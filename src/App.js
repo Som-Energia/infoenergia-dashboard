@@ -58,7 +58,6 @@ function App () {
     padding: 0 16px 16px;
   `
   return (
-
     <div className="container">
       <Tabs className="nav nav-tabs" role="tablist">
         {tabs.map((tab, index) => (

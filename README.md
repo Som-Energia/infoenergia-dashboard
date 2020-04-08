@@ -1,6 +1,6 @@
 # InfoEnergia Dashboard
 
-InfoEnergia dashboard for Virtual Office.
+InfoEnergia react dashboard for Som Energia Virtual Office.
 
 ## Available Scripts
 

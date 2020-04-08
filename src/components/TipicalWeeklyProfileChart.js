@@ -15,7 +15,6 @@ class CustomizedDaysValuesTick extends PureComponent {
 
     const avgDataDay = (day) => {
       const avgData = data.avgWeekCCH
-      console.log(avgData)
       for (const item in avgData) {
         if (avgData[item].weekDay === day) {
           return avgData[item]
@@ -50,7 +49,7 @@ function TipicalWeeklyProfileChart ({ data }) {
           margin={{ top: 10, bottom: 10 }}>
           <CartesianGrid stroke="#a1a1a1" vertical={false} />
           <XAxis height={100} dataKey="dayhour" tick={<CustomizedDaysValuesTick data={data} />} />
-          <YAxis axisLine={false} tick={() => ''} />
+          <YAxis axisLine={false} tick={() => ''} width={0} />
           <Tooltip />
           <Line type="monotone" dataKey="kWh" stroke="#96b633" dot={false} strokeWidth={4} />
         </LineChart>

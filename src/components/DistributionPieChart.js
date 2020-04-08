@@ -9,7 +9,7 @@ function DistributionPieChart ({ data, colors }) {
 
   return (
     <React.Fragment>
-      <ResponsiveContainer width="100%" height={300}>
+      <ResponsiveContainer width="100%" height={260}>
         <PieChart>
           <Pie
             data={values}
