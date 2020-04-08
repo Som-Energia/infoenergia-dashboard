@@ -12,7 +12,7 @@ function App () {
     { title: 'Perfil típic diari' },
     { title: 'Perfil típic setmanal' },
     { title: 'Perfil últims 3 mesos' },
-    { title: 'Perfil estacional' },
+    { title: 'Perfil estacional' }
   ]
 
   const activeComponent = () => {

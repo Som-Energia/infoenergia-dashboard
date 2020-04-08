@@ -17,7 +17,7 @@ class TipicalDailyProfile extends Component {
     return (
       <React.Fragment>
         <div className="row">
-          <Counter title="Mitjana setmanal" value={this.state?.data?.mitjana_semanal?.valor} date="" />        
+          <Counter title="Mitjana setmanal" value={this.state?.data?.mitjana_semanal?.valor} date="" />
         </div>
         <div className="row">
           <div className="col-xs-12">
