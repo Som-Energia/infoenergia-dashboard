@@ -63,10 +63,10 @@ class TipicalDailyProfile extends Component {
         <div className="row">
           <div className="col-xs-12">
             <Legend className="col-xs-12 col-md-6 text-right">
-              <b>Hivern:</b> <span class="vall"></span> Vall 22h a 12h <span class="punta"></span> Punta 12h a 22h
+              <b>Hivern:</b> <span className="vall"></span> Vall 22h a 12h <span className="punta"></span> Punta 12h a 22h
             </Legend>
             <Legend className="col-xs-12 col-md-6">
-              <b>Estiu:</b> <span class="vall"></span> Vall 23h a 13h <span class="punta"></span> Punta 13h a 23h
+              <b>Estiu:</b> <span className="vall"></span> Vall 23h a 13h <span className="punta"></span> Punta 13h a 23h
             </Legend>
           </div>
         </div>
