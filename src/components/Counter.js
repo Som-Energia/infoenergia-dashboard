@@ -25,6 +25,7 @@ const CounterDetail = styled.div`
     font-size: 1.35rem;
     font-weight: bold;
     padding: 0 4px 0 8px;
+    line-height: 14px;
     .title {
       color: #616161;
     }
