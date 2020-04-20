@@ -13,9 +13,9 @@ function TipicalDailyProfileChart ({ data }) {
     <div style={{ height: '300px' }}>
       <ResponsiveContainer>
         <BarChart width={730} height={250} data={data}>
-          <CartesianGrid stroke="#616161" vertical={false} />
+          <CartesianGrid stroke="#a1a1a1" vertical={false} />
           <XAxis dataKey="hour" tickFormatter={formatXAxis} tick={{ transform: 'translate(0, 8)' }} />
-          <YAxis axisLine={false} tickCount={6} tickFormatter={(tickItem) => `${tickItem} kWh`} tick={{ transform: 'translate(-4, 0)' }} />
+          <YAxis axisLine={false} tickCount={6} tickLine={false} tickFormatter={(tickItem) => `${tickItem} kWh`} tick={{ transform: 'translate(-2, 0)' }} />
           <Tooltip />
           <Bar dataKey="kWh">
             { data.map((entry, index) =>
