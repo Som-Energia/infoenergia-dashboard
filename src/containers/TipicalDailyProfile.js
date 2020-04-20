@@ -1,5 +1,6 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
+import moment from 'moment'
 
 import TipicalDailyProfileChart from '../components/TipicalDailyProfileChart'
 import Counter from '../components/Counter'
@@ -38,53 +39,56 @@ const Legend = styled.div`
     background-color: #f2970f;
   }
 `
+const CounterWrapper = styled.div`
+  padding-top: 16px;
+`
 
+function TipicalDailyProfile () {
+  const [data, setData] = useState({ ...mockData })
 
-class TipicalDailyProfile extends Component {
-
-  constructor (props) {
-    super(props)
-    this.state = {
-      data: { ...mockData }
-    }
-  }
-
-  render () {
-    return (
-      <React.Fragment>
-        <div className="row">
-          <Counter title="Mitjana diària" value={this.state?.data?.mitjana_diaria?.valor} date="" />
+  return (
+    <React.Fragment>
+      <div className="row">
+        <div className="col-xs-12">
+          <CounterWrapper>
+            <Counter title="Mitjana diària" value={data?.mitjana_diaria?.valor} date="" />
+          </CounterWrapper>
         </div>
-        <div className="row">
-          <div className="col-xs-12">
-            <TipicalDailyProfileChart data={this.state?.data?.perfil_tipic_diari} />
-          </div>
+      </div>
+      <div className="row">
+        <div className="col-xs-12">
+          <TipicalDailyProfileChart data={data?.perfil_tipic_diari} />
         </div>
-        <div className="row">
-          <div className="col-xs-12">
-            <Legend className="col-xs-12 col-md-6 text-right">
-              <b>Hivern:</b> <span className="vall"></span> Vall 22h a 12h <span className="punta"></span> Punta 12h a 22h
-            </Legend>
-            <Legend className="col-xs-12 col-md-6">
-              <b>Estiu:</b> <span className="vall"></span> Vall 23h a 13h <span className="punta"></span> Punta 13h a 23h
-            </Legend>
-          </div>
+      </div>
+      <div className="row">
+        <div className="col-xs-12">
+          <Legend className="col-xs-12 col-md-6 text-right">
+            <b>Hivern:</b> <span className="vall"></span> Vall 22h a 12h <span className="punta"></span> Punta 12h a 22h
+          </Legend>
+          <Legend className="col-xs-12 col-md-6">
+            <b>Estiu:</b> <span className="vall"></span> Vall 23h a 13h <span className="punta"></span> Punta 13h a 23h
+          </Legend>
         </div>
-        <div className="row">
-          <div className="col-xs-12 col-md-6">
-            <Widget>
-              <DistributionByUserType />
-            </Widget>
-          </div>
-          <div className="col-xs-12 col-md-6">
-            <Widget>
-              <DistributionByPeriod />
-            </Widget>
-          </div>
+      </div>
+      <div className="row">
+        <div className="col-xs-12 col-md-6">
+          <Widget>
+            <DistributionByUserType />
+          </Widget>
         </div>
-      </React.Fragment>
-    )
-  }
+        <div className="col-xs-12 col-md-6">
+          <Widget>
+            <DistributionByPeriod />
+          </Widget>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-xs-12 text-right">
+          Darrera actualització: {moment().format('DD/MM/YYYY')}
+        </div>
+      </div>
+    </React.Fragment>
+  )
 }
 
 export default TipicalDailyProfile

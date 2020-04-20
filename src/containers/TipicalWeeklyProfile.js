@@ -1,40 +1,46 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
+import styled from 'styled-components'
+import moment from 'moment'
 
 import TipicalWeeklyProfileChart from '../components/TipicalWeeklyProfileChart'
 import Counter from '../components/Counter'
 
 import mockData from '../services/TipicalWeeklyProfileMock'
 
-class TipicalDailyProfile extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      data: mockData
-    }
-  }
+const CounterWrapper = styled.div`
+  padding-top: 16px;
+`
 
-  render () {
-    return (
-      <React.Fragment>
-        <div className="row">
-          <Counter title="Mitjana setmanal" value={this.state?.data?.mitjana_semanal?.valor} date="" />
-        </div>
-        <div className="row">
-          <div className="col-xs-12">
-            <TipicalWeeklyProfileChart data={this.state?.data?.mitjana_semanal} />
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-xs-9">
+function TipicalDailyProfile () {
+  const [data, setData] = useState({ ...mockData })
 
-          </div>
-          <div className="col-xs-3">
-
-          </div>
+  return (
+    <React.Fragment>
+      <CounterWrapper>
+        <Counter title="Mitjana setmanal" value={data?.mitjana_semanal?.valor} date="" />
+      </CounterWrapper>
+      <div className="row">
+        <div className="col-xs-12">
+          <TipicalWeeklyProfileChart data={data?.mitjana_semanal} />
         </div>
-      </React.Fragment>
-    )
-  }
+      </div>
+      <div className="row">
+        <div className="col-xs-9">
+          <span>5kWh</span>
+          <span>Mitjana d'ús d'energia en dia entre setmana</span>
+        </div>
+        <div className="col-xs-3">
+          <span>3kWh</span>
+          <span>Mitjana d'ús d'energia en dia cap de setmana</span>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-xs-12 text-right">
+          Darrera actualització: {moment().format('DD/MM/YYYY')}
+        </div>
+      </div>
+    </React.Fragment>
+  )
 }
 
 export default TipicalDailyProfile

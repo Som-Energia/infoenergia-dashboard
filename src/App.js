@@ -1,19 +1,24 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { MuiPickersUtilsProvider } from '@material-ui/pickers'
+import MomentUtils from '@date-io/moment'
 
-import UsEnergia from './pages/UsEnergia'
+import EnergyUse from './pages/EnergyUse'
+import TimeCurves from './pages/TimeCurves'
 
 import './App.css'
 
 function App () {
   return (
-    <Router>
-      <Switch>
-        <Route exact path="/" component={UsEnergia} />
-        <Route path="/us-energia" component={UsEnergia} />
-        <Route path="/corbes-horaries" component={UsEnergia} />
-      </Switch>
-    </Router>
+    <MuiPickersUtilsProvider utils={MomentUtils}>
+      <Router>
+        <Switch>
+          <Route exact path="/" component={EnergyUse} />
+          <Route path="/us-energia" component={EnergyUse} />
+          <Route path="/corbes-horaries" component={TimeCurves} />
+        </Switch>
+      </Router>
+    </MuiPickersUtilsProvider>
   )
 }
 
