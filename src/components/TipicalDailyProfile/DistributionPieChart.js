@@ -9,14 +9,12 @@ function DistributionPieChart ({ data, colors }) {
 
   return (
     <React.Fragment>
-      <ResponsiveContainer width="100%" height={260}>
+      <ResponsiveContainer width="100%" height={180}>
         <PieChart>
           <Pie
             data={values}
-            cx={120}
-            cy={130}
-            innerRadius={70}
-            outerRadius={100}
+            innerRadius={55}
+            outerRadius={80}
             paddingAngle={0}
             dataKey="value"
           >

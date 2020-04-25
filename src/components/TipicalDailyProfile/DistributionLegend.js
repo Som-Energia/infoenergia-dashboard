@@ -30,4 +30,5 @@ function DistributionLegend ({ values, colors, data }) {
     </ul>
   )
 }
+
 export default DistributionLegend

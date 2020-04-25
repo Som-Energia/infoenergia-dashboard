@@ -1,10 +1,10 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 
 import DistributionPieChart from '../../components/TipicalDailyProfile/DistributionPieChart'
 import DistributionLegend from '../../components/TipicalDailyProfile/DistributionLegend'
 
-import data from '../../services/DistributionByPeriodMock'
+import mockedData from '../../services/DistributionByPeriodMock'
 
 const COLORS = {
   perc_punta: '#616161',
@@ -17,31 +17,34 @@ const VALUES = {
 }
 
 const Title = styled.h3`
-    font-size: 2.25rem;
-    font-weight: 700;
+  font-size: 2.25rem;
+  font-weight: 700;
 `
 
-class DistributionByPeriod extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      data
-    }
-  }
+const Wrapper = styled.div`
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-beetween;
+  flex-wrap: nowrap;
+`
 
-  render () {
-    return (
-      <div className="row">
-        <div className="col-xs-6">
-          <Title>Distribució<br />per períodes</Title>
-          <DistributionLegend colors={COLORS} values={VALUES} data={this.state?.data?.distribucio_periodes} />
-        </div>
-        <div className="col-xs-6">
-          <DistributionPieChart data={this.state?.data?.distribucio_periodes} colors={COLORS} />
-        </div>
+const ChartWrapper = styled.div`
+  width: 100%;
+  align-self: center;
+`
+
+export default function DistributionByPeriod () {
+  const [data, setData] = useState(mockedData)
+
+  return (
+    <Wrapper>
+      <div>
+        <Title>Distribució<br />per períodes</Title>
+        <DistributionLegend colors={COLORS} values={VALUES} data={data?.distribucio_periodes} />
       </div>
-    )
-  }
+      <ChartWrapper>
+        <DistributionPieChart colors={COLORS} data={data?.distribucio_periodes} />
+      </ChartWrapper>
+    </Wrapper>
+  )
 }
-
-export default DistributionByPeriod
