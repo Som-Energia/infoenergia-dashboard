@@ -7,15 +7,16 @@ align-items: center;
 `
 const TabList = styled.ul`
 border-bottom: 0;
-padding: 12px 8px;
+padding: 12px 8px 0;
 background: #fff;
 display: flex;
 list-style: none;
 margin-bottom: 0;
+flex-wrap: wrap;
 `
 const Tab = styled.li`
 background-color: #f2f2f2;
-margin: 0 4px;
+margin: 0 4px 8px;
 padding: 0;
 button {
   padding: 10px 16px;
@@ -23,6 +24,7 @@ button {
   font-weight: bold;
   background: transparent;
   border: 0;
+  white-space:nowrap;
 }
 &.active {
   background-color: #96b633;
