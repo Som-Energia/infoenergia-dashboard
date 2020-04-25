@@ -29,10 +29,10 @@ class CustomizedDaysValuesTick extends PureComponent {
     const avgDay = avgDataDay(currentDay)
     return (
       <g transform={`translate(${x},${y})`}>
-        <text x={0} y={0} dy={16} textAnchor="middle" fill="#666" fontWeight="800" fontSize="2rem">{days[currentDay]}</text>
+        <text x={0} y={0} dy={16} textAnchor="middle" fill="#666" fontWeight="700" fontSize="1.65rem">{days[currentDay]}</text>
         <text x={0} y={20} dy={16} textAnchor="middle" fill="#666">Mitjana d'ús</text>
-        <text x={0} y={50} dy={16} textAnchor="middle" fill="#96b633" fontWeight="800" fontSize="2.5rem">{formatkWh(avgDay?.avgKWh)}</text>
-        <text x={0} y={80} dy={16} textAnchor="middle" fill="#666" fontWeight="800" fontSize="2.5rem">{formatPerc(avgDay?.avgPercent)}</text>
+        <text x={0} y={50} dy={16} textAnchor="middle" fill="#96b633" fontWeight="700" fontSize="2rem">{formatkWh(avgDay?.avgKWh)}</text>
+        <text x={0} y={75} dy={16} textAnchor="middle" fill="#666" fontWeight="700" fontSize="2rem">{formatPerc(avgDay?.avgPercent)}</text>
       </g>
     )
   }
