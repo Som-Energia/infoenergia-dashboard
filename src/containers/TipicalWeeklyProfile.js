@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import moment from 'moment'
 
-import TipicalWeeklyProfileChart from '../components/TipicalWeeklyProfileChart'
+import TipicalWeeklyProfileChart from '../components/TipicalWeeklyProfile/TipicalWeeklyProfileChart'
 import Counter from '../components/Counter'
 
 import mockData from '../services/TipicalWeeklyProfileMock'

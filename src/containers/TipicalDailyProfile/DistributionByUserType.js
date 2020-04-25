@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 
-import DistributionPieChart from '../../components/DistributionPieChart'
-import DistributionLegend from '../../components/DistributionLegend'
+import DistributionPieChart from '../../components/TipicalDailyProfile/DistributionPieChart'
+import DistributionLegend from '../../components/TipicalDailyProfile/DistributionLegend'
 
 import data from '../../services/DistributionByUserTypeMock'
 

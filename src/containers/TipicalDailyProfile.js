@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import moment from 'moment'
 
-import TipicalDailyProfileChart from '../components/TipicalDailyProfileChart'
+import TipicalDailyProfileChart from '../components/TipicalDailyProfile/TipicalDailyProfileChart'
 import Counter from '../components/Counter'
 
 import DistributionByPeriod from './TipicalDailyProfile/DistributionByPeriod'
