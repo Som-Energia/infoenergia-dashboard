@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import moment from 'moment'
 
 import TipicalDailyProfileChart from '../components/TipicalDailyProfile/TipicalDailyProfileChart'
 import Counter from '../components/Counter'
+import LastUpdate from '../components/LastUpdate'
 
 import DistributionByPeriod from './TipicalDailyProfile/DistributionByPeriod'
 import DistributionByUserType from './TipicalDailyProfile/DistributionByUserType'
@@ -48,10 +48,10 @@ const CounterWrapper = styled.div`
 `
 
 function TipicalDailyProfile () {
-  const [data, setData] = useState({ ...mockData })
+  const [data, setData] = useState(mockData)
 
   return (
-    <React.Fragment>
+    <>
       <div className="row">
         <div className="col-xs-12">
           <CounterWrapper>
@@ -86,12 +86,8 @@ function TipicalDailyProfile () {
           </Widget>
         </div>
       </div>
-      <div className="row">
-        <div className="col-xs-12 text-right">
-          Darrera actualització: {moment().format('DD/MM/YYYY')}
-        </div>
-      </div>
-    </React.Fragment>
+      <LastUpdate />
+    </>
   )
 }
 
