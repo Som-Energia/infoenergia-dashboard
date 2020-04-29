@@ -19,6 +19,7 @@ const CounterValue = styled.div`
     font-size: 3rem;
     font-weight: bold;
     padding: 0 4px;
+    white-space: nowrap;
 `
 
 const CounterDetail = styled.div`
@@ -28,6 +29,9 @@ const CounterDetail = styled.div`
     line-height: 1.5rem;
     .title {
       color: #616161;
+    }
+    div {
+      white-space: nowrap;
     }
 `
 

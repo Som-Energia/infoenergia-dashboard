@@ -16,7 +16,7 @@ flex-wrap: wrap;
 `
 const Tab = styled.li`
 background-color: #f2f2f2;
-margin: 0 4px 8px;
+margin: 0 4px 16px;
 padding: 0;
 button {
   padding: 10px 16px;
