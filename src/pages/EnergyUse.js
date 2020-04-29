@@ -1,17 +1,18 @@
 import React from 'react'
 
 import Tabs from '../components/Tabs'
-import moment from 'moment'
 
 import TipicialDailyProfile from '../containers/TipicalDailyProfile'
 import TipicalWeeklyProfile from '../containers/TipicalWeeklyProfile'
+import LastMonthProfile from '../containers/LastMonthsProfile'
+import SeasonalProfile from '../containers/SeasonalProfile'
 
 function EnergyUse () {
   const tabs = [
     { title: 'Perfil típic diari', content: <TipicialDailyProfile /> },
     { title: 'Perfil típic setmanal', content: <TipicalWeeklyProfile /> },
-    { title: 'Perfil últims 3 mesos', content: <div>Perfil últims 3 mesos</div> },
-    { title: 'Perfil estacional', content: <div>Perfil estacional</div> }
+    { title: 'Perfil últims 3 mesos', content: <LastMonthProfile /> },
+    { title: 'Perfil estacional', content: <SeasonalProfile /> }
   ]
 
   return (
