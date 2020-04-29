@@ -20,11 +20,11 @@ const TopWrapper = styled.div`
   justify-content: space-between;
 `
 const CounterWrapper = styled.div`
-  padding-top: 16px;
+  padding-top: 24px;
 `
 
 const LegendWrapper = styled.div`
-  padding-top: 16px;
+  padding-top: 24px;
   display: flex;
   flex-wrap: wrap;
 `

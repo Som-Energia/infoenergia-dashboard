@@ -44,7 +44,7 @@ const Legend = styled.div`
   }
 `
 const CounterWrapper = styled.div`
-  padding-top: 16px;
+  padding-top: 24px;
 `
 
 function TipicalDailyProfile () {

@@ -8,7 +8,7 @@ import LastUpdate from '../components/LastUpdate'
 import mockData from '../services/TipicalWeeklyProfileMock'
 
 const CounterWrapper = styled.div`
-  padding-top: 16px;
+  padding-top: 24px;
 `
 
 const DayTypeWrapper = styled.div`
