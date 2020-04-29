@@ -1,29 +1,22 @@
 import React, { PureComponent } from 'react'
 import { LineChart, XAxis, YAxis, CartesianGrid, Tooltip, Line, ResponsiveContainer } from 'recharts'
+import { formatkWh, formatPerc } from '../../services/utils'
 
 class CustomizedDaysValuesTick extends PureComponent {
   render () {
     const { x, y, data } = this.props
 
-    const formatkWh = (item) => {
-      return Math.round(item) + ' kWh'
-    }
-
-    const formatPerc = (item) => {
-      return Math.round(item) + '%'
-    }
-
     const avgDataDay = (day) => {
       const avgData = data.avgWeekCCH
       for (const item in avgData) {
-        if (avgData[item].weekDay == parseInt(day)) {
+        if (avgData[item].weekDay === parseInt(day)) {
           return avgData[item]
         }
       }
     }
 
     const currentDay = this.props.payload.value.split('-')[0]
-    const currentHour = this.props.payload.value.split('-')[1]
+    // const currentHour = this.props.payload.value.split('-')[1]
     const days = ['Dilluns', 'Dimarts', 'Dimecres', 'Dijous', 'Divendres', 'Dissabte', 'Diumenge']
 
     const avgDay = avgDataDay(currentDay)
@@ -39,13 +32,13 @@ class CustomizedDaysValuesTick extends PureComponent {
 }
 
 function TipicalWeeklyProfileChart ({ data }) {
-  const tickPoints= [...Array(7).keys()].map( index => index+"-12")
+  const tickPoints = [...Array(7).keys()].map(index => index + '-12')
   return (
     <div style={{ height: '300px' }}>
       <ResponsiveContainer width="100%" height={300}>
         <LineChart data={data.format_avgWeekCCH}
           margin={{ top: 10, bottom: 10 }}>
-          <CartesianGrid stroke="#a1a1a1" vertical={false}/>
+          <CartesianGrid stroke="#cccccc" vertical={false}/>
           <XAxis height={100} ticks={tickPoints} dataKey="dayhour" tick={<CustomizedDaysValuesTick data={data} />} />
           <YAxis axisLine={false} tick={() => ''} width={0} />
           <Tooltip />
