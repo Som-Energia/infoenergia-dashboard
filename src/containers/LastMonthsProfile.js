@@ -4,7 +4,6 @@ import styled from 'styled-components'
 import Counter from '../components/Counter'
 import LastUpdate from '../components/LastUpdate'
 import CalendarMonth from '../components/LastMonthsProfile/CalendarMonth'
-import SeasonalProfile from '../containers/SeasonalProfile'
 import mockData from '../services/LastMonthsProfile'
 
 const ChartWrapper = styled.div`
