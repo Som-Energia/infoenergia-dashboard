@@ -61,14 +61,13 @@ const legendData = [
 function LastMonthProfile () {
   const [data, setData] = useState(mockData)
 
-  console.log(data)
   return (
     <>
       <TopWrapper>
         <LegendWrapper>
           {
             legendData.map(item => (
-              <LegendItem>
+              <LegendItem key={item.label}>
                 <LegendColor color={item.color} />
                 <LegendLabel>
                   Ús d'energia
