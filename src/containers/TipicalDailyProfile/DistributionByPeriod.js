@@ -18,13 +18,13 @@ const VALUES = {
 
 const Title = styled.h3`
   font-size: 2.25rem;
-  font-weight: 700;
+  font-weight: 500;
 `
 
 const Wrapper = styled.div`
   display: flex;
   align-items: flex-start;
-  justify-content: space-beetween;
+  justify-content: space-between;
   flex-wrap: nowrap;
 `
 

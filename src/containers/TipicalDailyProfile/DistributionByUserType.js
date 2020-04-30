@@ -20,7 +20,7 @@ const VALUES = {
 
 const Title = styled.h3`
   font-size: 2.25rem;
-  font-weight: 700;
+  font-weight: 500;
 `
 const Wrapper = styled.div`
   display: flex;

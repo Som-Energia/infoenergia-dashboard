@@ -7,7 +7,7 @@ const CounterWrapper = styled.div`
 `
 
 const CounterBox = styled.div`
-    padding: 0 4px;
+    padding: 0 8px;
     margin-bottom: 20px;
     background-color: #96b633;
     color: #fff;
@@ -23,7 +23,7 @@ const CounterValue = styled.div`
 `
 
 const CounterDetail = styled.div`
-    font-size: 1.35rem;
+    font-size: 1.3rem;
     font-weight: 500;
     padding: 0 4px 0 8px;
     line-height: 1.5rem;

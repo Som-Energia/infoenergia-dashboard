@@ -1,6 +1,10 @@
 
+export const formatNumber = (num) => {
+  return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
+}
+
 export const formatkWh = (item) => {
-  return Math.round(item) + ' kWh'
+  return formatNumber(Math.round(item)) + ' kWh'
 }
 
 export const formatPerc = (item) => {

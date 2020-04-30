@@ -10,6 +10,7 @@ const MonthName = styled.div`
   background-color: #f2f2f2;
   color: #585857;
   font-weight: 500;
+  font-size: 1.5rem;
   padding: 8px 0;
 `
 
@@ -18,7 +19,7 @@ const Calendar = styled.div`
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
   grid-gap: 2px;
-  margin-top: 8px;
+  margin-top: 12px;
 `
 
 const EmptyDay = styled.div`
