@@ -8,16 +8,40 @@ import LastUpdate from '../components/LastUpdate'
 import mockData from '../services/SeasonalProfile'
 
 const Wrapper = styled.div`
-  margin-top: 24px;
   background-color: #f2f2f2;
   color: #585857;
-  padding: 16px;
+  margin-top: 24px;
+  padding: 16px 24px 24px;
 `
 
-const TopWrapper = styled.div`
+const SelectorWrapper = styled.div`
+    padding-top: 24px;
+    display: flex;
+    justify-content: flex-end;
+`
+
+const SelectorBox = styled.div`
+    padding: 8px 8px;
+    margin-bottom: 20px;
+    background-color: #96b633;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    min-width: 260px;
+`
+
+const SelectorValue = styled.div`
+    font-size: 1.75rem;
+    font-weight: 700;
+    padding: 0 4px;
+    white-space: nowrap;
+`
+
+const TabWrapper = styled.div`
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
+  flex-wrap: wrap;
 `
 
 const Title = styled.div`
@@ -30,32 +54,90 @@ const Title = styled.div`
 `
 
 const ButtonsWrapper = styled.div`
-  margin-left: 8px;
+  display: flex;
+  & > button {
+    margin-top: 8px;
+  }
 `
 
 const Button = styled.button`
-  padding: 10px 16px;
+  padding: 8px 16px;
+  margin: 0 4px;
   color: #fff;
-  font-weight: bold;
+  font-weight: 500;
   background: #585857;
   border: 0;
-  white-space:nowrap;
-  margin-left: 8px;
+  white-space: nowrap;
+  min-width: 75px;
+  text-transform: capitalize;
+  &.active {
+    background: #96b633;
+  }
+`
+
+const AdviceWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 16px;
+  flex-wrap: wrap;
+`
+
+const AdviceText = styled.div`
+  margin-top: 8px;
+`
+
+const AdviceButton = styled(Button)`
+  color: #fff;
+  font-weight: 500;
+  background: #96b633;
+  margin-top: 8px;
 `
 
 function SeasonalProfile () {
+  const [dependencySeason, setDependencySeason] = useState('hivern')
+
+  const handleClick = (event, season) => {
+    event.preventDefault()
+    setDependencySeason(season)
+  }
+
+  const dependencyLevel = mockData?.perfilEstacional?.dependenciaClimatica[dependencySeason]
+
   return (
     <>
+      <SelectorWrapper>
+        <SelectorBox>
+          <SelectorValue>Últims 12 mesos</SelectorValue>
+        </SelectorBox>
+      </SelectorWrapper>
       <SeasonalProfileBarChart data={mockData?.perfilEstacional} />
       <Wrapper>
-        <TopWrapper>
+        <TabWrapper>
           <Title>Dependència climàtica<span> en base als últims 36 mesos</span></Title>
           <ButtonsWrapper>
-            <Button>Hivern</Button>
-            <Button>Estiu</Button>
+            {
+              Object.keys(mockData?.perfilEstacional?.dependenciaClimatica)
+                .map(season => (
+                  <Button
+                    key={season}
+                    className={ dependencySeason === season ? 'active' : null }
+                    onClick={event => handleClick(event, season)}>
+                    {season}
+                  </Button>
+                ))
+            }
           </ButtonsWrapper>
-        </TopWrapper>
-        <ClimaDependency />
+        </TabWrapper>
+        <ClimaDependency data={dependencyLevel} />
+        <AdviceWrapper>
+          <AdviceText>
+            Quan augmenta la temperatura exterior el teu ús d'energia augmenta en igual mida.
+          </AdviceText>
+          <AdviceButton>
+            INFORMA'T
+          </AdviceButton>
+        </AdviceWrapper>
       </Wrapper>
       <LastUpdate />
     </>
