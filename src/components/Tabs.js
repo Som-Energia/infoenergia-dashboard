@@ -4,8 +4,10 @@ import styled from 'styled-components'
 const TabBarWrapper = styled.div`
 display: flex;
 align-items: center;
+justify-content: space-between;
 `
 const TabList = styled.ul`
+flex-grow: 1;
 border-bottom: 0;
 padding: 12px 8px 0;
 background: #fff;

@@ -1,12 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
 import moment from 'moment'
 import { DatePicker } from '@material-ui/pickers'
 import IconButton from '@material-ui/core/IconButton'
 
-import ArrowBack from '@material-ui/icons/ArrowBackOutlined'
-import ArrowForward from '@material-ui/icons/ArrowForwardOutlined'
+import TodayOutlinedIcon from '@material-ui/icons/TodayOutlined'
+import ArrowBackIosOutlinedIcon from '@material-ui/icons/ArrowBackIosOutlined'
+import ArrowForwardIosOutlinedIcon from '@material-ui/icons/ArrowForwardIosOutlined'
 
 import TimeCurvesBarChart from '../components/TimeCurves/TimeCurvesBarChart'
 import TimeCurvesLineChart from '../components/TimeCurves/TimeCurvesLineChart'
@@ -28,7 +29,7 @@ const ChartWrapper = styled.div`
   padding-bottom: 24px;
 `
 
-const filterDataWithPeriod = (refDate, period, data, chartType) => {
+const filterDataWithPeriod = (refDate, period, data, charType) => {
   switch (period) {
     case 'DAILY':
       return data.filter(item => moment(item?.date).isSame(refDate, 'day'))
@@ -43,32 +44,72 @@ const filterDataWithPeriod = (refDate, period, data, chartType) => {
   }
 }
 
-function TimeCurves ({ data, chartType, period }) {
-  const refDate = ''
-  const [selectedDate, handleDateChange] = useState(new Date())
-  const totalKwh = 2
+const totalValueWithData = (data) => {
+  return data.reduce((prev, current) => prev + current?.value, 0)
+}
 
-  const filteredData = filterDataWithPeriod(selectedDate, period, data, chartType)
+function TimeCurves ({ data, chartType, period }) {
+  const [selectedDate, setSelectedDate] = useState()
+  const [selectedCompDate, setSelectedCompDate] = useState(null)
+  const [filteredData, setFilteredData] = useState()
+  const [totalKwh, setTotalKwh] = useState('-')
+
+  useEffect(() => {
+    const last = data.pop()
+    const lastDate = moment(last?.date)
+    setSelectedDate(lastDate)
+  }, [data, period])
+
+  useEffect(() => {
+    const filtered = filterDataWithPeriod(selectedDate, period, data, chartType)
+    setFilteredData(filtered)
+    const sumTotalKwh = totalValueWithData(filtered) / 1000
+    setTotalKwh(sumTotalKwh)
+  }, [data, selectedDate, period, chartType])
 
   return (
     <React.Fragment>
       <ControlsWrapper>
         <DateControlsWrapper>
+          <IconButton>
+            <ArrowBackIosOutlinedIcon />
+          </IconButton>
           <DatePicker
             value={selectedDate}
             variant="inline"
             autoOk
+            size="small"
             inputVariant="outlined"
-            onChange={handleDateChange}
+            onChange={setSelectedDate}
             format="DD/MM/YYYY"
             InputProps={{
-              startAdornment: <IconButton onClick={(event) => event.preventDefault()}><ArrowBack /></IconButton>,
-              endAdornment: <IconButton onClick={(event) => event.preventDefault()}><ArrowForward /></IconButton>
+              startAdornment: <IconButton><TodayOutlinedIcon /></IconButton>
+            }}
+          />
+          <IconButton>
+            <ArrowForwardIosOutlinedIcon />
+          </IconButton>
+
+          <DatePicker
+            value={selectedCompDate}
+            variant="inline"
+            placeholder="Comparar"
+            autoOk
+            size="small"
+            inputVariant="outlined"
+            onChange={setSelectedCompDate}
+            format="DD/MM/YYYY"
+            InputProps={{
+              startAdornment: <IconButton><TodayOutlinedIcon /></IconButton>
             }}
           />
         </DateControlsWrapper>
         <CounterWrapper>
-          <Counter title="Total diària" value={totalKwh} date={moment(selectedDate).format('DD/MM/YYYY')} />
+          <Counter
+            title="Total diària"
+            value={totalKwh}
+            date={moment(selectedDate).format('DD/MM/YYYY')}
+          />
         </CounterWrapper>
       </ControlsWrapper>
       <div className="row">
