@@ -16,17 +16,17 @@ const CounterBox = styled.div`
 `
 
 const CounterValue = styled.div`
-    font-size: 3rem;
+    font-size: 2.2rem;
     font-weight: bold;
     padding: 0 4px;
     white-space: nowrap;
 `
 
 const CounterDetail = styled.div`
-    font-size: 1.3rem;
+    font-size: 1rem;
     font-weight: 500;
     padding: 0 4px 0 8px;
-    line-height: 1.5rem;
+    line-height: 1.2rem;
     .title {
       color: #616161;
     }
