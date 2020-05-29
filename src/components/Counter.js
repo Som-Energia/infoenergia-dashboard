@@ -9,7 +9,9 @@ const CounterWrapper = styled.div`
 const CounterBox = styled.div`
     padding: 0 8px;
     margin-bottom: 20px;
-    background-color: #96b633;
+    background-color: ${props =>
+      props.color === 'primary' ? '#96b633' : '#f2970f'
+    };
     color: #fff;
     display: flex;
     align-items: center;
@@ -36,12 +38,12 @@ const CounterDetail = styled.div`
 `
 
 function Counter (props) {
-  const { value, title, date = '' } = props
+  const { value, title, date = '', color = 'primary' } = props
   const dateLabel = (date === '') ? 'Últims 12 mesos' : date
 
   return (
     <CounterWrapper>
-      <CounterBox>
+      <CounterBox color={color}>
         <CounterValue>
           {value} kWh
         </CounterValue>
