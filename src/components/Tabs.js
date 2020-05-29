@@ -23,7 +23,7 @@ padding: 0;
 button {
   padding: 10px 16px;
   color: #585857;
-  font-weight: bold;
+  font-weight: 500;
   background: transparent;
   border: 0;
   white-space:nowrap;
