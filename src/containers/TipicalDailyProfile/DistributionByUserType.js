@@ -19,7 +19,7 @@ const VALUES = {
 }
 
 const Title = styled.h3`
-  font-size: 2.25rem;
+  font-size: 1.8rem;
   font-weight: 500;
 `
 const Wrapper = styled.div`
