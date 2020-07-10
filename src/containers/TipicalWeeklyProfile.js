@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
 import TipicalWeeklyProfileChart from '../components/TipicalWeeklyProfile/TipicalWeeklyProfileChart'
 import Counter from '../components/Counter'
 import LastUpdate from '../components/LastUpdate'
 
-import mockData from '../services/TipicalWeeklyProfileMock'
+import { getWeeklyProfile } from '../services/api'
 
 const CounterWrapper = styled.div`
   padding-top: 24px;
@@ -67,7 +67,17 @@ const ChartWrapper = styled.div`
 `
 
 function TipicalWeeklyProfile () {
-  const [data, setData] = useState(mockData)
+  const [data, setData] = useState({})
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    getWeeklyProfile('100')
+      .then(response => {
+        console.log(response)
+        setData(response)
+        setIsLoading(false)
+      })
+  }, [])
 
   return (
     <>
@@ -83,15 +93,19 @@ function TipicalWeeklyProfile () {
         </DayTypeWrapperWeekend>
       </DayTypeWrapper>
       <ChartWrapper>
-        <TipicalWeeklyProfileChart data={data?.mitjana_semanal} />
+        {
+          isLoading
+            ? 'Loading...'
+            : <TipicalWeeklyProfileChart data={data?.mitjana_semanal} />
+        }
       </ChartWrapper>
       <WeeklyMediumWrapper>
         <DailyMediumWrapper>
-          <MediumValue>5kWh</MediumValue>
+          <MediumValue>{data?.mitjana_semanal?.valor_entre_semana} kWh</MediumValue>
           <span>Mitjana d'ús d'energia en dia entre setmana</span>
         </DailyMediumWrapper>
         <WeekendMediumWrapper>
-          <MediumValue>3kWh</MediumValue>
+          <MediumValue>{data?.mitjana_semanal?.valor_cap_semana} kWh</MediumValue>
           <span>Mitjana d'ús d'energia en dia cap de setmana</span>
         </WeekendMediumWrapper>
       </WeeklyMediumWrapper>

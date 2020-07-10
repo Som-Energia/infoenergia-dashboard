@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
 import Counter from '../components/Counter'
 import LastUpdate from '../components/LastUpdate'
 import CalendarMonth from '../components/LastMonthsProfile/CalendarMonth'
-import mockData from '../services/LastMonthsProfile'
+
+import { getMonthsProfile } from '../services/api'
 
 const ChartWrapper = styled.div`
   width: 100%;
@@ -42,8 +43,8 @@ const LegendColor = styled.div`
 `
 
 const LegendLabel = styled.div`
-  font-size: 1.35rem;
-  line-height: 1.5rem;
+  font-size: 1rem;
+  line-height: 1.2rem;
   white-space: nowrap;
   div {
     text-transform: uppercase;
@@ -58,7 +59,16 @@ const legendData = [
 ]
 
 function LastMonthProfile () {
-  const [data, setData] = useState(mockData)
+  const [data, setData] = useState({})
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    getMonthsProfile('100')
+      .then(response => {
+        setData(response)
+        setIsLoading(false)
+      })
+  }, [])
 
   return (
     <>
@@ -77,18 +87,22 @@ function LastMonthProfile () {
           }
         </LegendWrapper>
         <CounterWrapper>
-          <Counter title="Ús diari habitual" value={data?.levels[0].kWh} date="Últims 3 mesos" />
+          <Counter title="Ús diari habitual" value={ data?.levels ? data?.levels[0].kWh : '-'} date="Últims 3 mesos" />
         </CounterWrapper>
 
       </TopWrapper>
       <ChartWrapper>
         {
-          data?.months &&
-          data?.months.map((month, idx) => (
-            <div key={idx}>
-              <CalendarMonth month={month} consum={data?.months?.consum} />
-            </div>
-          ))
+          isLoading
+            ? 'Loading ...'
+            : (
+              data?.months &&
+              data?.months.map((month, idx) => (
+                <div key={idx}>
+                  <CalendarMonth month={month} consum={data?.consum} levels={data?.levels} />
+                </div>
+              ))
+            )
         }
       </ChartWrapper>
       <LastUpdate />

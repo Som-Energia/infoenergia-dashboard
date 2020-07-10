@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
 import DistributionPieChart from '../../components/TipicalDailyProfile/DistributionPieChart'
 import DistributionLegend from '../../components/TipicalDailyProfile/DistributionLegend'
 
 import mockedData from '../../services/DistributionByPeriodMock'
+import { getDistributionByPeriod } from '../../services/api'
 
 const COLORS = {
   perc_punta: '#616161',
@@ -34,17 +35,33 @@ const ChartWrapper = styled.div`
 `
 
 export default function DistributionByPeriod () {
-  const [data, setData] = useState(mockedData)
+  const [data, setData] = useState({})
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    getDistributionByPeriod('100')
+      .then(response => {
+        console.log(response)
+        setData(response)
+        setIsLoading(false)
+      })
+  }, [])
 
   return (
     <Wrapper>
-      <div>
-        <Title>Distribució<br />per períodes</Title>
-        <DistributionLegend colors={COLORS} values={VALUES} data={data?.distribucio_periodes} />
-      </div>
-      <ChartWrapper>
-        <DistributionPieChart colors={COLORS} data={data?.distribucio_periodes} />
-      </ChartWrapper>
+      {
+        isLoading
+          ? 'Loading ...'
+          : <>
+            <div>
+              <Title>Distribució<br />per períodes</Title>
+              <DistributionLegend colors={COLORS} values={VALUES} data={data?.distribucio_periodes} />
+            </div>
+            <ChartWrapper>
+              <DistributionPieChart colors={COLORS} data={data?.distribucio_periodes} />
+            </ChartWrapper>
+          </>
+      }
     </Wrapper>
   )
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
 import TipicalDailyProfileChart from '../components/TipicalDailyProfile/TipicalDailyProfileChart'
@@ -9,6 +9,8 @@ import DistributionByPeriod from './TipicalDailyProfile/DistributionByPeriod'
 import DistributionByUserType from './TipicalDailyProfile/DistributionByUserType'
 
 import mockData from '../services/TipicalDailyProfileMock'
+
+import { getDailyProfile } from '../services/api'
 
 const Widget = styled.div`
     min-height: 220px;
@@ -48,7 +50,16 @@ const CounterWrapper = styled.div`
 `
 
 function TipicalDailyProfile () {
-  const [data, setData] = useState(mockData)
+  const [data, setData] = useState({})
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    getDailyProfile('100')
+      .then(response => {
+        setData(response)
+        setIsLoading(false)
+      })
+  }, [])
 
   return (
     <>
@@ -61,7 +72,11 @@ function TipicalDailyProfile () {
       </div>
       <div className="row">
         <div className="col-xs-12">
-          <TipicalDailyProfileChart data={data?.perfil_tipic_diari} />
+          {
+            isLoading
+              ? 'Loading...'
+              : <TipicalDailyProfileChart data={data?.perfil_tipic_diari} />
+          }
         </div>
       </div>
       <div className="row">
