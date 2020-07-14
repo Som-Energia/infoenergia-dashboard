@@ -5,7 +5,7 @@ import styled from 'styled-components'
 const LastUpdateWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
-  padding-top: 24px;
+  padding-top: 16px;
   margin-bottom: 8px;
   span {
     padding-left: 4px;
@@ -14,9 +14,10 @@ const LastUpdateWrapper = styled.div`
 `
 
 const LastUpdate = (props) => {
+  const { date } = props
   return (
     <LastUpdateWrapper>
-      Darrera actualització: <span>{moment().format('DD/MM/YYYY')}</span>
+      Darrera actualització: <span>{ date ? moment(date).format('DD/MM/YYYY') : '-' }</span>
     </LastUpdateWrapper>
   )
 }

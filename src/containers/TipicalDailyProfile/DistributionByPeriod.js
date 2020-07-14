@@ -4,17 +4,16 @@ import styled from 'styled-components'
 import DistributionPieChart from '../../components/TipicalDailyProfile/DistributionPieChart'
 import DistributionLegend from '../../components/TipicalDailyProfile/DistributionLegend'
 
-import mockedData from '../../services/DistributionByPeriodMock'
 import { getDistributionByPeriod } from '../../services/api'
 
 const COLORS = {
-  perc_punta: '#616161',
-  perc_vall: '#96b633'
+  peakPercentage: '#616161',
+  valleyPercentage: '#96b633'
 }
 
 const VALUES = {
-  perc_punta: 'Punta',
-  perc_vall: 'Vall'
+  peakPercentage: 'Punta',
+  valleyPercentage: 'Vall'
 }
 
 const Title = styled.h3`
@@ -34,18 +33,18 @@ const ChartWrapper = styled.div`
   align-self: center;
 `
 
-export default function DistributionByPeriod () {
+const DistributionByPeriod = (props) => {
+  const { contract } = props
   const [data, setData] = useState({})
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    getDistributionByPeriod('100')
+    getDistributionByPeriod(contract)
       .then(response => {
-        console.log(response)
         setData(response)
         setIsLoading(false)
       })
-  }, [])
+  }, [contract])
 
   return (
     <Wrapper>
@@ -55,13 +54,15 @@ export default function DistributionByPeriod () {
           : <>
             <div>
               <Title>Distribució<br />per períodes</Title>
-              <DistributionLegend colors={COLORS} values={VALUES} data={data?.distribucio_periodes} />
+              <DistributionLegend colors={COLORS} values={VALUES} data={data} />
             </div>
             <ChartWrapper>
-              <DistributionPieChart colors={COLORS} data={data?.distribucio_periodes} />
+              <DistributionPieChart colors={COLORS} data={data} />
             </ChartWrapper>
           </>
       }
     </Wrapper>
   )
 }
+
+export default DistributionByPeriod

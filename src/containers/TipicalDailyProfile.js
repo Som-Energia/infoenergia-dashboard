@@ -8,8 +8,6 @@ import LastUpdate from '../components/LastUpdate'
 import DistributionByPeriod from './TipicalDailyProfile/DistributionByPeriod'
 import DistributionByUserType from './TipicalDailyProfile/DistributionByUserType'
 
-import mockData from '../services/TipicalDailyProfileMock'
-
 import { getDailyProfile } from '../services/api'
 
 const Widget = styled.div`
@@ -49,24 +47,26 @@ const CounterWrapper = styled.div`
   padding-top: 24px;
 `
 
-function TipicalDailyProfile () {
+function TipicalDailyProfile (props) {
+  const { contract } = props
   const [data, setData] = useState({})
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    getDailyProfile('100')
+    getDailyProfile(contract)
       .then(response => {
+        console.log(response)
         setData(response)
         setIsLoading(false)
       })
-  }, [])
+  }, [contract])
 
   return (
     <>
       <div className="row">
         <div className="col-xs-12">
           <CounterWrapper>
-            <Counter title="Mitjana diària" value={data?.mitjana_diaria?.valor} date="" />
+            <Counter title="Mitjana diària" value={data?.dailyAvg?.value} date="" />
           </CounterWrapper>
         </div>
       </div>
@@ -75,7 +75,7 @@ function TipicalDailyProfile () {
           {
             isLoading
               ? 'Loading...'
-              : <TipicalDailyProfileChart data={data?.perfil_tipic_diari} />
+              : <TipicalDailyProfileChart data={data?.dailyTypicalProfile} />
           }
         </div>
       </div>
@@ -92,16 +92,16 @@ function TipicalDailyProfile () {
       <div className="row">
         <div className="col-xs-12 col-md-6">
           <Widget>
-            <DistributionByUserType />
+            <DistributionByUserType contract={contract} />
           </Widget>
         </div>
         <div className="col-xs-12 col-md-6">
           <Widget>
-            <DistributionByPeriod />
+            <DistributionByPeriod contract={contract} />
           </Widget>
         </div>
       </div>
-      <LastUpdate />
+      <LastUpdate date={data?.updated} />
     </>
   )
 }

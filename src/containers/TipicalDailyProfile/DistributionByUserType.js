@@ -6,7 +6,7 @@ import DistributionLegend from '../../components/TipicalDailyProfile/Distributio
 
 import Skeleton from '@material-ui/lab/Skeleton'
 
-import { getDistributionByUserType } from '../../services/api'
+import { getDistributionByTypeOfUse } from '../../services/api'
 
 const COLORS = {
   permanent: '#f2970f',
@@ -36,18 +36,18 @@ const ChartWrapper = styled.div`
   align-self: center;
 `
 
-export default function DistributionByUserType () {
+export default function DistributionByUserType (props) {
+  const { contract } = props
   const [data, setData] = useState({})
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    getDistributionByUserType('100')
+    getDistributionByTypeOfUse(contract)
       .then(response => {
-        console.log(response)
         setData(response)
         setIsLoading(false)
       })
-  }, [])
+  }, [contract])
 
   return (
     <>
@@ -65,10 +65,10 @@ export default function DistributionByUserType () {
           : <Wrapper>
             <div>
               <Title>Distribució<br />per tipus d'ús</Title>
-              <DistributionLegend colors={COLORS} values={VALUES} data={data?.distribucio_tipus_us} />
+              <DistributionLegend colors={COLORS} values={VALUES} data={data} />
             </div>
             <ChartWrapper>
-              <DistributionPieChart data={data?.distribucio_tipus_us} colors={COLORS} />
+              <DistributionPieChart colors={COLORS} data={data} />
             </ChartWrapper>
           </Wrapper>
       }
