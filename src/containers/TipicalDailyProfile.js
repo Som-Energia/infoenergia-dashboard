@@ -55,7 +55,6 @@ function TipicalDailyProfile (props) {
   useEffect(() => {
     getDailyProfile(contract)
       .then(response => {
-        console.log(response)
         setData(response)
         setIsLoading(false)
       })

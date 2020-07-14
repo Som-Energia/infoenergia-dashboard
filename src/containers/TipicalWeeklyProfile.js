@@ -58,31 +58,33 @@ const WeekendMediumWrapper = styled(MediumWrapper)`
 
 const MediumValue = styled.div`
   padding: 0 8px;
-  font-size: 3rem;
+  font-size: 2.2rem;
   font-weight: bold;
+  white-space: nowrap;
 `
 
 const ChartWrapper = styled.div`
   width: 100%;
 `
 
-function TipicalWeeklyProfile () {
+const TipicalWeeklyProfile = (props) => {
+  const { contract } = props
   const [data, setData] = useState({})
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    getWeeklyProfile('100')
+    getWeeklyProfile(contract)
       .then(response => {
         console.log(response)
         setData(response)
         setIsLoading(false)
       })
-  }, [])
+  }, [contract])
 
   return (
     <>
       <CounterWrapper>
-        <Counter title="Mitjana setmanal" value={data?.mitjana_semanal?.valor} date="" />
+        <Counter title="Mitjana setmanal" value={data?.value} date="" />
       </CounterWrapper>
       <DayTypeWrapper>
         <DayTypeWrapperDaily>
@@ -96,16 +98,16 @@ function TipicalWeeklyProfile () {
         {
           isLoading
             ? 'Loading...'
-            : <TipicalWeeklyProfileChart data={data?.mitjana_semanal} />
+            : <TipicalWeeklyProfileChart data={{ avgWeekCCH: data?.avgWeekCCH, formatAvgWeekCCH: data?.formatAvgWeekCCH }} />
         }
       </ChartWrapper>
       <WeeklyMediumWrapper>
         <DailyMediumWrapper>
-          <MediumValue>{data?.mitjana_semanal?.valor_entre_semana} kWh</MediumValue>
+          <MediumValue>{data?.weekValue} kWh</MediumValue>
           <span>Mitjana d'ús d'energia en dia entre setmana</span>
         </DailyMediumWrapper>
         <WeekendMediumWrapper>
-          <MediumValue>{data?.mitjana_semanal?.valor_cap_semana} kWh</MediumValue>
+          <MediumValue>{data?.weekendValue} kWh</MediumValue>
           <span>Mitjana d'ús d'energia en dia cap de setmana</span>
         </WeekendMediumWrapper>
       </WeeklyMediumWrapper>

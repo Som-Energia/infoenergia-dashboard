@@ -16,16 +16,12 @@ function TimeCurvesBarChart ({ data, period }) {
     switch (period) {
       case 'DAILY':
         return moment(tickItem).format('HH') + 'h'
-        break
       case 'WEEKLY':
         return moment(tickItem).format('dddd')
-        break
       case 'MONTHLY':
         return moment(tickItem).format('D')
-        break
       default:
         return moment(tickItem).format('MMMM')
-        break
     }
   }
 
