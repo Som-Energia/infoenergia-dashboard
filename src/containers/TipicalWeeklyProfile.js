@@ -75,7 +75,6 @@ const TipicalWeeklyProfile = (props) => {
   useEffect(() => {
     getWeeklyProfile(contract)
       .then(response => {
-        console.log(response)
         setData(response)
         setIsLoading(false)
       })
@@ -111,7 +110,7 @@ const TipicalWeeklyProfile = (props) => {
           <span>Mitjana d'ús d'energia en dia cap de setmana</span>
         </WeekendMediumWrapper>
       </WeeklyMediumWrapper>
-      <LastUpdate />
+      <LastUpdate date={data?.updated} />
     </>
   )
 }

@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
 import SeasonalProfileBarChart from '../components/SeasonalProfile/SeasonalProfileBarChart'
 import ClimaDependency from '../components/SeasonalProfile/ClimaDependency'
 import LastUpdate from '../components/LastUpdate'
 
-import mockData from '../services/SeasonalProfile'
+import { getSeasonalProfile } from '../services/api'
 
 const Wrapper = styled.div`
   background-color: #f2f2f2;
@@ -31,7 +31,7 @@ const SelectorBox = styled.div`
 `
 
 const SelectorValue = styled.div`
-    font-size: 1.75rem;
+    font-size: 1.25rem;
     font-weight: 700;
     padding: 0 4px;
     white-space: nowrap;
@@ -45,10 +45,10 @@ const TabWrapper = styled.div`
 `
 
 const Title = styled.div`
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: 700;
   span {
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 400;
   }
 `
@@ -94,15 +94,25 @@ const AdviceButton = styled(Button)`
   margin-top: 8px;
 `
 
-function SeasonalProfile () {
-  const [dependencySeason, setDependencySeason] = useState('hivern')
+function SeasonalProfile (props) {
+  const { contract } = props
+  const [data, setData] = useState({})
+  const [isLoading, setIsLoading] = useState(true)
+  const [seasonFilter, setSeasonFilter] = useState('summer')
 
   const handleClick = (event, season) => {
     event.preventDefault()
-    setDependencySeason(season)
+    setSeasonFilter(season)
   }
 
-  const dependencyLevel = mockData?.perfilEstacional?.dependenciaClimatica[dependencySeason]
+  useEffect(() => {
+    getSeasonalProfile(contract)
+      .then(response => {
+        console.log(response)
+        setData(response)
+        setIsLoading(false)
+      })
+  }, [contract])
 
   return (
     <>
@@ -111,35 +121,45 @@ function SeasonalProfile () {
           <SelectorValue>Últims 12 mesos</SelectorValue>
         </SelectorBox>
       </SelectorWrapper>
-      <SeasonalProfileBarChart data={mockData?.perfilEstacional} />
+      {
+        isLoading
+          ? 'Loading...'
+          : <SeasonalProfileBarChart data={data} />
+      }
       <Wrapper>
-        <TabWrapper>
-          <Title>Dependència climàtica<span> en base als últims 36 mesos</span></Title>
-          <ButtonsWrapper>
-            {
-              Object.keys(mockData?.perfilEstacional?.dependenciaClimatica)
-                .map(season => (
-                  <Button
-                    key={season}
-                    className={ dependencySeason === season ? 'active' : null }
-                    onClick={event => handleClick(event, season)}>
-                    {season}
-                  </Button>
-                ))
-            }
-          </ButtonsWrapper>
-        </TabWrapper>
-        <ClimaDependency data={dependencyLevel} />
-        <AdviceWrapper>
-          <AdviceText>
-            Quan augmenta la temperatura exterior el teu ús d'energia augmenta en igual mida.
-          </AdviceText>
-          <AdviceButton>
-            INFORMA'T
-          </AdviceButton>
-        </AdviceWrapper>
+        {
+          isLoading
+            ? 'Loading...'
+            : <>
+              <TabWrapper>
+                <Title>Dependència climàtica<span> en base als últims 36 mesos</span></Title>
+                <ButtonsWrapper>
+                  {
+                    Object.keys(data?.climaticDependence)
+                      .map(season => (
+                        <Button
+                          key={season}
+                          className={ seasonFilter === season ? 'active' : null }
+                          onClick={event => handleClick(event, season)}>
+                          {season}
+                        </Button>
+                      ))
+                  }
+                </ButtonsWrapper>
+              </TabWrapper>
+              <ClimaDependency data={data?.climaticDependence[seasonFilter]} />
+              <AdviceWrapper>
+                <AdviceText>
+                  Quan augmenta la temperatura exterior el teu ús d'energia augmenta en igual mida.
+                </AdviceText>
+                <AdviceButton>
+                  INFORMA'T
+                </AdviceButton>
+              </AdviceWrapper>
+            </>
+        }
       </Wrapper>
-      <LastUpdate />
+      <LastUpdate date={data?.updated} />
     </>
   )
 }

@@ -7,6 +7,10 @@ export const formatkWh = (item) => {
   return formatNumber(Math.round(item)) + ' kWh'
 }
 
+export const formatkWhDecimal = (item) => {
+  return formatNumber(Math.round((item + Number.EPSILON) * 100) / 100) + ' kWh'
+}
+
 export const formatPerc = (item) => {
   return Math.round(item) + '%'
 }

@@ -58,17 +58,18 @@ const legendData = [
   { color: '#616161', label: 'nul. permanent' }
 ]
 
-function LastMonthProfile () {
+function LastMonthProfile (props) {
+  const { contract } = props
   const [data, setData] = useState({})
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    getMonthsProfile('100')
+    getMonthsProfile(contract)
       .then(response => {
         setData(response)
         setIsLoading(false)
       })
-  }, [])
+  }, [contract])
 
   return (
     <>
@@ -87,7 +88,7 @@ function LastMonthProfile () {
           }
         </LegendWrapper>
         <CounterWrapper>
-          <Counter title="Ús diari habitual" value={ data?.levels ? data?.levels[0].kWh : '-'} date="Últims 3 mesos" />
+          <Counter title="Ús diari habitual" value={ data?.levels ? data?.levels[1].kWh : '-'} date="Últims 3 mesos" />
         </CounterWrapper>
 
       </TopWrapper>
@@ -99,13 +100,13 @@ function LastMonthProfile () {
               data?.months &&
               data?.months.map((month, idx) => (
                 <div key={idx}>
-                  <CalendarMonth month={month} consum={data?.consum} levels={data?.levels} />
+                  <CalendarMonth month={month} consum={data?.consumption} levels={data?.levels} />
                 </div>
               ))
             )
         }
       </ChartWrapper>
-      <LastUpdate />
+      <LastUpdate date={data?.updated} />
     </>
 
   )

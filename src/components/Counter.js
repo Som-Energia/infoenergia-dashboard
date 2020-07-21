@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import { formatkWhDecimal } from '../services/utils'
+
 const CounterWrapper = styled.div`
     display: flex;
     justify-content: flex-end;
@@ -45,7 +47,7 @@ function Counter (props) {
     <CounterWrapper>
       <CounterBox color={color}>
         <CounterValue>
-          {value} kWh
+          {formatkWhDecimal(value)}
         </CounterValue>
         <CounterDetail>
           <div className="title">{title}</div>

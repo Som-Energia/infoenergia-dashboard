@@ -14,7 +14,6 @@ const Widget = styled.div`
     min-height: 220px;
     padding: 4px 4px 4px 24px;
     background-color: #f2f2f2;
-    margin-bottom: 16px;
     h3 {
       white-space: nowrap;
     }

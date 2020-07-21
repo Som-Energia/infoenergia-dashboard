@@ -47,13 +47,14 @@ const Level = styled.div`
 `
 
 const levels = [
-  'nulla',
-  'baixa',
-  'moderada',
-  'alta'
+  'null',
+  'low',
+  'moderate',
+  'hight'
 ]
 
 const ClimaDependency = ({ data }) => {
+  console.log(data)
   return (
     <Wrapper>
       <DependecyLevels>

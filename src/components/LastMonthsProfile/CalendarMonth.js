@@ -2,6 +2,8 @@ import React from 'react'
 import styled from 'styled-components'
 import moment from 'moment'
 
+import { formatkWhDecimal } from '../../services/utils'
+
 const MonthName = styled.div`
   display: flex;
   align-items: center;
@@ -62,7 +64,7 @@ const ConsumDay = (props) => {
     className = 'hight'
   }
 
-  return <Day className={className}>{day}</Day>
+  return <Day title={formatkWhDecimal(consumDay)} className={className}>{day}</Day>
 }
 
 const CalendarMonth = (props) => {

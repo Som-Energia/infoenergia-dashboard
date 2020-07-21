@@ -53,3 +53,13 @@ export const getMonthsProfile = async (contract) => {
       return response?.data
     })
 }
+
+export const getSeasonalProfile = async (contract) => {
+  return axios({
+    method: 'GET',
+    url: `${API_BASE_URL}/data/seasonalprofile/${contract}`
+  })
+    .then(response => {
+      return response?.data
+    })
+}

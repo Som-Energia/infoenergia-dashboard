@@ -5,7 +5,6 @@ import { formatkWh, formatPerc } from '../../services/utils'
 class CustomizedDaysValuesTick extends PureComponent {
   render () {
     const { x, y, data } = this.props
-    console.log(data)
     const avgDataDay = (day) => {
       const avgData = data
       for (const item in avgData) {
