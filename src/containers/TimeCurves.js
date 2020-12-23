@@ -121,7 +121,7 @@ function TimeCurves ({ data, chartType, period }) {
   }, [currentDate, period])
 
   return (
-    <React.Fragment>
+    <>
       <ControlsWrapper>
         <DateControlsWrapper>
           <IconButton
@@ -207,7 +207,7 @@ function TimeCurves ({ data, chartType, period }) {
           </ChartWrapper>
         </div>
       </div>
-    </React.Fragment>
+    </>
   )
 }
 

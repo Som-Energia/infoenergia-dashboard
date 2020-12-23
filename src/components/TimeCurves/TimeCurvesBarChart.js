@@ -1,5 +1,4 @@
 import React from 'react'
-import moment from 'moment'
 
 import {
   Bar,
@@ -11,55 +10,24 @@ import {
   YAxis
 } from 'recharts'
 
+import {
+  formatXAxis,
+  formatTooltip,
+  formatTooltipLabel,
+  groupDataByPeriod
+} from '../../services/utils'
+
 function TimeCurvesBarChart ({ data, period }) {
-  const formatXAxis = (tickItem) => {
-    switch (period) {
-      case 'DAILY':
-        return moment(tickItem).format('HH') + 'h'
-      case 'WEEKLY':
-        return moment(tickItem).format('dddd')
-      case 'MONTHLY':
-        return moment(tickItem).format('D')
-      default:
-        return moment(tickItem).format('MMMM')
-    }
-  }
-
-  const formatTooltipLabel = (value) => {
-    return moment(value).format('DD/MM/YYYY HH') + 'h'
-  }
-
-  const formatTooltip = (value, name, props) => (['kWh', value / 1000])
-
-  const groupWeeklyData = (data) => {
-    const weekly = []
-    for (let day = 1; day <= 7; day++) {
-      const days = data.filter(item => moment(item?.date).isoWeekday() === day)
-      const totalValue = days.reduce((prev, current) => prev + current?.value, 0)
-      weekly.push({ date: days[0]?.date, value: totalValue })
-    }
-    return weekly
-  }
-
-  const groupDataByPeriod = (data, period) => {
-    console.log(period)
-    if (period === 'WEEKLY') {
-      return groupWeeklyData(data)
-    } else {
-      return data
-    }
-  }
-
-  const groupedData = groupDataByPeriod(data, period)
+  const groupedData = groupDataByPeriod(data, period, 'barChart')
 
   return (
     <div style={{ height: '450px' }}>
       <ResponsiveContainer>
         <BarChart width={730} height={250} data={groupedData}>
           <CartesianGrid stroke="#616161" strokeWidth={0.5} vertical={false} />
-          <XAxis dataKey="date" tickFormatter={formatXAxis} tick={{ fontSize: 12, transform: 'translate(0, 8)' }} />
+          <XAxis dataKey="date" tickFormatter={ (tickItem) => formatXAxis(period, tickItem)} tick={{ fontSize: 12, transform: 'translate(0, 8)' }} />
           <YAxis axisLine={false} tickCount={10} tick={{ fontSize: 12 }} tickFormatter={(tickItem) => `${(tickItem / 1000).toFixed(2)} kWh`} tickLine={false} />
-          <Tooltip formatter={formatTooltip} labelFormatter={formatTooltipLabel} />
+          <Tooltip formatter={formatTooltip} labelFormatter={(value) => formatTooltipLabel(period, value)} />
           <Bar dataKey="value" barSize={24} fill="#96b633" />
         </BarChart>
       </ResponsiveContainer>
