@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
+import Skeleton from '@material-ui/lab/Skeleton'
+
 import SeasonalProfileBarChart from '../components/SeasonalProfile/SeasonalProfileBarChart'
 import ClimaDependency from '../components/SeasonalProfile/ClimaDependency'
 import LastUpdate from '../components/LastUpdate'
@@ -123,13 +125,13 @@ function SeasonalProfile (props) {
       </SelectorWrapper>
       {
         isLoading
-          ? 'Loading...'
+          ? <Skeleton height={300} />
           : <SeasonalProfileBarChart data={data} />
       }
       <Wrapper>
         {
           isLoading
-            ? 'Loading...'
+            ? <Skeleton height={230} />
             : <>
               <TabWrapper>
                 <Title>Dependència climàtica<span> en base als últims 36 mesos</span></Title>

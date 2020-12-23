@@ -53,15 +53,9 @@ export default function DistributionByUserType (props) {
     <>
       {
         isLoading
-          ? <Skeleton>
-            <Wrapper>
-              <div>
-                <Title/>
-              </div>
-              <ChartWrapper>
-              </ChartWrapper>
-            </Wrapper>
-          </Skeleton>
+          ? <Wrapper>
+            <Skeleton height={210} width="100%" />
+          </Wrapper>
           : <Wrapper>
             <div>
               <Title>Distribució<br />per tipus d'ús</Title>

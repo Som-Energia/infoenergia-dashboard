@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
+import Skeleton from '@material-ui/lab/Skeleton'
+
 import Counter from '../components/Counter'
 import LastUpdate from '../components/LastUpdate'
 import CalendarMonth from '../components/LastMonthsProfile/CalendarMonth'
@@ -12,6 +14,7 @@ const ChartWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   column-gap: 32px;
+  min-height: 283px;
 `
 
 const TopWrapper = styled.div`
@@ -20,7 +23,7 @@ const TopWrapper = styled.div`
   justify-content: space-between;
 `
 const CounterWrapper = styled.div`
-  padding-top: 24px;
+  padding-top: 4px;
 `
 
 const LegendWrapper = styled.div`
@@ -88,21 +91,29 @@ function LastMonthProfile (props) {
           }
         </LegendWrapper>
         <CounterWrapper>
-          <Counter title="Ús diari habitual" value={ data?.levels ? data?.levels[1].kWh : '-'} date="Últims 3 mesos" />
+          <Counter
+            title="Ús diari habitual"
+            value={ data?.levels ? data?.levels[1]?.kWh : '-'}
+            date="Últims 3 mesos"
+          />
         </CounterWrapper>
 
       </TopWrapper>
       <ChartWrapper>
         {
           isLoading
-            ? 'Loading ...'
+            ? <>
+              <Skeleton height="100%" />
+              <Skeleton height="100%" />
+              <Skeleton height="100%" />
+            </>
             : (
               data?.months &&
               data?.months.map((month, idx) => (
                 <div key={idx}>
                   <CalendarMonth month={month} consum={data?.consumption} levels={data?.levels} />
                 </div>
-              ))
+              )).reverse()
             )
         }
       </ChartWrapper>

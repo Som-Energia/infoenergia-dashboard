@@ -53,15 +53,17 @@ const findConsumDay = (consums, day) => {
 
 const ConsumDay = (props) => {
   const { day, consum, levels } = props
-  const consumDay = consum[0]?.kWh
+  const consumDay = consum[0]?.kWh || 0
   let className = ''
 
   if (consumDay < levels[0]?.kWh) {
     className = 'low'
   } else if (consumDay < levels[1]?.kWh) {
     className = 'normal'
-  } else {
+  } else if (consumDay > levels[1]?.kWh) {
     className = 'hight'
+  } else {
+    className = ''
   }
 
   return <Day title={formatkWhDecimal(consumDay)} className={className}>{day}</Day>

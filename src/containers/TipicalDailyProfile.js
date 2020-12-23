@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
+import Skeleton from '@material-ui/lab/Skeleton'
+
 import TipicalDailyProfileChart from '../components/TipicalDailyProfile/TipicalDailyProfileChart'
 import Counter from '../components/Counter'
 import LastUpdate from '../components/LastUpdate'
@@ -43,7 +45,7 @@ const Legend = styled.div`
   }
 `
 const CounterWrapper = styled.div`
-  padding-top: 24px;
+  padding-top: 4px;
 `
 
 function TipicalDailyProfile (props) {
@@ -58,13 +60,12 @@ function TipicalDailyProfile (props) {
         setIsLoading(false)
       })
   }, [contract])
-
   return (
     <>
       <div className="row">
         <div className="col-xs-12">
           <CounterWrapper>
-            <Counter title="Mitjana diària" value={data?.dailyAvg?.value} date="" />
+            <Counter title="Mitjana diària" value={data?.dailyAvg?.value || '-'} date="" />
           </CounterWrapper>
         </div>
       </div>
@@ -72,7 +73,7 @@ function TipicalDailyProfile (props) {
         <div className="col-xs-12">
           {
             isLoading
-              ? 'Loading...'
+              ? <Skeleton height={300} />
               : <TipicalDailyProfileChart data={data?.dailyTypicalProfile} />
           }
         </div>

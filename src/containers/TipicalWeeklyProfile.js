@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
+import Skeleton from '@material-ui/lab/Skeleton'
+
 import TipicalWeeklyProfileChart from '../components/TipicalWeeklyProfile/TipicalWeeklyProfileChart'
 import Counter from '../components/Counter'
 import LastUpdate from '../components/LastUpdate'
@@ -8,7 +10,7 @@ import LastUpdate from '../components/LastUpdate'
 import { getWeeklyProfile } from '../services/api'
 
 const CounterWrapper = styled.div`
-  padding-top: 24px;
+  padding-top: 4px;
 `
 
 const DayTypeWrapper = styled.div`
@@ -83,7 +85,7 @@ const TipicalWeeklyProfile = (props) => {
   return (
     <>
       <CounterWrapper>
-        <Counter title="Mitjana setmanal" value={data?.value} date="" />
+        <Counter title="Mitjana setmanal" value={data?.value || '-'} date="" />
       </CounterWrapper>
       <DayTypeWrapper>
         <DayTypeWrapperDaily>
@@ -96,7 +98,7 @@ const TipicalWeeklyProfile = (props) => {
       <ChartWrapper>
         {
           isLoading
-            ? 'Loading...'
+            ? <Skeleton height={300} width="100%" />
             : <TipicalWeeklyProfileChart data={{ avgWeekCCH: data?.avgWeekCCH, formatAvgWeekCCH: data?.formatAvgWeekCCH }} />
         }
       </ChartWrapper>

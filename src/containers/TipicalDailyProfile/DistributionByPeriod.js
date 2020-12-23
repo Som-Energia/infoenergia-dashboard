@@ -1,19 +1,23 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
+import Skeleton from '@material-ui/lab/Skeleton'
+
 import DistributionPieChart from '../../components/TipicalDailyProfile/DistributionPieChart'
 import DistributionLegend from '../../components/TipicalDailyProfile/DistributionLegend'
 
 import { getDistributionByPeriod } from '../../services/api'
 
 const COLORS = {
-  peakPercentage: '#616161',
-  valleyPercentage: '#96b633'
+  peakPercentage: '#f2970f',
+  valleyPercentage: '#96b633',
+  superValleyPercentage: '#616161'
 }
 
 const VALUES = {
   peakPercentage: 'Punta',
-  valleyPercentage: 'Vall'
+  valleyPercentage: 'Vall',
+  superValleyPercentage: 'Supervall'
 }
 
 const Title = styled.h3`
@@ -41,6 +45,7 @@ const DistributionByPeriod = (props) => {
   useEffect(() => {
     getDistributionByPeriod(contract)
       .then(response => {
+        console.log(response)
         setData(response)
         setIsLoading(false)
       })
@@ -50,7 +55,7 @@ const DistributionByPeriod = (props) => {
     <Wrapper>
       {
         isLoading
-          ? 'Loading ...'
+          ? <Skeleton height={210} width="100%" />
           : <>
             <div>
               <Title>Distribució<br />per períodes</Title>

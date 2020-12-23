@@ -52,7 +52,7 @@ export default function Tabs ({ tabs = defaultTabs, extra, initialTab = 0 }) {
   const activeTabContent = () => tabs[activeTab]?.content
 
   return (
-    <React.Fragment>
+    <>
       <TabBarWrapper>
         <TabList role="tablist">
           {tabs.map(({ title }, index) => (
@@ -70,6 +70,6 @@ export default function Tabs ({ tabs = defaultTabs, extra, initialTab = 0 }) {
       <TabContentWrapper>
         {activeTabContent()}
       </TabContentWrapper>
-    </React.Fragment>
+    </>
   )
 }

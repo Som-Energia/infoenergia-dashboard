@@ -1,11 +1,20 @@
 import React from 'react'
 
 import { BarChart, ResponsiveContainer, CartesianGrid, XAxis, YAxis, Tooltip, Bar, Cell } from 'recharts'
+import { formatDecimal } from '../../services/utils'
 
 const zeroPad = (num, places) => String(num).padStart(places, '0')
 
 const formatXAxis = (tickItem) => {
   return zeroPad(tickItem, 2) + 'h'
+}
+
+const formatTooltip = (value, name, props) => {
+  return [name, formatDecimal(value, 1000)]
+}
+
+const formatLabel = (value) => {
+  return formatXAxis(value)
 }
 
 const TipicalDailyProfileChart = ({ data }) => {
@@ -16,7 +25,7 @@ const TipicalDailyProfileChart = ({ data }) => {
           <CartesianGrid stroke="#a1a1a1" vertical={false} />
           <XAxis dataKey="hour" tickFormatter={formatXAxis} tick={{ transform: 'translate(0, 8)' }} />
           <YAxis axisLine={false} tickCount={6} tickLine={false} tickFormatter={(tickItem) => `${tickItem} kWh`} tick={{ transform: 'translate(-2, 0)' }} />
-          <Tooltip />
+          <Tooltip formatter={formatTooltip} labelFormatter={formatLabel} separator=" " />
           {
             data !== undefined
               ? <Bar dataKey="kWh">
