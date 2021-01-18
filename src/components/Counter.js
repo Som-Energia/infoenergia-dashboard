@@ -41,13 +41,13 @@ const CounterDetail = styled.div`
 
 function Counter (props) {
   const { value, title, date = '', color = 'primary' } = props
-  const dateLabel = (date === '') ? 'Últims 12 mesos' : date
+  const dateLabel = (date === '') ? '' : date
 
   return (
     <CounterWrapper>
       <CounterBox color={color}>
         <CounterValue>
-          {formatkWhDecimal(value)}
+          {value !== '-' ? formatkWhDecimal(value) : '- kWh'}
         </CounterValue>
         <CounterDetail>
           <div className="title">{title}</div>

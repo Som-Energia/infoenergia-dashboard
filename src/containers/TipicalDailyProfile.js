@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 
 import Skeleton from '@material-ui/lab/Skeleton'
 
@@ -50,6 +51,8 @@ const CounterWrapper = styled.div`
 
 function TipicalDailyProfile (props) {
   const { contract } = props
+  const { t } = useTranslation()
+
   const [data, setData] = useState({})
   const [isLoading, setIsLoading] = useState(true)
 
@@ -65,7 +68,10 @@ function TipicalDailyProfile (props) {
       <div className="row">
         <div className="col-xs-12">
           <CounterWrapper>
-            <Counter title="Mitjana diària" value={data?.dailyAvg?.value || '-'} date="" />
+            <Counter
+              title={t('DAILY_AVERAGE')}
+              value={data?.dailyAvg?.value || '-'}
+              date={t('LAST_12_MONTHS')} />
           </CounterWrapper>
         </div>
       </div>

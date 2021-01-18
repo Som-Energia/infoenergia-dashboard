@@ -8,6 +8,7 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 import EnergyUse from './pages/EnergyUse'
 import TimeCurves from './pages/TimeCurves'
 
+import './i18n/i18n'
 import './App.css'
 
 const theme = createMuiTheme({
@@ -30,15 +31,21 @@ const theme = createMuiTheme({
   }
 })
 
-function App () {
+function App (props) {
   return (
     <ThemeProvider theme={theme}>
       <MuiPickersUtilsProvider utils={MomentUtils}>
         <Router>
           <Switch>
-            <Route exact path="/" component={EnergyUse} />
-            <Route path="/us-energia" component={EnergyUse} />
-            <Route path="/corbes-horaries" component={TimeCurves} />
+            <Route exact path="/">
+              <EnergyUse {...props} />
+            </Route>
+            <Route path="/us-energia">
+              <EnergyUse {...props} />
+            </Route>
+            <Route path="/corbes-horaries">
+              <TimeCurves {...props} />
+            </Route>
           </Switch>
         </Router>
       </MuiPickersUtilsProvider>

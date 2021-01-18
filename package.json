@@ -3,22 +3,24 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@date-io/moment": "1.x",
+    "@date-io/moment": "2.10.6",
     "@material-ui/core": "^4.9.11",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.56",
     "@material-ui/pickers": "^3.2.10",
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2",
-    "axios": "^0.19.2",
+    "@testing-library/jest-dom": "^5.11.9",
+    "@testing-library/react": "^11.2.3",
+    "@testing-library/user-event": "^12.6.0",
+    "axios": "^0.21.1",
+    "i18next": "^19.8.4",
     "moment": "^2.24.0",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-i18next": "^11.8.5",
     "react-router": "^5.1.2",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.4.1",
-    "recharts": "^1.8.5",
+    "react-scripts": "4.0.1",
+    "recharts": "^2.0.3",
     "styled-components": "^5.1.0"
   },
   "scripts": {
@@ -29,8 +31,7 @@
   },
   "eslintConfig": {
     "extends": [
-      "react-app",
-      "standard"
+      "react-app"
     ]
   },
   "browserslist": {
@@ -46,6 +47,10 @@
     ]
   },
   "devDependencies": {
-    "standard": "^14.3.3"
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "standard": "^16.0.3"
   }
 }
