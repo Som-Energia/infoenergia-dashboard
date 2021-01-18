@@ -7,12 +7,22 @@ import 'moment/locale/ca'
 
 moment.locale('ca')
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-)
+const root = document.getElementById('root')
+const props = {}
+
+if (root) {
+  const attrs = Object.keys(root.dataset)
+  attrs.forEach(
+    (name, index) => { props[name] = root.dataset[name] }
+  )
+
+  ReactDOM.render(
+    <React.StrictMode>
+      <App {...props} />
+    </React.StrictMode>,
+    document.getElementById('root')
+  )
+}
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
