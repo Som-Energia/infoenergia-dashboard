@@ -2,5 +2,14 @@
   "TIPICAL_DAILY_PROFILE": "Perfil típico diario",
   "TIPICAL_WEEKLY_PROFILE": "Perfil típico semanal",
   "LAST_3_MONTH_PROFILE": "Perfil últimos 3 meses",
-  "SEASONAL_PROFILE": "Perfil estacional"
+  "SEASONAL_PROFILE": "Perfil estacional",
+  "DAILY_AVERAGE": "Media diaria",
+  "LAST_12_MONTHS": "Últimos 12 meses",
+  "NO_DATA": "No hay datos suficientes",
+  "WINTER": "Invierno",
+  "WINTER_VALLEY": "Valle 22h a 12h",
+  "WINTER_PEACK": "Punta 12h a 22h",
+  "SUMMER": "Verano",
+  "SUMMER_VALLEY": "Valle 23h a 13h",
+  "SUMMER_PEACK": "Punta 13h a 23h"
 }

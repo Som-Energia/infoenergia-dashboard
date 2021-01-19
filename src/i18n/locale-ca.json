@@ -4,5 +4,12 @@
   "LAST_3_MONTH_PROFILE": "Perfil últims 3 mesos",
   "SEASONAL_PROFILE": "Perfil estacional",
   "DAILY_AVERAGE": "Mitjana diària",
-  "LAST_12_MONTHS": "Últims 12 mesos"
+  "LAST_12_MONTHS": "Últims 12 mesos",
+  "NO_DATA": "No hi ha dades suficients",
+  "WINTER": "Hivern",
+  "WINTER_VALLEY": "Vall 22h a 12h",
+  "WINTER_PEACK": "Punta 12h a 22h",
+  "SUMMER": "Estiu",
+  "SUMMER_VALLEY": "Vall 23h a 13h",
+  "SUMMER_PEACK": "Punta 13h a 23h"
 }

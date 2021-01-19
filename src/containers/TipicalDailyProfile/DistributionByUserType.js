@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 
 import DistributionPieChart from '../../components/TipicalDailyProfile/DistributionPieChart'
 import DistributionLegend from '../../components/TipicalDailyProfile/DistributionLegend'
@@ -36,15 +37,28 @@ const ChartWrapper = styled.div`
   align-self: center;
 `
 
+const NoDataMessage = styled.h3`
+  font-size: 1.2rem;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+
 export default function DistributionByUserType (props) {
   const { contract } = props
-  const [data, setData] = useState({})
+  const { t } = useTranslation()
+  const [data, setData] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     getDistributionByTypeOfUse(contract)
       .then(response => {
         setData(response)
+        setIsLoading(false)
+      }).catch(error => {
+        console.log(error)
         setIsLoading(false)
       })
   }, [contract])
@@ -57,13 +71,19 @@ export default function DistributionByUserType (props) {
             <Skeleton height={210} width="100%" />
           </Wrapper>
           : <Wrapper>
-            <div>
-              <Title>Distribució<br />per tipus d'ús</Title>
-              <DistributionLegend colors={COLORS} values={VALUES} data={data} />
-            </div>
-            <ChartWrapper>
-              <DistributionPieChart colors={COLORS} data={data} />
-            </ChartWrapper>
+            {
+              !data
+                ? <NoDataMessage>{t('NO_DATA')}</NoDataMessage>
+                : <>
+                    <div>
+                      <Title>Distribució<br />per tipus d'ús</Title>
+                      <DistributionLegend colors={COLORS} values={VALUES} data={data} />
+                    </div>
+                    <ChartWrapper>
+                      <DistributionPieChart colors={COLORS} data={data} />
+                    </ChartWrapper>
+                </>
+            }
           </Wrapper>
       }
     </>

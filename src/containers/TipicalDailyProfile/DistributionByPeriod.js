@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 
 import Skeleton from '@material-ui/lab/Skeleton'
 
@@ -37,9 +38,20 @@ const ChartWrapper = styled.div`
   align-self: center;
 `
 
+const NoDataMessage = styled.h3`
+  flex: 1;
+  font-size: 1.2rem;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+
 const DistributionByPeriod = (props) => {
   const { contract } = props
-  const [data, setData] = useState({})
+  const { t } = useTranslation()
+  const [data, setData] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
@@ -47,6 +59,9 @@ const DistributionByPeriod = (props) => {
       .then(response => {
         console.log(response)
         setData(response)
+        setIsLoading(false)
+      }).catch(error => {
+        console.log(error)
         setIsLoading(false)
       })
   }, [contract])
@@ -56,15 +71,18 @@ const DistributionByPeriod = (props) => {
       {
         isLoading
           ? <Skeleton height={210} width="100%" />
-          : <>
-            <div>
-              <Title>Distribució<br />per períodes</Title>
-              <DistributionLegend colors={COLORS} values={VALUES} data={data} />
-            </div>
-            <ChartWrapper>
-              <DistributionPieChart colors={COLORS} data={data} />
-            </ChartWrapper>
-          </>
+          :
+            !data
+              ? <NoDataMessage>{t('NO_DATA')}</NoDataMessage>
+              : <>
+                  <div>
+                    <Title>Distribució<br />per períodes</Title>
+                    <DistributionLegend colors={COLORS} values={VALUES} data={data} />
+                  </div>
+                  <ChartWrapper>
+                    <DistributionPieChart colors={COLORS} data={data} />
+                  </ChartWrapper>
+              </>
       }
     </Wrapper>
   )

@@ -26,20 +26,20 @@ const Legend = styled.div`
   align-items: center;
   background-color: #f2f2f2;
   margin: 16px 0;
-  padding: 12px;
+  padding: 16px;
   &.text-right {
     justify-content: flex-end;
   }
   .vall {
-    width: 20px;
-    height: 4px;
+    width: 12px;
+    height: 12px;
     display: inline-block;
     margin: 0 4px;
     background-color: #96b633;
   }
   .punta {
-    width: 20px;
-    height: 4px;
+    width: 12px;
+    height: 12px;
     display: inline-block;
     margin: 0 8px;
     background-color: #f2970f;
@@ -49,20 +49,31 @@ const CounterWrapper = styled.div`
   padding-top: 4px;
 `
 
+const NoDataMessage = styled.h3`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+`
+
 function TipicalDailyProfile (props) {
-  const { contract } = props
+  const { contract, token } = props
   const { t } = useTranslation()
 
   const [data, setData] = useState({})
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    getDailyProfile(contract)
+    getDailyProfile(contract, token)
       .then(response => {
         setData(response)
         setIsLoading(false)
       })
-  }, [contract])
+      .catch(error => {
+        console.log(error)
+        setIsLoading(false)
+      })
+  }, [contract, token])
   return (
     <>
       <div className="row">
@@ -80,17 +91,19 @@ function TipicalDailyProfile (props) {
           {
             isLoading
               ? <Skeleton height={300} />
-              : <TipicalDailyProfileChart data={data?.dailyTypicalProfile} />
+              : data?.dailyTypicalProfile
+                ? <TipicalDailyProfileChart data={data?.dailyTypicalProfile} />
+                : <NoDataMessage>{t('NO_DATA')}</NoDataMessage>
           }
         </div>
       </div>
       <div className="row">
         <div className="col-xs-12">
           <Legend className="col-xs-12 col-md-6 text-right">
-            <b>Hivern:</b> <span className="vall"></span> Vall 22h a 12h <span className="punta"></span> Punta 12h a 22h
+            <b>{t('WINTER')}:</b> <span className="vall"></span> {t('WINTER_VALLEY')} <span className="punta"></span> {t('WINTER_PEACK')}
           </Legend>
           <Legend className="col-xs-12 col-md-6">
-            <b>Estiu:</b> <span className="vall"></span> Vall 23h a 13h <span className="punta"></span> Punta 13h a 23h
+            <b>{t('SUMMER')}:</b> <span className="vall"></span> {t('SUMMER_VALLEY')} <span className="punta"></span> {t('SUMMER_PEACK')}
           </Legend>
         </div>
       </div>
