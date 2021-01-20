@@ -13,72 +13,66 @@ const headers = {
 export const getDailyProfile = async (contract) => {
   return axios({
     method: 'GET',
-    // url: `${API_BASE_URL}/data/dailyprofile/${contract}`
-    url: `${API_BASE_URL}/InfoenergiaReport/${contract}`,
+    url: `${API_BASE_URL}/InfoenergiaReport/data/dailyprofile/${contract}`,
     headers: headers
   })
     .then(response => {
-      return response?.data[0][1]?.results.dailyTypicalProfileLast12Months
+      return response?.data
     })
 }
 
 export const getDistributionByPeriod = async (contract) => {
   return axios({
     method: 'GET',
-    // url: `${API_BASE_URL}/data/distributionbyperiod/${contract}`
-    url: `${API_BASE_URL}/InfoenergiaReport/${contract}`,
+    url: `${API_BASE_URL}/InfoenergiaReport/data/distributionbyperiod/${contract}`,
     headers: headers
   })
     .then(response => {
-      return response?.data[0][1]?.results.distributionByPeriods
+      return response?.data
     })
 }
 
 export const getDistributionByTypeOfUse = async (contract) => {
   return axios({
     method: 'GET',
-    // url: `${API_BASE_URL}/data/distributionbytypeofuse/${contract}`,
-    url: `${API_BASE_URL}/InfoenergiaReport/${contract}`,
+    url: `${API_BASE_URL}/InfoenergiaReport/data/distributionbytypeofuse/${contract}`,
     headers: headers
   })
     .then(response => {
-      return response?.data[0][1]?.results.distributionByTypeOfUse
+      return response?.data
     })
 }
 
 export const getWeeklyProfile = async (contract) => {
   return axios({
     method: 'GET',
-    // url: `${API_BASE_URL}/data/weeklyprofile/${contract}`,
-    url: `${API_BASE_URL}/InfoenergiaReport/${contract}`,
+    url: `${API_BASE_URL}/InfoenergiaReport/data/weeklyprofile/${contract}`,
     headers: headers
   })
     .then(response => {
-      return response?.data[0][1]?.results.weeklyAvgConsumeLast12Months
+      return response?.data
     })
 }
 
 export const getMonthsProfile = async (contract) => {
   return axios({
     method: 'GET',
-    // url: `${API_BASE_URL}/data/monthsprofile/${contract}`,
-    url: `${API_BASE_URL}/InfoenergiaReport/${contract}`,
+    url: `${API_BASE_URL}/InfoenergiaReport/data/monthsprofile/${contract}`,
     headers: headers
   })
     .then(response => {
-      return response?.data[0][1]?.results.last3MonthsProfile
+      return response?.data
     })
 }
 
 export const getSeasonalProfile = async (contract) => {
   return axios({
     method: 'GET',
-    // url: `${API_BASE_URL}/data/seasonalprofile/${contract}`,
-    url: `${API_BASE_URL}/InfoenergiaReport/${contract}`,
+    url: `${API_BASE_URL}/InfoenergiaReport/data/seasonalprofile/${contract}`,
     headers: headers
   })
     .then(response => {
-      return response?.data[0][1]?.results.seasonalProfile
+      return response?.data
     })
 }
 
