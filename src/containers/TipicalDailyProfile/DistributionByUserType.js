@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
 
 import DistributionPieChart from '../../components/TipicalDailyProfile/DistributionPieChart'
@@ -9,48 +8,25 @@ import Skeleton from '@material-ui/lab/Skeleton'
 
 import { getDistributionByTypeOfUse } from '../../services/api'
 
-const COLORS = {
-  permanent: '#f2970f',
-  peak: '#616161',
-  regular: '#96b633'
-}
-
-const VALUES = {
-  permanent: 'Permanent',
-  peak: 'PIC',
-  regular: 'Regular'
-}
-
-const Title = styled.h3`
-  font-size: 1.8rem;
-  font-weight: 500;
-`
-const Wrapper = styled.div`
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-beetween;
-  flex-wrap: nowrap;
-`
-
-const ChartWrapper = styled.div`
-  width: 100%;
-  align-self: center;
-`
-
-const NoDataMessage = styled.h3`
-  font-size: 1.2rem;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`
+import { Container, Title, Wrapper, ChartWrapper, NoDataMessage } from './DistributionCharts'
 
 export default function DistributionByUserType (props) {
   const { contract } = props
   const { t } = useTranslation()
   const [data, setData] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
+
+  const COLORS = {
+    permanent: '#f2970f',
+    peak: '#616161',
+    regular: '#96b633'
+  }
+
+  const VALUES = {
+    permanent: t('PERMANENT'),
+    peak: t('PIC'),
+    regular: t('REGULAR')
+  }
 
   useEffect(() => {
     getDistributionByTypeOfUse(contract)
@@ -64,28 +40,24 @@ export default function DistributionByUserType (props) {
   }, [contract])
 
   return (
-    <>
+    <Wrapper>
       {
         isLoading
-          ? <Wrapper>
-            <Skeleton height={210} width="100%" />
-          </Wrapper>
-          : <Wrapper>
-            {
-              !data
-                ? <NoDataMessage>{t('NO_DATA')}</NoDataMessage>
-                : <>
-                    <div>
-                      <Title>Distribució<br />per tipus d'ús</Title>
-                      <DistributionLegend colors={COLORS} values={VALUES} data={data} />
-                    </div>
-                    <ChartWrapper>
-                      <DistributionPieChart colors={COLORS} data={data} />
-                    </ChartWrapper>
-                </>
-            }
-          </Wrapper>
+          ? <Skeleton height={210} width="100%" />
+          : !data
+            ? <NoDataMessage>{t('NO_DATA')}</NoDataMessage>
+            : <>
+                <Title>{t('DISTRIB_BY_USE_TYPE')}</Title>
+                <Container>
+                  <div className="max-w-50 ml-5">
+                    <DistributionLegend colors={COLORS} values={VALUES} data={data} />
+                  </div>
+                  <ChartWrapper>
+                    <DistributionPieChart colors={COLORS} data={data} />
+                  </ChartWrapper>
+              </Container>
+            </>
       }
-    </>
+    </Wrapper>
   )
 }

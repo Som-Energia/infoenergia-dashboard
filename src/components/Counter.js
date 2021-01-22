@@ -10,7 +10,7 @@ const CounterWrapper = styled.div`
 
 const CounterBox = styled.div`
     padding: 0 8px;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
     background-color: ${props =>
       props.color === 'primary' ? '#96b633' : '#f2970f'
     };

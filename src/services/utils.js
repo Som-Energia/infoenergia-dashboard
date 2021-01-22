@@ -21,7 +21,8 @@ export const formatPerc = (item) => {
 }
 
 export const formatEuros = (item) => {
-  return (item + '€').replace('.', ',')
+  const value = item || '-'
+  return (value + ' €').replace('.', ',')
 }
 
 export const formatXAxis = (period, item) => {

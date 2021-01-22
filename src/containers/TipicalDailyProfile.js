@@ -15,20 +15,32 @@ import { getDailyProfile } from '../services/api'
 
 const Widget = styled.div`
     min-height: 220px;
-    padding: 4px 4px 4px 24px;
     background-color: #f2f2f2;
     h3 {
       white-space: nowrap;
     }
+    display: flex;
+    flex-direction: column;
 `
 const Legend = styled.div`
   display: flex;
   align-items: center;
   background-color: #f2f2f2;
-  margin: 16px 0;
+  margin-bottom: 16px;
   padding: 16px;
+  justify-content: flex-start;
+  &:first-child {
+    padding-bottom: 0;
+    margin-bottom: 0;
+    @media (min-width: 768px) {
+      padding-bottom: 16px;
+      margin-bottom: 16px;
+    }
+  }
   &.text-right {
-    justify-content: flex-end;
+    @media (min-width: 768px) {
+      justify-content: flex-end;
+    }
   }
   .vall {
     width: 12px;
@@ -87,33 +99,37 @@ function TipicalDailyProfile (props) {
         </div>
       </div>
       <div className="row">
-        <div className="col-xs-12">
+        <div className="col-xs-12 mb-4">
           {
             isLoading
               ? <Skeleton height={300} />
               : data?.dailyTypicalProfile
                 ? <TipicalDailyProfileChart data={data?.dailyTypicalProfile} />
-                : <NoDataMessage>{t('NO_DATA')}</NoDataMessage>
+                : data?.errors ? <NoDataMessage>{t(data.errors)}</NoDataMessage> : <NoDataMessage>{t('NO_DATA')}</NoDataMessage>
           }
         </div>
       </div>
       <div className="row">
         <div className="col-xs-12">
           <Legend className="col-xs-12 col-md-6 text-right">
-            <b>{t('WINTER')}:</b> <span className="vall"></span> {t('WINTER_VALLEY')} <span className="punta"></span> {t('WINTER_PEACK')}
+            <b>{t('WINTER')}:</b>
+            <span className="vall"></span> {t('WINTER_VALLEY')}
+            <span className="punta"></span> {t('WINTER_PEACK')}
           </Legend>
           <Legend className="col-xs-12 col-md-6">
-            <b>{t('SUMMER')}:</b> <span className="vall"></span> {t('SUMMER_VALLEY')} <span className="punta"></span> {t('SUMMER_PEACK')}
+            <b>{t('SUMMER')}:</b>
+            <span className="vall"></span> {t('SUMMER_VALLEY')}
+            <span className="punta"></span> {t('SUMMER_PEACK')}
           </Legend>
         </div>
       </div>
       <div className="row">
-        <div className="col-xs-12 col-md-6">
+        <div className="col-xs-12 col-md-6 mb-4">
           <Widget>
             <DistributionByUserType contract={contract} />
           </Widget>
         </div>
-        <div className="col-xs-12 col-md-6">
+        <div className="col-xs-12 col-md-6 mb-4">
           <Widget>
             <DistributionByPeriod contract={contract} />
           </Widget>

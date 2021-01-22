@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import {
   Bar,
@@ -26,13 +27,14 @@ class CustomLabel extends PureComponent {
 }
 
 function SeasonalProfileBarChart ({ data }) {
+  const { t } = useTranslation()
   return (
     <div style={{ height: '300px' }}>
       <ResponsiveContainer>
         <BarChart width={730} height={250} data={data?.price}>
           <CartesianGrid stroke="#cccccc" strokeWidth={0.5} vertical={false} />
           <YAxis dataKey="euros" axisLine={false} tick={() => ''} width={0} domain={[dataMin => 0, dataMax => (dataMax * 1.1 + 50)]} tickCount={8} />
-          <XAxis dataKey="season" tick={{ transform: 'translate(0, 8)' }} tickFormatter={ tickItem => tickItem.toUpperCase() } tickLine={false} fontWeight={500} fontSize="1.35rem" />
+          <XAxis dataKey="season" tick={{ transform: 'translate(0, 8)' }} tickFormatter={ tickItem => t(tickItem.toUpperCase()) } tickLine={false} fontWeight={500} fontSize="1.35rem" />
           <Bar dataKey="euros" fill="#96b633" >
             <LabelList content={<CustomLabel data={data} />} position="top" />
           </Bar>

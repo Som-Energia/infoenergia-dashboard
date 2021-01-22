@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 
 import Skeleton from '@material-ui/lab/Skeleton'
 
@@ -96,8 +97,16 @@ const AdviceButton = styled(Button)`
   margin-top: 8px;
 `
 
+const NoDataMessage = styled.h3`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+`
+
 function SeasonalProfile (props) {
   const { contract } = props
+  const { t } = useTranslation()
   const [data, setData] = useState({})
   const [isLoading, setIsLoading] = useState(true)
   const [seasonFilter, setSeasonFilter] = useState('summer')
@@ -113,6 +122,9 @@ function SeasonalProfile (props) {
         console.log(response)
         setData(response)
         setIsLoading(false)
+      }).catch(error => {
+        console.log(error)
+        setIsLoading(false)
       })
   }, [contract])
 
@@ -120,44 +132,40 @@ function SeasonalProfile (props) {
     <>
       <SelectorWrapper>
         <SelectorBox>
-          <SelectorValue>Últims 12 mesos</SelectorValue>
+          <SelectorValue>{ t('LAST_12_MONTHS') }</SelectorValue>
         </SelectorBox>
       </SelectorWrapper>
       {
         isLoading
-          ? <Skeleton height={300} />
-          : <SeasonalProfileBarChart data={data} />
+          ? <Skeleton height={300}  width="100%" />
+          : data?.price
+            ? <SeasonalProfileBarChart data={data} />
+            : data?.errors
+              ? <NoDataMessage>{t(data.errors)}</NoDataMessage>
+              : <NoDataMessage>{t('NO_DATA')}</NoDataMessage>
       }
       <Wrapper>
         {
           isLoading
-            ? <Skeleton height={230} />
+            ? <Skeleton height={230} width="100%" />
             : <>
               <TabWrapper>
-                <Title>Dependència climàtica<span> en base als últims 36 mesos</span></Title>
+                <Title>{ t('CLIMATE_DEPENDENCY') }<span> { t('LAST_36_NONTH_BASE') }</span></Title>
                 <ButtonsWrapper>
                   {
-                    Object.keys(data?.climaticDependence)
+                    Object.keys(data?.climaticDependence ? data?.climaticDependence : [])
                       .map(season => (
                         <Button
                           key={season}
                           className={ seasonFilter === season ? 'active' : null }
                           onClick={event => handleClick(event, season)}>
-                          {season}
+                          {t(season.toUpperCase())}
                         </Button>
                       ))
                   }
                 </ButtonsWrapper>
               </TabWrapper>
               <ClimaDependency data={data?.climaticDependence[seasonFilter]} />
-              <AdviceWrapper>
-                <AdviceText>
-                  Quan augmenta la temperatura exterior el teu ús d'energia augmenta en igual mida.
-                </AdviceText>
-                <AdviceButton>
-                  INFORMA'T
-                </AdviceButton>
-              </AdviceWrapper>
             </>
         }
       </Wrapper>

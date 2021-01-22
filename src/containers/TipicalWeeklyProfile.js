@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 
 import Skeleton from '@material-ui/lab/Skeleton'
 
@@ -23,6 +24,8 @@ const WeeklyMediumWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   margin-top: 32px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
 `
 
 const MediumWrapper = styled.div`
@@ -38,24 +41,32 @@ const MediumWrapper = styled.div`
 
 const DayTypeWrapperDaily = styled(MediumWrapper)`
   width: 70%;
-  padding: 4px 8px;
+  padding: 4px 12px;
   font-weight: 500;
 `
 
 const DayTypeWrapperWeekend = styled(MediumWrapper)`
   width: 29%;
-  padding: 4px 8px;
+  padding: 4px 12px;
   font-weight: 500;
 `
 
 const DailyMediumWrapper = styled(MediumWrapper)`
-  width: 70%;
+  width: 100%;
+  @media (min-width: 768px) {
+    width: 70%;
+  }
   background-color: #96b633;
   color: #ffffff;
+  padding-right: 8px;
 `
 
 const WeekendMediumWrapper = styled(MediumWrapper)`
-  width: 29%;
+  width: 100%;
+  @media (min-width: 768px) {
+    width: 29%;
+  }
+  padding-right: 8px;
 `
 
 const MediumValue = styled.div`
@@ -63,6 +74,14 @@ const MediumValue = styled.div`
   font-size: 2.2rem;
   font-weight: bold;
   white-space: nowrap;
+  padding-right: 12px;
+`
+
+const NoDataMessage = styled.h3`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
 `
 
 const ChartWrapper = styled.div`
@@ -71,6 +90,7 @@ const ChartWrapper = styled.div`
 
 const TipicalWeeklyProfile = (props) => {
   const { contract } = props
+  const { t } = useTranslation()
   const [data, setData] = useState({})
   const [isLoading, setIsLoading] = useState(true)
 
@@ -79,37 +99,46 @@ const TipicalWeeklyProfile = (props) => {
       .then(response => {
         setData(response)
         setIsLoading(false)
+      }).catch(error => {
+        console.log(error)
+        setIsLoading(false)
       })
   }, [contract])
 
   return (
     <>
       <CounterWrapper>
-        <Counter title="Mitjana setmanal" value={data?.value || '-'} date="" />
+        <Counter
+          title={t('WEEKLY_AVERAGE')}
+          value={data?.value || '-'}
+          date={t('LAST_12_MONTHS')}
+        />
       </CounterWrapper>
       <DayTypeWrapper>
         <DayTypeWrapperDaily>
-          Entre setmana
+          { t('BETWEEN_WEEKDAYS') }
         </DayTypeWrapperDaily>
         <DayTypeWrapperWeekend>
-          Cap de setmana
+          { t('WEEKEND') }
         </DayTypeWrapperWeekend>
       </DayTypeWrapper>
       <ChartWrapper>
-        {
-          isLoading
-            ? <Skeleton height={300} width="100%" />
-            : <TipicalWeeklyProfileChart data={{ avgWeekCCH: data?.avgWeekCCH, formatAvgWeekCCH: data?.formatAvgWeekCCH }} />
-        }
+      {
+        isLoading
+          ? <Skeleton height={300}  width="100%" />
+          : data?.avgWeekCCH
+            ? <TipicalWeeklyProfileChart data={{ avgWeekCCH: data?.avgWeekCCH, formatAvgWeekCCH: data?.formatAvgWeekCCH }} />
+            : data?.errors ? <NoDataMessage>{t(data.errors)}</NoDataMessage> : <NoDataMessage>{t('NO_DATA')}</NoDataMessage>
+      }
       </ChartWrapper>
       <WeeklyMediumWrapper>
         <DailyMediumWrapper>
-          <MediumValue>{data?.weekValue} kWh</MediumValue>
-          <span>Mitjana d'ús d'energia en dia entre setmana</span>
+          <MediumValue>{data?.weekValue || '-'} kWh</MediumValue>
+          <span>{ t('AVG_USE_BETWEEN_WEEKDAY') }</span>
         </DailyMediumWrapper>
         <WeekendMediumWrapper>
-          <MediumValue>{data?.weekendValue} kWh</MediumValue>
-          <span>Mitjana d'ús d'energia en dia cap de setmana</span>
+          <MediumValue>{data?.weekendValue || '-'} kWh</MediumValue>
+          <span>{ t('AVG_USE_WEEKEND_DAY') }</span>
         </WeekendMediumWrapper>
       </WeeklyMediumWrapper>
       <LastUpdate date={data?.updated} />

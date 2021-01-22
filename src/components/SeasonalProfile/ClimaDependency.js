@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 
 const Wrapper = styled.div`
 `
@@ -20,7 +21,6 @@ const DependecyLevel = styled.div`
   font-size: 1.5rem;
   font-weight: 500;
   color: #ffffff;
-  text-transform: uppercase;
   background-color: transparent;
 
   .edge {
@@ -46,6 +46,14 @@ const Level = styled.div`
   padding: 4px 8px;
 `
 
+const NoDataMessage = styled.h3`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 1.25rem;
+  font-weight: 300;
+`
+
 const levels = [
   'null',
   'low',
@@ -54,20 +62,25 @@ const levels = [
 ]
 
 const ClimaDependency = ({ data }) => {
-  console.log(data)
+  const { t } = useTranslation()
+
   return (
     <Wrapper>
-      <DependecyLevels>
         {
-          levels.map(level => (
-            <DependecyLevel key={level} className={ level === data ? 'active' : null }>
-              <div className="edge" />
-              <Level>{level}</Level>
-              <div className="edge" />
-            </DependecyLevel>
-          ))
+          data === 'nodata'
+            ? <NoDataMessage>{t('NO_DATA')}</NoDataMessage>
+            : <DependecyLevels>
+              { levels.map(level => (
+              <DependecyLevel key={level} className={ level === data ? 'active' : null }>
+                <div className="edge" />
+                <Level>{t(level.toUpperCase())}</Level>
+                <div className="edge" />
+              </DependecyLevel>
+            ))
+              }
+              </DependecyLevels>
         }
-      </DependecyLevels>
+
     </Wrapper>
   )
 }

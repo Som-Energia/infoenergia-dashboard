@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 
 import Skeleton from '@material-ui/lab/Skeleton'
 
@@ -55,21 +56,32 @@ const LegendLabel = styled.div`
   }
 `
 
-const legendData = [
-  { color: '#96b633', label: 'habitual' },
-  { color: '#f2970f', label: 'excepcional' },
-  { color: '#616161', label: 'nul. permanent' }
-]
+const NoDataMessage = styled.h3`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 283px;
+`
 
 function LastMonthProfile (props) {
   const { contract } = props
   const [data, setData] = useState({})
+  const { t } = useTranslation()
   const [isLoading, setIsLoading] = useState(true)
+
+  const legendData = [
+    { color: '#96b633', label: t('USE_REGULAR') },
+    { color: '#f2970f', label: t('USE_EXCEPTIONAL') },
+    { color: '#616161', label: t('USE_NULL') }
+  ]
 
   useEffect(() => {
     getMonthsProfile(contract)
       .then(response => {
         setData(response)
+        setIsLoading(false)
+      }).catch(error => {
+        console.log(error)
         setIsLoading(false)
       })
   }, [contract])
@@ -83,7 +95,7 @@ function LastMonthProfile (props) {
               <LegendItem key={item.label}>
                 <LegendColor color={item.color} />
                 <LegendLabel>
-                  Ús d'energia
+                  { t('ENERGY_USE') }
                   <div>{item.label}</div>
                 </LegendLabel>
               </LegendItem>
@@ -92,7 +104,7 @@ function LastMonthProfile (props) {
         </LegendWrapper>
         <CounterWrapper>
           <Counter
-            title="Ús diari habitual"
+            title={t('STAND_DAILY_USE')}
             value={ data?.levels ? data?.levels[1]?.kWh : '-'}
             date="Últims 3 mesos"
           />
@@ -107,14 +119,15 @@ function LastMonthProfile (props) {
               <Skeleton height="100%" />
               <Skeleton height="100%" />
             </>
-            : (
-              data?.months &&
-              data?.months.map((month, idx) => (
-                <div key={idx}>
-                  <CalendarMonth month={month} consum={data?.consumption} levels={data?.levels} />
-                </div>
-              )).reverse()
-            )
+            : data?.months
+              ? data?.months.map((month, idx) => (
+                  <div key={idx}>
+                    <CalendarMonth month={month} consum={data?.consumption} levels={data?.levels} />
+                  </div>
+                )).reverse()
+              : data?.errors
+                ? <NoDataMessage>{t(data.errors)}</NoDataMessage>
+                : <NoDataMessage>{t('NO_DATA')}</NoDataMessage>
         }
       </ChartWrapper>
       <LastUpdate date={data?.updated} />
