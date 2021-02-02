@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
 
+import Grid from '@material-ui/core/Grid'
 import Skeleton from '@material-ui/lab/Skeleton'
 
 import TipicalDailyProfileChart from '../components/TipicalDailyProfile/TipicalDailyProfileChart'
@@ -15,6 +16,7 @@ import { getDailyProfile } from '../services/api'
 
 const Widget = styled.div`
     min-height: 220px;
+    padding: 0 16px;
     background-color: #f2f2f2;
     h3 {
       white-space: nowrap;
@@ -27,14 +29,12 @@ const Legend = styled.div`
   align-items: center;
   background-color: #f2f2f2;
   margin-bottom: 16px;
-  padding: 16px;
+  padding: 16px 12px;
   justify-content: flex-start;
   &:first-child {
-    padding-bottom: 0;
     margin-bottom: 0;
     @media (min-width: 768px) {
       padding-bottom: 16px;
-      margin-bottom: 16px;
     }
   }
   &.text-right {
@@ -43,15 +43,15 @@ const Legend = styled.div`
     }
   }
   .vall {
-    width: 12px;
-    height: 12px;
+    width: 16px;
+    height: 16px;
     display: inline-block;
-    margin: 0 4px;
+    margin: 0 8px;
     background-color: #96b633;
   }
   .punta {
-    width: 12px;
-    height: 12px;
+    width: 16px;
+    height: 16px;
     display: inline-block;
     margin: 0 8px;
     background-color: #f2970f;
@@ -66,6 +66,13 @@ const NoDataMessage = styled.h3`
   align-items: center;
   justify-content: center;
   min-height: 300px;
+  font-weight: 400;
+`
+
+const Separator = styled.div`
+  display: block;
+  margin-top: 16px;
+  width: 100%;
 `
 
 function TipicalDailyProfile (props) {
@@ -87,56 +94,62 @@ function TipicalDailyProfile (props) {
       })
   }, [contract, token])
   return (
-    <>
-      <div className="row">
-        <div className="col-xs-12">
-          <CounterWrapper>
-            <Counter
-              title={t('DAILY_AVERAGE')}
-              value={data?.dailyAvg?.value || '-'}
-              date={t('LAST_12_MONTHS')} />
-          </CounterWrapper>
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-xs-12 mb-4">
-          {
-            isLoading
-              ? <Skeleton height={300} />
-              : data?.dailyTypicalProfile
-                ? <TipicalDailyProfileChart data={data?.dailyTypicalProfile} />
-                : data?.errors ? <NoDataMessage>{t(data.errors)}</NoDataMessage> : <NoDataMessage>{t('NO_DATA')}</NoDataMessage>
-          }
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-xs-12">
-          <Legend className="col-xs-12 col-md-6 text-right">
-            <b>{t('WINTER')}:</b>
+    <Grid container>
+      <Grid item xs={12}>
+        <CounterWrapper>
+          <Counter
+            title={t('DAILY_AVERAGE')}
+            value={data?.dailyAvg?.value || '-'}
+            date={t('LAST_12_MONTHS')} />
+        </CounterWrapper>
+      </Grid>
+      <Grid item xs={12}>
+        {
+          isLoading
+            ? <Skeleton height={300} />
+            : data?.dailyTypicalProfile
+              ? <TipicalDailyProfileChart data={data?.dailyTypicalProfile} />
+              : data?.errors ? <NoDataMessage>{t(data.errors)}</NoDataMessage> : <NoDataMessage>{t('NO_DATA')}</NoDataMessage>
+        }
+      </Grid>
+
+      <Separator />
+
+      <Grid container>
+        <Grid item sm={6} xs={12}>
+          <Legend className="text-right">
+            <b>{t('WINTER')}</b>
             <span className="vall"></span> {t('WINTER_VALLEY')}
             <span className="punta"></span> {t('WINTER_PEACK')}
           </Legend>
-          <Legend className="col-xs-12 col-md-6">
-            <b>{t('SUMMER')}:</b>
+        </Grid>
+        <Grid item sm={6} xs={12}>
+          <Legend>
+            <b>{t('SUMMER')}</b>
             <span className="vall"></span> {t('SUMMER_VALLEY')}
             <span className="punta"></span> {t('SUMMER_PEACK')}
           </Legend>
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-xs-12 col-md-6 mb-4">
+        </Grid>
+      </Grid>
+
+      <Separator />
+
+      <Grid container spacing={2}>
+        <Grid item sm={6} xs={12}>
           <Widget>
-            <DistributionByUserType contract={contract} />
+            <DistributionByUserType {...props} />
           </Widget>
-        </div>
-        <div className="col-xs-12 col-md-6 mb-4">
+        </Grid>
+        <Grid item sm={6} xs={12}>
           <Widget>
-            <DistributionByPeriod contract={contract} />
+            <DistributionByPeriod {...props} />
           </Widget>
-        </div>
-      </div>
+        </Grid>
+      </Grid>
+
       <LastUpdate date={data?.updated} />
-    </>
+
+    </Grid>
   )
 }
 

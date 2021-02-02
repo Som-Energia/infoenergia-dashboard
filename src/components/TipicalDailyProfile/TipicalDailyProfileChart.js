@@ -25,7 +25,7 @@ const TipicalDailyProfileChart = ({ data }) => {
           <CartesianGrid stroke="#a1a1a1" vertical={false} />
           <XAxis dataKey="hour" tickFormatter={formatXAxis} tick={{ transform: 'translate(0, 8)' }} />
           <YAxis axisLine={false} tickCount={6} tickLine={false} tickFormatter={(tickItem) => `${tickItem} kWh`} tick={{ transform: 'translate(-2, 0)' }} />
-          <Tooltip formatter={formatTooltip} labelFormatter={formatLabel} separator=" " />
+          <Tooltip cursor={{fill: '#f2f2f2'}} formatter={formatTooltip} labelFormatter={formatLabel} separator=" " />
           {
             data !== undefined
               ? <Bar dataKey="kWh">

@@ -18,12 +18,15 @@ export const Title = styled.h3`
   font-weight: 500;
   white-space: wrap;
   margin-left: 20px;
+  margin-bottom: 8px;
 `
 
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  justify-content: center;
+  align-content: center;
 `
 
 export const ChartWrapper = styled.div`
@@ -42,4 +45,5 @@ export const NoDataMessage = styled.h3`
   display: flex;
   align-items: center;
   justify-content: center;
+  font-weight: 400;
 `

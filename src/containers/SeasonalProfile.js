@@ -18,13 +18,13 @@ const Wrapper = styled.div`
 `
 
 const SelectorWrapper = styled.div`
-    padding-top: 24px;
+    padding-top: 4px;
     display: flex;
     justify-content: flex-end;
 `
 
 const SelectorBox = styled.div`
-    padding: 8px 8px;
+    padding: 12px 8px;
     margin-bottom: 20px;
     background-color: #96b633;
     color: #fff;
@@ -102,6 +102,7 @@ const NoDataMessage = styled.h3`
   align-items: center;
   justify-content: center;
   min-height: 300px;
+  font-weight: 400;
 `
 
 function SeasonalProfile (props) {
@@ -119,7 +120,6 @@ function SeasonalProfile (props) {
   useEffect(() => {
     getSeasonalProfile(contract)
       .then(response => {
-        console.log(response)
         setData(response)
         setIsLoading(false)
       }).catch(error => {
@@ -165,7 +165,7 @@ function SeasonalProfile (props) {
                   }
                 </ButtonsWrapper>
               </TabWrapper>
-              <ClimaDependency data={data?.climaticDependence[seasonFilter]} />
+              <ClimaDependency data={data?.climaticDependence && data?.climaticDependence[seasonFilter]} />
             </>
         }
       </Wrapper>

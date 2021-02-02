@@ -13,13 +13,13 @@ const props = {}
 if (root) {
   const attrs = Object.keys(root.dataset)
   attrs.forEach(
-    (name, index) => { props[name] = root.dataset[name] }
+    (name) => { props[name] = root.dataset[name] }
   )
 
   ReactDOM.render(
-    <React.StrictMode>
+    <>
       <App {...props} />
-    </React.StrictMode>,
+    </>,
     document.getElementById('root')
   )
 }

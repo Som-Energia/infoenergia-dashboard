@@ -1,12 +1,9 @@
-import React from 'react'
+import React, { lazy, Suspense } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { MuiPickersUtilsProvider } from '@material-ui/pickers'
 import MomentUtils from '@date-io/moment'
 
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
-
-import EnergyUse from './pages/EnergyUse'
-import TimeCurves from './pages/TimeCurves'
 
 import './i18n/i18n'
 import './App.css'
@@ -32,22 +29,29 @@ const theme = createMuiTheme({
 })
 
 function App (props) {
+
+  const loadEnergyUse = () => {
+    const EnergyUse = lazy(() => import('./pages/EnergyUse'))
+    return <EnergyUse {...props} />
+  }
+
+  const loadTimeCurves = () => {
+    const TimeCurves = lazy(() => import('./pages/EnergyUse'))
+    return <TimeCurves {...props} />
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <MuiPickersUtilsProvider utils={MomentUtils}>
-        <Router>
-          <Switch>
-            <Route exact path="/">
-              <EnergyUse {...props} />
-            </Route>
-            <Route path="/us-energia">
-              <EnergyUse {...props} />
-            </Route>
-            <Route path="/corbes-horaries">
-              <TimeCurves {...props} />
-            </Route>
-          </Switch>
-        </Router>
+        <Suspense fallback ={<></>}>
+          <Router>
+            <Switch>
+              <Route exact path="/" render={loadEnergyUse} />
+              <Route path="/:language/infoenergy/energy-use" render={loadEnergyUse} />
+              <Route path="/:language/infoenergy" render={loadTimeCurves} />
+            </Switch>
+          </Router>
+        </Suspense>
       </MuiPickersUtilsProvider>
     </ThemeProvider>
   )

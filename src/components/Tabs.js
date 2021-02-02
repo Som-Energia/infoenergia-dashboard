@@ -17,9 +17,16 @@ margin-bottom: 0;
 flex-wrap: wrap;
 `
 const Tab = styled.li`
+flex-grow: 1;
+text-align: center;
 background-color: #f2f2f2;
-margin: 0 4px 16px;
+margin: 0 4px 12px;
 padding: 0;
+@media (min-width: 768px) {
+  flex-grow: 0;
+  margin-bottom: 0;
+}
+
 button {
   padding: 10px 16px;
   color: #585857;

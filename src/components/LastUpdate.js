@@ -3,12 +3,12 @@ import moment from 'moment'
 import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
 
-
 const LastUpdateWrapper = styled.div`
+  width: 100%;
   display: flex;
   justify-content: flex-end;
-  padding-top: 8px;
-  margin-bottom: 8px;
+  padding-top: 12px;
+  margin-bottom: 0;
   span {
     padding-left: 4px;
     font-weight: 500;

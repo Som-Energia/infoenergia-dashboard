@@ -26,6 +26,9 @@ const WeeklyMediumWrapper = styled.div`
   margin-top: 32px;
   margin-bottom: 8px;
   flex-wrap: wrap;
+  @media (min-width: 768px) {
+    flex-wrap: nowrap;
+  }
 `
 
 const MediumWrapper = styled.div`
@@ -49,6 +52,7 @@ const DayTypeWrapperWeekend = styled(MediumWrapper)`
   width: 29%;
   padding: 4px 12px;
   font-weight: 500;
+  margin-left: 12px;
 `
 
 const DailyMediumWrapper = styled(MediumWrapper)`
@@ -65,6 +69,7 @@ const WeekendMediumWrapper = styled(MediumWrapper)`
   width: 100%;
   @media (min-width: 768px) {
     width: 29%;
+    margin-left: 12px;
   }
   padding-right: 8px;
 `
@@ -82,6 +87,7 @@ const NoDataMessage = styled.h3`
   align-items: center;
   justify-content: center;
   min-height: 300px;
+  font-weight: 400;
 `
 
 const ChartWrapper = styled.div`

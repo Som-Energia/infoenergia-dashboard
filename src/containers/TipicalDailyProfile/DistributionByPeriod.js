@@ -31,7 +31,6 @@ const DistributionByPeriod = (props) => {
   useEffect(() => {
     getDistributionByPeriod(contract)
       .then(response => {
-        console.log(response)
         setData(response)
         setIsLoading(false)
       }).catch(error => {

@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useParams } from 'react-router-dom'
 
 import TipicialDailyProfile from '../containers/TipicalDailyProfile'
 import TipicalWeeklyProfile from '../containers/TipicalWeeklyProfile'
@@ -9,32 +10,40 @@ import SeasonalProfile from '../containers/SeasonalProfile'
 import Tabs from '../components/Tabs'
 
 function EnergyUse (props) {
-  const { token, contract = '0065020' } = props
-  const { t } = useTranslation()
+  const { token, contract } = props
+  const { language } = useParams()
+  const { t, i18n } = useTranslation()
+
+  useEffect(() => {
+    language && i18n.changeLanguage(language)
+  }, [language, i18n])
 
   const tabs = [
     {
       title: t('TIPICAL_DAILY_PROFILE'),
-      content: <TipicialDailyProfile contract={contract} token={token} />
-    },
-    {
+      content: <TipicialDailyProfile {...props} />
+    }, {
       title: t('TIPICAL_WEEKLY_PROFILE'),
-      content: <TipicalWeeklyProfile contract={contract} token={token} />
-    },
-    {
+      content: <TipicalWeeklyProfile {...props} />
+    }, {
       title: t('LAST_3_MONTH_PROFILE'),
-      content: <LastMonthProfile contract={contract} token={token} />
-    },
-    {
+      content: <LastMonthProfile {...props} />
+    }, {
       title: t('SEASONAL_PROFILE'),
-      content: <SeasonalProfile contract={contract} token={token} />
+      content: <SeasonalProfile {...props} />
     }
   ]
 
   return (
-    <div className="container">
-      <Tabs tabs={tabs} initialTab={0} />
-    </div>
+    token && contract
+      ?
+      <div>
+        <Tabs tabs={tabs} initialTab={0} />
+      </div>
+      :
+      <div>
+        { t('NO_DATA') }
+      </div>
   )
 }
 

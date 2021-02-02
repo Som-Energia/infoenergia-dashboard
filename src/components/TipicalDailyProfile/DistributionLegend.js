@@ -2,7 +2,8 @@ import React from 'react'
 
 const classes = {
   list: {
-    paddingTop: '16px'
+    paddingTop: '16px',
+    paddingLeft: '0'
   },
   listItem: {
     marginBottom: '8px',
@@ -10,8 +11,8 @@ const classes = {
     alignItems: 'center'
   },
   colorSample: {
-    width: '28px',
-    height: '28px',
+    width: '24px',
+    height: '24px',
     marginRight: '8px'
   }
 }
@@ -21,7 +22,7 @@ const DistributionLegend = ({ values, colors, data }) => {
     <>
       {
         data !== undefined
-          ? <ul className="list-unstyled" style={classes.list}>
+          ? <ul style={classes.list}>
             {
               Object.keys(values).map(value => (
                 <li key={value} style={classes.listItem}>

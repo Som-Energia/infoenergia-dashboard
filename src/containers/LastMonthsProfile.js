@@ -61,6 +61,7 @@ const NoDataMessage = styled.h3`
   align-items: center;
   justify-content: center;
   min-height: 283px;
+  font-weight: 400;
 `
 
 function LastMonthProfile (props) {
