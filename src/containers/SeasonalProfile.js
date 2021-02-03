@@ -106,7 +106,7 @@ const NoDataMessage = styled.h3`
 `
 
 function SeasonalProfile (props) {
-  const { contract } = props
+  const { contract, token } = props
   const { t } = useTranslation()
   const [data, setData] = useState({})
   const [isLoading, setIsLoading] = useState(true)
@@ -118,7 +118,7 @@ function SeasonalProfile (props) {
   }
 
   useEffect(() => {
-    getSeasonalProfile(contract)
+    getSeasonalProfile(contract, token)
       .then(response => {
         setData(response)
         setIsLoading(false)
@@ -126,7 +126,7 @@ function SeasonalProfile (props) {
         console.log(error)
         setIsLoading(false)
       })
-  }, [contract])
+  }, [contract, token])
 
   return (
     <>

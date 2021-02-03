@@ -17,7 +17,7 @@ const COLORS = {
 }
 
 const DistributionByPeriod = (props) => {
-  const { contract } = props
+  const { contract, token } = props
   const { t } = useTranslation()
   const [data, setData] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
@@ -29,7 +29,7 @@ const DistributionByPeriod = (props) => {
   }
 
   useEffect(() => {
-    getDistributionByPeriod(contract)
+    getDistributionByPeriod(contract, token)
       .then(response => {
         setData(response)
         setIsLoading(false)
@@ -37,7 +37,7 @@ const DistributionByPeriod = (props) => {
         console.log(error)
         setIsLoading(false)
       })
-  }, [contract])
+  }, [contract, token])
 
   return (
     <Wrapper>

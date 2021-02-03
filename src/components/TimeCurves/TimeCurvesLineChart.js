@@ -24,7 +24,6 @@ function TimeCurvesLineChart ({ period, data = [], compareData = [] }) {
 
   useEffect(() => {
     const groupedData = groupDataByPeriod(data, period, 'lineChart')
-    console.log(groupedData)
     setTickNumber(tickCount(period))
     if (compareData.length) {
       const mixedDataArr = mergeData(groupedData, compareData)
@@ -33,8 +32,6 @@ function TimeCurvesLineChart ({ period, data = [], compareData = [] }) {
       setMixedData(groupedData)
     }
   }, [data, compareData, period])
-
-  console.log(mixedData)
 
   return (
     <ChartWrapper>

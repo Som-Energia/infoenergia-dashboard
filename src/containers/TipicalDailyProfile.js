@@ -93,6 +93,7 @@ function TipicalDailyProfile (props) {
         setIsLoading(false)
       })
   }, [contract, token])
+
   return (
     <Grid container>
       <Grid item xs={12}>

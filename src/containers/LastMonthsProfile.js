@@ -65,7 +65,7 @@ const NoDataMessage = styled.h3`
 `
 
 function LastMonthProfile (props) {
-  const { contract } = props
+  const { contract, token } = props
   const [data, setData] = useState({})
   const { t } = useTranslation()
   const [isLoading, setIsLoading] = useState(true)
@@ -77,7 +77,7 @@ function LastMonthProfile (props) {
   ]
 
   useEffect(() => {
-    getMonthsProfile(contract)
+    getMonthsProfile(contract, token)
       .then(response => {
         setData(response)
         setIsLoading(false)
@@ -85,7 +85,7 @@ function LastMonthProfile (props) {
         console.log(error)
         setIsLoading(false)
       })
-  }, [contract])
+  }, [contract, token])
 
   return (
     <>

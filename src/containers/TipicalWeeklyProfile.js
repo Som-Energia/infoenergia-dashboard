@@ -95,13 +95,13 @@ const ChartWrapper = styled.div`
 `
 
 const TipicalWeeklyProfile = (props) => {
-  const { contract } = props
+  const { contract, token } = props
   const { t } = useTranslation()
   const [data, setData] = useState({})
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    getWeeklyProfile(contract)
+    getWeeklyProfile(contract, token)
       .then(response => {
         setData(response)
         setIsLoading(false)
@@ -109,7 +109,7 @@ const TipicalWeeklyProfile = (props) => {
         console.log(error)
         setIsLoading(false)
       })
-  }, [contract])
+  }, [contract, token])
 
   return (
     <>

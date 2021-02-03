@@ -11,7 +11,7 @@ import { getDistributionByTypeOfUse } from '../../services/api'
 import { Container, Title, Wrapper, ChartWrapper, NoDataMessage } from './DistributionCharts'
 
 export default function DistributionByUserType (props) {
-  const { contract } = props
+  const { contract, token } = props
   const { t } = useTranslation()
   const [data, setData] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
@@ -29,7 +29,7 @@ export default function DistributionByUserType (props) {
   }
 
   useEffect(() => {
-    getDistributionByTypeOfUse(contract)
+    getDistributionByTypeOfUse(contract, token)
       .then(response => {
         setData(response)
         setIsLoading(false)
@@ -37,7 +37,7 @@ export default function DistributionByUserType (props) {
         console.log(error)
         setIsLoading(false)
       })
-  }, [contract])
+  }, [contract, token])
 
   return (
     <Wrapper>
