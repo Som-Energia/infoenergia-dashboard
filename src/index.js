@@ -16,6 +16,8 @@ if (root) {
     (name) => { props[name] = root.dataset[name] }
   )
 
+  console.log(`infoenergia version: ${process.env.REACT_APP_VERSION}`)
+
   ReactDOM.render(
     <>
       <App {...props} />
