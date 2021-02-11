@@ -24,7 +24,7 @@ const SelectorWrapper = styled.div`
 `
 
 const SelectorBox = styled.div`
-    padding: 12px 8px;
+    padding: 8px 8px;
     margin-bottom: 20px;
     background-color: #96b633;
     color: #fff;
