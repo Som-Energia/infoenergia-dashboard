@@ -4,6 +4,8 @@ export const formatNumber = (num) => {
   return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
 }
 
+export const formatDay = (weekDay) => moment().isoWeekday(weekDay).format('dddd')
+
 export const formatkWh = (item) => {
   return formatNumber(Math.round(item)) + ' kWh'
 }
@@ -12,7 +14,7 @@ export const formatDecimal = (item, base = 100) => (
   formatNumber(Math.round((item + Number.EPSILON) * base) / base)
 )
 
-export const formatkWhDecimal = (item) => {
+export const formatkWhDecimal = (item, base = undefined) => {
   return formatDecimal(item) + ' kWh'
 }
 

@@ -1,32 +1,51 @@
-import React, { PureComponent } from 'react'
-import { LineChart, XAxis, YAxis, CartesianGrid, Tooltip, Line, ResponsiveContainer } from 'recharts'
-import { formatkWh, formatPerc } from '../../services/utils'
+import React from 'react'
+import moment from 'moment'
+import { useTranslation } from 'react-i18next'
 
-class CustomizedDaysValuesTick extends PureComponent {
-  render () {
-    const { x, y, data } = this.props
-    const avgDataDay = (day) => {
-      const avgData = data
-      for (const item in avgData) {
-        if (avgData[item].weekDay === parseInt(day)) {
-          return avgData[item]
-        }
+import { LineChart, XAxis, YAxis, CartesianGrid, Tooltip, Line, ResponsiveContainer } from 'recharts'
+import { formatkWhDecimal, formatPerc, formatDecimal, formatDay } from '../../services/utils'
+
+const CustomizedDaysValuesTick = (props) => {
+  const { x, y, data } = props
+  const { t } = useTranslation()
+
+  const avgDataDay = (day) => {
+    const avgData = data
+    for (const item in avgData) {
+      if (avgData[item].weekDay === parseInt(day)) {
+        return avgData[item]
       }
     }
-
-    const currentDay = this.props.payload.value.split('-')[0]
-    const days = ['Dilluns', 'Dimarts', 'Dimecres', 'Dijous', 'Divendres', 'Dissabte', 'Diumenge']
-
-    const avgDay = avgDataDay(currentDay)
-    return (
-      <g transform={`translate(${x},${y})`}>
-        <text x={0} y={0} dy={16} textAnchor="middle" fill="#666" fontWeight="700" fontSize="1.5rem">{days[currentDay]}</text>
-        <text x={0} y={20} dy={16} textAnchor="middle" fill="#666">Mitjana d'ús</text>
-        <text x={0} y={50} dy={16} textAnchor="middle" fill="#96b633" fontWeight="700" fontSize="1.75rem">{formatkWh(avgDay?.avgKWh)}</text>
-        <text x={0} y={75} dy={16} textAnchor="middle" fill="#666" fontWeight="700" fontSize="1.75rem">{formatPerc(avgDay?.avgPercentage)}</text>
-      </g>
-    )
   }
+
+  const [currentDay] = props.payload.value.split('-')
+  const avgDay = avgDataDay(currentDay)
+
+  return (
+    <g transform={`translate(${x},${y})`}>
+      <text x={0} y={1} dy={16} textAnchor="middle" fill="#666" fontWeight="500" fontSize="1.5rem">
+        {formatDay(parseInt(avgDay?.weekDay) + 1)}
+      </text>
+      <text x={0} y={20} dy={16} textAnchor="middle" fill="#666">
+        {t('AVG_USE')}
+      </text>
+      <text x={0} y={45} dy={16} textAnchor="middle" fill="#96b633" fontWeight="600" fontSize="1.5rem">
+        {formatkWhDecimal(avgDay?.avgKWh, 10)}
+      </text>
+      <text x={0} y={70} dy={16} textAnchor="middle" fill="#666" fontWeight="500" fontSize="1.5rem">
+        {formatPerc(avgDay?.avgPercentage)}
+      </text>
+    </g>
+  )
+}
+
+const formatTooltip = (value, name) => {
+  return [name, formatDecimal(value, 1000)]
+}
+
+const formatLabel = (value) => {
+  const [day, hour] = value.split('-')
+  return `${moment().hour(hour).isoWeekday(day).format('dddd hh')}h`
 }
 
 const TipicalWeeklyProfileChart = ({ data }) => {
@@ -40,10 +59,10 @@ const TipicalWeeklyProfileChart = ({ data }) => {
           formatAvgWeekCCH
             ? <LineChart data={formatAvgWeekCCH}
               margin={{ top: 10, bottom: 10 }}>
-              <CartesianGrid stroke="#cccccc" vertical={false}/>
+              <CartesianGrid stroke="#a1a1a1" vertical={false} />
               <XAxis height={100} ticks={tickPoints} dataKey="dayHour" tick={<CustomizedDaysValuesTick data={avgWeekCCH} />} />
               <YAxis axisLine={false} tick={() => ''} width={0} />
-              <Tooltip />
+              <Tooltip cursor={{fill: '#f2f2f2'}} formatter={formatTooltip} labelFormatter={formatLabel} separator=" " />
               <Line type="monotone" dataKey="kWh" stroke="#96b633" dot={false} strokeWidth={4} />
             </LineChart>
             : <></>
