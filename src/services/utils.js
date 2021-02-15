@@ -1,10 +1,20 @@
-import moment from 'moment'
+import * as dayjs from 'dayjs'
 
 export const formatNumber = (num) => {
   return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
 }
 
-export const formatDay = (weekDay) => moment().isoWeekday(weekDay).format('dddd')
+export const formatDay = (weekDay) => {
+  var isoWeek = require('dayjs/plugin/isoWeek')
+  dayjs.extend(isoWeek)
+  return dayjs().isoWeekday(weekDay).format('dddd')
+}
+
+export const formatDayHour = (day, hour) => {
+  var isoWeek = require('dayjs/plugin/isoWeek')
+  dayjs.extend(isoWeek)
+  return dayjs().hour(hour).isoWeekday(day).format('dddd hh')
+}
 
 export const formatkWh = (item) => {
   return formatNumber(Math.round(item)) + ' kWh'
@@ -15,7 +25,7 @@ export const formatDecimal = (item, base = 100) => (
 )
 
 export const formatkWhDecimal = (item, base = undefined) => {
-  return formatDecimal(item) + ' kWh'
+  return formatDecimal(item, base) + ' kWh'
 }
 
 export const formatPerc = (item) => {
@@ -30,13 +40,13 @@ export const formatEuros = (item) => {
 export const formatXAxis = (period, item) => {
   switch (period) {
     case 'DAILY':
-      return moment(item).format('HH') + 'h'
+      return dayjs(item).format('HH') + 'h'
     case 'WEEKLY':
-      return moment(item).format('dddd')
+      return dayjs(item).format('dddd')
     case 'MONTHLY':
-      return moment(item).format('D')
+      return dayjs(item).format('D')
     default:
-      return moment(item).format('MMMM')
+      return dayjs(item).format('MMMM')
   }
 }
 
@@ -55,11 +65,11 @@ export const tickCount = (period, value) => {
 
 export const formatTooltipLabel = (period, value, type = 'barChart') => {
 
-  const formatWithHour = (value) => moment(value).format('DD/MM/YYYY HH') + 'h'
+  const formatWithHour = (value) => dayjs(value).format('DD/MM/YYYY HH') + 'h'
 
   switch (period) {
     case 'WEEKLY':
-      return type === 'barChart' ? moment(value).format('DD/MM/YYYY') : formatWithHour(value)
+      return type === 'barChart' ? dayjs(value).format('DD/MM/YYYY') : formatWithHour(value)
     default:
       return formatWithHour(value)
   }
@@ -73,9 +83,9 @@ export const groupWeeklyData = (data) => {
   const weekly = []
   const firstDay = data[0]?.date
   for (let day = 1; day <= 7; day++) {
-    const days = data.filter(item => moment(item?.date).isoWeekday() === day)
+    const days = data.filter(item => dayjs(item?.date).isoWeekday() === day)
     const totalValue = days.reduce((prev, current) => prev + current?.value, 0)
-    weekly.push({ date: moment(firstDay).add(day - 1, 'd').toISOString(), value: totalValue })
+    weekly.push({ date: dayjs(firstDay).add(day - 1, 'd').toISOString(), value: totalValue })
   }
   return weekly
 }
@@ -83,10 +93,10 @@ export const groupWeeklyData = (data) => {
 export const groupMonthlyData = (data) => {
   const weekly = []
   const firstDay = data[0]?.date
-  for (let day = 1; day <= moment(firstDay).daysInMonth(); day++) {
-    const days = data.filter(item => moment(item?.date).date() === day)
+  for (let day = 1; day <= dayjs(firstDay).daysInMonth(); day++) {
+    const days = data.filter(item => dayjs(item?.date).date() === day)
     const totalValue = days.reduce((prev, current) => prev + current?.value, 0)
-    weekly.push({ date: moment(firstDay).add(day - 1, 'd').toISOString(), value: totalValue })
+    weekly.push({ date: dayjs(firstDay).add(day - 1, 'd').toISOString(), value: totalValue })
   }
   return weekly
 }
@@ -105,21 +115,19 @@ export const groupDataByPeriod = (data, period, type) => {
 }
 
 export const mergeData = (arrData1 = [], arrData2 = []) => {
-  if (arrData1 > arrData2) {
-    return arrData1.map((item, index) => (
+  return (arrData1 > arrData2)
+    ? arrData1.map((item, index) => (
       {
         date: item.date,
         value: item.value,
         compValue: arrData2[index]?.value
       }
     ))
-  } else {
-    return arrData2.map((item, index) => (
+    : arrData2.map((item, index) => (
       {
         date: item.date,
         value: arrData1[index]?.value,
         compValue: item.value
       }
     ))
-  }
 }

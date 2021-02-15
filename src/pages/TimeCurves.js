@@ -57,7 +57,7 @@ function TimeCurvesPage () {
   useEffect(function () {
     getTimeCurves()
       .then(response => {
-        setData(response)
+        setData(response ? response : [])
       })
       .catch(error => {
         console.log(error)

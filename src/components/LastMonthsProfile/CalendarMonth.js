@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import moment from 'moment'
+import * as dayjs from 'dayjs'
 
 import { formatkWhDecimal } from '../../services/utils'
 
@@ -48,32 +48,35 @@ const Day = styled(EmptyDay)`
   }
 `
 const findConsumDay = (consums, day) => {
-  return consums.filter(item => item.day === day)
+  return consums?.filter(item => item.day === day)
 }
 
 const ConsumDay = (props) => {
   const { day, consum, levels } = props
-  const consumDay = consum[0]?.kWh || 0
+  const consumDay = consum?.[0]?.kWh || 0
   let className = ''
 
-  if (consumDay < levels[0]?.kWh) {
+  if (consumDay < levels?.[1]?.kWh) {
     className = 'low'
-  } else if (consumDay < levels[1]?.kWh) {
+  } else if (consumDay < levels?.[1]?.kWh) {
     className = 'normal'
-  } else if (consumDay > levels[1]?.kWh) {
+  } else if (consumDay > levels?.[1]?.kWh) {
     className = 'hight'
   } else {
     className = ''
   }
 
-  return <Day title={formatkWhDecimal(consumDay)} className={className}>{day}</Day>
+  return (<Day
+    title={formatkWhDecimal(consumDay)}
+    className={className}>{day}
+  </Day>)
 }
 
 const CalendarMonth = (props) => {
   const { month, consum, levels } = props
   return (
     <>
-      <MonthName>{ moment(month?.fullMonth, 'YYYYMM').format('MMMM')}</MonthName>
+      <MonthName>{ dayjs(month?.fullMonth, 'YYYYMM').format('MMMM')}</MonthName>
       <Calendar>
         {
           month?.arrayDays.map((week, weekIdx) => (

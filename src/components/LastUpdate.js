@@ -1,5 +1,5 @@
 import React from 'react'
-import moment from 'moment'
+import * as dayjs from 'dayjs'
 import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
 
@@ -21,7 +21,7 @@ const LastUpdate = (props) => {
   const { t } = useTranslation()
   return (
     <LastUpdateWrapper>
-      {t('LAST_UPDATE')}: <span>{ date ? moment(date).format('DD/MM/YYYY HH:mm:ss') : '-' }</span>
+      {t('LAST_UPDATE')}: <span>{ date ? dayjs(date).format('DD/MM/YYYY HH:mm:ss') : '-' }</span>
     </LastUpdateWrapper>
   )
 }

@@ -1,9 +1,8 @@
 import React from 'react'
-import moment from 'moment'
 import { useTranslation } from 'react-i18next'
 
 import { LineChart, XAxis, YAxis, CartesianGrid, Tooltip, Line, ResponsiveContainer } from 'recharts'
-import { formatkWhDecimal, formatPerc, formatDecimal, formatDay } from '../../services/utils'
+import { formatkWhDecimal, formatPerc, formatDecimal, formatDay, formatDayHour } from '../../services/utils'
 
 const CustomizedDaysValuesTick = (props) => {
   const { x, y, data } = props
@@ -45,7 +44,7 @@ const formatTooltip = (value, name) => {
 
 const formatLabel = (value) => {
   const [day, hour] = value.split('-')
-  return `${moment().hour(hour).isoWeekday(day).format('dddd hh')}h`
+  return `${formatDayHour(day, hour)}h`
 }
 
 const TipicalWeeklyProfileChart = ({ data }) => {

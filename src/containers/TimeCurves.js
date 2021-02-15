@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import styled from 'styled-components'
 
-import moment from 'moment'
+import * as dayjs from 'dayjs'
 import { DatePicker } from '@material-ui/pickers'
 import IconButton from '@material-ui/core/IconButton'
 
@@ -52,13 +52,13 @@ const periodUnit = (period) => {
 const filterDataWithPeriod = (refDate, period, data, charType) => {
   switch (period) {
     case 'DAILY':
-      return data.filter(item => moment(item?.date).isSame(refDate, 'day'))
+      return data.filter(item => dayjs(item?.date).isSame(refDate, 'day'))
     case 'WEEKLY':
-      return data.filter(item => moment(item?.date).isSame(refDate, 'week'))
+      return data.filter(item => dayjs(item?.date).isSame(refDate, 'week'))
     case 'MONTHLY':
-      return data.filter(item => moment(item?.date).isSame(refDate, 'month'))
+      return data.filter(item => dayjs(item?.date).isSame(refDate, 'month'))
     case 'YEARLY':
-      return data.filter(item => moment(item?.date).isSame(refDate, 'year'))
+      return data.filter(item => dayjs(item?.date).isSame(refDate, 'year'))
     default:
       return []
   }
@@ -79,13 +79,13 @@ function TimeCurves ({ data, chartType, period }) {
   const [compareTotalKwh, setCompareTotalKwh] = useState()
 
   useEffect(() => {
-    const firstItem = data[0]
-    const firstDate = moment(firstItem?.date)
+    const firstItem = data?.[0]
+    const firstDate = dayjs(firstItem?.date)
     firstDate.set('hour', 0)
     setMinDate(firstDate)
 
     const lastItem = [...data].pop()
-    const lastDate = moment(lastItem?.date)
+    const lastDate = dayjs(lastItem?.date)
     lastDate.set('hour', 0)
     setMaxDate(lastDate)
 
@@ -110,13 +110,13 @@ function TimeCurves ({ data, chartType, period }) {
 
   const prevDate = useCallback((event) => {
     event.preventDefault()
-    const prevDate = moment(currentDate).subtract(1, periodUnit(period))
+    const prevDate = dayjs(currentDate).subtract(1, periodUnit(period))
     setCurrentDate(prevDate)
   }, [currentDate, period])
 
   const nextDate = useCallback((event) => {
     event.preventDefault()
-    const nextDate = moment(currentDate).add(1, periodUnit(period))
+    const nextDate = dayjs(currentDate).add(1, periodUnit(period))
     setCurrentDate(nextDate)
   }, [currentDate, period])
 
@@ -126,7 +126,7 @@ function TimeCurves ({ data, chartType, period }) {
         <DateControlsWrapper>
           <IconButton
             onClick={prevDate}
-            disabled={moment(currentDate).isSame(minDate, 'day')}
+            disabled={dayjs(currentDate).isSame(minDate, 'day')}
           >
             <ArrowBackIosOutlinedIcon />
           </IconButton>
@@ -146,7 +146,7 @@ function TimeCurves ({ data, chartType, period }) {
           />
           <IconButton
             onClick={nextDate}
-            disabled={moment(currentDate).isSame(maxDate, 'day')}
+            disabled={dayjs(currentDate).isSame(maxDate, 'day')}
           >
             <ArrowForwardIosOutlinedIcon />
           </IconButton>
@@ -160,7 +160,7 @@ function TimeCurves ({ data, chartType, period }) {
             size="small"
             inputVariant="outlined"
             onChange={setCompareDate}
-            shouldDisableDate={(date) => moment(date).isSame(currentDate, 'day')}
+            shouldDisableDate={(date) => dayjs(date).isSame(currentDate, 'day')}
             format="DD/MM/YYYY"
             InputProps={{
               startAdornment: <IconButton><TodayOutlinedIcon /></IconButton>
@@ -177,13 +177,13 @@ function TimeCurves ({ data, chartType, period }) {
           <Counter
             value={totalKwh}
             title="Total diària"
-            date={moment(currentDate).format('DD/MM/YYYY')}
+            date={dayjs(currentDate).format('DD/MM/YYYY')}
           />
           { compareDate &&
             <Counter
               value={compareTotalKwh}
               title="Total diària"
-              date={moment(compareDate).format('DD/MM/YYYY')}
+              date={dayjs(compareDate).format('DD/MM/YYYY')}
               color="secondary"
             />
           }

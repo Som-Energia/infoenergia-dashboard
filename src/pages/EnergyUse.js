@@ -2,6 +2,10 @@ import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
 
+import dayjs from 'dayjs'
+import 'dayjs/locale/ca'
+import 'dayjs/locale/es'
+
 import TipicialDailyProfile from '../containers/TipicalDailyProfile'
 import TipicalWeeklyProfile from '../containers/TipicalWeeklyProfile'
 import LastMonthProfile from '../containers/LastMonthsProfile'
@@ -16,6 +20,7 @@ function EnergyUse (props) {
 
   useEffect(() => {
     language && i18n.changeLanguage(language)
+    language ? dayjs.locale(language) : dayjs.locale('es')
   }, [language, i18n])
 
   const tabs = [

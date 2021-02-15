@@ -2,10 +2,6 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
 import * as serviceWorker from './serviceWorker'
-import moment from 'moment'
-import 'moment/locale/ca'
-
-moment.locale('ca')
 
 const root = document.getElementById('root')
 const props = {}
