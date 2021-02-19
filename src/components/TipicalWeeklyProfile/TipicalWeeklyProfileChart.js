@@ -44,7 +44,7 @@ const formatTooltip = (value, name) => {
 
 const formatLabel = (value) => {
   const [day, hour] = value.split('-')
-  return `${formatDayHour(day, hour)}h`
+  return `${formatDayHour(parseInt(day) + 1, hour)}h`
 }
 
 const TipicalWeeklyProfileChart = ({ data }) => {

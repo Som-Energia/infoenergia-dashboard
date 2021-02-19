@@ -13,7 +13,7 @@ export const formatDay = (weekDay) => {
 export const formatDayHour = (day, hour) => {
   var isoWeek = require('dayjs/plugin/isoWeek')
   dayjs.extend(isoWeek)
-  return dayjs().hour(hour).isoWeekday(day).format('dddd hh')
+  return dayjs().hour(hour).isoWeekday(day).format('dddd HH')
 }
 
 export const formatkWh = (item) => {
