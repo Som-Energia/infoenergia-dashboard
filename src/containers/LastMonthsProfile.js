@@ -16,6 +16,7 @@ const ChartWrapper = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   column-gap: 32px;
   min-height: 283px;
+  margin-top: 16px;
 `
 
 const TopWrapper = styled.div`
@@ -107,7 +108,7 @@ function LastMonthProfile (props) {
           <Counter
             title={t('STAND_DAILY_USE')}
             value={ data?.levels ? data?.levels[1]?.kWh : '-'}
-            date="Últims 3 mesos"
+            date={t('LAST_3_MONTHS')}
           />
         </CounterWrapper>
 
@@ -123,7 +124,7 @@ function LastMonthProfile (props) {
             : data?.months
               ? data?.months.map((month, idx) => (
                   <div key={idx}>
-                    <CalendarMonth month={month} consum={data?.consumption} levels={data?.levels} />
+                    <CalendarMonth month={month} consum={data?.consum} levels={data?.levels} />
                   </div>
                 )).reverse()
               : data?.errors

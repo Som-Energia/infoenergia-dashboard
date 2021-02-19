@@ -53,14 +53,15 @@ const findConsumDay = (consums, day) => {
 
 const ConsumDay = (props) => {
   const { day, consum, levels } = props
+  const [low, hight] = levels
   const consumDay = consum?.[0]?.kWh || 0
-  let className = ''
 
-  if (consumDay < levels?.[1]?.kWh) {
+  let className = ''
+  if (consumDay < low?.kWh) {
     className = 'low'
-  } else if (consumDay < levels?.[1]?.kWh) {
+  } else if (consumDay < hight?.kWh) {
     className = 'normal'
-  } else if (consumDay > levels?.[1]?.kWh) {
+  } else if (consumDay > hight?.kWh) {
     className = 'hight'
   } else {
     className = ''
@@ -74,9 +75,13 @@ const ConsumDay = (props) => {
 
 const CalendarMonth = (props) => {
   const { month, consum, levels } = props
+  const currentMonth = `${month?.fullMonth}`.slice(-2)
+  const currentYear = `${month?.fullMonth}`.slice(0,4)
+  const fullMonth = month?.fullMonth ? dayjs(`${currentMonth} ${currentYear}`, 'MM YYYY', true).format('MMMM') : ''
+  
   return (
     <>
-      <MonthName>{ dayjs(month?.fullMonth, 'YYYYMM').format('MMMM')}</MonthName>
+      <MonthName>{fullMonth}</MonthName>
       <Calendar>
         {
           month?.arrayDays.map((week, weekIdx) => (
