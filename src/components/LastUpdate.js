@@ -21,7 +21,7 @@ const LastUpdate = (props) => {
   const { t } = useTranslation()
   return (
     <LastUpdateWrapper>
-      {t('LAST_UPDATE')}: <span>{ date ? dayjs(date).format('DD/MM/YYYY HH:mm:ss') : '-' }</span>
+      {t('LAST_UPDATE')}: <span>{ date ? dayjs(date).format('DD/MM/YYYY HH:mm') : '-' }</span>
     </LastUpdateWrapper>
   )
 }
