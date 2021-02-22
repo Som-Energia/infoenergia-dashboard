@@ -105,12 +105,21 @@ const NoDataMessage = styled.h3`
   font-weight: 400;
 `
 
+const ScrollContainer = styled.div`
+  width: 100%;
+  overflow-x: scroll;
+`
+
+const ScrollWrapper = styled.div`
+  min-width: 700px;
+`
+
 function SeasonalProfile (props) {
   const { contract, token } = props
   const { t } = useTranslation()
   const [data, setData] = useState({})
   const [isLoading, setIsLoading] = useState(true)
-  const [seasonFilter, setSeasonFilter] = useState('summer')
+  const [seasonFilter, setSeasonFilter] = useState('heating')
 
   const handleClick = (event, season) => {
     event.preventDefault()
@@ -138,8 +147,12 @@ function SeasonalProfile (props) {
       {
         isLoading
           ? <Skeleton height={300}  width="100%" />
-          : data?.price
-            ? <SeasonalProfileBarChart data={data} />
+          : data?.consumption
+          ? <ScrollContainer>
+              <ScrollWrapper>
+                <SeasonalProfileBarChart data={data} />
+              </ScrollWrapper>
+            </ScrollContainer>
             : data?.errors
               ? <NoDataMessage>{t(data.errors)}</NoDataMessage>
               : <NoDataMessage>{t('NO_DATA')}</NoDataMessage>
