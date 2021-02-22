@@ -19,6 +19,7 @@ export const Title = styled.h3`
   white-space: wrap;
   margin-left: 20px;
   margin-bottom: 8px;
+  margin-top: 20px;
 `
 
 export const Wrapper = styled.div`

@@ -94,6 +94,15 @@ const ChartWrapper = styled.div`
   width: 100%;
 `
 
+const ScrollContainer = styled.div`
+  width: 100%;
+  overflow-x: scroll;
+`
+
+const ScrollWrapper = styled.div`
+  min-width: 700px;
+`
+
 const TipicalWeeklyProfile = (props) => {
   const { contract, token } = props
   const { t } = useTranslation()
@@ -120,23 +129,27 @@ const TipicalWeeklyProfile = (props) => {
           date={t('LAST_12_MONTHS')}
         />
       </CounterWrapper>
-      <DayTypeWrapper>
-        <DayTypeWrapperDaily>
-          { t('BETWEEN_WEEKDAYS') }
-        </DayTypeWrapperDaily>
-        <DayTypeWrapperWeekend>
-          { t('WEEKEND') }
-        </DayTypeWrapperWeekend>
-      </DayTypeWrapper>
-      <ChartWrapper>
-      {
-        isLoading
-          ? <Skeleton height={300}  width="100%" />
-          : data?.avgWeekCCH
-            ? <TipicalWeeklyProfileChart data={{ avgWeekCCH: data?.avgWeekCCH, formatAvgWeekCCH: data?.formatAvgWeekCCH }} />
-            : data?.errors ? <NoDataMessage>{t(data.errors)}</NoDataMessage> : <NoDataMessage>{t('NO_DATA')}</NoDataMessage>
-      }
-      </ChartWrapper>
+      <ScrollContainer>
+        <ScrollWrapper>
+          <DayTypeWrapper>
+            <DayTypeWrapperDaily>
+              { t('BETWEEN_WEEKDAYS') }
+            </DayTypeWrapperDaily>
+            <DayTypeWrapperWeekend>
+              { t('WEEKEND') }
+            </DayTypeWrapperWeekend>
+          </DayTypeWrapper>
+          <ChartWrapper>
+          {
+            isLoading
+              ? <Skeleton height={300}  width="100%" />
+              : data?.avgWeekCCH
+                ? <TipicalWeeklyProfileChart data={{ avgWeekCCH: data?.avgWeekCCH, formatAvgWeekCCH: data?.formatAvgWeekCCH }} />
+                : data?.errors ? <NoDataMessage>{t(data.errors)}</NoDataMessage> : <NoDataMessage>{t('NO_DATA')}</NoDataMessage>
+          }
+          </ChartWrapper>
+        </ScrollWrapper>
+      </ScrollContainer>
       <WeeklyMediumWrapper>
         <DailyMediumWrapper>
           <MediumValue>{data?.weekValue || '-'} kWh</MediumValue>

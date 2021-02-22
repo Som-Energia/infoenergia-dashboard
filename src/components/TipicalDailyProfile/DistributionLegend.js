@@ -24,12 +24,16 @@ const DistributionLegend = ({ values, colors, data }) => {
         data !== undefined
           ? <ul style={classes.list}>
             {
-              Object.keys(values).map(value => (
-                <li key={value} style={classes.listItem}>
-                  <span style={{ ...classes.colorSample, backgroundColor: colors[value] }}></span>
-                  <span>{ values[value] !== undefined ? values[value] : '-' }: <b>{ data[value] !== undefined ? data[value] : '-' }%</b></span>
-                </li>
-              ))
+              Object.keys(values).map(value =>
+                {
+                  return data[value] !== undefined ?
+                    <li key={values[value]} style={classes.listItem}>
+                      <span style={{ ...classes.colorSample, backgroundColor: colors[value] }}></span>
+                      <span>{ values[value] !== undefined ? values[value] : '-' } <b>{ data[value] !== undefined ? data[value] : '-' }%</b></span>
+                    </li>
+                    : null
+                }
+              )
             }
           </ul>
           : ''

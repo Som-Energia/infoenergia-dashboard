@@ -75,6 +75,15 @@ const Separator = styled.div`
   width: 100%;
 `
 
+const ScrollContainer = styled.div`
+  width: 100%;
+  overflow-x: scroll;
+`
+
+const ScrollWrapper = styled.div`
+  min-width: 700px;
+`
+
 function TipicalDailyProfile (props) {
   const { contract, token } = props
   const { t } = useTranslation()
@@ -109,7 +118,11 @@ function TipicalDailyProfile (props) {
           isLoading
             ? <Skeleton height={300} />
             : data?.dailyTypicalProfile
-              ? <TipicalDailyProfileChart data={data?.dailyTypicalProfile} />
+              ? <ScrollContainer>
+                  <ScrollWrapper>
+                    <TipicalDailyProfileChart data={data?.dailyTypicalProfile} />
+                  </ScrollWrapper>
+                </ScrollContainer>              
               : data?.errors ? <NoDataMessage>{t(data.errors)}</NoDataMessage> : <NoDataMessage>{t('NO_DATA')}</NoDataMessage>
         }
       </Grid>
