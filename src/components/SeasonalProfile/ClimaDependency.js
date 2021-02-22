@@ -70,13 +70,13 @@ const ClimaDependency = ({ data }) => {
           data === 'nodata'
             ? <NoDataMessage>{t('NO_DATA')}</NoDataMessage>
             : <DependecyLevels>
-              { levels.map(level => (
-              <DependecyLevel key={level} className={ level === data ? 'active' : null }>
-                <div className="edge" />
-                <Level>{t(level.toUpperCase())}</Level>
-                <div className="edge" />
-              </DependecyLevel>
-            ))
+                { levels.map(level => (
+                  <DependecyLevel key={level} className={ level === data ? 'active' : null }>
+                    <div className="edge" />
+                    <Level>{t(level.toUpperCase())}</Level>
+                    <div className="edge" />
+                  </DependecyLevel>
+              ))
               }
               </DependecyLevels>
         }

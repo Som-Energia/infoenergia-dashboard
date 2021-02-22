@@ -40,5 +40,7 @@
   "LOW": "Baixa",
   "MODERATE": "Moderada",
   "HIGHT": "Alta",
-  "LAST_UPDATE": "Darrera actualització"
+  "LAST_UPDATE": "Darrera actualització",
+  "COOLING": "Hivern",
+  "HEATING": "Estiu"
 }

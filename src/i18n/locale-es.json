@@ -41,6 +41,8 @@
   "MODERATE": "Moderada",
   "HIGHT": "Alta",
   "LAST_UPDATE": "Actualizado",
+  "COOLING": "Invierno",
+  "HEATING": "Verano",
 
   "required_last_3_consumption_data": "No disponemos de suficientes datos",
   "required_calendar_data": "No disponemos de suficientes datos"
