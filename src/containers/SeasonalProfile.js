@@ -8,7 +8,84 @@ import SeasonalProfileBarChart from '../components/SeasonalProfile/SeasonalProfi
 import ClimaDependency from '../components/SeasonalProfile/ClimaDependency'
 import LastUpdate from '../components/LastUpdate'
 
+import { ScrollWrapper, ScrollContainer } from '../components/Utils'
+
 import { getSeasonalProfile } from '../services/api'
+
+function SeasonalProfile (props) {
+  const { contract, token } = props
+  const { t } = useTranslation()
+  const [data, setData] = useState({})
+  const [isLoading, setIsLoading] = useState(true)
+  const [seasonFilter, setSeasonFilter] = useState('heating')
+
+  const handleClick = (event, season) => {
+    event.preventDefault()
+    setSeasonFilter(season)
+  }
+
+  useEffect(() => {
+    getSeasonalProfile(contract, token)
+      .then(response => {
+        setData(response)
+        setIsLoading(false)
+      }).catch(error => {
+        console.log(error)
+        setIsLoading(false)
+      })
+  }, [contract, token])
+
+  return (
+    <>
+      <SelectorWrapper>
+        <SelectorBox>
+          <SelectorValue>{ t('LAST_12_MONTHS') }</SelectorValue>
+        </SelectorBox>
+      </SelectorWrapper>
+      {
+        isLoading
+          ? <Skeleton height={300}  width="100%" />
+          : data?.consumption
+          ? <ScrollContainer>
+              <ScrollWrapper>
+                <SeasonalProfileBarChart data={data} />
+              </ScrollWrapper>
+            </ScrollContainer>
+            : data?.errors
+              ? <NoDataMessage>{t(data.errors)}</NoDataMessage>
+              : <NoDataMessage>{t('NO_DATA')}</NoDataMessage>
+      }
+      <Wrapper>
+        {
+          isLoading
+            ? <Skeleton height={230} width="100%" />
+            : <>
+              <TabWrapper>
+                <Title>{ t('CLIMATE_DEPENDENCY') }<span> { t('LAST_36_NONTH_BASE') }</span></Title>
+                <ButtonsWrapper>
+                  {
+                    Object.keys(data?.climaticDependence ? data?.climaticDependence : [])
+                      .map(season => (
+                        <Button
+                          key={season}
+                          className={ seasonFilter === season ? 'active' : null }
+                          onClick={event => handleClick(event, season)}>
+                          {t(season.toUpperCase())}
+                        </Button>
+                      ))
+                  }
+                </ButtonsWrapper>
+              </TabWrapper>
+              <ClimaDependency data={data?.climaticDependence && data?.climaticDependence[seasonFilter]} />
+            </>
+        }
+      </Wrapper>
+      <LastUpdate date={data?.updated} />
+    </>
+  )
+}
+
+export default SeasonalProfile
 
 const Wrapper = styled.div`
   background-color: #f2f2f2;
@@ -104,87 +181,3 @@ const NoDataMessage = styled.h3`
   min-height: 300px;
   font-weight: 400;
 `
-
-const ScrollContainer = styled.div`
-  width: 100%;
-  overflow-x: scroll;
-`
-
-const ScrollWrapper = styled.div`
-  min-width: 700px;
-`
-
-function SeasonalProfile (props) {
-  const { contract, token } = props
-  const { t } = useTranslation()
-  const [data, setData] = useState({})
-  const [isLoading, setIsLoading] = useState(true)
-  const [seasonFilter, setSeasonFilter] = useState('heating')
-
-  const handleClick = (event, season) => {
-    event.preventDefault()
-    setSeasonFilter(season)
-  }
-
-  useEffect(() => {
-    getSeasonalProfile(contract, token)
-      .then(response => {
-        setData(response)
-        setIsLoading(false)
-      }).catch(error => {
-        console.log(error)
-        setIsLoading(false)
-      })
-  }, [contract, token])
-
-  return (
-    <>
-      <SelectorWrapper>
-        <SelectorBox>
-          <SelectorValue>{ t('LAST_12_MONTHS') }</SelectorValue>
-        </SelectorBox>
-      </SelectorWrapper>
-      {
-        isLoading
-          ? <Skeleton height={300}  width="100%" />
-          : data?.consumption
-          ? <ScrollContainer>
-              <ScrollWrapper>
-                <SeasonalProfileBarChart data={data} />
-              </ScrollWrapper>
-            </ScrollContainer>
-            : data?.errors
-              ? <NoDataMessage>{t(data.errors)}</NoDataMessage>
-              : <NoDataMessage>{t('NO_DATA')}</NoDataMessage>
-      }
-      <Wrapper>
-        {
-          isLoading
-            ? <Skeleton height={230} width="100%" />
-            : <>
-              <TabWrapper>
-                <Title>{ t('CLIMATE_DEPENDENCY') }<span> { t('LAST_36_NONTH_BASE') }</span></Title>
-                <ButtonsWrapper>
-                  {
-                    Object.keys(data?.climaticDependence ? data?.climaticDependence : [])
-                      .map(season => (
-                        <Button
-                          key={season}
-                          className={ seasonFilter === season ? 'active' : null }
-                          onClick={event => handleClick(event, season)}>
-                          {t(season.toUpperCase())}
-                        </Button>
-                      ))
-                  }
-                </ButtonsWrapper>
-              </TabWrapper>
-              <ClimaDependency data={data?.climaticDependence && data?.climaticDependence[seasonFilter]} />
-            </>
-        }
-      </Wrapper>
-      <LastUpdate date={data?.updated} />
-    </>
-  )
-}
-
-export default SeasonalProfile

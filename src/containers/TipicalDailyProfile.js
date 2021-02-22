@@ -12,77 +12,9 @@ import LastUpdate from '../components/LastUpdate'
 import DistributionByPeriod from './TipicalDailyProfile/DistributionByPeriod'
 import DistributionByUserType from './TipicalDailyProfile/DistributionByUserType'
 
+import { ScrollWrapper, ScrollContainer } from '../components/Utils'
+
 import { getDailyProfile } from '../services/api'
-
-const Widget = styled.div`
-    min-height: 220px;
-    padding: 0 16px;
-    background-color: #f2f2f2;
-    h3 {
-      white-space: nowrap;
-    }
-    display: flex;
-    flex-direction: column;
-`
-const Legend = styled.div`
-  display: flex;
-  align-items: center;
-  background-color: #f2f2f2;
-  margin-bottom: 16px;
-  padding: 16px 12px;
-  justify-content: flex-start;
-  &:first-child {
-    margin-bottom: 0;
-    @media (min-width: 768px) {
-      padding-bottom: 16px;
-    }
-  }
-  &.text-right {
-    @media (min-width: 768px) {
-      justify-content: flex-end;
-    }
-  }
-  .vall {
-    width: 16px;
-    height: 16px;
-    display: inline-block;
-    margin: 0 8px;
-    background-color: #96b633;
-  }
-  .punta {
-    width: 16px;
-    height: 16px;
-    display: inline-block;
-    margin: 0 8px;
-    background-color: #f2970f;
-  }
-`
-const CounterWrapper = styled.div`
-  padding-top: 4px;
-`
-
-const NoDataMessage = styled.h3`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 300px;
-  font-weight: 400;
-`
-
-const Separator = styled.div`
-  display: block;
-  margin-top: 16px;
-  width: 100%;
-`
-
-const ScrollContainer = styled.div`
-  width: 100%;
-  overflow-x: scroll;
-`
-
-const ScrollWrapper = styled.div`
-  min-width: 700px;
-`
 
 function TipicalDailyProfile (props) {
   const { contract, token } = props
@@ -168,3 +100,64 @@ function TipicalDailyProfile (props) {
 }
 
 export default TipicalDailyProfile
+
+const Widget = styled.div`
+    min-height: 220px;
+    padding: 0 16px;
+    background-color: #f2f2f2;
+    h3 {
+      white-space: nowrap;
+    }
+    display: flex;
+    flex-direction: column;
+`
+const Legend = styled.div`
+  display: flex;
+  align-items: center;
+  background-color: #f2f2f2;
+  margin-bottom: 16px;
+  padding: 16px 12px;
+  justify-content: flex-start;
+  &:first-child {
+    margin-bottom: 0;
+    @media (min-width: 768px) {
+      padding-bottom: 16px;
+    }
+  }
+  &.text-right {
+    @media (min-width: 768px) {
+      justify-content: flex-end;
+    }
+  }
+  .vall {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    margin: 0 8px;
+    background-color: #96b633;
+  }
+  .punta {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    margin: 0 8px;
+    background-color: #f2970f;
+  }
+`
+const CounterWrapper = styled.div`
+  padding-top: 4px;
+`
+
+const NoDataMessage = styled.h3`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  font-weight: 400;
+`
+
+const Separator = styled.div`
+  display: block;
+  margin-top: 16px;
+  width: 100%;
+`

@@ -8,7 +8,73 @@ import TipicalWeeklyProfileChart from '../components/TipicalWeeklyProfile/Tipica
 import Counter from '../components/Counter'
 import LastUpdate from '../components/LastUpdate'
 
+import { ScrollWrapper, ScrollContainer } from '../components/Utils'
+
 import { getWeeklyProfile } from '../services/api'
+
+const TipicalWeeklyProfile = (props) => {
+  const { contract, token } = props
+  const { t } = useTranslation()
+  const [data, setData] = useState({})
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    getWeeklyProfile(contract, token)
+      .then(response => {
+        setData(response)
+        setIsLoading(false)
+      }).catch(error => {
+        console.log(error)
+        setIsLoading(false)
+      })
+  }, [contract, token])
+
+  return (
+    <>
+      <CounterWrapper>
+        <Counter
+          title={t('WEEKLY_AVERAGE')}
+          value={data?.value || '-'}
+          date={t('LAST_12_MONTHS')}
+        />
+      </CounterWrapper>
+      <ScrollContainer>
+        <ScrollWrapper>
+          <DayTypeWrapper>
+            <DayTypeWrapperDaily>
+              { t('BETWEEN_WEEKDAYS') }
+            </DayTypeWrapperDaily>
+            <DayTypeWrapperWeekend>
+              { t('WEEKEND') }
+            </DayTypeWrapperWeekend>
+          </DayTypeWrapper>
+          <ChartWrapper>
+          {
+            isLoading
+              ? <Skeleton height={300}  width="100%" />
+              : data?.avgWeekCCH
+                ? <TipicalWeeklyProfileChart data={{ avgWeekCCH: data?.avgWeekCCH, formatAvgWeekCCH: data?.formatAvgWeekCCH }} />
+                : data?.errors ? <NoDataMessage>{t(data.errors)}</NoDataMessage> : <NoDataMessage>{t('NO_DATA')}</NoDataMessage>
+          }
+          </ChartWrapper>
+        </ScrollWrapper>
+      </ScrollContainer>
+      <WeeklyMediumWrapper>
+        <DailyMediumWrapper>
+          <MediumValue>{data?.weekValue || '-'} kWh</MediumValue>
+          <span>{ t('AVG_USE_BETWEEN_WEEKDAY') }</span>
+        </DailyMediumWrapper>
+        <WeekendMediumWrapper>
+          <MediumValue>{data?.weekendValue || '-'} kWh</MediumValue>
+          <span>{ t('AVG_USE_WEEKEND_DAY') }</span>
+        </WeekendMediumWrapper>
+      </WeeklyMediumWrapper>
+      <LastUpdate date={data?.updated} />
+    </>
+  )
+}
+
+export default TipicalWeeklyProfile
 
 const CounterWrapper = styled.div`
   padding-top: 4px;
@@ -93,76 +159,3 @@ const NoDataMessage = styled.h3`
 const ChartWrapper = styled.div`
   width: 100%;
 `
-
-const ScrollContainer = styled.div`
-  width: 100%;
-  overflow-x: scroll;
-`
-
-const ScrollWrapper = styled.div`
-  min-width: 700px;
-`
-
-const TipicalWeeklyProfile = (props) => {
-  const { contract, token } = props
-  const { t } = useTranslation()
-  const [data, setData] = useState({})
-  const [isLoading, setIsLoading] = useState(true)
-
-  useEffect(() => {
-    getWeeklyProfile(contract, token)
-      .then(response => {
-        setData(response)
-        setIsLoading(false)
-      }).catch(error => {
-        console.log(error)
-        setIsLoading(false)
-      })
-  }, [contract, token])
-
-  return (
-    <>
-      <CounterWrapper>
-        <Counter
-          title={t('WEEKLY_AVERAGE')}
-          value={data?.value || '-'}
-          date={t('LAST_12_MONTHS')}
-        />
-      </CounterWrapper>
-      <ScrollContainer>
-        <ScrollWrapper>
-          <DayTypeWrapper>
-            <DayTypeWrapperDaily>
-              { t('BETWEEN_WEEKDAYS') }
-            </DayTypeWrapperDaily>
-            <DayTypeWrapperWeekend>
-              { t('WEEKEND') }
-            </DayTypeWrapperWeekend>
-          </DayTypeWrapper>
-          <ChartWrapper>
-          {
-            isLoading
-              ? <Skeleton height={300}  width="100%" />
-              : data?.avgWeekCCH
-                ? <TipicalWeeklyProfileChart data={{ avgWeekCCH: data?.avgWeekCCH, formatAvgWeekCCH: data?.formatAvgWeekCCH }} />
-                : data?.errors ? <NoDataMessage>{t(data.errors)}</NoDataMessage> : <NoDataMessage>{t('NO_DATA')}</NoDataMessage>
-          }
-          </ChartWrapper>
-        </ScrollWrapper>
-      </ScrollContainer>
-      <WeeklyMediumWrapper>
-        <DailyMediumWrapper>
-          <MediumValue>{data?.weekValue || '-'} kWh</MediumValue>
-          <span>{ t('AVG_USE_BETWEEN_WEEKDAY') }</span>
-        </DailyMediumWrapper>
-        <WeekendMediumWrapper>
-          <MediumValue>{data?.weekendValue || '-'} kWh</MediumValue>
-          <span>{ t('AVG_USE_WEEKEND_DAY') }</span>
-        </WeekendMediumWrapper>
-      </WeeklyMediumWrapper>
-      <LastUpdate date={data?.updated} />
-    </>
-  )
-}
-
-export default TipicalWeeklyProfile
