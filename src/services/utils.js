@@ -1,7 +1,7 @@
 import * as dayjs from 'dayjs'
 
 export const formatNumber = (num) => {
-  return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
+  return num.toLocaleString()
 }
 
 export const formatDay = (weekDay) => {
