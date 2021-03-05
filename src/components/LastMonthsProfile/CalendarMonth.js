@@ -43,7 +43,7 @@ const Day = styled(EmptyDay)`
   &.normal {
     background-color: #96b633;
   },
-  &.hight {
+  &.high {
     background-color: #f2970f;
   }
 `
@@ -53,16 +53,16 @@ const findConsumDay = (consums, day) => {
 
 const ConsumDay = (props) => {
   const { day, consum, levels } = props
-  const [low, hight] = levels
+  const [low, high] = levels
   const consumDay = consum?.[0]?.kWh || 0
 
   let className = ''
   if (consumDay < low?.kWh) {
     className = 'low'
-  } else if (consumDay < hight?.kWh) {
+  } else if (consumDay < high?.kWh) {
     className = 'normal'
-  } else if (consumDay > hight?.kWh) {
-    className = 'hight'
+  } else if (consumDay > high?.kWh) {
+    className = 'high'
   } else {
     className = ''
   }

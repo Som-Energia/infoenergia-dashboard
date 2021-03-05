@@ -74,7 +74,7 @@ function LastMonthProfile (props) {
   const legendData = [
     { color: '#96b633', label: t('USE_REGULAR') },
     { color: '#f2970f', label: t('USE_EXCEPTIONAL') },
-    { color: '#616161', label: t('USE_NULL') }
+    { color: '#616161', label: t('USE_LOW') }
   ]
 
   useEffect(() => {
@@ -124,7 +124,7 @@ function LastMonthProfile (props) {
             : data?.months
               ? data?.months.map((month, idx) => (
                   <div key={idx}>
-                    <CalendarMonth month={month} consum={data?.consum} levels={data?.levels} />
+                    <CalendarMonth month={month} consum={data?.consumption} levels={data?.levels} />
                   </div>
                 )).reverse()
               : data?.errors

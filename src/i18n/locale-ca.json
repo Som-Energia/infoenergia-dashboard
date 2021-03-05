@@ -32,6 +32,7 @@
   "USE_NULL": "nul permanent",
   "USE_EXCEPTIONAL": "excepcional",
   "USE_REGULAR": "habitual",
+  "USE_LOW": "baix",
   "CLIMATE_DEPENDENCY": "Dependència climàtica",
   "LAST_36_NONTH_BASE": "en base als darrers 36 mesos",
   "AUTUMN": "Tardor",
@@ -39,7 +40,7 @@
   "NULL": "Nul·la",
   "LOW": "Baixa",
   "MODERATE": "Moderada",
-  "HIGHT": "Alta",
+  "HIGH": "Alta",
   "LAST_UPDATE": "Darrera actualització",
   "COOLING": "Hivern",
   "HEATING": "Estiu"

@@ -17,7 +17,7 @@ function SeasonalProfile (props) {
   const { t } = useTranslation()
   const [data, setData] = useState({})
   const [isLoading, setIsLoading] = useState(true)
-  const [seasonFilter, setSeasonFilter] = useState('heating')
+  const [seasonFilter, setSeasonFilter] = useState('summer')
 
   const handleClick = (event, season) => {
     event.preventDefault()
@@ -45,7 +45,7 @@ function SeasonalProfile (props) {
       {
         isLoading
           ? <Skeleton height={300}  width="100%" />
-          : data?.consumption
+          : data?.price
           ? <ScrollContainer>
               <ScrollWrapper>
                 <SeasonalProfileBarChart data={data} />
@@ -119,7 +119,7 @@ const SelectorValue = styled.div`
 
 const TabWrapper = styled.div`
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
 `
@@ -155,29 +155,11 @@ const Button = styled.button`
   }
 `
 
-const AdviceWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 16px;
-  flex-wrap: wrap;
-`
-
-const AdviceText = styled.div`
-  margin-top: 8px;
-`
-
-const AdviceButton = styled(Button)`
-  color: #fff;
-  font-weight: 500;
-  background: #96b633;
-  margin-top: 8px;
-`
-
 const NoDataMessage = styled.h3`
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 300px;
   font-weight: 400;
+  font-size: 1.25rem;
 `
