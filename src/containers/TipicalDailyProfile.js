@@ -16,7 +16,9 @@ import { ScrollWrapper, ScrollContainer } from '../components/Utils'
 
 import { getDailyProfile } from '../services/api'
 
-function TipicalDailyProfile (props) {
+import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline'
+
+function TipicalDailyProfile(props) {
   const { contract, token } = props
   const { t } = useTranslation()
 
@@ -25,11 +27,11 @@ function TipicalDailyProfile (props) {
 
   useEffect(() => {
     getDailyProfile(contract, token)
-      .then(response => {
+      .then((response) => {
         setData(response)
         setIsLoading(false)
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error)
         setIsLoading(false)
       })
@@ -42,21 +44,24 @@ function TipicalDailyProfile (props) {
           <Counter
             title={t('DAILY_AVERAGE')}
             value={data?.dailyAvg?.value || '-'}
-            date={t('LAST_12_MONTHS')} />
+            date={t('LAST_12_MONTHS')}
+          />
         </CounterWrapper>
       </Grid>
       <Grid item xs={12}>
-        {
-          isLoading
-            ? <Skeleton height={300} />
-            : data?.dailyTypicalProfile
-              ? <ScrollContainer>
-                  <ScrollWrapper>
-                    <TipicalDailyProfileChart data={data?.dailyTypicalProfile} />
-                  </ScrollWrapper>
-                </ScrollContainer>              
-              : data?.errors ? <NoDataMessage>{t(data.errors)}</NoDataMessage> : <NoDataMessage>{t('NO_DATA')}</NoDataMessage>
-        }
+        {isLoading ? (
+          <Skeleton height={300} />
+        ) : data?.dailyTypicalProfile ? (
+          <ScrollContainer>
+            <ScrollWrapper>
+              <TipicalDailyProfileChart data={data?.dailyTypicalProfile} />
+            </ScrollWrapper>
+          </ScrollContainer>
+        ) : data?.errors ? (
+          <NoDataMessage>{t(data.errors)}</NoDataMessage>
+        ) : (
+          <NoDataMessage>{t('NO_DATA')}</NoDataMessage>
+        )}
       </Grid>
 
       <Separator />
@@ -93,8 +98,14 @@ function TipicalDailyProfile (props) {
         </Grid>
       </Grid>
 
-      <LastUpdate date={data?.updated} />
+      <Message>
+        <div>
+          <ErrorOutlineIcon fontSize="large" />
+        </div>
+        <p>{t('NEW_TOLLS_MESSAGE')}</p>
+      </Message>
 
+      <LastUpdate date={data?.updated} />
     </Grid>
   )
 }
@@ -102,14 +113,11 @@ function TipicalDailyProfile (props) {
 export default TipicalDailyProfile
 
 const Widget = styled.div`
-    min-height: 220px;
-    padding: 0 16px;
-    background-color: #f2f2f2;
-    h3 {
-      white-space: nowrap;
-    }
-    display: flex;
-    flex-direction: column;
+  min-height: 220px;
+  padding: 0 16px;
+  background-color: #f2f2f2;
+  display: flex;
+  flex-direction: column;
 `
 const Legend = styled.div`
   display: flex;
@@ -160,4 +168,19 @@ const Separator = styled.div`
   display: block;
   margin-top: 16px;
   width: 100%;
+`
+
+const Message = styled.div`
+  background-color: #f2f2f2;
+  padding: 8px 24px;
+  margin-top: 16px;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  & > div {
+    padding-right: 24px;
+  }
+  p {
+    line-height: 1.6rem;
+  }
 `

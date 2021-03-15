@@ -43,5 +43,6 @@
   "HIGH": "Alta",
   "LAST_UPDATE": "Darrera actualització",
   "COOLING": "Hivern",
-  "HEATING": "Estiu"
+  "HEATING": "Estiu",
+  "NEW_TOLLS_MESSAGE": "A partir de l’1 de juny es preveu l’entrada en vigor de la nova tarifa domèstica. Amb aquest canvi, tots els contractes de llum passaran a tenir 3 períodes horaris, diferents dels mostrats en aquesta gràfica. Per més informació, fes clic  aquí."
 }
