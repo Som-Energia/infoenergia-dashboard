@@ -6,7 +6,7 @@ export const ScrollContainer = styled.div`
   scrollbar-width: none;
   &&::-webkit-scrollbar {
     display: none;
-  }  
+  }
 `
 
 export const ScrollWrapper = styled.div`

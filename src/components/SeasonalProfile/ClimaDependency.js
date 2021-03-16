@@ -2,12 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
 
-const levels = [
-  'null',
-  'low',
-  'moderate',
-  'high'
-]
+const levels = ['null', 'low', 'moderate', 'high']
 
 const ClimaDependency = ({ data }) => {
   const { t } = useTranslation()
@@ -15,21 +10,22 @@ const ClimaDependency = ({ data }) => {
 
   return (
     <div>
-        {
-          data === 'nothing'
-            ? <NoDataMessage>{t('NO_DATA')}</NoDataMessage>
-            : <DependecyLevels>
-              { levels.map(level => (
-                <DependecyLevel key={level} className={ level === data ? 'active' : null }>
-                  <div className="edge" />
-                  <Level>{t(level.toUpperCase())}</Level>
-                  <div className="edge" />
-                </DependecyLevel>
-              ))
-              }
-              </DependecyLevels>
-        }
-
+      {data === 'nothing' ? (
+        <NoDataMessage>{t('NO_DATA')}</NoDataMessage>
+      ) : (
+        <DependecyLevels>
+          {levels.map((level) => (
+            <DependecyLevel
+              key={level}
+              className={level === data ? 'active' : null}
+            >
+              <div className="edge" />
+              <Level>{t(level.toUpperCase())}</Level>
+              <div className="edge" />
+            </DependecyLevel>
+          ))}
+        </DependecyLevels>
+      )}
     </div>
   )
 }
@@ -39,8 +35,13 @@ export default ClimaDependency
 const DependecyLevels = styled.div`
   display: flex;
   margin-top: 16px;
-  background: rgb(150,182,51);
-  background: linear-gradient(90deg, rgba(150,182,51,1) 0%, rgba(242,151,15,1) 80%, rgba(249,82,18,1) 100%);
+  background: rgb(150, 182, 51);
+  background: linear-gradient(
+    90deg,
+    rgba(150, 182, 51, 1) 0%,
+    rgba(242, 151, 15, 1) 80%,
+    rgba(249, 82, 18, 1) 100%
+  );
 `
 
 const DependecyLevel = styled.div`

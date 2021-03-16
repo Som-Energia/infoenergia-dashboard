@@ -50,16 +50,16 @@ const ExtraButtonsWrapper = styled.div`
   }
 `
 
-function TimeCurvesPage () {
+function TimeCurvesPage() {
   const [data, setData] = useState([])
   const [type, setType] = useState('LINE_CHART_TYPE')
 
   useEffect(function () {
     getTimeCurves()
-      .then(response => {
-        setData(response ? response : [])
+      .then((response) => {
+        response ? setData(response) : setData([])
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error)
         setData([])
       })
@@ -68,14 +68,21 @@ function TimeCurvesPage () {
   const ExtraControls = () => (
     <ExtraButtonsWrapper>
       <ul>
-        <li className={ (type === 'LINE_CHART_TYPE') ? 'active' : null }>
-          <button onClick={ () => setType('LINE_CHART_TYPE') }><TimelineOutlinedIcon /></button>
+        <li className={type === 'LINE_CHART_TYPE' ? 'active' : null}>
+          <button onClick={() => setType('LINE_CHART_TYPE')}>
+            <TimelineOutlinedIcon />
+          </button>
         </li>
-        <li className={ (type === 'BAR_CHART_TYPE') ? 'active' : null }>
-          <button onClick={ () => setType('BAR_CHART_TYPE') }><BarChartOutlinedIcon /></button>
+        <li className={type === 'BAR_CHART_TYPE' ? 'active' : null}>
+          <button onClick={() => setType('BAR_CHART_TYPE')}>
+            <BarChartOutlinedIcon />
+          </button>
         </li>
         <li>
-          <button onClick={ () => console.log('descarrega!') }><GetAppIcon />&nbsp;Descarrega</button>
+          <button onClick={() => console.log('descarrega!')}>
+            <GetAppIcon />
+            &nbsp;Descarrega
+          </button>
         </li>
       </ul>
     </ExtraButtonsWrapper>
@@ -83,21 +90,33 @@ function TimeCurvesPage () {
 
   return (
     <div className="container">
-      <Tabs tabs={[
-        {
-          title: 'Diària',
-          content: <TimeCurves period="DAILY" chartType={type} data={data} />
-        }, {
-          title: 'Setmanal',
-          content: <TimeCurves period="WEEKLY" chartType={type} data={data} />
-        }, {
-          title: 'Mensual',
-          content: <TimeCurves period="MONTHLY" chartType={type} data={data} />
-        }, {
-          title: 'Anual',
-          content: <TimeCurves period="YEARLY" chartType={type} data={data} />
-        }
-      ]} extra={<ExtraControls />} />
+      <Tabs
+        tabs={[
+          {
+            title: 'Diària',
+            content: <TimeCurves period="DAILY" chartType={type} data={data} />,
+          },
+          {
+            title: 'Setmanal',
+            content: (
+              <TimeCurves period="WEEKLY" chartType={type} data={data} />
+            ),
+          },
+          {
+            title: 'Mensual',
+            content: (
+              <TimeCurves period="MONTHLY" chartType={type} data={data} />
+            ),
+          },
+          {
+            title: 'Anual',
+            content: (
+              <TimeCurves period="YEARLY" chartType={type} data={data} />
+            ),
+          },
+        ]}
+        extra={<ExtraControls />}
+      />
     </div>
   )
 }

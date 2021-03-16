@@ -13,7 +13,7 @@ import SeasonalProfile from '../containers/SeasonalProfile'
 
 import Tabs from '../components/Tabs'
 
-function EnergyUse (props) {
+function EnergyUse(props) {
   const { token, contract } = props
   const { language } = useParams()
   const { t, i18n } = useTranslation()
@@ -26,29 +26,28 @@ function EnergyUse (props) {
   const tabs = [
     {
       title: t('TIPICAL_DAILY_PROFILE'),
-      content: <TipicialDailyProfile {...props} />
-    }, {
+      content: <TipicialDailyProfile {...props} />,
+    },
+    {
       title: t('TIPICAL_WEEKLY_PROFILE'),
-      content: <TipicalWeeklyProfile {...props} />
-    }, {
+      content: <TipicalWeeklyProfile {...props} />,
+    },
+    {
       title: t('LAST_3_MONTH_PROFILE'),
-      content: <LastMonthProfile {...props} />
-    }, {
+      content: <LastMonthProfile {...props} />,
+    },
+    {
       title: t('SEASONAL_PROFILE'),
-      content: <SeasonalProfile {...props} />
-    }
+      content: <SeasonalProfile {...props} />,
+    },
   ]
 
-  return (
-    token && contract
-      ?
-      <div>
-        <Tabs tabs={tabs} initialTab={0} />
-      </div>
-      :
-      <div>
-        { t('NO_DATA') }
-      </div>
+  return token && contract ? (
+    <div>
+      <Tabs tabs={tabs} initialTab={0} />
+    </div>
+  ) : (
+    <div>{t('NO_DATA')}</div>
   )
 }
 

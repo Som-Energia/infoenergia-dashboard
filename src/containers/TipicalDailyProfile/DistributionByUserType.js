@@ -8,9 +8,15 @@ import Skeleton from '@material-ui/lab/Skeleton'
 
 import { getDistributionByTypeOfUse } from '../../services/api'
 
-import { Container, Title, Wrapper, ChartWrapper, NoDataMessage } from './DistributionCharts'
+import {
+  Container,
+  Title,
+  Wrapper,
+  ChartWrapper,
+  NoDataMessage,
+} from './DistributionCharts'
 
-export default function DistributionByUserType (props) {
+export default function DistributionByUserType(props) {
   const { contract, token } = props
   const { t } = useTranslation()
   const [data, setData] = useState(false)
@@ -19,21 +25,22 @@ export default function DistributionByUserType (props) {
   const COLORS = {
     permanent: '#f2970f',
     peak: '#616161',
-    regular: '#96b633'
+    regular: '#96b633',
   }
 
   const VALUES = {
     permanent: t('PERMANENT'),
     peak: t('PIC'),
-    regular: t('REGULAR')
+    regular: t('REGULAR'),
   }
 
   useEffect(() => {
     getDistributionByTypeOfUse(contract, token)
-      .then(response => {
+      .then((response) => {
         setData(response)
         setIsLoading(false)
-      }).catch(error => {
+      })
+      .catch((error) => {
         console.log(error)
         setIsLoading(false)
       })
@@ -41,23 +48,23 @@ export default function DistributionByUserType (props) {
 
   return (
     <Wrapper>
-      {
-        isLoading
-          ? <Skeleton height={210} width="100%" />
-          : !data
-            ? <NoDataMessage>{t('NO_DATA')}</NoDataMessage>
-            : <>
-                <Title>{t('DISTRIB_BY_USE_TYPE')}</Title>
-                <Container>
-                  <div className="max-w-50 ml-5">
-                    <DistributionLegend colors={COLORS} values={VALUES} data={data} />
-                  </div>
-                  <ChartWrapper>
-                    <DistributionPieChart colors={COLORS} data={data} />
-                  </ChartWrapper>
-              </Container>
-            </>
-      }
+      {isLoading ? (
+        <Skeleton height={210} width="100%" />
+      ) : !data ? (
+        <NoDataMessage>{t('NO_DATA')}</NoDataMessage>
+      ) : (
+        <>
+          <Title>{t('DISTRIB_BY_USE_TYPE')}</Title>
+          <Container>
+            <div className="max-w-50 ml-5">
+              <DistributionLegend colors={COLORS} values={VALUES} data={data} />
+            </div>
+            <ChartWrapper>
+              <DistributionPieChart colors={COLORS} data={data} />
+            </ChartWrapper>
+          </Container>
+        </>
+      )}
     </Wrapper>
   )
 }

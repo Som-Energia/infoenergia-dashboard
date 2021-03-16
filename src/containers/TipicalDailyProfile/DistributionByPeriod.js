@@ -8,12 +8,18 @@ import DistributionLegend from '../../components/TipicalDailyProfile/Distributio
 
 import { getDistributionByPeriod } from '../../services/api'
 
-import { Container, Title, Wrapper, ChartWrapper, NoDataMessage } from './DistributionCharts'
+import {
+  Container,
+  Title,
+  Wrapper,
+  ChartWrapper,
+  NoDataMessage,
+} from './DistributionCharts'
 
 const COLORS = {
   peakPercentage: '#f2970f',
   valleyPercentage: '#96b633',
-  superValleyPercentage: '#616161'
+  superValleyPercentage: '#616161',
 }
 
 const DistributionByPeriod = (props) => {
@@ -25,40 +31,40 @@ const DistributionByPeriod = (props) => {
   const VALUES = {
     peakPercentage: t('PICK'),
     valleyPercentage: t('VALLEY'),
-    superValleyPercentage: t('SUPERVALLEY')
+    superValleyPercentage: t('SUPERVALLEY'),
   }
 
   useEffect(() => {
     getDistributionByPeriod(contract, token)
-      .then(response => {
+      .then((response) => {
         setData(response)
         setIsLoading(false)
-      }).catch(error => {
-        console.log(error)
+      })
+      .catch((error) => {
+        console.error(error)
         setIsLoading(false)
       })
   }, [contract, token])
 
   return (
     <Wrapper>
-      {
-        isLoading
-          ? <Skeleton height={210} width="100%" />
-          :
-            !data
-              ? <NoDataMessage>{t('NO_DATA')}</NoDataMessage>
-              : <>
-                <Title>{t('DISTRIB_BY_PERIOD')}</Title>
-                <Container>
-                  <div className="max-w-50 ml-5">
-                    <DistributionLegend colors={COLORS} values={VALUES} data={data} />
-                  </div>
-                  <ChartWrapper>
-                    <DistributionPieChart colors={COLORS} data={data} />
-                  </ChartWrapper>
-                </Container>
-                </>
-      }
+      {isLoading ? (
+        <Skeleton height={210} width="100%" />
+      ) : !data ? (
+        <NoDataMessage>{t('NO_DATA')}</NoDataMessage>
+      ) : (
+        <>
+          <Title>{t('DISTRIB_BY_PERIOD')}</Title>
+          <Container>
+            <div className="max-w-50 ml-5">
+              <DistributionLegend colors={COLORS} values={VALUES} data={data} />
+            </div>
+            <ChartWrapper>
+              <DistributionPieChart colors={COLORS} data={data} />
+            </ChartWrapper>
+          </Container>
+        </>
+      )}
     </Wrapper>
   )
 }

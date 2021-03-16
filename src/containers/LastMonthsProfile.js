@@ -44,7 +44,7 @@ const LegendColor = styled.div`
   width: 32px;
   height: 32px;
   margin-right: 8px;
-  background-color: ${props => props.color};
+  background-color: ${(props) => props.color};
 `
 
 const LegendLabel = styled.div`
@@ -65,7 +65,7 @@ const NoDataMessage = styled.h3`
   font-weight: 400;
 `
 
-function LastMonthProfile (props) {
+function LastMonthProfile(props) {
   const { contract, token } = props
   const [data, setData] = useState({})
   const { t } = useTranslation()
@@ -74,15 +74,16 @@ function LastMonthProfile (props) {
   const legendData = [
     { color: '#96b633', label: t('USE_REGULAR') },
     { color: '#f2970f', label: t('USE_EXCEPTIONAL') },
-    { color: '#616161', label: t('USE_LOW') }
+    { color: '#616161', label: t('USE_LOW') },
   ]
 
   useEffect(() => {
     getMonthsProfile(contract, token)
-      .then(response => {
+      .then((response) => {
         setData(response)
         setIsLoading(false)
-      }).catch(error => {
+      })
+      .catch((error) => {
         console.log(error)
         setIsLoading(false)
       })
@@ -92,49 +93,51 @@ function LastMonthProfile (props) {
     <>
       <TopWrapper>
         <LegendWrapper>
-          {
-            legendData.map(item => (
-              <LegendItem key={item.label}>
-                <LegendColor color={item.color} />
-                <LegendLabel>
-                  { t('ENERGY_USE') }
-                  <div>{item.label}</div>
-                </LegendLabel>
-              </LegendItem>
-            ))
-          }
+          {legendData.map((item) => (
+            <LegendItem key={item.label}>
+              <LegendColor color={item.color} />
+              <LegendLabel>
+                {t('ENERGY_USE')}
+                <div>{item.label}</div>
+              </LegendLabel>
+            </LegendItem>
+          ))}
         </LegendWrapper>
         <CounterWrapper>
           <Counter
             title={t('STAND_DAILY_USE')}
-            value={ data?.levels ? data?.levels[1]?.kWh : '-'}
+            value={data?.levels ? data?.levels[1]?.kWh : '-'}
             date={t('LAST_3_MONTHS')}
           />
         </CounterWrapper>
-
       </TopWrapper>
       <ChartWrapper>
-        {
-          isLoading
-            ? <>
-              <Skeleton height="100%" />
-              <Skeleton height="100%" />
-              <Skeleton height="100%" />
-            </>
-            : data?.months
-              ? data?.months.map((month, idx) => (
-                  <div key={idx}>
-                    <CalendarMonth month={month} consum={data?.consumption} levels={data?.levels} />
-                  </div>
-                )).reverse()
-              : data?.errors
-                ? <NoDataMessage>{t(data.errors)}</NoDataMessage>
-                : <NoDataMessage>{t('NO_DATA')}</NoDataMessage>
-        }
+        {isLoading ? (
+          <>
+            <Skeleton height="100%" />
+            <Skeleton height="100%" />
+            <Skeleton height="100%" />
+          </>
+        ) : data?.months ? (
+          data?.months
+            .map((month, idx) => (
+              <div key={idx}>
+                <CalendarMonth
+                  month={month}
+                  consum={data?.consumption}
+                  levels={data?.levels}
+                />
+              </div>
+            ))
+            .reverse()
+        ) : data?.errors ? (
+          <NoDataMessage>{t(data.errors)}</NoDataMessage>
+        ) : (
+          <NoDataMessage>{t('NO_DATA')}</NoDataMessage>
+        )}
       </ChartWrapper>
       <LastUpdate date={data?.updated} />
     </>
-
   )
 }
 

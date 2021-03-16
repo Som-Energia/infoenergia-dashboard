@@ -52,13 +52,13 @@ const periodUnit = (period) => {
 const filterDataWithPeriod = (refDate, period, data, charType) => {
   switch (period) {
     case 'DAILY':
-      return data.filter(item => dayjs(item?.date).isSame(refDate, 'day'))
+      return data.filter((item) => dayjs(item?.date).isSame(refDate, 'day'))
     case 'WEEKLY':
-      return data.filter(item => dayjs(item?.date).isSame(refDate, 'week'))
+      return data.filter((item) => dayjs(item?.date).isSame(refDate, 'week'))
     case 'MONTHLY':
-      return data.filter(item => dayjs(item?.date).isSame(refDate, 'month'))
+      return data.filter((item) => dayjs(item?.date).isSame(refDate, 'month'))
     case 'YEARLY':
-      return data.filter(item => dayjs(item?.date).isSame(refDate, 'year'))
+      return data.filter((item) => dayjs(item?.date).isSame(refDate, 'year'))
     default:
       return []
   }
@@ -68,7 +68,7 @@ const totalValueWithData = (data) => {
   return data.reduce((prev, current) => prev + current?.value, 0)
 }
 
-function TimeCurves ({ data, chartType, period }) {
+function TimeCurves({ data, chartType, period }) {
   const [minDate, setMinDate] = useState()
   const [maxDate, setMaxDate] = useState()
   const [currentDate, setCurrentDate] = useState()
@@ -100,25 +100,38 @@ function TimeCurves ({ data, chartType, period }) {
     setTotalKwh(sumTotalKwh)
 
     if (compareDate) {
-      const filteredCompare = filterDataWithPeriod(compareDate, period, data, chartType)
+      const filteredCompare = filterDataWithPeriod(
+        compareDate,
+        period,
+        data,
+        chartType
+      )
       setCompareData(filteredCompare)
 
-      const sumCompTotalKwh = (totalValueWithData(filteredCompare) / 1000).toFixed(0)
+      const sumCompTotalKwh = (
+        totalValueWithData(filteredCompare) / 1000
+      ).toFixed(0)
       setCompareTotalKwh(sumCompTotalKwh)
     }
   }, [data, currentDate, period, chartType, compareDate])
 
-  const prevDate = useCallback((event) => {
-    event.preventDefault()
-    const prevDate = dayjs(currentDate).subtract(1, periodUnit(period))
-    setCurrentDate(prevDate)
-  }, [currentDate, period])
+  const prevDate = useCallback(
+    (event) => {
+      event.preventDefault()
+      const prevDate = dayjs(currentDate).subtract(1, periodUnit(period))
+      setCurrentDate(prevDate)
+    },
+    [currentDate, period]
+  )
 
-  const nextDate = useCallback((event) => {
-    event.preventDefault()
-    const nextDate = dayjs(currentDate).add(1, periodUnit(period))
-    setCurrentDate(nextDate)
-  }, [currentDate, period])
+  const nextDate = useCallback(
+    (event) => {
+      event.preventDefault()
+      const nextDate = dayjs(currentDate).add(1, periodUnit(period))
+      setCurrentDate(nextDate)
+    },
+    [currentDate, period]
+  )
 
   return (
     <>
@@ -141,7 +154,11 @@ function TimeCurves ({ data, chartType, period }) {
             onChange={setCurrentDate}
             format="DD/MM/YYYY"
             InputProps={{
-              startAdornment: <IconButton><TodayOutlinedIcon /></IconButton>
+              startAdornment: (
+                <IconButton>
+                  <TodayOutlinedIcon />
+                </IconButton>
+              ),
             }}
           />
           <IconButton
@@ -163,15 +180,18 @@ function TimeCurves ({ data, chartType, period }) {
             shouldDisableDate={(date) => dayjs(date).isSame(currentDate, 'day')}
             format="DD/MM/YYYY"
             InputProps={{
-              startAdornment: <IconButton><TodayOutlinedIcon /></IconButton>
+              startAdornment: (
+                <IconButton>
+                  <TodayOutlinedIcon />
+                </IconButton>
+              ),
             }}
           />
-          {
-            compareDate &&
-              <IconButton onClick={() => setCompareDate(null)}>
-                <ClearIcon />
-              </IconButton>
-          }
+          {compareDate && (
+            <IconButton onClick={() => setCompareDate(null)}>
+              <ClearIcon />
+            </IconButton>
+          )}
         </DateControlsWrapper>
         <CounterWrapper>
           <Counter
@@ -179,31 +199,32 @@ function TimeCurves ({ data, chartType, period }) {
             title="Total diària"
             date={dayjs(currentDate).format('DD/MM/YYYY')}
           />
-          { compareDate &&
+          {compareDate && (
             <Counter
               value={compareTotalKwh}
               title="Total diària"
               date={dayjs(compareDate).format('DD/MM/YYYY')}
               color="secondary"
             />
-          }
+          )}
         </CounterWrapper>
       </ControlsWrapper>
       <div className="row">
         <div className="col-xs-12">
           <ChartWrapper>
-            { chartType === 'LINE_CHART_TYPE'
-              ? <TimeCurvesLineChart
+            {chartType === 'LINE_CHART_TYPE' ? (
+              <TimeCurvesLineChart
                 data={filteredData}
                 compareData={compareData}
                 period={period}
               />
-              : <TimeCurvesBarChart
+            ) : (
+              <TimeCurvesBarChart
                 data={filteredData}
                 compareData={compareData}
                 period={period}
               />
-            }
+            )}
           </ChartWrapper>
         </div>
       </div>

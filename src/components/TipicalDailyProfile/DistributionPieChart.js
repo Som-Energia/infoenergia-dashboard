@@ -1,7 +1,7 @@
 import React from 'react'
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts'
 
-function DistributionPieChart ({ data, colors }) {
+function DistributionPieChart({ data, colors }) {
   const values = []
   for (const property in data) {
     if (colors[property] !== undefined) {
@@ -20,7 +20,9 @@ function DistributionPieChart ({ data, colors }) {
             paddingAngle={0}
             dataKey="value"
           >
-            {values.map((entry, index) => <Cell key={index} fill={colors[entry?.name]} />)}
+            {values.map((entry, index) => (
+              <Cell key={index} fill={colors[entry?.name]} />
+            ))}
           </Pie>
         </PieChart>
       </ResponsiveContainer>

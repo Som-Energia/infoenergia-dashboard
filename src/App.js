@@ -11,24 +11,24 @@ import './App.css'
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: '#96b633'
+      main: '#96b633',
     },
     secondary: {
-      main: '#a1a1a1'
+      main: '#a1a1a1',
     },
     contrastThreshold: 2,
-    tonalOffset: 0.2
+    tonalOffset: 0.2,
   },
   typography: {
     color: '#4d4d4d',
-    htmlFontSize: 16
+    htmlFontSize: 16,
   },
   shape: {
-    borderRadius: '0'
-  }
+    borderRadius: '0',
+  },
 })
 
-function App (props) {
+function App(props) {
   const loadEnergyUse = () => {
     const EnergyUse = lazy(() => import('./pages/EnergyUse'))
     return <EnergyUse {...props} />
@@ -42,12 +42,19 @@ function App (props) {
   return (
     <ThemeProvider theme={theme}>
       <MuiPickersUtilsProvider utils={DayJsUtils}>
-        <Suspense fallback ={<></>}>
+        <Suspense fallback={<></>}>
           <Router>
             <Switch>
               <Route exact path="/" render={loadEnergyUse} />
-              <Route exact path="/:language/infoenergy" render={loadTimeCurves} />
-              <Route path="/:language/infoenergy/energy-use" render={loadEnergyUse} />
+              <Route
+                exact
+                path="/:language/infoenergy"
+                render={loadTimeCurves}
+              />
+              <Route
+                path="/:language/infoenergy/energy-use"
+                render={loadEnergyUse}
+              />
             </Switch>
           </Router>
         </Suspense>

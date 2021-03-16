@@ -4,15 +4,15 @@ const CUPS = 'ES0031406238503003AP0F'
 const currentMonth = '202004'
 
 const headers = new Headers({
-  'Authorization': `token ${TOKEN}`,
-  'Content-Type': 'application/json'
+  Authorization: `token ${TOKEN}`,
+  'Content-Type': 'application/json',
 })
 
-export function getTimeCurves () {
+export function getTimeCurves() {
   return fetch(`${API_URL}/CCHFact/${CUPS}/${currentMonth}`, {
     method: 'GET',
-    headers: headers
+    headers: headers,
   })
-    .then(response => response.json())
-    .catch(error => console.error(error))
+    .then((response) => response.json())
+    .catch((error) => console.error(error))
 }

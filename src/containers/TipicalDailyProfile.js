@@ -102,7 +102,13 @@ function TipicalDailyProfile(props) {
         <div>
           <ErrorOutlineIcon fontSize="large" />
         </div>
-        <p>{t('NEW_TOLLS_MESSAGE')}</p>
+        <p
+          dangerouslySetInnerHTML={{
+            __html: t('NEW_TOLLS_MESSAGE', {
+              url: t('NEW_TOLLS_MESSAGE_URL'),
+            }),
+          }}
+        ></p>
       </Message>
 
       <LastUpdate date={data?.updated} />
@@ -172,7 +178,7 @@ const Separator = styled.div`
 
 const Message = styled.div`
   background-color: #f2f2f2;
-  padding: 8px 24px;
+  padding: 12px 24px;
   margin-top: 16px;
   font-size: 1rem;
   display: flex;
@@ -182,5 +188,9 @@ const Message = styled.div`
   }
   p {
     line-height: 1.6rem;
+    margin: 0;
+  }
+  a {
+    color: #4d4d4d;
   }
 `

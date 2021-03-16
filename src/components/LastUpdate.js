@@ -4,11 +4,11 @@ import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
 
 const LastUpdateWrapper = styled.div`
-  font-size: 0.9rem;
+  font-size: 1rem;
   width: 100%;
   display: flex;
   justify-content: flex-end;
-  padding-top: 12px;
+  padding-top: 16px;
   margin-bottom: 0;
   span {
     padding-left: 4px;
@@ -21,7 +21,8 @@ const LastUpdate = (props) => {
   const { t } = useTranslation()
   return (
     <LastUpdateWrapper>
-      {t('LAST_UPDATE')}: <span>{ date ? dayjs(date).format('DD/MM/YYYY HH:mm') : '-' }</span>
+      {t('LAST_UPDATE')}
+      <span>{date ? dayjs(date).format('DD/MM/YYYY HH:mm') : '-'}</span>
     </LastUpdateWrapper>
   )
 }

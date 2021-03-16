@@ -42,13 +42,14 @@ const Day = styled(EmptyDay)`
   }
   &.normal {
     background-color: #96b633;
-  },
+  }
+  ,
   &.high {
     background-color: #f2970f;
   }
 `
 const findConsumDay = (consums, day) => {
-  return consums?.filter(item => item.day === day)
+  return consums?.filter((item) => item.day === day)
 }
 
 const ConsumDay = (props) => {
@@ -67,34 +68,45 @@ const ConsumDay = (props) => {
     className = ''
   }
 
-  return (<Day
-    title={formatkWhDecimal(consumDay)}
-    className={className}>{day}
-  </Day>)
+  return (
+    <Day title={formatkWhDecimal(consumDay)} className={className}>
+      {day}
+    </Day>
+  )
 }
 
 const CalendarMonth = (props) => {
   const { month, consum, levels } = props
   const currentMonth = `${month?.fullMonth}`.slice(-2)
-  const currentYear = `${month?.fullMonth}`.slice(0,4)
-  const fullMonth = month?.fullMonth ? dayjs(`${currentMonth} ${currentYear}`, 'MM YYYY', true).format('MMMM') : ''
-  
+  const currentYear = `${month?.fullMonth}`.slice(0, 4)
+  const fullMonth = month?.fullMonth
+    ? dayjs(`${currentMonth} ${currentYear}`, 'MM YYYY', true).format('MMMM')
+    : ''
+
   return (
     <>
       <MonthName>{fullMonth}</MonthName>
       <Calendar>
-        {
-          month?.arrayDays.map((week, weekIdx) => (
-            week.map((day, dayIdx) => {
-              const formatedDay = ('0' + day).slice(-2)
-              const dayMonth = `${month?.fullMonth}${formatedDay}`
-              const consumDay = findConsumDay(consum, dayMonth)
-              return day === 0
-                ? <EmptyDay key={weekIdx + '-' + dayIdx} />
-                : <ConsumDay key={weekIdx + '-' + dayIdx} day={day} consum={consumDay} levels={levels}/>
-            })
-          ))
-        }
+        {month?.arrayDays.map((week, weekIdx) =>
+          week.map((day, dayIdx) => {
+            const formatedDay = ('0' + day).slice(-2)
+            const fullMonth = month?.fullMonth
+            const dayMonth = fullMonth + formatedDay
+            const consumDay = findConsumDay(consum, dayMonth)
+            if (day === 0) {
+              return <EmptyDay key={weekIdx + '-' + dayIdx} />
+            }
+
+            return (
+              <ConsumDay
+                key={weekIdx + '-' + dayIdx}
+                day={day}
+                consum={consumDay}
+                levels={levels}
+              />
+            )
+          })
+        )}
       </Calendar>
     </>
   )

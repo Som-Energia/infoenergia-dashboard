@@ -12,7 +12,7 @@ import { ScrollWrapper, ScrollContainer } from '../components/Utils'
 
 import { getSeasonalProfile } from '../services/api'
 
-function SeasonalProfile (props) {
+function SeasonalProfile(props) {
   const { contract, token } = props
   const { t } = useTranslation()
   const [data, setData] = useState({})
@@ -26,10 +26,11 @@ function SeasonalProfile (props) {
 
   useEffect(() => {
     getSeasonalProfile(contract, token)
-      .then(response => {
+      .then((response) => {
         setData(response)
         setIsLoading(false)
-      }).catch(error => {
+      })
+      .catch((error) => {
         console.log(error)
         setIsLoading(false)
       })
@@ -39,46 +40,54 @@ function SeasonalProfile (props) {
     <>
       <SelectorWrapper>
         <SelectorBox>
-          <SelectorValue>{ t('LAST_12_MONTHS') }</SelectorValue>
+          <SelectorValue>{t('LAST_12_MONTHS')}</SelectorValue>
         </SelectorBox>
       </SelectorWrapper>
-      {
-        isLoading
-          ? <Skeleton height={300}  width="100%" />
-          : data?.price
-          ? <ScrollContainer>
-              <ScrollWrapper>
-                <SeasonalProfileBarChart data={data} />
-              </ScrollWrapper>
-            </ScrollContainer>
-            : data?.errors
-              ? <NoDataMessage>{t(data.errors)}</NoDataMessage>
-              : <NoDataMessage>{t('NO_DATA')}</NoDataMessage>
-      }
+      {isLoading ? (
+        <Skeleton height={300} width="100%" />
+      ) : data?.price ? (
+        <ScrollContainer>
+          <ScrollWrapper>
+            <SeasonalProfileBarChart data={data} />
+          </ScrollWrapper>
+        </ScrollContainer>
+      ) : data?.errors ? (
+        <NoDataMessage>{t(data.errors)}</NoDataMessage>
+      ) : (
+        <NoDataMessage>{t('NO_DATA')}</NoDataMessage>
+      )}
       <Wrapper>
-        {
-          isLoading
-            ? <Skeleton height={230} width="100%" />
-            : <>
-              <TabWrapper>
-                <Title>{ t('CLIMATE_DEPENDENCY') }<span> { t('LAST_36_NONTH_BASE') }</span></Title>
-                <ButtonsWrapper>
-                  {
-                    Object.keys(data?.climaticDependence ? data?.climaticDependence : [])
-                      .map(season => (
-                        <Button
-                          key={season}
-                          className={ seasonFilter === season ? 'active' : null }
-                          onClick={event => handleClick(event, season)}>
-                          {t(season.toUpperCase())}
-                        </Button>
-                      ))
-                  }
-                </ButtonsWrapper>
-              </TabWrapper>
-              <ClimaDependency data={data?.climaticDependence && data?.climaticDependence[seasonFilter]} />
-            </>
-        }
+        {isLoading ? (
+          <Skeleton height={230} width="100%" />
+        ) : (
+          <>
+            <TabWrapper>
+              <Title>
+                {t('CLIMATE_DEPENDENCY')}
+                <span> {t('LAST_36_NONTH_BASE')}</span>
+              </Title>
+              <ButtonsWrapper>
+                {Object.keys(
+                  data?.climaticDependence ? data?.climaticDependence : []
+                ).map((season) => (
+                  <Button
+                    key={season}
+                    className={seasonFilter === season ? 'active' : null}
+                    onClick={(event) => handleClick(event, season)}
+                  >
+                    {t(season.toUpperCase())}
+                  </Button>
+                ))}
+              </ButtonsWrapper>
+            </TabWrapper>
+            <ClimaDependency
+              data={
+                data?.climaticDependence &&
+                data?.climaticDependence[seasonFilter]
+              }
+            />
+          </>
+        )}
       </Wrapper>
       <LastUpdate date={data?.updated} />
     </>
@@ -95,26 +104,26 @@ const Wrapper = styled.div`
 `
 
 const SelectorWrapper = styled.div`
-    padding-top: 4px;
-    display: flex;
-    justify-content: flex-end;
+  padding-top: 4px;
+  display: flex;
+  justify-content: flex-end;
 `
 
 const SelectorBox = styled.div`
-    padding: 8px 8px;
-    margin-bottom: 20px;
-    background-color: #96b633;
-    color: #fff;
-    display: flex;
-    align-items: center;
-    min-width: 260px;
+  padding: 8px 8px;
+  margin-bottom: 20px;
+  background-color: #96b633;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  min-width: 260px;
 `
 
 const SelectorValue = styled.div`
-    font-size: 1.25rem;
-    font-weight: 700;
-    padding: 0 4px;
-    white-space: nowrap;
+  font-size: 1.25rem;
+  font-weight: 700;
+  padding: 0 4px;
+  white-space: nowrap;
 `
 
 const TabWrapper = styled.div`
