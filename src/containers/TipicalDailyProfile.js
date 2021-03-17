@@ -58,7 +58,8 @@ function TipicalDailyProfile(props) {
             </ScrollWrapper>
           </ScrollContainer>
         ) : data?.errors ? (
-          <NoDataMessage>{t(data.errors)}</NoDataMessage>
+          // <NoDataMessage>{t(data.errors)}</NoDataMessage>
+          <NoDataMessage>{t('NO_DATA')}</NoDataMessage>
         ) : (
           <NoDataMessage>{t('NO_DATA')}</NoDataMessage>
         )}
@@ -191,6 +192,7 @@ const Message = styled.div`
     margin: 0;
   }
   a {
+    text-decoration: underline;
     color: #4d4d4d;
   }
 `

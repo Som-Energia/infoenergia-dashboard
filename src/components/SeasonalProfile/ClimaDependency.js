@@ -6,11 +6,10 @@ const levels = ['null', 'low', 'moderate', 'high']
 
 const ClimaDependency = ({ data }) => {
   const { t } = useTranslation()
-  console.log('data: ' + data)
 
   return (
     <div>
-      {data === 'nothing' ? (
+      {data === 'nothing' || data === 'nodata' ? (
         <NoDataMessage>{t('NO_DATA')}</NoDataMessage>
       ) : (
         <DependecyLevels>
@@ -75,7 +74,7 @@ const Level = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 8px 8px;
+  padding: 4px 8px;
   text-transform: uppercase;
   font-size: 1.35rem;
 `

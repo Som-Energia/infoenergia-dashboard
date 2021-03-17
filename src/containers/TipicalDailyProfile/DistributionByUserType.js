@@ -50,7 +50,7 @@ export default function DistributionByUserType(props) {
     <Wrapper>
       {isLoading ? (
         <Skeleton height={210} width="100%" />
-      ) : !data ? (
+      ) : !data || data?.error ? (
         <NoDataMessage>{t('NO_DATA')}</NoDataMessage>
       ) : (
         <>
