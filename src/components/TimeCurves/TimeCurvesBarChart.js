@@ -28,20 +28,25 @@ function TimeCurvesBarChart({ data, period }) {
           <XAxis
             dataKey="date"
             tickFormatter={(tickItem) => formatXAxis(period, tickItem)}
-            tick={{ fontSize: 12, transform: 'translate(0, 8)' }}
+            tick={{ fontSize: 13, transform: 'translate(0, 8)' }}
+            padding={{ left: 24, right: 24 }}
           />
           <YAxis
+            type="number"
+            domain={[0, 'auto']}
             axisLine={false}
-            tickCount={10}
-            tick={{ fontSize: 12 }}
+            tickCount={7}
+            width={75}
+            tick={{ fontSize: 13 }}
             tickFormatter={(tickItem) => `${(tickItem / 1000).toFixed(2)} kWh`}
             tickLine={false}
           />
           <Tooltip
             formatter={formatTooltip}
             labelFormatter={(value) => formatTooltipLabel(period, value)}
+            cursor={{ fill: '#f2f2f2bb' }}
           />
-          <Bar dataKey="value" barSize={24} fill="#96b633" />
+          <Bar dataKey="value" fill="#96b633" />
         </BarChart>
       </ResponsiveContainer>
     </div>

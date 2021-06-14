@@ -9,7 +9,7 @@ const TabBarWrapper = styled.div`
 const TabList = styled.ul`
   flex-grow: 1;
   border-bottom: 0;
-  padding: 12px 8px 0;
+  padding: 12px 16px 0;
   background: #fff;
   display: flex;
   list-style: none;
@@ -28,8 +28,9 @@ const Tab = styled.li`
   }
 
   button {
-    padding: 10px 16px;
+    padding: 12px 24px;
     color: #585857;
+    font-size: 1rem;
     font-weight: 500;
     background: transparent;
     border: 0;

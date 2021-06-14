@@ -1,13 +1,22 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
+import { useTranslation } from 'react-i18next'
+import { useParams } from 'react-router-dom'
+
+import dayjs from 'dayjs'
+import 'dayjs/locale/ca'
+import 'dayjs/locale/es'
+
 import TimelineOutlinedIcon from '@material-ui/icons/TimelineOutlined'
 import BarChartOutlinedIcon from '@material-ui/icons/BarChartOutlined'
 import GetAppIcon from '@material-ui/icons/GetApp'
 
 import Tabs from '../components/Tabs'
 
-import { getTimeCurves } from '../services/TimeCurves'
+import { getTimeCurves } from '../services/timecurves'
+import { completeYearData } from '../services/utils'
+
 import TimeCurves from '../containers/TimeCurves'
 
 const ExtraButtonsWrapper = styled.div`
@@ -15,7 +24,7 @@ const ExtraButtonsWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  padding: 12px 8px;
+  padding: 12px 16px 0;
 
   & > ul {
     border-bottom: 0;
@@ -51,13 +60,30 @@ const ExtraButtonsWrapper = styled.div`
 `
 
 function TimeCurvesPage() {
+  const { language } = useParams()
+  const { t, i18n } = useTranslation()
+
   const [data, setData] = useState([])
   const [type, setType] = useState('LINE_CHART_TYPE')
+
+  useEffect(() => {
+    language && i18n.changeLanguage(language)
+    language ? dayjs.locale(language) : dayjs.locale('es')
+  }, [language, i18n])
 
   useEffect(function () {
     getTimeCurves()
       .then((response) => {
-        response ? setData(response) : setData([])
+        console.log(response)
+        if (response) {
+          const origData = response
+          console.log(origData)
+          const completeData = completeYearData(origData)
+          console.log(completeData)
+          setData(completeData)
+        } else {
+          setData([])
+        }
       })
       .catch((error) => {
         console.log(error)
@@ -81,7 +107,7 @@ function TimeCurvesPage() {
         <li>
           <button onClick={() => console.log('descarrega!')}>
             <GetAppIcon />
-            &nbsp;Descarrega
+            &nbsp;{t('Descarrega')}
           </button>
         </li>
       </ul>
@@ -89,27 +115,27 @@ function TimeCurvesPage() {
   )
 
   return (
-    <div className="container">
+    <div>
       <Tabs
         tabs={[
           {
-            title: 'Diària',
+            title: t('Diària'),
             content: <TimeCurves period="DAILY" chartType={type} data={data} />,
           },
           {
-            title: 'Setmanal',
+            title: t('Setmanal'),
             content: (
               <TimeCurves period="WEEKLY" chartType={type} data={data} />
             ),
           },
           {
-            title: 'Mensual',
+            title: t('Mensual'),
             content: (
               <TimeCurves period="MONTHLY" chartType={type} data={data} />
             ),
           },
           {
-            title: 'Anual',
+            title: t('Anual'),
             content: (
               <TimeCurves period="YEARLY" chartType={type} data={data} />
             ),

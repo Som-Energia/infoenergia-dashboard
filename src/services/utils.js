@@ -52,7 +52,7 @@ export const formatXAxis = (period, item) => {
 export const tickCount = (period, value) => {
   switch (period) {
     case 'DAILY':
-      return 24
+      return 25
     case 'WEEKLY':
       return 7
     case 'MONTHLY':
@@ -80,6 +80,8 @@ export const formatTooltip = (value) => {
 }
 
 export const groupWeeklyData = (data) => {
+  const isoWeek = require('dayjs/plugin/isoWeek')
+  dayjs.extend(isoWeek)
   const weekly = []
   const firstDay = data[0]?.date
   for (let day = 1; day <= 7; day++) {
@@ -136,4 +138,52 @@ export const mergeData = (arrData1 = [], arrData2 = []) => {
         value: arrData1[index]?.value,
         compValue: item.value,
       }))
+}
+
+export const completeYearData = (origData) => {
+  const data = [...origData]
+  const now = new Date()
+  const firstDate = data.length ? new Date(data[0].date) : now
+  const lastDate = data.length ? new Date(data[data.length - 2].date) : now
+
+  // Introduim valors 0 per completar els anys naturals
+  const oneDay = 24 * 60 * 60 * 1000
+  const currYearFirst = firstDate // d3.timeYear()
+  const currYearLast = lastDate // d3.timeYear()
+  const nextYear = new Date(
+    new Date(currYearLast.getTime()).getFullYear() + 1,
+    0,
+    1
+  )
+  console.log(nextYear)
+  const lastYear = new Date(
+    new Date(currYearFirst.getTime()).getFullYear() - 1,
+    12,
+    0
+  )
+
+  const diffDaysNext = Math.round(
+    Math.abs((lastDate.getTime() - nextYear.getTime()) / oneDay)
+  )
+  const diffDaysLast = Math.round(
+    Math.abs((lastYear.getTime() - firstDate.getTime()) / oneDay)
+  )
+
+  for (let i = diffDaysLast; i > 0; i--) {
+    const date = dayjs(lastYear).add(i, 'd')
+    for (let j = 0; j < 24; j++) {
+      const dateWithHour = dayjs(date).add(j, 'h')
+      data.unshift({ date: dateWithHour.valueOf(), value: null })
+    }
+  }
+
+  for (let i = 1; i < diffDaysNext; i++) {
+    const date = dayjs(lastDate).add(i, 'd')
+    for (let j = 0; j < 24; j++) {
+      const dateWithHour = dayjs(date).add(j, 'h')
+      data[data.length] = { date: dateWithHour.valueOf(), value: null }
+    }
+  }
+
+  return data
 }

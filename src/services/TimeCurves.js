@@ -1,7 +1,7 @@
-const TOKEN = '04afcfa463934dc784540aaea63d7d76490101cb0e264c43a7c293bdf58a17d4'
+const TOKEN = 'ecada804a8884a67960726dbf983aeda451355d1ae2d4af69854dd7e0d182761'
 const API_URL = 'https://infoenergia-api.somenergia.coop/api'
 const CUPS = 'ES0031406238503003AP0F'
-const currentMonth = '202004'
+const currentMonth = '202106'
 
 const headers = new Headers({
   Authorization: `token ${TOKEN}`,

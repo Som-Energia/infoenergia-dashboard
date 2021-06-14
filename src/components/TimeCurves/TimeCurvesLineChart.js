@@ -27,11 +27,9 @@ const ChartWrapper = styled.div`
 
 function TimeCurvesLineChart({ period, data = [], compareData = [] }) {
   const [mixedData, setMixedData] = useState([])
-  const [tickNumber, setTickNumber] = useState(1)
 
   useEffect(() => {
     const groupedData = groupDataByPeriod(data, period, 'lineChart')
-    setTickNumber(tickCount(period))
     if (compareData.length) {
       const mixedDataArr = mergeData(groupedData, compareData)
       setMixedData(mixedDataArr)
@@ -48,10 +46,10 @@ function TimeCurvesLineChart({ period, data = [], compareData = [] }) {
           <XAxis
             dataKey="date"
             type="number"
-            tickCount={tickNumber}
-            domain={['dataMin', 'dataMax']}
+            scale="time"
+            tickCount={tickCount(period)}
+            domain={['minDate', 'maxDate']}
             tickFormatter={(tickItem) => formatXAxis(period, tickItem)}
-            allowDuplicatedCategory={false}
             padding={{ left: 24, right: 24 }}
             tick={{ fontSize: 13, transform: 'translate(0, 8)' }}
           />
@@ -59,7 +57,7 @@ function TimeCurvesLineChart({ period, data = [], compareData = [] }) {
             type="number"
             domain={[0, 'auto']}
             axisLine={false}
-            tickCount={8}
+            tickCount={7}
             width={75}
             tick={{ fontSize: 13 }}
             tickFormatter={(tickItem) => `${(tickItem / 1000).toFixed(2)} kWh`}
@@ -78,6 +76,7 @@ function TimeCurvesLineChart({ period, data = [], compareData = [] }) {
             stroke="#96b633"
             dot={false}
             strokeWidth={3}
+            activeDot={{ r: 6 }}
           />
           {compareData && (
             <Line
@@ -86,6 +85,7 @@ function TimeCurvesLineChart({ period, data = [], compareData = [] }) {
               stroke="#f2970f"
               dot={false}
               strokeWidth={3}
+              activeDot={{ r: 6 }}
             />
           )}
         </LineChart>

@@ -8,26 +8,6 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 import './i18n/i18n'
 import './App.css'
 
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: '#96b633',
-    },
-    secondary: {
-      main: '#a1a1a1',
-    },
-    contrastThreshold: 2,
-    tonalOffset: 0.2,
-  },
-  typography: {
-    color: '#4d4d4d',
-    htmlFontSize: 16,
-  },
-  shape: {
-    borderRadius: '0',
-  },
-})
-
 function App(props) {
   const loadEnergyUse = () => {
     const EnergyUse = lazy(() => import('./pages/EnergyUse'))
@@ -64,3 +44,23 @@ function App(props) {
 }
 
 export default App
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#96b633',
+    },
+    secondary: {
+      main: '#a1a1a1',
+    },
+    contrastThreshold: 2,
+    tonalOffset: 0.2,
+  },
+  typography: {
+    color: '#4d4d4d',
+    htmlFontSize: 16,
+  },
+  shape: {
+    borderRadius: '0',
+  },
+})

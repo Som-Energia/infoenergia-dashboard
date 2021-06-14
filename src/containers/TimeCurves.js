@@ -18,19 +18,22 @@ const ControlsWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding-top: 24px;
 `
 const CounterWrapper = styled.div`
   display: flex;
-  padding-top: 16px;
   & > div {
     margin-left: 8px;
   }
 `
 const DateControlsWrapper = styled.div`
   padding-top: 0;
+  display: flex;
+  align-items: center;
 `
 
 const ChartWrapper = styled.div`
+  padding-top: 16px;
   padding-bottom: 24px;
 `
 
@@ -52,7 +55,12 @@ const periodUnit = (period) => {
 const filterDataWithPeriod = (refDate, period, data, charType) => {
   switch (period) {
     case 'DAILY':
-      return data.filter((item) => dayjs(item?.date).isSame(refDate, 'day'))
+      return data.filter(
+        (item) =>
+          dayjs(item?.date).isSame(refDate, 'day') ||
+          (dayjs(item?.date).isSame(refDate.add(1, 'day'), 'day') &&
+            dayjs(item?.date).hour() === 0)
+      )
     case 'WEEKLY':
       return data.filter((item) => dayjs(item?.date).isSame(refDate, 'week'))
     case 'MONTHLY':
@@ -68,7 +76,9 @@ const totalValueWithData = (data) => {
   return data.reduce((prev, current) => prev + current?.value, 0)
 }
 
-function TimeCurves({ data, chartType, period }) {
+function TimeCurves(props) {
+  const { data, chartType, period } = props
+
   const [minDate, setMinDate] = useState()
   const [maxDate, setMaxDate] = useState()
   const [currentDate, setCurrentDate] = useState()
@@ -84,7 +94,7 @@ function TimeCurves({ data, chartType, period }) {
     firstDate.set('hour', 0)
     setMinDate(firstDate)
 
-    const lastItem = [...data].pop()
+    const lastItem = data.pop?.()
     const lastDate = dayjs(lastItem?.date)
     lastDate.set('hour', 0)
     setMaxDate(lastDate)
@@ -93,9 +103,11 @@ function TimeCurves({ data, chartType, period }) {
   }, [data])
 
   useEffect(() => {
-    const filtered = filterDataWithPeriod(currentDate, period, data, chartType)
+    const filtered =
+      data?.length > 0
+        ? filterDataWithPeriod(currentDate, period, data, chartType)
+        : []
     setFilteredData(filtered)
-
     const sumTotalKwh = (totalValueWithData(filtered) / 1000).toFixed(0)
     setTotalKwh(sumTotalKwh)
 
@@ -155,7 +167,7 @@ function TimeCurves({ data, chartType, period }) {
             format="DD/MM/YYYY"
             InputProps={{
               startAdornment: (
-                <IconButton>
+                <IconButton edge="start" size="small">
                   <TodayOutlinedIcon />
                 </IconButton>
               ),
@@ -181,7 +193,7 @@ function TimeCurves({ data, chartType, period }) {
             format="DD/MM/YYYY"
             InputProps={{
               startAdornment: (
-                <IconButton>
+                <IconButton edge="start" size="small">
                   <TodayOutlinedIcon />
                 </IconButton>
               ),
@@ -209,25 +221,21 @@ function TimeCurves({ data, chartType, period }) {
           )}
         </CounterWrapper>
       </ControlsWrapper>
-      <div className="row">
-        <div className="col-xs-12">
-          <ChartWrapper>
-            {chartType === 'LINE_CHART_TYPE' ? (
-              <TimeCurvesLineChart
-                data={filteredData}
-                compareData={compareData}
-                period={period}
-              />
-            ) : (
-              <TimeCurvesBarChart
-                data={filteredData}
-                compareData={compareData}
-                period={period}
-              />
-            )}
-          </ChartWrapper>
-        </div>
-      </div>
+      <ChartWrapper>
+        {chartType === 'LINE_CHART_TYPE' ? (
+          <TimeCurvesLineChart
+            data={filteredData}
+            compareData={compareData}
+            period={period}
+          />
+        ) : (
+          <TimeCurvesBarChart
+            data={filteredData}
+            compareData={compareData}
+            period={period}
+          />
+        )}
+      </ChartWrapper>
     </>
   )
 }
