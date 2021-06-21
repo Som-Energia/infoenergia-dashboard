@@ -9,6 +9,7 @@ import ClimaDependency from '../components/SeasonalProfile/ClimaDependency'
 import LastUpdate from '../components/LastUpdate'
 
 import { ScrollWrapper, ScrollContainer } from '../components/Utils'
+import { Widget } from '../containers/TipicalDailyProfile/DistributionCharts'
 
 import { getSeasonalProfile } from '../services/api'
 
@@ -38,57 +39,61 @@ function SeasonalProfile(props) {
 
   return (
     <>
-      <SelectorWrapper>
-        <SelectorBox>
-          <SelectorValue>{t('LAST_12_MONTHS')}</SelectorValue>
-        </SelectorBox>
-      </SelectorWrapper>
-      {isLoading ? (
-        <Skeleton height={300} width="100%" />
-      ) : data?.price ? (
-        <ScrollContainer>
-          <ScrollWrapper>
-            <SeasonalProfileBarChart data={data} />
-          </ScrollWrapper>
-        </ScrollContainer>
-      ) : data?.errors ? (
-        <NoDataMessage>{t(data.errors)}</NoDataMessage>
-      ) : (
-        <NoDataMessage>{t('NO_DATA')}</NoDataMessage>
-      )}
-      <Wrapper>
+      <Widget>
+        <SelectorWrapper>
+          <SelectorBox>
+            <SelectorValue>{t('LAST_12_MONTHS')}</SelectorValue>
+          </SelectorBox>
+        </SelectorWrapper>
         {isLoading ? (
-          <Skeleton height={230} width="100%" />
+          <Skeleton height={300} width="100%" />
+        ) : data?.price ? (
+          <ScrollContainer>
+            <ScrollWrapper>
+              <SeasonalProfileBarChart data={data} />
+            </ScrollWrapper>
+          </ScrollContainer>
+        ) : data?.errors ? (
+          <NoDataMessage>{t(data.errors)}</NoDataMessage>
         ) : (
-          <>
-            <TabWrapper>
-              <Title>
-                {t('CLIMATE_DEPENDENCY')}
-                <span> {t('LAST_36_NONTH_BASE')}</span>
-              </Title>
-              <ButtonsWrapper>
-                {Object.keys(
-                  data?.climaticDependence ? data?.climaticDependence : []
-                ).map((season) => (
-                  <Button
-                    key={season}
-                    className={seasonFilter === season ? 'active' : null}
-                    onClick={(event) => handleClick(event, season)}
-                  >
-                    {t(season.toUpperCase())}
-                  </Button>
-                ))}
-              </ButtonsWrapper>
-            </TabWrapper>
-            <ClimaDependency
-              data={
-                data?.climaticDependence &&
-                data?.climaticDependence[seasonFilter]
-              }
-            />
-          </>
+          <NoDataMessage>{t('NO_DATA')}</NoDataMessage>
         )}
-      </Wrapper>
+      </Widget>
+      <Widget>
+        <Wrapper>
+          {isLoading ? (
+            <Skeleton height={230} width="100%" />
+          ) : (
+            <>
+              <TabWrapper>
+                <Title>
+                  {t('CLIMATE_DEPENDENCY')}
+                  <span> {t('LAST_36_NONTH_BASE')}</span>
+                </Title>
+                <ButtonsWrapper>
+                  {Object.keys(
+                    data?.climaticDependence ? data?.climaticDependence : []
+                  ).map((season) => (
+                    <Button
+                      key={season}
+                      className={seasonFilter === season ? 'active' : null}
+                      onClick={(event) => handleClick(event, season)}
+                    >
+                      {t(season.toUpperCase())}
+                    </Button>
+                  ))}
+                </ButtonsWrapper>
+              </TabWrapper>
+              <ClimaDependency
+                data={
+                  data?.climaticDependence &&
+                  data?.climaticDependence[seasonFilter]
+                }
+              />
+            </>
+          )}
+        </Wrapper>
+      </Widget>
       <LastUpdate date={data?.updated} />
     </>
   )
@@ -97,10 +102,7 @@ function SeasonalProfile(props) {
 export default SeasonalProfile
 
 const Wrapper = styled.div`
-  background-color: #f2f2f2;
   color: #585857;
-  margin-top: 24px;
-  padding: 16px 24px 24px;
 `
 
 const SelectorWrapper = styled.div`
@@ -112,9 +114,9 @@ const SelectorWrapper = styled.div`
 const SelectorBox = styled.div`
   padding: 8px 8px;
   margin-bottom: 20px;
-  background-color: #96b633;
-  color: #fff;
+  color: #4d4d4d;
   display: flex;
+  justify-content: flex-end;
   align-items: center;
   min-width: 260px;
 `
@@ -134,6 +136,7 @@ const TabWrapper = styled.div`
 `
 
 const Title = styled.div`
+  color: #96b633;
   font-size: 1.5rem;
   font-weight: 700;
   span {

@@ -7,6 +7,7 @@ import Skeleton from '@material-ui/lab/Skeleton'
 import Counter from '../components/Counter'
 import LastUpdate from '../components/LastUpdate'
 import CalendarMonth from '../components/LastMonthsProfile/CalendarMonth'
+import { Widget } from '../containers/TipicalDailyProfile/DistributionCharts'
 
 import { getMonthsProfile } from '../services/api'
 
@@ -16,20 +17,20 @@ const ChartWrapper = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   column-gap: 32px;
   min-height: 283px;
-  margin-top: 16px;
+  margin-top: 4px;
 `
 
 const TopWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: flex-end;
 `
 const CounterWrapper = styled.div`
-  padding-top: 4px;
+  padding-top: 0px;
 `
 
 const LegendWrapper = styled.div`
-  padding-top: 24px;
+  padding-top: 16px;
   display: flex;
   flex-wrap: wrap;
 `
@@ -40,11 +41,12 @@ const LegendItem = styled.div`
   padding-bottom: 8px;
 `
 
-const LegendColor = styled.div`
-  width: 32px;
-  height: 32px;
-  margin-right: 8px;
-  background-color: ${(props) => props.color};
+const LegendColor = styled.span`
+  font-size: 18px;
+  text-transform: uppercase;
+  color: ${(props) => props.color};
+  font-weight: 700;
+  padding-right: 16px;
 `
 
 const LegendLabel = styled.div`
@@ -91,51 +93,55 @@ function LastMonthProfile(props) {
 
   return (
     <>
-      <TopWrapper>
+      {' '}
+      <Widget>
+        <TopWrapper>
+          <CounterWrapper>
+            <Counter
+              title={t('STAND_DAILY_USE')}
+              value={data?.levels ? data?.levels[1]?.kWh : '-'}
+              date={t('LAST_3_MONTHS')}
+            />
+          </CounterWrapper>
+        </TopWrapper>
+        <ChartWrapper>
+          {isLoading ? (
+            <>
+              <Skeleton height="100%" />
+              <Skeleton height="100%" />
+              <Skeleton height="100%" />
+            </>
+          ) : data?.months ? (
+            data?.months
+              .map((month, idx) => (
+                <div key={idx}>
+                  <CalendarMonth
+                    month={month}
+                    consum={data?.consumption}
+                    levels={data?.levels}
+                  />
+                </div>
+              ))
+              .reverse()
+          ) : data?.errors ? (
+            <NoDataMessage>{t(data.errors)}</NoDataMessage>
+          ) : (
+            <NoDataMessage>{t('NO_DATA')}</NoDataMessage>
+          )}
+        </ChartWrapper>
         <LegendWrapper>
-          {legendData.map((item) => (
-            <LegendItem key={item.label}>
-              <LegendColor color={item.color} />
-              <LegendLabel>
-                {t('ENERGY_USE')}
-                <div>{item.label}</div>
-              </LegendLabel>
+          <LegendLabel>
+            {t('ENERGY_USE')}
+            <LegendItem>
+              {legendData.map((item) => (
+                <LegendColor key={item.label} color={item.color}>
+                  {item.label}
+                </LegendColor>
+              ))}
             </LegendItem>
-          ))}
+          </LegendLabel>
         </LegendWrapper>
-        <CounterWrapper>
-          <Counter
-            title={t('STAND_DAILY_USE')}
-            value={data?.levels ? data?.levels[1]?.kWh : '-'}
-            date={t('LAST_3_MONTHS')}
-          />
-        </CounterWrapper>
-      </TopWrapper>
-      <ChartWrapper>
-        {isLoading ? (
-          <>
-            <Skeleton height="100%" />
-            <Skeleton height="100%" />
-            <Skeleton height="100%" />
-          </>
-        ) : data?.months ? (
-          data?.months
-            .map((month, idx) => (
-              <div key={idx}>
-                <CalendarMonth
-                  month={month}
-                  consum={data?.consumption}
-                  levels={data?.levels}
-                />
-              </div>
-            ))
-            .reverse()
-        ) : data?.errors ? (
-          <NoDataMessage>{t(data.errors)}</NoDataMessage>
-        ) : (
-          <NoDataMessage>{t('NO_DATA')}</NoDataMessage>
-        )}
-      </ChartWrapper>
+      </Widget>
       <LastUpdate date={data?.updated} />
     </>
   )

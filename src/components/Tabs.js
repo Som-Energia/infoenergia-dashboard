@@ -10,10 +10,10 @@ const TabList = styled.ul`
   flex-grow: 1;
   border-bottom: 0;
   padding: 12px 16px 0;
-  background: #fff;
+  background: transparent;
   display: flex;
   list-style: none;
-  margin-bottom: 0;
+  margin-bottom: 8px;
   flex-wrap: wrap;
 `
 const Tab = styled.li`
@@ -37,16 +37,22 @@ const Tab = styled.li`
     white-space: nowrap;
   }
   &.active {
-    background-color: #96b633;
+    font-weight: 700;
+    color: #96b633;
+    border-bottom: 2px solid #96b633;
     button {
-      color: #fff !important;
+      font-weight: 700;
+      color: #96b633 !important;
       background: transparent;
     }
   }
 `
 const TabContentWrapper = styled.div`
-  background-color: #fff;
+  background-color: transparent;
   padding: 0 16px 16px;
+  @media (max-width: 768px) {
+    padding: 0;
+  }
 `
 
 const defaultTabs = [

@@ -47,6 +47,9 @@ export default App
 
 const theme = createMuiTheme({
   palette: {
+    background: {
+      default: '#f2f2f2',
+    },
     primary: {
       main: '#96b633',
     },

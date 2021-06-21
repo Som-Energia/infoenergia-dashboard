@@ -44,6 +44,5 @@
   "LAST_UPDATE": "Darrera actualització",
   "COOLING": "Hivern",
   "HEATING": "Estiu",
-  "NEW_TOLLS_MESSAGE": "A partir de l’1 de juny es preveu l’entrada en vigor de la nova tarifa domèstica. Amb aquest canvi, tots els contractes de llum passaran a tenir 3 períodes horaris, diferents dels mostrats en aquesta gràfica. Per més informació, fes <a target=\"_blank\" href=\"{{url}}\">clic  aquí</a>.",
-  "NEW_TOLLS_MESSAGE_URL": "https://blog.somenergia.coop/tarifas-electricidad-y-sector-electrico/2021/02/el-canvi-de-la-factura-per-a-contractes-domestics-i-petites-empreses/"
+  "CONSUME_ADVICE": "Aquesta ha estat la teva distribució durant els últims 12 mesos, pots modificar-la canviant els teus hàbits."
 }

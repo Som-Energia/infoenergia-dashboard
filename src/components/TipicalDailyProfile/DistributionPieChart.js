@@ -5,17 +5,19 @@ function DistributionPieChart({ data, colors }) {
   const values = []
   for (const property in data) {
     if (colors[property] !== undefined) {
-      values.push({ value: data[property], name: property })
+      values.push({ value: parseFloat(data[property]), name: property })
     }
   }
 
+  console.log(values)
+
   return (
     <>
-      <ResponsiveContainer width="100%" height={180}>
+      <ResponsiveContainer width={180} height={180}>
         <PieChart>
           <Pie
             data={values}
-            innerRadius={55}
+            innerRadius={50}
             outerRadius={80}
             paddingAngle={0}
             dataKey="value"

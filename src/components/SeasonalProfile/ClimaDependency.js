@@ -53,10 +53,9 @@ const DependecyLevel = styled.div`
   font-weight: 500;
   color: #ffffff;
   background-color: transparent;
-
   .edge {
-    background-color: #f2f2f2;
-    padding-top: 16px;
+    background-color: #fff;
+    padding-top: 20px;
     width: 100%;
     flex: 1;
   }
@@ -74,7 +73,7 @@ const Level = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 4px 8px;
+  padding: 10px 8px;
   text-transform: uppercase;
   font-size: 1.35rem;
 `

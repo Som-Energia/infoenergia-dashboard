@@ -9,10 +9,13 @@ const CounterWrapper = styled.div`
 `
 
 const CounterBox = styled.div`
-  padding: 4px 8px;
-  background-color: ${(props) =>
+  border-color: ${(props) =>
     props.color === 'primary' ? '#96b633' : '#f2970f'};
-  color: #fff;
+  border-width: 0px;
+  border-radius: 8px;
+  border-style: solid;
+  padding: 4px 8px;
+  color: ${(props) => (props.color === 'primary' ? '#96b633' : '#f2970f')};
   display: flex;
   align-items: center;
 `

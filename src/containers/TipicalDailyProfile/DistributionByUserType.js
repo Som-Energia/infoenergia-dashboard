@@ -14,6 +14,7 @@ import {
   Wrapper,
   ChartWrapper,
   NoDataMessage,
+  LegendWrapper,
 } from './DistributionCharts'
 
 export default function DistributionByUserType(props) {
@@ -56,12 +57,12 @@ export default function DistributionByUserType(props) {
         <>
           <Title>{t('DISTRIB_BY_USE_TYPE')}</Title>
           <Container>
-            <div className="max-w-50 ml-5">
-              <DistributionLegend colors={COLORS} values={VALUES} data={data} />
-            </div>
             <ChartWrapper>
               <DistributionPieChart colors={COLORS} data={data} />
             </ChartWrapper>
+            <LegendWrapper>
+              <DistributionLegend colors={COLORS} values={VALUES} data={data} />
+            </LegendWrapper>
           </Container>
         </>
       )}

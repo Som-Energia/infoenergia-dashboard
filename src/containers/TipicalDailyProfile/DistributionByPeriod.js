@@ -14,12 +14,13 @@ import {
   Wrapper,
   ChartWrapper,
   NoDataMessage,
+  LegendWrapper,
 } from './DistributionCharts'
 
 const COLORS = {
   peakPercentage: '#f2970f',
   valleyPercentage: '#96b633',
-  superValleyPercentage: '#616161',
+  superValleyPercentage: '#c4dd8c',
 }
 
 const DistributionByPeriod = (props) => {
@@ -30,8 +31,8 @@ const DistributionByPeriod = (props) => {
 
   const VALUES = {
     peakPercentage: t('PICK'),
-    valleyPercentage: t('VALLEY'),
-    superValleyPercentage: t('SUPERVALLEY'),
+    valleyPercentage: t('FLAT'),
+    superValleyPercentage: t('VALLEY'),
   }
 
   useEffect(() => {
@@ -56,12 +57,12 @@ const DistributionByPeriod = (props) => {
         <>
           <Title>{t('DISTRIB_BY_PERIOD')}</Title>
           <Container>
-            <div className="max-w-50 ml-5">
-              <DistributionLegend colors={COLORS} values={VALUES} data={data} />
-            </div>
             <ChartWrapper>
               <DistributionPieChart colors={COLORS} data={data} />
             </ChartWrapper>
+            <LegendWrapper>
+              <DistributionLegend colors={COLORS} values={VALUES} data={data} />
+            </LegendWrapper>
           </Container>
         </>
       )}

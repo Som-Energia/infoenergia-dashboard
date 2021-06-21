@@ -9,7 +9,6 @@ const MonthName = styled.div`
   align-items: center;
   justify-content: center;
   text-transform: uppercase;
-  background-color: #f2f2f2;
   color: #585857;
   font-weight: 500;
   font-size: 1.2rem;

@@ -8,7 +8,6 @@ const LastUpdateWrapper = styled.div`
   width: 100%;
   display: flex;
   justify-content: flex-end;
-  padding-top: 16px;
   margin-bottom: 0;
   span {
     padding-left: 4px;

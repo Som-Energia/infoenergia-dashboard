@@ -6,14 +6,19 @@ const classes = {
     paddingLeft: '0',
   },
   listItem: {
-    marginBottom: '8px',
+    marginBottom: '10px',
     display: 'flex',
     alignItems: 'center',
+    justifyContent: 'space-between',
   },
-  colorSample: {
-    width: '24px',
-    height: '24px',
-    marginRight: '8px',
+  name: {
+    fontSize: '18px',
+    marginRight: '24px',
+    textTransform: 'uppercase',
+  },
+  value: {
+    fontSize: '28px',
+    fontWeight: 700,
   },
 }
 
@@ -25,14 +30,10 @@ const DistributionLegend = ({ values, colors, data }) => {
           {Object.keys(values).map((value) => {
             return data[value] !== undefined ? (
               <li key={values[value]} style={classes.listItem}>
-                <span
-                  style={{
-                    ...classes.colorSample,
-                    backgroundColor: colors[value],
-                  }}
-                ></span>
-                <span>
+                <span style={classes.name}>
                   {values[value] !== undefined ? values[value] : '-'}{' '}
+                </span>
+                <span style={{ ...classes.value, color: colors[value] }}>
                   <b>{data[value] !== undefined ? data[value] : '-'}%</b>
                 </span>
               </li>

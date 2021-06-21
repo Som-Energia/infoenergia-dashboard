@@ -10,16 +10,16 @@ export const Container = styled.div`
     flex-wrap: nowrap;
     flex-direction: row;
   }
-  margin-bottom: 8px;
 `
 
 export const Title = styled.h3`
   font-size: 1.45rem;
   font-weight: 500;
   white-space: wrap;
-  margin-left: 20px;
-  margin-bottom: 8px;
-  margin-top: 20px;
+  margin: 0;
+  padding-left: 16px;
+  padding-bottom: 16px;
+  color: #96b633;
 `
 
 export const Wrapper = styled.div`
@@ -31,11 +31,9 @@ export const Wrapper = styled.div`
 `
 
 export const ChartWrapper = styled.div`
-  width: 100%;
-  align-self: center;
-  @media (min-width: 768px) {
-    align-self: flex-end;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
   flex-grow: 1;
 `
 
@@ -47,4 +45,21 @@ export const NoDataMessage = styled.h3`
   align-items: center;
   justify-content: center;
   font-weight: 400;
+`
+export const LegendWrapper = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-grow: 1;
+`
+export const Widget = styled.div`
+  min-height: 180px;
+  padding: 32px;
+  margin-bottom: 32px;
+  @media (max-width: 768px) {
+    padding: 24px;
+    margin-bottom: 16px;
+  }
+  background-color: #fff;
+  border-radius: 10px;
 `

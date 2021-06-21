@@ -27,6 +27,14 @@ const formatLabel = (value) => {
   return formatXAxis(value)
 }
 
+const colorPeriod = (hour, isWeekend) => {
+  if (isWeekend || (hour >= 0 && hour < 8)) return '#c4dd8c'
+
+  return (hour >= 10 && hour < 14) || (hour >= 18 && hour < 22)
+    ? '#f2970f'
+    : '#96b633'
+}
+
 const TipicalDailyProfileChart = ({ data }) => {
   return (
     <div style={{ height: '300px' }}>
@@ -62,12 +70,7 @@ const TipicalDailyProfileChart = ({ data }) => {
           {data !== undefined ? (
             <Bar dataKey="kWh">
               {data.map((entry, index) => (
-                <Cell
-                  key={index}
-                  fill={
-                    entry?.hour > 11 && entry?.hour < 23 ? '#f2970f' : '#96b633'
-                  }
-                />
+                <Cell key={index} fill={colorPeriod(entry?.hour)} />
               ))}
             </Bar>
           ) : (

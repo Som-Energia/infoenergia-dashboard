@@ -13,10 +13,11 @@ import DistributionByPeriod from './TipicalDailyProfile/DistributionByPeriod'
 import DistributionByUserType from './TipicalDailyProfile/DistributionByUserType'
 
 import { ScrollWrapper, ScrollContainer } from '../components/Utils'
+import { Widget } from '../containers/TipicalDailyProfile/DistributionCharts'
 
 import { getDailyProfile } from '../services/api'
 
-import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline'
+import ErrorOutlineIcon from '@material-ui/icons/Error'
 
 function TipicalDailyProfile(props) {
   const { contract, token } = props
@@ -38,110 +39,122 @@ function TipicalDailyProfile(props) {
   }, [contract, token])
 
   return (
-    <Grid container>
-      <Grid item xs={12}>
-        <CounterWrapper>
-          <Counter
-            title={t('DAILY_AVERAGE')}
-            value={data?.dailyAvg?.value || '-'}
-            date={t('LAST_12_MONTHS')}
-          />
-        </CounterWrapper>
-      </Grid>
-      <Grid item xs={12}>
-        {isLoading ? (
-          <Skeleton height={300} />
-        ) : data?.dailyTypicalProfile ? (
-          <ScrollContainer>
-            <ScrollWrapper>
-              <TipicalDailyProfileChart data={data?.dailyTypicalProfile} />
-            </ScrollWrapper>
-          </ScrollContainer>
-        ) : data?.errors ? (
-          // <NoDataMessage>{t(data.errors)}</NoDataMessage>
-          <NoDataMessage>{t('NO_DATA')}</NoDataMessage>
-        ) : (
-          <NoDataMessage>{t('NO_DATA')}</NoDataMessage>
-        )}
-      </Grid>
+    <>
+      <Widget>
+        <Grid item xs={12}>
+          <CounterWrapper>
+            <Counter
+              title={t('DAILY_AVERAGE')}
+              value={data?.dailyAvg?.value || '-'}
+              date={t('LAST_12_MONTHS')}
+            />
+          </CounterWrapper>
+        </Grid>
+        <Grid item xs={12}>
+          {isLoading ? (
+            <Skeleton height={300} />
+          ) : data?.dailyTypicalProfile ? (
+            <ScrollContainer>
+              <ScrollWrapper>
+                <TipicalDailyProfileChart data={data?.dailyTypicalProfile} />
+              </ScrollWrapper>
+            </ScrollContainer>
+          ) : data?.errors ? (
+            // <NoDataMessage>{t(data.errors)}</NoDataMessage>
+            <NoDataMessage>{t('NO_DATA')}</NoDataMessage>
+          ) : (
+            <NoDataMessage>{t('NO_DATA')}</NoDataMessage>
+          )}
+        </Grid>
 
+        <Separator />
+
+        <Grid container>
+          <Grid item xs={12}>
+            <LegendWrapper>
+              <Legend>
+                <b>{t('WORKING_DAYS')}</b>
+                <span className="item">
+                  <span className="vall"></span> {t('WORKING_VALLEY')}
+                </span>
+                <span className="item">
+                  <span className="pla"></span> {t('WORKING_FLAT_1')}
+                </span>
+                <span className="item">
+                  <span className="punta"></span> {t('WORKING_PEAK_1')}
+                </span>
+                <span className="item">
+                  <span className="pla"></span> {t('WORKING_FLAT_2')}
+                </span>
+                <span className="item">
+                  <span className="punta"></span> {t('WORKING_PEAK_2')}
+                </span>
+                <span className="item">
+                  <span className="pla"></span> {t('WORKING_FLAT_3')}
+                </span>
+              </Legend>
+              <Legend>
+                <b>{t('WEEKEND_DAYS')}</b>
+                <span className="vall"></span> {t('WEEKEND_VALLEY')}
+              </Legend>
+            </LegendWrapper>
+          </Grid>
+          <Grid item xs={12}>
+            <Message>
+              <div className="iconWrapper">
+                <ErrorOutlineIcon fontSize="large" />
+              </div>
+              <p
+                dangerouslySetInnerHTML={{
+                  __html: t('CONSUME_ADVICE'),
+                }}
+              ></p>
+            </Message>
+          </Grid>
+        </Grid>
+      </Widget>
       <Separator />
 
-      <Grid container>
-        <Grid item sm={6} xs={12}>
-          <Legend className="text-right">
-            <b>{t('WINTER')}</b>
-            <span className="vall"></span> {t('WINTER_VALLEY')}
-            <span className="punta"></span> {t('WINTER_PEACK')}
-          </Legend>
-        </Grid>
-        <Grid item sm={6} xs={12}>
-          <Legend>
-            <b>{t('SUMMER')}</b>
-            <span className="vall"></span> {t('SUMMER_VALLEY')}
-            <span className="punta"></span> {t('SUMMER_PEACK')}
-          </Legend>
-        </Grid>
-      </Grid>
-
-      <Separator />
-
-      <Grid container spacing={2}>
-        <Grid item sm={6} xs={12}>
-          <Widget>
-            <DistributionByUserType {...props} />
-          </Widget>
-        </Grid>
-        <Grid item sm={6} xs={12}>
-          <Widget>
-            <DistributionByPeriod {...props} />
-          </Widget>
-        </Grid>
-      </Grid>
-
-      <Message>
-        <div>
-          <ErrorOutlineIcon fontSize="large" />
-        </div>
-        <p
-          dangerouslySetInnerHTML={{
-            __html: t('NEW_TOLLS_MESSAGE', {
-              url: t('NEW_TOLLS_MESSAGE_URL'),
-            }),
-          }}
-        ></p>
-      </Message>
+      <WidgetGrid>
+        <Widget>
+          <DistributionByUserType {...props} />
+        </Widget>
+        <Widget>
+          <DistributionByPeriod {...props} />
+        </Widget>
+      </WidgetGrid>
 
       <LastUpdate date={data?.updated} />
-    </Grid>
+    </>
   )
 }
 
 export default TipicalDailyProfile
 
-const Widget = styled.div`
-  min-height: 220px;
-  padding: 0 16px;
-  background-color: #f2f2f2;
-  display: flex;
-  flex-direction: column;
-`
-const Legend = styled.div`
+const LegendWrapper = styled.div`
   display: flex;
   align-items: center;
-  background-color: #f2f2f2;
-  margin-bottom: 16px;
+  flex-wrap: wrap;
+`
+
+const Legend = styled(ScrollContainer)`
+  display: flex;
+  align-items: center;
   padding: 16px 12px;
-  justify-content: flex-start;
-  &:first-child {
-    margin-bottom: 0;
-    @media (min-width: 768px) {
-      padding-bottom: 16px;
-    }
+  justify-content: center;
+  @media (max-width: 768px) {
+    justify-content: flex-start;
   }
-  &.text-right {
-    @media (min-width: 768px) {
-      justify-content: flex-end;
+  flex-grow: 1;
+  &:last-child {
+    padding-top: 0;
+  }
+  .item {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    @media (max-width: 768px) {
+      min-width: 140px;
     }
   }
   .vall {
@@ -149,7 +162,7 @@ const Legend = styled.div`
     height: 16px;
     display: inline-block;
     margin: 0 8px;
-    background-color: #96b633;
+    background-color: #c4dd8c;
   }
   .punta {
     width: 16px;
@@ -158,10 +171,15 @@ const Legend = styled.div`
     margin: 0 8px;
     background-color: #f2970f;
   }
+  .pla {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    margin: 0 8px;
+    background-color: #96b633;
+  }
 `
-const CounterWrapper = styled.div`
-  padding-top: 4px;
-`
+const CounterWrapper = styled.div``
 
 const NoDataMessage = styled.h3`
   display: flex;
@@ -173,17 +191,23 @@ const NoDataMessage = styled.h3`
 
 const Separator = styled.div`
   display: block;
-  margin-top: 16px;
+  margin-top: 32px;
   width: 100%;
 `
 
 const Message = styled.div`
-  background-color: #f2f2f2;
-  padding: 12px 24px;
+  border: 2px solid #96b633;
+  border-radius: 8px;
+  background-color: #fff;
+  padding: 16px 24px;
   margin-top: 16px;
   font-size: 1rem;
   display: flex;
   align-items: center;
+  flex-grow: 1;
+  .iconWrapper {
+    color: #96b633;
+  }
   & > div {
     padding-right: 24px;
   }
@@ -194,5 +218,15 @@ const Message = styled.div`
   a {
     text-decoration: underline;
     color: #4d4d4d;
+  }
+`
+
+const WidgetGrid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 16px;
   }
 `

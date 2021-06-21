@@ -9,6 +9,7 @@ import Counter from '../components/Counter'
 import LastUpdate from '../components/LastUpdate'
 
 import { ScrollWrapper, ScrollContainer } from '../components/Utils'
+import { Widget } from '../containers/TipicalDailyProfile/DistributionCharts'
 
 import { getWeeklyProfile } from '../services/api'
 
@@ -32,47 +33,55 @@ const TipicalWeeklyProfile = (props) => {
 
   return (
     <>
-      <CounterWrapper>
-        <Counter
-          title={t('WEEKLY_AVERAGE')}
-          value={data?.value || '-'}
-          date={t('LAST_12_MONTHS')}
-        />
-      </CounterWrapper>
-      <ScrollContainer>
-        <ScrollWrapper>
-          <DayTypeWrapper>
-            <DayTypeWrapperDaily>{t('BETWEEN_WEEKDAYS')}</DayTypeWrapperDaily>
-            <DayTypeWrapperWeekend>{t('WEEKEND')}</DayTypeWrapperWeekend>
-          </DayTypeWrapper>
-          <ChartWrapper>
-            {isLoading ? (
-              <Skeleton height={300} width="100%" />
-            ) : data?.avgWeekCCH ? (
-              <TipicalWeeklyProfileChart
-                data={{
-                  avgWeekCCH: data?.avgWeekCCH,
-                  formatAvgWeekCCH: data?.formatAvgWeekCCH,
-                }}
-              />
-            ) : data?.errors ? (
-              <NoDataMessage>{t(data.errors)}</NoDataMessage>
-            ) : (
-              <NoDataMessage>{t('NO_DATA')}</NoDataMessage>
-            )}
-          </ChartWrapper>
-        </ScrollWrapper>
-      </ScrollContainer>
-      <WeeklyMediumWrapper>
-        <DailyMediumWrapper>
-          <MediumValue>{data?.weekValue || '-'} kWh</MediumValue>
-          <span>{t('AVG_USE_BETWEEN_WEEKDAY')}</span>
-        </DailyMediumWrapper>
-        <WeekendMediumWrapper>
-          <MediumValue>{data?.weekendValue || '-'} kWh</MediumValue>
-          <span>{t('AVG_USE_WEEKEND_DAY')}</span>
-        </WeekendMediumWrapper>
-      </WeeklyMediumWrapper>
+      <Widget>
+        <CounterWrapper>
+          <Counter
+            title={t('WEEKLY_AVERAGE')}
+            value={data?.value || '-'}
+            date={t('LAST_12_MONTHS')}
+          />
+        </CounterWrapper>
+        <ScrollContainer>
+          <ScrollWrapper>
+            <ChartWrapper>
+              {isLoading ? (
+                <Skeleton height={300} width="100%" />
+              ) : data?.avgWeekCCH ? (
+                <TipicalWeeklyProfileChart
+                  data={{
+                    avgWeekCCH: data?.avgWeekCCH,
+                    formatAvgWeekCCH: data?.formatAvgWeekCCH,
+                  }}
+                />
+              ) : data?.errors ? (
+                <NoDataMessage>{t(data.errors)}</NoDataMessage>
+              ) : (
+                <NoDataMessage>{t('NO_DATA')}</NoDataMessage>
+              )}
+            </ChartWrapper>
+          </ScrollWrapper>
+        </ScrollContainer>
+        <WeeklyMediumWrapper>
+          <DailyMediumWrapper>
+            <MediumValue>{data?.weekValue || '-'} kWh</MediumValue>
+            <span
+              className="text"
+              dangerouslySetInnerHTML={{
+                __html: t('AVG_USE_BETWEEN_WEEKDAY'),
+              }}
+            ></span>
+          </DailyMediumWrapper>
+          <WeekendMediumWrapper>
+            <MediumValue>{data?.weekendValue || '-'} kWh</MediumValue>
+            <span
+              className="text"
+              dangerouslySetInnerHTML={{
+                __html: t('AVG_USE_WEEKEND_DAY'),
+              }}
+            ></span>
+          </WeekendMediumWrapper>
+        </WeeklyMediumWrapper>
+      </Widget>
       <LastUpdate date={data?.updated} />
     </>
   )
@@ -82,12 +91,6 @@ export default TipicalWeeklyProfile
 
 const CounterWrapper = styled.div`
   padding-top: 4px;
-`
-
-const DayTypeWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 4px;
 `
 
 const WeeklyMediumWrapper = styled.div`
@@ -105,24 +108,13 @@ const MediumWrapper = styled.div`
   padding: 4px 4px;
   display: flex;
   align-items: center;
-  background-color: #f2f2f2;
   color: #585857;
   span {
     line-height: 1.5rem;
   }
-`
-
-const DayTypeWrapperDaily = styled(MediumWrapper)`
-  width: 70%;
-  padding: 4px 12px;
-  font-weight: 500;
-`
-
-const DayTypeWrapperWeekend = styled(MediumWrapper)`
-  width: 29%;
-  padding: 4px 12px;
-  font-weight: 500;
-  margin-left: 12px;
+  .text {
+    color: #4d4d4d;
+  }
 `
 
 const DailyMediumWrapper = styled(MediumWrapper)`
@@ -130,9 +122,10 @@ const DailyMediumWrapper = styled(MediumWrapper)`
   @media (min-width: 768px) {
     width: 70%;
   }
-  background-color: #96b633;
-  color: #ffffff;
+  color: #96b633;
+  border: 2px solid #96b633;
   padding-right: 8px;
+  border-radius: 10px;
 `
 
 const WeekendMediumWrapper = styled(MediumWrapper)`
@@ -142,6 +135,10 @@ const WeekendMediumWrapper = styled(MediumWrapper)`
     margin-left: 12px;
   }
   padding-right: 8px;
+  color: #96b633;
+  border: 2px solid #96b633;
+  padding-right: 8px;
+  border-radius: 10px;
 `
 
 const MediumValue = styled.div`
