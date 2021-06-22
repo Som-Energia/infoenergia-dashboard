@@ -38,6 +38,7 @@ const LegendWrapper = styled.div`
 const LegendItem = styled.div`
   display: flex;
   margin-right: 24px;
+  padding-top: 8px;
   padding-bottom: 8px;
 `
 

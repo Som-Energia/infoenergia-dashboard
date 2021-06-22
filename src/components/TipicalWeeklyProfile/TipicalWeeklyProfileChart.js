@@ -11,7 +11,6 @@ import {
   ResponsiveContainer,
 } from 'recharts'
 import {
-  formatkWhDecimal,
   formatPerc,
   formatDecimal,
   formatDay,
@@ -59,15 +58,16 @@ const CustomizedDaysValuesTick = (props) => {
         fontWeight="600"
         fontSize="1.5rem"
       >
-        {formatkWhDecimal(avgDay?.avgKWh, 10)}
+        {formatDecimal(avgDay?.avgKWh, 10)}
+        <tspan className="units"> kWh</tspan>
       </text>
       <text
         x={0}
-        y={70}
+        y={72}
         dy={16}
         textAnchor="middle"
         fill="#666"
-        fontWeight="500"
+        fontWeight="600"
         fontSize="1.5rem"
       >
         {formatPerc(avgDay?.avgPercentage)}
@@ -94,14 +94,14 @@ const TipicalWeeklyProfileChart = ({ data }) => {
       <ResponsiveContainer width="100%" height={300}>
         {formatAvgWeekCCH ? (
           <LineChart data={formatAvgWeekCCH} margin={{ top: 10, bottom: 10 }}>
-            <CartesianGrid stroke="#a1a1a1" vertical={false} />
+            <CartesianGrid stroke="#cccccc" vertical={false} />
             <XAxis
               height={100}
               ticks={tickPoints}
               dataKey="dayHour"
               tick={<CustomizedDaysValuesTick data={avgWeekCCH} />}
             />
-            <YAxis axisLine={false} tick={() => ''} width={0} />
+            <YAxis axisLine={false} tickCount={5} tick={() => ''} width={0} />
             <Tooltip
               cursor={{ fill: '#f2f2f2' }}
               formatter={formatTooltip}

@@ -40,7 +40,7 @@ const TipicalDailyProfileChart = ({ data }) => {
     <div style={{ height: '300px' }}>
       <ResponsiveContainer>
         <BarChart width={730} height={250} data={data}>
-          <CartesianGrid stroke="#a1a1a1" vertical={false} />
+          <CartesianGrid stroke="#cccccc" vertical={false} />
           <XAxis
             dataKey="hour"
             tickFormatter={formatXAxis}
@@ -53,7 +53,6 @@ const TipicalDailyProfileChart = ({ data }) => {
             tickFormatter={(tickItem) => `${formatNumber(tickItem)}`}
             tick={{ transform: 'translate(-2, 0)' }}
           >
-            ç
             <Label
               value="kWh"
               angle={-90}

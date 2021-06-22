@@ -45,19 +45,21 @@ function SeasonalProfile(props) {
             <SelectorValue>{t('LAST_12_MONTHS')}</SelectorValue>
           </SelectorBox>
         </SelectorWrapper>
-        {isLoading ? (
-          <Skeleton height={300} width="100%" />
-        ) : data?.price ? (
-          <ScrollContainer>
-            <ScrollWrapper>
-              <SeasonalProfileBarChart data={data} />
-            </ScrollWrapper>
-          </ScrollContainer>
-        ) : data?.errors ? (
-          <NoDataMessage>{t(data.errors)}</NoDataMessage>
-        ) : (
-          <NoDataMessage>{t('NO_DATA')}</NoDataMessage>
-        )}
+        <ChartWrapper>
+          {isLoading ? (
+            <Skeleton height={300} width="100%" />
+          ) : data?.price ? (
+            <ScrollContainer>
+              <ScrollWrapper>
+                <SeasonalProfileBarChart data={data} />
+              </ScrollWrapper>
+            </ScrollContainer>
+          ) : data?.errors ? (
+            <NoDataMessage>{t(data.errors)}</NoDataMessage>
+          ) : (
+            <NoDataMessage>{t('NO_DATA')}</NoDataMessage>
+          )}
+        </ChartWrapper>
       </Widget>
       <Widget>
         <Wrapper>
@@ -111,9 +113,16 @@ const SelectorWrapper = styled.div`
   justify-content: flex-end;
 `
 
+const ChartWrapper = styled.div`
+  .unit {
+    font-weight: 400;
+    font-size: 1.35rem;
+  }
+`
+
 const SelectorBox = styled.div`
   padding: 8px 8px;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
   color: #4d4d4d;
   display: flex;
   justify-content: flex-end;
@@ -122,8 +131,9 @@ const SelectorBox = styled.div`
 `
 
 const SelectorValue = styled.div`
-  font-size: 1.25rem;
-  font-weight: 700;
+  color: #96b633;
+  font-size: 1rem;
+  font-weight: 500;
   padding: 0 4px;
   white-space: nowrap;
 `

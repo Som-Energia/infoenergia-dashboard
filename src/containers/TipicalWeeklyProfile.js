@@ -63,7 +63,9 @@ const TipicalWeeklyProfile = (props) => {
         </ScrollContainer>
         <WeeklyMediumWrapper>
           <DailyMediumWrapper>
-            <MediumValue>{data?.weekValue || '-'} kWh</MediumValue>
+            <MediumValue>
+              {data?.weekValue || '-'} <span>kWh</span>
+            </MediumValue>
             <span
               className="text"
               dangerouslySetInnerHTML={{
@@ -72,7 +74,9 @@ const TipicalWeeklyProfile = (props) => {
             ></span>
           </DailyMediumWrapper>
           <WeekendMediumWrapper>
-            <MediumValue>{data?.weekendValue || '-'} kWh</MediumValue>
+            <MediumValue>
+              {data?.weekendValue || '-'} <span>kWh</span>
+            </MediumValue>
             <span
               className="text"
               dangerouslySetInnerHTML={{
@@ -89,9 +93,7 @@ const TipicalWeeklyProfile = (props) => {
 
 export default TipicalWeeklyProfile
 
-const CounterWrapper = styled.div`
-  padding-top: 4px;
-`
+const CounterWrapper = styled.div``
 
 const WeeklyMediumWrapper = styled.div`
   display: flex;
@@ -105,12 +107,12 @@ const WeeklyMediumWrapper = styled.div`
 `
 
 const MediumWrapper = styled.div`
-  padding: 4px 4px;
+  padding: 8px 8px;
   display: flex;
   align-items: center;
   color: #585857;
   span {
-    line-height: 1.5rem;
+    line-height: 1.2rem;
   }
   .text {
     color: #4d4d4d;
@@ -147,6 +149,10 @@ const MediumValue = styled.div`
   font-weight: bold;
   white-space: nowrap;
   padding-right: 12px;
+  span:last-child {
+    font-weight: 400;
+    font-size: 1.8rem;
+  }
 `
 
 const NoDataMessage = styled.h3`
@@ -159,4 +165,8 @@ const NoDataMessage = styled.h3`
 
 const ChartWrapper = styled.div`
   width: 100%;
+  .units {
+    font-weight: 400;
+    font-size: 1.25rem;
+  }
 `

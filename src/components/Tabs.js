@@ -13,7 +13,7 @@ const TabList = styled.ul`
   background: transparent;
   display: flex;
   list-style: none;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
   flex-wrap: wrap;
 `
 const Tab = styled.li`
@@ -28,7 +28,7 @@ const Tab = styled.li`
   }
 
   button {
-    padding: 12px 24px;
+    padding: 8px 24px;
     color: #585857;
     font-size: 1rem;
     font-weight: 500;
@@ -37,6 +37,7 @@ const Tab = styled.li`
     white-space: nowrap;
   }
   &.active {
+    font-size: 1rem;
     font-weight: 700;
     color: #96b633;
     border-bottom: 2px solid #96b633;

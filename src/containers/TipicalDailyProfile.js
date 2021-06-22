@@ -191,7 +191,7 @@ const NoDataMessage = styled.h3`
 
 const Separator = styled.div`
   display: block;
-  margin-top: 32px;
+  margin-top: 24px;
   width: 100%;
 `
 

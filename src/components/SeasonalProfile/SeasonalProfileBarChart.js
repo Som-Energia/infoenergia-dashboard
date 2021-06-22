@@ -11,7 +11,7 @@ import {
   LabelList,
 } from 'recharts'
 
-import { formatkWh, formatEuros } from '../../services/utils'
+import { formatNumber, formatEuros } from '../../services/utils'
 
 const CustomLabel = (props) => {
   const { x, y, width, data, index } = props
@@ -20,13 +20,14 @@ const CustomLabel = (props) => {
       <text
         x={width / 2}
         y={0}
-        dy={-40}
+        dy={-42}
         textAnchor="middle"
         fill="#96b633"
-        fontWeight="600"
+        fontWeight="700"
         fontSize="1.5rem"
       >
         {formatEuros(data?.price[index].euros)}
+        <tspan className="unit"> €</tspan>
       </text>
       <text
         x={width / 2}
@@ -34,10 +35,11 @@ const CustomLabel = (props) => {
         dy={-15}
         textAnchor="middle"
         fill="#666"
-        fontWeight="600"
+        fontWeight="700"
         fontSize="1.5rem"
       >
-        {formatkWh(data?.valueKwh[index].kWh)}
+        {formatNumber(data?.valueKwh[index].kWh)}
+        <tspan className="unit"> kWh</tspan>
       </text>
     </g>
   )
@@ -56,7 +58,7 @@ function SeasonalProfileBarChart({ data }) {
             tick={() => ''}
             width={0}
             domain={[(dataMin) => 0, (dataMax) => dataMax * 1.1 + 50]}
-            tickCount={8}
+            tickCount={6}
           />
           <XAxis
             dataKey="season"
