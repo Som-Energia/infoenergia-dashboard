@@ -125,6 +125,8 @@ function TimeCurves(props) {
         totalValueWithData(filteredCompare) / 1000
       ).toFixed(0)
       setCompareTotalKwh(sumCompTotalKwh)
+    } else {
+      setCompareData([])
     }
   }, [data, currentDate, period, chartType, compareDate])
 
@@ -146,7 +148,6 @@ function TimeCurves(props) {
     [currentDate, period]
   )
 
-  console.log(totalKwh)
   return (
     <Widget>
       <ControlsWrapper>

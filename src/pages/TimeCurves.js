@@ -15,7 +15,6 @@ import GetAppIcon from '@material-ui/icons/GetApp'
 import Tabs from '../components/Tabs'
 
 import { getTimeCurves } from '../services/timecurves'
-import { completeYearData } from '../services/utils'
 
 import TimeCurves from '../containers/TimeCurves'
 
@@ -74,14 +73,7 @@ function TimeCurvesPage() {
   useEffect(function () {
     getTimeCurves()
       .then((response) => {
-        if (response) {
-          const origData = response
-          // const completeData = completeYearData(origData)
-          completeYearData(origData)
-          setData(origData)
-        } else {
-          setData([])
-        }
+        setData(response || [])
       })
       .catch((error) => {
         console.log(error)
