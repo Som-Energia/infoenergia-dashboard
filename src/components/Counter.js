@@ -1,8 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { formatDecimal } from '../services/utils'
-
 const CounterWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
@@ -47,12 +45,11 @@ const CounterDetail = styled.div`
 function Counter(props) {
   const { value, title, date = '', color = 'primary' } = props
   const dateLabel = date === '' ? '' : date
-
   return (
     <CounterWrapper>
       <CounterBox color={color}>
         <CounterValue>
-          <span>{value !== '-' ? formatDecimal(value) : '-'}</span>
+          <span>{value !== '-' ? value : '-'}</span>
           <span> kWh</span>
         </CounterValue>
         <CounterDetail>

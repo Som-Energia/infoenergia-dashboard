@@ -74,13 +74,11 @@ function TimeCurvesPage() {
   useEffect(function () {
     getTimeCurves()
       .then((response) => {
-        console.log(response)
         if (response) {
           const origData = response
-          console.log(origData)
-          const completeData = completeYearData(origData)
-          console.log(completeData)
-          setData(completeData)
+          // const completeData = completeYearData(origData)
+          completeYearData(origData)
+          setData(origData)
         } else {
           setData([])
         }

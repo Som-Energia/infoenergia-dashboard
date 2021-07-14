@@ -9,6 +9,7 @@ import {
   Tooltip,
   XAxis,
   YAxis,
+  Label,
 } from 'recharts'
 
 import {
@@ -17,7 +18,8 @@ import {
   formatTooltip,
   mergeData,
   groupDataByPeriod,
-  tickCount,
+  ticksFromData,
+  domainFromData,
 } from '../../services/utils'
 
 const ChartWrapper = styled.div`
@@ -30,6 +32,7 @@ function TimeCurvesLineChart({ period, data = [], compareData = [] }) {
 
   useEffect(() => {
     const groupedData = groupDataByPeriod(data, period, 'lineChart')
+
     if (compareData.length) {
       const mixedDataArr = mergeData(groupedData, compareData)
       setMixedData(mixedDataArr)
@@ -42,27 +45,33 @@ function TimeCurvesLineChart({ period, data = [], compareData = [] }) {
     <ChartWrapper>
       <ResponsiveContainer>
         <LineChart width={730} height={250} data={mixedData}>
-          <CartesianGrid stroke="#616161" strokeWidth={0.5} vertical={false} />
+          <CartesianGrid stroke="#ccc" strokeWidth={0.5} vertical={false} />
           <XAxis
             dataKey="date"
             type="number"
+            ticks={ticksFromData(mixedData, period)}
             scale="time"
-            tickCount={tickCount(period)}
-            domain={['minDate', 'maxDate']}
+            domain={domainFromData(mixedData, period)}
             tickFormatter={(tickItem) => formatXAxis(period, tickItem)}
             padding={{ left: 24, right: 24 }}
-            tick={{ fontSize: 13, transform: 'translate(0, 8)' }}
+            tick={{ fontSize: 16, transform: 'translate(0, 8)' }}
           />
           <YAxis
             type="number"
             domain={[0, 'auto']}
             axisLine={false}
-            tickCount={7}
-            width={75}
-            tick={{ fontSize: 13 }}
-            tickFormatter={(tickItem) => `${(tickItem / 1000).toFixed(2)} kWh`}
+            tickCount={8}
             tickLine={false}
-          />
+            tickFormatter={(tickItem) => `${(tickItem / 1000).toFixed(2)}`}
+            tick={{ fontSize: 16, transform: 'translate(0, 0)' }}
+          >
+            <Label
+              value="kWh"
+              angle={-90}
+              position="insideLeft"
+              fill="#969696"
+            />
+          </YAxis>
           <Tooltip
             formatter={formatTooltip}
             labelFormatter={(value) =>

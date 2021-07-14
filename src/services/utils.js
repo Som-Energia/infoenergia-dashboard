@@ -49,19 +49,6 @@ export const formatXAxis = (period, item) => {
   }
 }
 
-export const tickCount = (period, value) => {
-  switch (period) {
-    case 'DAILY':
-      return 25
-    case 'WEEKLY':
-      return 7
-    case 'MONTHLY':
-      return 30
-    default:
-      return 12
-  }
-}
-
 export const formatTooltipLabel = (period, value, type = 'barChart') => {
   const formatWithHour = (value) => dayjs(value).format('DD/MM/YYYY HH') + 'h'
 
@@ -90,7 +77,7 @@ export const groupWeeklyData = (data) => {
     weekly.push({
       date: dayjs(firstDay)
         .add(day - 1, 'd')
-        .toISOString(),
+        .valueOf(),
       value: totalValue,
     })
   }
@@ -98,19 +85,99 @@ export const groupWeeklyData = (data) => {
 }
 
 export const groupMonthlyData = (data) => {
-  const weekly = []
+  const month = []
   const firstDay = data[0]?.date
   for (let day = 1; day <= dayjs(firstDay).daysInMonth(); day++) {
     const days = data.filter((item) => dayjs(item?.date).date() === day)
     const totalValue = days.reduce((prev, current) => prev + current?.value, 0)
-    weekly.push({
+    month.push({
       date: dayjs(firstDay)
         .add(day - 1, 'd')
-        .toISOString(),
+        .valueOf(),
       value: totalValue,
     })
   }
-  return weekly
+  return month
+}
+
+export const groupYearlyData = (data) => {
+  const year = []
+  const firstDay = data[0]?.date
+  for (let month = 1; month <= 12; month++) {
+    const days = data.filter((item) => dayjs(item?.date).month() === month)
+    const totalValue = days.reduce((prev, current) => prev + current?.value, 0)
+    year.push({
+      date: dayjs(firstDay).date(1).month(month).valueOf(),
+      value: totalValue,
+    })
+  }
+  return year
+}
+
+const weekday = require('dayjs/plugin/weekday')
+dayjs.extend(weekday)
+
+export const domainFromData = (data, period) => {
+  const firstDate = dayjs(data?.[0]?.date)
+  if (period === 'WEEKLY') {
+    return [firstDate.weekday(0).valueOf(), firstDate.weekday(7).valueOf()]
+  }
+
+  if (period === 'MONTHLY') {
+    return [
+      firstDate.date(1).valueOf(),
+      firstDate.date(1).add(1, 'month').valueOf(),
+    ]
+  }
+
+  if (period === 'YEARLY') {
+    return [
+      firstDate.month(0).date(1).valueOf(),
+      firstDate.month(0).date(1).add(1, 'year').valueOf(),
+    ]
+  }
+
+  return ['auto', 'auto']
+}
+
+export const ticksFromData = (data, period) => {
+  const firstDate = dayjs(data?.[0]?.date)
+  if (period === 'WEEKLY') {
+    return [...Array(7).keys()].map((item) => {
+      const day = firstDate.weekday(item).valueOf()
+      return day
+    })
+  }
+
+  if (period === 'MONTHLY') {
+    return [...Array(firstDate.daysInMonth()).keys()].map((item) => {
+      const day = firstDate.date(item + 1)
+      console.log(day)
+      return day.valueOf()
+    })
+  }
+
+  if (period === 'YEARLY') {
+    return [...Array(12).keys()].map((item) => {
+      const day = firstDate.month(item)
+      console.log(day.toISOString())
+      return day.valueOf()
+    })
+  }
+
+  /*
+  let lastFormat = null
+
+  return data
+    .filter((item) => {
+      const currentFormat = formatXAxis(period, item?.date)
+      console.log(currentFormat)
+      if (currentFormat === lastFormat) return false
+      lastFormat = currentFormat
+      return true
+    })
+    .map((item) => item?.date)
+    */
 }
 
 export const groupDataByPeriod = (data, period, type) => {
@@ -120,7 +187,7 @@ export const groupDataByPeriod = (data, period, type) => {
     case 'MONTHLY':
       return type === 'barChart' ? groupMonthlyData(data) : data
     case 'YEARLY':
-      return groupMonthlyData(data)
+      return groupYearlyData(data)
     default:
       return data
   }

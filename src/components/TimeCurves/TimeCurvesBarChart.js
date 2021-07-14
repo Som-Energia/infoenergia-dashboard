@@ -8,6 +8,7 @@ import {
   Tooltip,
   XAxis,
   YAxis,
+  Label
 } from 'recharts'
 
 import {
@@ -28,7 +29,7 @@ function TimeCurvesBarChart({ data, period }) {
           <XAxis
             dataKey="date"
             tickFormatter={(tickItem) => formatXAxis(period, tickItem)}
-            tick={{ fontSize: 13, transform: 'translate(0, 8)' }}
+            tick={{ fontSize: 16, transform: 'translate(0, 8)' }}
             padding={{ left: 24, right: 24 }}
           />
           <YAxis
@@ -37,10 +38,18 @@ function TimeCurvesBarChart({ data, period }) {
             axisLine={false}
             tickCount={7}
             width={75}
-            tick={{ fontSize: 13 }}
-            tickFormatter={(tickItem) => `${(tickItem / 1000).toFixed(2)} kWh`}
             tickLine={false}
-          />
+            tickFormatter={(tickItem) => `${(tickItem / 1000).toFixed(2)}`}
+            tick={{ fontSize: 16, transform: 'translate(0, 0)' }}
+          >
+            <Label
+              value="kWh"
+              angle={-90}
+              position="insideLeft"
+              fill="#969696"
+            />
+          </YAxis>          
+
           <Tooltip
             formatter={formatTooltip}
             labelFormatter={(value) => formatTooltipLabel(period, value)}

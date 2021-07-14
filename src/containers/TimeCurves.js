@@ -13,12 +13,12 @@ import ClearIcon from '@material-ui/icons/Clear'
 import Counter from '../components/Counter'
 import TimeCurvesBarChart from '../components/TimeCurves/TimeCurvesBarChart'
 import TimeCurvesLineChart from '../components/TimeCurves/TimeCurvesLineChart'
+import { Widget } from '../containers/TipicalDailyProfile/DistributionCharts'
 
 const ControlsWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-top: 24px;
 `
 const CounterWrapper = styled.div`
   display: flex;
@@ -73,6 +73,7 @@ const filterDataWithPeriod = (refDate, period, data, charType) => {
 }
 
 const totalValueWithData = (data) => {
+  console.log(data)
   return data.reduce((prev, current) => prev + current?.value, 0)
 }
 
@@ -145,8 +146,9 @@ function TimeCurves(props) {
     [currentDate, period]
   )
 
+  console.log(totalKwh)
   return (
-    <>
+    <Widget>
       <ControlsWrapper>
         <DateControlsWrapper>
           <IconButton
@@ -236,7 +238,7 @@ function TimeCurves(props) {
           />
         )}
       </ChartWrapper>
-    </>
+    </Widget>
   )
 }
 
