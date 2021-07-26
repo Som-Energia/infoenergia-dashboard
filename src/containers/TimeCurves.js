@@ -14,6 +14,7 @@ import Counter from '../components/Counter'
 import TimeCurvesBarChart from '../components/TimeCurves/TimeCurvesBarChart'
 import TimeCurvesLineChart from '../components/TimeCurves/TimeCurvesLineChart'
 import { Widget } from '../containers/TipicalDailyProfile/DistributionCharts'
+import LegendPeriod from 'src/components/TipicalDailyProfile/LegendPeriod'
 
 const ControlsWrapper = styled.div`
   display: flex;
@@ -181,30 +182,36 @@ function TimeCurves(props) {
           >
             <ArrowForwardIosOutlinedIcon />
           </IconButton>
-          <DatePicker
-            value={compareDate}
-            minDate={minDate}
-            maxDate={maxDate}
-            variant="inline"
-            placeholder="Comparar"
-            autoOk
-            size="small"
-            inputVariant="outlined"
-            onChange={setCompareDate}
-            shouldDisableDate={(date) => dayjs(date).isSame(currentDate, 'day')}
-            format="DD/MM/YYYY"
-            InputProps={{
-              startAdornment: (
-                <IconButton edge="start" size="small">
-                  <TodayOutlinedIcon />
+          {chartType === 'LINE_CHART_TYPE' && (
+            <>
+              <DatePicker
+                value={compareDate}
+                minDate={minDate}
+                maxDate={maxDate}
+                variant="inline"
+                placeholder="Comparar"
+                autoOk
+                size="small"
+                inputVariant="outlined"
+                onChange={setCompareDate}
+                shouldDisableDate={(date) =>
+                  dayjs(date).isSame(currentDate, 'day')
+                }
+                format="DD/MM/YYYY"
+                InputProps={{
+                  startAdornment: (
+                    <IconButton edge="start" size="small">
+                      <TodayOutlinedIcon />
+                    </IconButton>
+                  ),
+                }}
+              />
+              {compareDate && (
+                <IconButton onClick={() => setCompareDate(null)}>
+                  <ClearIcon />
                 </IconButton>
-              ),
-            }}
-          />
-          {compareDate && (
-            <IconButton onClick={() => setCompareDate(null)}>
-              <ClearIcon />
-            </IconButton>
+              )}
+            </>
           )}
         </DateControlsWrapper>
         <CounterWrapper>
@@ -213,7 +220,7 @@ function TimeCurves(props) {
             title="Total diària"
             date={dayjs(currentDate).format('DD/MM/YYYY')}
           />
-          {compareDate && (
+          {chartType === 'LINE_CHART_TYPE' && compareDate && (
             <Counter
               value={compareTotalKwh}
               title="Total diària"
@@ -238,6 +245,7 @@ function TimeCurves(props) {
           />
         )}
       </ChartWrapper>
+      {chartType === 'BAR_CHART_TYPE' && <LegendPeriod />}
     </Widget>
   )
 }

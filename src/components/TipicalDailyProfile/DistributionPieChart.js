@@ -9,8 +9,6 @@ function DistributionPieChart({ data, colors }) {
     }
   }
 
-  console.log(values)
-
   return (
     <>
       <ResponsiveContainer width={180} height={180}>

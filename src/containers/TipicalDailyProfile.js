@@ -18,6 +18,7 @@ import { Widget } from '../containers/TipicalDailyProfile/DistributionCharts'
 import { getDailyProfile } from '../services/api'
 
 import ErrorOutlineIcon from '@material-ui/icons/Error'
+import LegendPeriod from 'src/components/TipicalDailyProfile/LegendPeriod'
 
 function TipicalDailyProfile(props) {
   const { contract, token } = props
@@ -71,33 +72,7 @@ function TipicalDailyProfile(props) {
 
         <Grid container>
           <Grid item xs={12}>
-            <LegendWrapper>
-              <Legend>
-                <b>{t('WORKING_DAYS')}</b>
-                <span className="item">
-                  <span className="vall"></span> {t('WORKING_VALLEY')}
-                </span>
-                <span className="item">
-                  <span className="pla"></span> {t('WORKING_FLAT_1')}
-                </span>
-                <span className="item">
-                  <span className="punta"></span> {t('WORKING_PEAK_1')}
-                </span>
-                <span className="item">
-                  <span className="pla"></span> {t('WORKING_FLAT_2')}
-                </span>
-                <span className="item">
-                  <span className="punta"></span> {t('WORKING_PEAK_2')}
-                </span>
-                <span className="item">
-                  <span className="pla"></span> {t('WORKING_FLAT_3')}
-                </span>
-              </Legend>
-              <Legend>
-                <b>{t('WEEKEND_DAYS')}</b>
-                <span className="vall"></span> {t('WEEKEND_VALLEY')}
-              </Legend>
-            </LegendWrapper>
+            <LegendPeriod />
           </Grid>
           <Grid item xs={12}>
             <Message>
@@ -131,54 +106,6 @@ function TipicalDailyProfile(props) {
 
 export default TipicalDailyProfile
 
-const LegendWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-`
-
-const Legend = styled(ScrollContainer)`
-  display: flex;
-  align-items: center;
-  padding: 16px 12px;
-  justify-content: center;
-  @media (max-width: 768px) {
-    justify-content: flex-start;
-  }
-  flex-grow: 1;
-  &:last-child {
-    padding-top: 0;
-  }
-  .item {
-    display: flex;
-    align-items: center;
-    white-space: nowrap;
-    @media (max-width: 768px) {
-      min-width: 140px;
-    }
-  }
-  .vall {
-    width: 16px;
-    height: 16px;
-    display: inline-block;
-    margin: 0 8px;
-    background-color: #c4dd8c;
-  }
-  .punta {
-    width: 16px;
-    height: 16px;
-    display: inline-block;
-    margin: 0 8px;
-    background-color: #f2970f;
-  }
-  .pla {
-    width: 16px;
-    height: 16px;
-    display: inline-block;
-    margin: 0 8px;
-    background-color: #96b633;
-  }
-`
 const CounterWrapper = styled.div``
 
 const NoDataMessage = styled.h3`
