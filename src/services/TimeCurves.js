@@ -23,7 +23,10 @@ export function getTimeCurves() {
 export function getPeriod(date) {
   // valley, peak, flat
   const hour = dayjs(date).hour()
-  if (hour < 8) return 'peak'
-  if (hour < 17) return 'flat'
+  if (hour < 8) return 'valley'
+  if (hour < 10) return 'flat'
+  if (hour < 14) return 'peak'
+  if (hour < 18) return 'flat'
+  if (hour < 22) return 'peak'
   return 'valley'
 }
