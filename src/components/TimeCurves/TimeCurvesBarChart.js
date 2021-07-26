@@ -21,8 +21,6 @@ import {
 
 function TimeCurvesBarChart({ data, period, compareData = [] }) {
   const groupedData = groupDataByPeriod(data, period, 'barChart')
-  console.log(groupedData)
-  console.log(period2Color)
 
   return (
     <div style={{ height: '450px' }}>
@@ -57,6 +55,7 @@ function TimeCurvesBarChart({ data, period, compareData = [] }) {
             formatter={formatTooltip}
             labelFormatter={(value) => formatTooltipLabel(period, value)}
             cursor={{ fill: '#f2f2f2bb' }}
+            contentStyle={{ fontWeight: 'bold' }}
           />
           {groupedData &&
             Object.keys(period2Color).map((key) => (

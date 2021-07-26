@@ -54,16 +54,19 @@ export const formatTooltipLabel = (period, value, type = 'barChart') => {
   const formatWithHour = (value) => dayjs(value).format('DD/MM/YYYY HH') + 'h'
 
   switch (period) {
+    case 'DAILY':
+      return formatWithHour(value)
     case 'WEEKLY':
       return type === 'barChart'
         ? dayjs(value).format('DD/MM/YYYY')
         : formatWithHour(value)
     default:
-      return formatWithHour(value)
+      return dayjs(value).format('DD/MM/YYYY')
   }
 }
 
 export const formatTooltip = (value) => {
+  if (value === 0) return [null, null]
   return [`${value / 1000} kWh`, null]
 }
 
