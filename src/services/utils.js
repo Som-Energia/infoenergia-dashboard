@@ -1,4 +1,5 @@
 import * as dayjs from 'dayjs'
+import { getPeriod } from 'src/services/timecurves'
 
 export const formatNumber = (num) => {
   return num.toLocaleString()
@@ -73,15 +74,36 @@ export const groupWeeklyData = (data) => {
   const firstDay = data[0]?.date
   for (let day = 1; day <= 7; day++) {
     const days = data.filter((item) => dayjs(item?.date).isoWeekday() === day)
-    const totalValue = days.reduce((prev, current) => prev + current?.value, 0)
-    weekly.push({
-      date: dayjs(firstDay)
+    const result = agregateDates(
+      days,
+      dayjs(firstDay)
         .add(day - 1, 'd')
-        .valueOf(),
-      value: totalValue,
-    })
+        .valueOf()
+    )
+
+    weekly.push(result)
   }
+
   return weekly
+}
+
+export const agregateDates = (dates, agregatedDate) => {
+  const totalValue = dates.reduce((prev, current) => prev + current?.value, 0)
+
+  const result = {
+    date: agregatedDate,
+    value: totalValue,
+    valley: 0,
+    peak: 0,
+    flat: 0,
+  }
+
+  dates.forEach((item) => {
+    const period = getPeriod(item?.date)
+    result[period] += item?.value
+  })
+
+  return result
 }
 
 export const groupMonthlyData = (data) => {
@@ -89,13 +111,15 @@ export const groupMonthlyData = (data) => {
   const firstDay = data[0]?.date
   for (let day = 1; day <= dayjs(firstDay).daysInMonth(); day++) {
     const days = data.filter((item) => dayjs(item?.date).date() === day)
-    const totalValue = days.reduce((prev, current) => prev + current?.value, 0)
-    month.push({
-      date: dayjs(firstDay)
+
+    const result = agregateDates(
+      days,
+      dayjs(firstDay)
         .add(day - 1, 'd')
-        .valueOf(),
-      value: totalValue,
-    })
+        .valueOf()
+    )
+
+    month.push(result)
   }
   return month
 }
@@ -105,11 +129,13 @@ export const groupYearlyData = (data) => {
   const firstDay = data[0]?.date
   for (let month = 1; month <= 12; month++) {
     const days = data.filter((item) => dayjs(item?.date).month() === month)
-    const totalValue = days.reduce((prev, current) => prev + current?.value, 0)
-    year.push({
-      date: dayjs(firstDay).date(1).month(month).valueOf(),
-      value: totalValue,
-    })
+
+    const result = agregateDates(
+      days,
+      dayjs(firstDay).date(1).month(month).valueOf()
+    )
+
+    year.push(result)
   }
   return year
 }
@@ -164,20 +190,6 @@ export const ticksFromData = (data, period) => {
       return day.valueOf()
     })
   }
-
-  /*
-  let lastFormat = null
-
-  return data
-    .filter((item) => {
-      const currentFormat = formatXAxis(period, item?.date)
-      console.log(currentFormat)
-      if (currentFormat === lastFormat) return false
-      lastFormat = currentFormat
-      return true
-    })
-    .map((item) => item?.date)
-    */
 }
 
 export const groupDataByPeriod = (data, period, type) => {
@@ -253,4 +265,15 @@ export const completeYearData = (origData) => {
   }
 
   return data
+}
+
+export const period2Color = {
+  valley: '#c4dd8c',
+  flat: '#96b633',
+  peak: '#f2970f',
+}
+
+export const colorPeriod = (date) => {
+  const period = getPeriod(date)
+  return period2Color[period]
 }

@@ -8,7 +8,7 @@ import {
   Tooltip,
   XAxis,
   YAxis,
-  Label
+  Label,
 } from 'recharts'
 
 import {
@@ -16,10 +16,13 @@ import {
   formatTooltip,
   formatTooltipLabel,
   groupDataByPeriod,
+  period2Color,
 } from '../../services/utils'
 
-function TimeCurvesBarChart({ data, period }) {
+function TimeCurvesBarChart({ data, period, compareData = [] }) {
   const groupedData = groupDataByPeriod(data, period, 'barChart')
+  console.log(groupedData)
+  console.log(period2Color)
 
   return (
     <div style={{ height: '450px' }}>
@@ -48,14 +51,22 @@ function TimeCurvesBarChart({ data, period }) {
               position="insideLeft"
               fill="#969696"
             />
-          </YAxis>          
+          </YAxis>
 
           <Tooltip
             formatter={formatTooltip}
             labelFormatter={(value) => formatTooltipLabel(period, value)}
             cursor={{ fill: '#f2f2f2bb' }}
           />
-          <Bar dataKey="value" fill="#96b633" />
+          {groupedData &&
+            Object.keys(period2Color).map((key) => (
+              <Bar
+                key={key}
+                stackId="current"
+                dataKey={key}
+                fill={period2Color[key]}
+              />
+            ))}
         </BarChart>
       </ResponsiveContainer>
     </div>
