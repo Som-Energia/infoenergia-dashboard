@@ -73,7 +73,6 @@ const filterDataWithPeriod = (refDate, period, data, charType) => {
 }
 
 const totalValueWithData = (data) => {
-  console.log(data)
   return data.reduce((prev, current) => prev + current?.value, 0)
 }
 

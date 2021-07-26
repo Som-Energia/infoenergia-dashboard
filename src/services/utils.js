@@ -106,6 +106,12 @@ export const agregateDates = (dates, agregatedDate) => {
   return result
 }
 
+export const groupDailyData = (data) => {
+  return data.map((item) => {
+    return agregateDates([item], item?.date)
+  })
+}
+
 export const groupMonthlyData = (data) => {
   const month = []
   const firstDay = data[0]?.date
@@ -178,7 +184,6 @@ export const ticksFromData = (data, period) => {
   if (period === 'MONTHLY') {
     return [...Array(firstDate.daysInMonth()).keys()].map((item) => {
       const day = firstDate.date(item + 1)
-      console.log(day)
       return day.valueOf()
     })
   }
@@ -186,7 +191,6 @@ export const ticksFromData = (data, period) => {
   if (period === 'YEARLY') {
     return [...Array(12).keys()].map((item) => {
       const day = firstDate.month(item)
-      console.log(day.toISOString())
       return day.valueOf()
     })
   }
@@ -201,7 +205,7 @@ export const groupDataByPeriod = (data, period, type) => {
     case 'YEARLY':
       return groupYearlyData(data)
     default:
-      return data
+      return type === 'barChart' ? groupDailyData(data) : data
   }
 }
 
@@ -234,7 +238,6 @@ export const completeYearData = (origData) => {
     0,
     1
   )
-  console.log(nextYear)
   const lastYear = new Date(
     new Date(currYearFirst.getTime()).getFullYear() - 1,
     12,
