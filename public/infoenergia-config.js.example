@@ -1,3 +1,5 @@
 window.config = {
-  API_BASE_URL: 'https://heman-demo.somenergia.local:8084/api'
+  API_BASE_URL: 'https://heman-demo.somenergia.local:8084/api',
+  INFOENERGIA_API_URL: 'https://infoenergia-api/api',
+  WEBFORMS_API_URL: 'https://api.somenergia.coop',
 }

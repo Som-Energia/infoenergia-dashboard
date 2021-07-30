@@ -4,8 +4,7 @@ const isoWeek = require('dayjs/plugin/isoWeek')
 dayjs.extend(isoWeek)
 
 const TOKEN = 'ecada804a8884a67960726dbf983aeda451355d1ae2d4af69854dd7e0d182761'
-const API_URL = 'https://infoenergia-api.somenergia.coop/api'
-const WEBFORMS_API_URL = 'http://0.0.0.0:5001'
+const { INFOENERGIA_API_URL, WEBFORMS_API_URL } = window.config
 const CUPS = 'ES0031406238503003AP0F'
 const currentMonth = '202106'
 let MARKET_HOLIDAYS = []
@@ -16,7 +15,7 @@ const headers = new Headers({
 })
 
 export function getTimeCurves() {
-  return fetch(`${API_URL}/CCHFact/${CUPS}/${currentMonth}`, {
+  return fetch(`${INFOENERGIA_API_URL}/CCHFact/${CUPS}/${currentMonth}`, {
     method: 'GET',
     headers: headers,
   })
