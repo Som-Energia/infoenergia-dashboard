@@ -35,7 +35,7 @@ export function getMarketHolidays() {
 
 getMarketHolidays()
   .then((holidays) => {
-    MARKET_HOLIDAYS = holidays?.data?.holidays
+    MARKET_HOLIDAYS = holidays?.data?.holidays || []
   })
 
 // TODO: This is a Mock!!!!
