@@ -25,7 +25,7 @@ export function getTimeCurves() {
 
 export function getMarketHolidays() {
   const today = dayjs().format('YYYY-MM-DD')
-  return fetch(`${WEBFORMS_API_URL}/data/marketholidays/2010-01-01/${today}`, {
+  return fetch(`${WEBFORMS_API_URL}/data/marketholidays?to=${today}`, {
     method: 'GET',
     headers: headers,
   })
@@ -35,7 +35,7 @@ export function getMarketHolidays() {
 
 getMarketHolidays()
   .then((holidays) => {
-    MARKET_HOLIDAYS = holidays?.data?.holidays || []
+    MARKET_HOLIDAYS = holidays?.data || []
   })
 
 // TODO: This is a Mock!!!!
