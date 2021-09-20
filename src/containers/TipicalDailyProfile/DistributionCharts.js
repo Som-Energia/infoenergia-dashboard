@@ -20,6 +20,9 @@ export const Title = styled.h3`
   padding-left: 16px;
   padding-bottom: 16px;
   color: #96b633;
+  @media (max-width: 768px) {
+    padding-left: 0;
+  }
 `
 
 export const Wrapper = styled.div`
@@ -53,6 +56,7 @@ export const LegendWrapper = styled.div`
   flex-grow: 1;
 `
 export const Widget = styled.div`
+  width: 100%;
   min-height: 180px;
   padding: 32px;
   margin-bottom: 32px;

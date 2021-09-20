@@ -15,6 +15,10 @@ const TabList = styled.ul`
   list-style: none;
   margin-bottom: 12px;
   flex-wrap: wrap;
+  @media (max-width: 768px) {
+    margin: 0;
+    padding: 4px 0 0;
+  }
 `
 const Tab = styled.li`
   flex-grow: 1;
@@ -52,7 +56,7 @@ const TabContentWrapper = styled.div`
   background-color: transparent;
   padding: 0 16px 16px;
   @media (max-width: 768px) {
-    padding: 0;
+    padding: 0 4px 4px;
   }
 `
 

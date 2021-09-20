@@ -128,6 +128,7 @@ const DailyMediumWrapper = styled(MediumWrapper)`
   border: 2px solid #96b633;
   padding-right: 8px;
   border-radius: 10px;
+  margin-bottom: 4px;
 `
 
 const WeekendMediumWrapper = styled(MediumWrapper)`
@@ -141,6 +142,7 @@ const WeekendMediumWrapper = styled(MediumWrapper)`
   border: 2px solid #96b633;
   padding-right: 8px;
   border-radius: 10px;
+  margin-bottom: 4px;
 `
 
 const MediumValue = styled.div`

@@ -54,6 +54,7 @@ const Legend = styled(ScrollContainer)`
     justify-content: flex-start;
   }
   flex-grow: 1;
+  flex-wrap: wrap;
   &:last-child {
     padding-top: 0;
   }
