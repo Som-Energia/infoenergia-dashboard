@@ -44,5 +44,16 @@
   "LAST_UPDATE": "Darrera actualització",
   "COOLING": "Hivern",
   "HEATING": "Estiu",
+
+  "WORKING_DAYS": "Laborables",
+  "WORKING_VALLEY": "Vall 00h a 08h",
+  "WORKING_FLAT_1": "Pla 08h a 10h",
+  "WORKING_PEAK_1": "Punta 10h a 14h",
+  "WORKING_FLAT_2": "Pla 14h a 18h",
+  "WORKING_PEAK_2": "Punta 18h a 22h",
+  "WORKING_FLAT_3": "Pla 22h a 00h",
+  "WEEKEND_DAYS": "Cap de setmana i festius",
+  "WEEKEND_VALLEY": "Vall 00h a 00h",
+
   "CONSUME_ADVICE": "Aquesta ha estat la teva distribució durant els últims 12 mesos, pots modificar-la canviant els teus hàbits."
 }

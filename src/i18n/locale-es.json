@@ -54,11 +54,5 @@
   "WEEKEND_DAYS": "Fin de semana y festivos",
   "WEEKEND_VALLEY": "Valle 00h a 00h",
 
-  "CONSUME_ADVICE": "Esta ha sido tu distribución durante los últimos 12 meses, puedes modificarla cambiando tus hábitos.",
-
-  "NEW_TOLLS_MESSAGE": "A partir del 1 de junio se prevé la entrada en vigor de la nueva tarifa doméstica. Con este cambio, todos los contratos de luz pasarán a tener 3 periodos horarios, distintos de los mostrados en esta gráfica. Para más información, haz <a target=\"_blank\" href=\"{{url}}\">clic aquí</a>.",
-  "NEW_TOLLS_MESSAGE_URL": "https://blog.somenergia.coop/tarifas-electricidad-y-sector-electrico/2021/02/el-cambio-de-la-factura-para-contratos-domesticos-y-pequenas-empresas/",
-
-  "required_last_3_consumption_data": "No disponemos de suficientes datos",
-  "required_calendar_data": "No disponemos de suficientes datos"
+  "CONSUME_ADVICE": "Esta ha sido tu distribución durante los últimos 12 meses, puedes modificarla cambiando tus hábitos."
 }
