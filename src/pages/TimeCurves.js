@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
 
 import { useTranslation } from 'react-i18next'
@@ -12,25 +12,28 @@ import TimelineOutlinedIcon from '@material-ui/icons/TimelineOutlined'
 import BarChartOutlinedIcon from '@material-ui/icons/BarChartOutlined'
 import GetAppIcon from '@material-ui/icons/GetApp'
 
-import Tabs from '../components/Tabs'
+import Tabs from 'components/Tabs'
+import TimeCurves from 'containers/TimeCurves'
+import { getTimeCurves } from 'services/timecurves'
+import TimeCurvesContext from 'contexts/TimeCurvesContext'
 
-import { getTimeCurves } from '../services/timecurves'
-
-import TimeCurves from '../containers/TimeCurves'
+import { CSVLink } from 'react-csv'
+import { CnmcformatData } from 'services/utils'
 
 const ExtraButtonsWrapper = styled.div`
   flex-grow: 1;
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  padding: 12px 16px 0;
+  padding: 0 0 12px;
 
   & > ul {
-    border-bottom: 0;
+    border: 0;
+    padding: 0;
+    margin: 0;
     background: transparent;
     display: flex;
     list-style: none;
-    margin-bottom: 0;
 
     & li {
       background-color: #585857;
@@ -45,24 +48,34 @@ const ExtraButtonsWrapper = styled.div`
         margin-left: 16px;
       }
 
-      button {
+      .controlBtn {
         display: flex;
         align-items: center;
-        padding: 10px 16px;
+        padding: 8px 12px;
         color: #fff;
         font-weight: bold;
         background: transparent;
         border: 0;
+        text-decoration: none;
       }
     }
   }
 `
 
-function TimeCurvesPage() {
+function TimeCurvesPage(props) {
   const { language } = useParams()
   const { t, i18n } = useTranslation()
 
-  const [data, setData] = useState([])
+  const { timeCurves, setTimeCurves, filteredTimeCurves } =
+    useContext(TimeCurvesContext)
+
+  const {
+    token,
+    contract,
+    cups,
+    currentMonth = dayjs().format('YYYYMM'),
+  } = props
+
   const [type, setType] = useState('LINE_CHART_TYPE')
 
   useEffect(() => {
@@ -71,34 +84,64 @@ function TimeCurvesPage() {
   }, [language, i18n])
 
   useEffect(function () {
-    getTimeCurves()
+    getTimeCurves({
+      token,
+      cups,
+      currentMonth,
+    })
       .then((response) => {
-        setData(response || [])
+        setTimeCurves(response || [])
       })
       .catch((error) => {
         console.log(error)
-        setData([])
+        setTimeCurves([])
       })
   }, [])
+
+  const DownloadButton = (props) => {
+    const { children } = props
+
+    const [headers, data] = CnmcformatData({
+      data: filteredTimeCurves,
+      cups: cups,
+    })
+
+    return (
+      <CSVLink
+        className="controlBtn"
+        filename={`infoenergia-${contract}.csv`}
+        headers={headers}
+        data={data}
+      >
+        {children}
+      </CSVLink>
+    )
+  }
 
   const ExtraControls = () => (
     <ExtraButtonsWrapper>
       <ul>
         <li className={type === 'LINE_CHART_TYPE' ? 'active' : null}>
-          <button onClick={() => setType('LINE_CHART_TYPE')}>
-            <TimelineOutlinedIcon />
+          <button
+            className="controlBtn"
+            onClick={() => setType('LINE_CHART_TYPE')}
+          >
+            <TimelineOutlinedIcon fontSize="small" />
           </button>
         </li>
         <li className={type === 'BAR_CHART_TYPE' ? 'active' : null}>
-          <button onClick={() => setType('BAR_CHART_TYPE')}>
-            <BarChartOutlinedIcon />
+          <button
+            className="controlBtn"
+            onClick={() => setType('BAR_CHART_TYPE')}
+          >
+            <BarChartOutlinedIcon fontSize="small" />
           </button>
         </li>
         <li>
-          <button onClick={() => console.log('descarrega!')}>
-            <GetAppIcon />
+          <DownloadButton>
+            <GetAppIcon fontSize="small" />
             &nbsp;{t('Descarrega')}
-          </button>
+          </DownloadButton>
         </li>
       </ul>
     </ExtraButtonsWrapper>
@@ -110,24 +153,26 @@ function TimeCurvesPage() {
         tabs={[
           {
             title: t('Diària'),
-            content: <TimeCurves period="DAILY" chartType={type} data={data} />,
+            content: (
+              <TimeCurves period="DAILY" chartType={type} data={timeCurves} />
+            ),
           },
           {
             title: t('Setmanal'),
             content: (
-              <TimeCurves period="WEEKLY" chartType={type} data={data} />
+              <TimeCurves period="WEEKLY" chartType={type} data={timeCurves} />
             ),
           },
           {
             title: t('Mensual'),
             content: (
-              <TimeCurves period="MONTHLY" chartType={type} data={data} />
+              <TimeCurves period="MONTHLY" chartType={type} data={timeCurves} />
             ),
           },
           {
             title: t('Anual'),
             content: (
-              <TimeCurves period="YEARLY" chartType={type} data={data} />
+              <TimeCurves period="YEARLY" chartType={type} data={timeCurves} />
             ),
           },
         ]}

@@ -25,7 +25,7 @@ const CounterValue = styled.div`
   white-space: nowrap;
   span:last-child {
     font-weight: 400;
-    font-size: 1.8rem;
+    font-size: 2rem;
   }
 `
 

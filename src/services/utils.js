@@ -1,8 +1,8 @@
 import * as dayjs from 'dayjs'
-import { getPeriod } from 'src/services/timecurves'
+import { getPeriod } from 'services/timecurves'
 
 export const formatNumber = (num) => {
-  return num.toLocaleString()
+  return num.toLocaleString('es-ES')
 }
 
 export const formatDay = (weekDay) => {
@@ -67,7 +67,7 @@ export const formatTooltipLabel = (period, value, type = 'barChart') => {
 
 export const formatTooltip = (value) => {
   if (value === 0) return [null, null]
-  return [`${value / 1000} kWh`, null]
+  return [`${formatNumber(value / 1000)} kWh`, null]
 }
 
 export const groupWeeklyData = (data) => {
@@ -282,4 +282,24 @@ export const period2Color = {
 export const colorPeriod = (date) => {
   const period = getPeriod(date)
   return period2Color[period]
+}
+
+export const CnmcformatData = ({ data, cups }) => {
+  const formatedHeaders = [
+    { label: 'CUPS', key: 'cups' },
+    { label: 'Fecha', key: 'date' },
+    { label: 'Hora', key: 'time' },
+    { label: 'Consumo_kWh', key: 'value' },
+    { label: 'Metodo_obtencion', key: 'state' },
+  ]
+
+  const formatedData = data.map(({ date, value }) => ({
+    cups,
+    date: dayjs(date).format('DD/MM/YYYY'),
+    time: dayjs(date).format('H'),
+    value: (parseFloat(value) / 1000).toString().replace('.', ','),
+    state: 'R',
+  }))
+
+  return [formatedHeaders, formatedData]
 }

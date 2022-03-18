@@ -17,7 +17,8 @@ import {
   formatTooltipLabel,
   groupDataByPeriod,
   period2Color,
-} from '../../services/utils'
+  formatDecimal,
+} from 'services/utils'
 
 function TimeCurvesBarChart({ data, period, compareData = [] }) {
   const groupedData = groupDataByPeriod(data, period, 'barChart')
@@ -30,7 +31,7 @@ function TimeCurvesBarChart({ data, period, compareData = [] }) {
           <XAxis
             dataKey="date"
             tickFormatter={(tickItem) => formatXAxis(period, tickItem)}
-            tick={{ fontSize: 16, transform: 'translate(0, 8)' }}
+            tick={{ fontSize: '1rem', transform: 'translate(0, 8)' }}
             padding={{ left: 24, right: 24 }}
           />
           <YAxis
@@ -40,8 +41,8 @@ function TimeCurvesBarChart({ data, period, compareData = [] }) {
             tickCount={7}
             width={75}
             tickLine={false}
-            tickFormatter={(tickItem) => `${(tickItem / 1000).toFixed(2)}`}
-            tick={{ fontSize: 16, transform: 'translate(0, 0)' }}
+            tickFormatter={(tickItem) => `${formatDecimal(tickItem / 1000)}`}
+            tick={{ fontSize: '1rem', transform: 'translate(0, 0)' }}
           >
             <Label
               value="kWh"

@@ -20,7 +20,8 @@ import {
   groupDataByPeriod,
   ticksFromData,
   domainFromData,
-} from '../../services/utils'
+  formatDecimal,
+} from 'services/utils'
 
 const ChartWrapper = styled.div`
   height: 450px;
@@ -54,7 +55,7 @@ function TimeCurvesLineChart({ period, data = [], compareData = [] }) {
             domain={domainFromData(mixedData, period)}
             tickFormatter={(tickItem) => formatXAxis(period, tickItem)}
             padding={{ left: 24, right: 24 }}
-            tick={{ fontSize: 16, transform: 'translate(0, 8)' }}
+            tick={{ fontSize: '1rem', transform: 'translate(0, 8)' }}
           />
           <YAxis
             type="number"
@@ -62,8 +63,8 @@ function TimeCurvesLineChart({ period, data = [], compareData = [] }) {
             axisLine={false}
             tickCount={8}
             tickLine={false}
-            tickFormatter={(tickItem) => `${(tickItem / 1000).toFixed(2)}`}
-            tick={{ fontSize: 16, transform: 'translate(0, 0)' }}
+            tickFormatter={(tickItem) => `${formatDecimal(tickItem / 1000)}`}
+            tick={{ fontSize: '1rem', transform: 'translate(0, 0)' }}
           >
             <Label
               value="kWh"

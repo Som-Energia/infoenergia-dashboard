@@ -5,20 +5,20 @@ import { useTranslation } from 'react-i18next'
 import Grid from '@material-ui/core/Grid'
 import Skeleton from '@material-ui/lab/Skeleton'
 
-import TipicalDailyProfileChart from '../components/TipicalDailyProfile/TipicalDailyProfileChart'
-import Counter from '../components/Counter'
-import LastUpdate from '../components/LastUpdate'
+import TipicalDailyProfileChart from 'components/TipicalDailyProfile/TipicalDailyProfileChart'
+import Counter from 'components/Counter'
+import LastUpdate from 'components/LastUpdate'
 
-import DistributionByPeriod from './TipicalDailyProfile/DistributionByPeriod'
-import DistributionByUserType from './TipicalDailyProfile/DistributionByUserType'
+import DistributionByPeriod from 'containers/TipicalDailyProfile/DistributionByPeriod'
+import DistributionByUserType from 'containers/TipicalDailyProfile/DistributionByUserType'
 
-import { ScrollWrapper, ScrollContainer } from '../components/Utils'
-import { Widget } from '../containers/TipicalDailyProfile/DistributionCharts'
+import { ScrollWrapper, ScrollContainer } from 'components/Utils'
+import { Widget } from 'containers/TipicalDailyProfile/DistributionCharts'
 
-import { getDailyProfile } from '../services/api'
+import { getDailyProfile } from 'services/api'
 
 import ErrorOutlineIcon from '@material-ui/icons/Error'
-import LegendPeriod from 'src/components/TipicalDailyProfile/LegendPeriod'
+import LegendPeriod from 'components/TipicalDailyProfile/LegendPeriod'
 
 function TipicalDailyProfile(props) {
   const { contract, token } = props

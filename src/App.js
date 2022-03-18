@@ -3,7 +3,10 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { MuiPickersUtilsProvider } from '@material-ui/pickers'
 import DayJsUtils from '@date-io/dayjs'
 
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
+import CssBaseline from '@material-ui/core/CssBaseline'
+
+import { createTheme, ThemeProvider } from '@material-ui/core/styles'
+import { TimeCurvesContextProvider } from 'contexts/TimeCurvesContext'
 
 import './i18n/i18n'
 import './App.css'
@@ -16,36 +19,45 @@ function App(props) {
 
   const loadTimeCurves = () => {
     const TimeCurves = lazy(() => import('./pages/TimeCurves'))
-    return <TimeCurves {...props} />
+
+    return (
+      <TimeCurvesContextProvider>
+        <TimeCurves {...props} />
+      </TimeCurvesContextProvider>
+    )
   }
 
   return (
-    <ThemeProvider theme={theme}>
-      <MuiPickersUtilsProvider utils={DayJsUtils}>
-        <Suspense fallback={<></>}>
-          <Router>
-            <Switch>
-              <Route exact path="/" render={loadEnergyUse} />
-              <Route
-                exact
-                path="/:language/infoenergy"
-                render={loadTimeCurves}
-              />
-              <Route
-                path="/:language/infoenergy/energy-use"
-                render={loadEnergyUse}
-              />
-            </Switch>
-          </Router>
-        </Suspense>
-      </MuiPickersUtilsProvider>
-    </ThemeProvider>
+    <>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+
+        <MuiPickersUtilsProvider utils={DayJsUtils}>
+          <Suspense fallback={<></>}>
+            <Router>
+              <Switch>
+                <Route exact path="/" render={loadEnergyUse} />
+                <Route
+                  exact
+                  path="/:language/infoenergy"
+                  render={loadTimeCurves}
+                />
+                <Route
+                  path="/:language/infoenergy/energy-use"
+                  render={loadEnergyUse}
+                />
+              </Switch>
+            </Router>
+          </Suspense>
+        </MuiPickersUtilsProvider>
+      </ThemeProvider>
+    </>
   )
 }
 
 export default App
 
-const theme = createMuiTheme({
+const theme = createTheme({
   palette: {
     background: {
       default: '#f2f2f2',
@@ -61,7 +73,7 @@ const theme = createMuiTheme({
   },
   typography: {
     color: '#4d4d4d',
-    htmlFontSize: 16,
+    htmlFontSize: 14,
   },
   shape: {
     borderRadius: '0',

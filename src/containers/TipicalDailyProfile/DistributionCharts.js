@@ -17,6 +17,7 @@ export const Title = styled.h3`
   font-weight: 500;
   white-space: wrap;
   margin: 0;
+  padding-top: 8px;
   padding-left: 16px;
   padding-bottom: 16px;
   color: #96b633;
@@ -58,12 +59,12 @@ export const LegendWrapper = styled.div`
 export const Widget = styled.div`
   width: 100%;
   min-height: 180px;
-  padding: 32px;
+  padding: 12px 24px 24px;
   margin-bottom: 32px;
   @media (max-width: 768px) {
     padding: 24px;
     margin-bottom: 16px;
   }
   background-color: #fff;
-  border-radius: 10px;
+  border-radius: 0;
 `

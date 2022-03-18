@@ -4,14 +4,14 @@ import { useTranslation } from 'react-i18next'
 
 import Skeleton from '@material-ui/lab/Skeleton'
 
-import TipicalWeeklyProfileChart from '../components/TipicalWeeklyProfile/TipicalWeeklyProfileChart'
-import Counter from '../components/Counter'
-import LastUpdate from '../components/LastUpdate'
+import TipicalWeeklyProfileChart from 'components/TipicalWeeklyProfile/TipicalWeeklyProfileChart'
+import Counter from 'components/Counter'
+import LastUpdate from 'components/LastUpdate'
 
-import { ScrollWrapper, ScrollContainer } from '../components/Utils'
-import { Widget } from '../containers/TipicalDailyProfile/DistributionCharts'
+import { ScrollWrapper, ScrollContainer } from 'components/Utils'
+import { Widget } from 'containers/TipicalDailyProfile/DistributionCharts'
 
-import { getWeeklyProfile } from '../services/api'
+import { getWeeklyProfile } from 'services/api'
 
 const TipicalWeeklyProfile = (props) => {
   const { contract, token } = props

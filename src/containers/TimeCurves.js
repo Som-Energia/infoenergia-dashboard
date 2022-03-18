@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, useContext } from 'react'
 import styled from 'styled-components'
 
 import * as dayjs from 'dayjs'
@@ -10,16 +10,19 @@ import ArrowForwardIosOutlinedIcon from '@material-ui/icons/ArrowForwardIosOutli
 import TodayOutlinedIcon from '@material-ui/icons/TodayOutlined'
 import ClearIcon from '@material-ui/icons/Clear'
 
-import Counter from '../components/Counter'
-import TimeCurvesBarChart from '../components/TimeCurves/TimeCurvesBarChart'
-import TimeCurvesLineChart from '../components/TimeCurves/TimeCurvesLineChart'
-import { Widget } from '../containers/TipicalDailyProfile/DistributionCharts'
-import LegendPeriod from 'src/components/TipicalDailyProfile/LegendPeriod'
+import Counter from 'components/Counter'
+import TimeCurvesBarChart from 'components/TimeCurves/TimeCurvesBarChart'
+import TimeCurvesLineChart from 'components/TimeCurves/TimeCurvesLineChart'
+import LegendPeriod from 'components/TipicalDailyProfile/LegendPeriod'
+
+import TimeCurvesContext from 'contexts/TimeCurvesContext'
+import Loading from 'components/Loading'
 
 const ControlsWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
 `
 const CounterWrapper = styled.div`
   display: flex;
@@ -36,6 +39,20 @@ const DateControlsWrapper = styled.div`
 const ChartWrapper = styled.div`
   padding-top: 16px;
   padding-bottom: 24px;
+  min-height: 450px;
+`
+
+export const Widget = styled.div`
+  width: 100%;
+  min-height: 180px;
+  padding: 16px 32px;
+  margin-bottom: 24px;
+  @media (max-width: 768px) {
+    padding: 24px;
+    margin-bottom: 16px;
+  }
+  background-color: #fff;
+  border-radius: 0;
 `
 
 const periodUnit = (period) => {
@@ -80,11 +97,13 @@ const totalValueWithData = (data) => {
 function TimeCurves(props) {
   const { data, chartType, period } = props
 
+  const { filteredTimeCurves, setFilteredTimeCurves } =
+    useContext(TimeCurvesContext)
+
   const [minDate, setMinDate] = useState()
   const [maxDate, setMaxDate] = useState()
   const [currentDate, setCurrentDate] = useState()
   const [compareDate, setCompareDate] = useState(null)
-  const [filteredData, setFilteredData] = useState([])
   const [compareData, setCompareData] = useState([])
   const [totalKwh, setTotalKwh] = useState('-')
   const [compareTotalKwh, setCompareTotalKwh] = useState()
@@ -92,14 +111,17 @@ function TimeCurves(props) {
   useEffect(() => {
     const firstItem = data?.[0]
     const firstDate = dayjs(firstItem?.date)
-    firstDate.set('hour', 0)
+    firstDate.startOf('day')
     setMinDate(firstDate)
 
     const lastItem = data.pop?.()
-    const lastDate = dayjs(lastItem?.date)
-    lastDate.set('hour', 0)
-    setMaxDate(lastDate)
+    let lastDate = dayjs(lastItem?.date)
+    if (lastDate.hour() === 0) {
+      lastDate = lastDate.subtract(1, 'hour')
+    }
+    lastDate.startOf('day')
 
+    setMaxDate(lastDate)
     setCurrentDate(lastDate)
   }, [data])
 
@@ -108,7 +130,7 @@ function TimeCurves(props) {
       data?.length > 0
         ? filterDataWithPeriod(currentDate, period, data, chartType)
         : []
-    setFilteredData(filtered)
+    setFilteredTimeCurves(filtered)
     const sumTotalKwh = (totalValueWithData(filtered) / 1000).toFixed(0)
     setTotalKwh(sumTotalKwh)
 
@@ -169,6 +191,7 @@ function TimeCurves(props) {
             onChange={setCurrentDate}
             format="DD/MM/YYYY"
             InputProps={{
+              style: { fontSize: '1rem' },
               startAdornment: (
                 <IconButton edge="start" size="small">
                   <TodayOutlinedIcon />
@@ -199,6 +222,7 @@ function TimeCurves(props) {
                 }
                 format="DD/MM/YYYY"
                 InputProps={{
+                  style: { fontSize: '1rem' },
                   startAdornment: (
                     <IconButton edge="start" size="small">
                       <TodayOutlinedIcon />
@@ -231,15 +255,17 @@ function TimeCurves(props) {
         </CounterWrapper>
       </ControlsWrapper>
       <ChartWrapper>
-        {chartType === 'LINE_CHART_TYPE' ? (
+        {!data.length ? (
+          <Loading />
+        ) : chartType === 'LINE_CHART_TYPE' ? (
           <TimeCurvesLineChart
-            data={filteredData}
+            data={filteredTimeCurves}
             compareData={compareData}
             period={period}
           />
         ) : (
           <TimeCurvesBarChart
-            data={filteredData}
+            data={filteredTimeCurves}
             compareData={compareData}
             period={period}
           />

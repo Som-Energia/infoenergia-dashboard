@@ -5,14 +5,16 @@ const TabBarWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
 `
 const TabList = styled.ul`
   flex-grow: 1;
   border-bottom: 0;
-  padding: 12px 16px 0;
+  padding: 0;
   background: transparent;
   display: flex;
   list-style: none;
+  margin: 0;
   margin-bottom: 12px;
   flex-wrap: wrap;
   @media (max-width: 768px) {
@@ -54,7 +56,7 @@ const Tab = styled.li`
 `
 const TabContentWrapper = styled.div`
   background-color: transparent;
-  padding: 0 16px 16px;
+  padding: 0 0 16px;
   @media (max-width: 768px) {
     padding: 0 4px 4px;
   }
