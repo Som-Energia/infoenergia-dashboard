@@ -55,5 +55,10 @@
   "WEEKEND_DAYS": "Cap de setmana i festius",
   "WEEKEND_VALLEY": "Vall 00h a 00h",
 
+  "TOTAL_DAILY": "Total diària",
+  "TOTAL_WEEKLY": "Total setmanal",
+  "TOTAL_MONTHLY": "Total mensual",
+  "TOTAL_YEARLY": "Total anual",
+
   "CONSUME_ADVICE": "Aquesta ha estat la teva distribució durant els últims 12 mesos, pots modificar-la canviant els teus hàbits."
 }

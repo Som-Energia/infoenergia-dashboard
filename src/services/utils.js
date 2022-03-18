@@ -60,6 +60,10 @@ export const formatTooltipLabel = (period, value, type = 'barChart') => {
       return type === 'barChart'
         ? dayjs(value).format('DD/MM/YYYY')
         : formatWithHour(value)
+    case 'MONTHLY':
+      return type === 'barChart'
+        ? dayjs(value).format('DD/MM/YYYY')
+        : formatWithHour(value)
     default:
       return dayjs(value).format('DD/MM/YYYY')
   }
@@ -302,4 +306,34 @@ export const CnmcformatData = ({ data, cups }) => {
   }))
 
   return [formatedHeaders, formatedData]
+}
+
+export const periodUnit = (period) => {
+  switch (period) {
+    case 'DAILY':
+      return 'd'
+    case 'WEEKLY':
+      return 'w'
+    case 'MONTHLY':
+      return 'M'
+    case 'YEARLY':
+      return 'y'
+    default:
+      return ''
+  }
+}
+
+export const labelTotalPeriod = (period) => {
+  switch (period) {
+    case 'DAILY':
+      return 'TOTAL_DAILY'
+    case 'WEEKLY':
+      return 'TOTAL_WEEKLY'
+    case 'MONTHLY':
+      return 'TOTAL_MONTHLY'
+    case 'YEARLY':
+      return 'TOTAL_YEARLY'
+    default:
+      return ''
+  }
 }

@@ -54,5 +54,10 @@
   "WEEKEND_DAYS": "Fin de semana y festivos",
   "WEEKEND_VALLEY": "Valle 00h a 00h",
 
+  "TOTAL_DAILY": "Total diaria",
+  "TOTAL_WEEKLY": "Total semanal",
+  "TOTAL_MONTHLY": "Total mensual",
+  "TOTAL_YEARLY": "Total anual",
+
   "CONSUME_ADVICE": "Esta ha sido tu distribución durante los últimos 12 meses, puedes modificarla cambiando tus hábitos."
 }

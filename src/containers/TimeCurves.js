@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback, useContext } from 'react'
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 
 import * as dayjs from 'dayjs'
 import { DatePicker } from '@material-ui/pickers'
@@ -17,6 +18,8 @@ import LegendPeriod from 'components/TipicalDailyProfile/LegendPeriod'
 
 import TimeCurvesContext from 'contexts/TimeCurvesContext'
 import Loading from 'components/Loading'
+
+import { periodUnit, labelTotalPeriod } from 'services/utils'
 
 const ControlsWrapper = styled.div`
   display: flex;
@@ -55,22 +58,7 @@ export const Widget = styled.div`
   border-radius: 0;
 `
 
-const periodUnit = (period) => {
-  switch (period) {
-    case 'DAILY':
-      return 'd'
-    case 'WEEKLY':
-      return 'w'
-    case 'MONTHLY':
-      return 'M'
-    case 'YEARLY':
-      return 'y'
-    default:
-      return ''
-  }
-}
-
-const filterDataWithPeriod = (refDate, period, data, charType) => {
+const filterDataWithPeriod = ({ refDate, period, data }) => {
   switch (period) {
     case 'DAILY':
       return data.filter(
@@ -96,6 +84,7 @@ const totalValueWithData = (data) => {
 
 function TimeCurves(props) {
   const { data, chartType, period } = props
+  const { t } = useTranslation()
 
   const { filteredTimeCurves, setFilteredTimeCurves } =
     useContext(TimeCurvesContext)
@@ -128,19 +117,24 @@ function TimeCurves(props) {
   useEffect(() => {
     const filtered =
       data?.length > 0
-        ? filterDataWithPeriod(currentDate, period, data, chartType)
+        ? filterDataWithPeriod({
+            refDate: currentDate,
+            period,
+            data,
+            chartType,
+          })
         : []
     setFilteredTimeCurves(filtered)
     const sumTotalKwh = (totalValueWithData(filtered) / 1000).toFixed(0)
     setTotalKwh(sumTotalKwh)
 
     if (compareDate) {
-      const filteredCompare = filterDataWithPeriod(
-        compareDate,
+      const filteredCompare = filterDataWithPeriod({
+        refDate: compareDate,
         period,
         data,
-        chartType
-      )
+        chartType,
+      })
       setCompareData(filteredCompare)
 
       const sumCompTotalKwh = (
@@ -241,13 +235,13 @@ function TimeCurves(props) {
         <CounterWrapper>
           <Counter
             value={totalKwh}
-            title="Total diària"
+            title={t(labelTotalPeriod(period))}
             date={dayjs(currentDate).format('DD/MM/YYYY')}
           />
           {chartType === 'LINE_CHART_TYPE' && compareDate && (
             <Counter
               value={compareTotalKwh}
-              title="Total diària"
+              title={t(labelTotalPeriod(period))}
               date={dayjs(compareDate).format('DD/MM/YYYY')}
               color="secondary"
             />
