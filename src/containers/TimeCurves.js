@@ -45,7 +45,7 @@ const ChartWrapper = styled.div`
 export const Widget = styled.div`
   width: 100%;
   min-height: 180px;
-  padding: 16px 32px;
+  padding: 16px 24px;
   margin-bottom: 24px;
   @media (max-width: 768px) {
     padding: 24px;
@@ -178,7 +178,7 @@ function TimeCurves(props) {
             onClick={prevDate}
             disabled={dayjs(currentDate).isSame(minDate, 'day')}
           >
-            <ArrowBackIosOutlinedIcon />
+            <ArrowBackIosOutlinedIcon fontSize="small" />
           </IconButton>
           <DatePicker
             value={currentDate}
@@ -194,7 +194,7 @@ function TimeCurves(props) {
               style: { fontSize: '1rem' },
               startAdornment: (
                 <IconButton edge="start" size="small">
-                  <TodayOutlinedIcon />
+                  <TodayOutlinedIcon fontSize="small" />
                 </IconButton>
               ),
             }}
@@ -203,7 +203,7 @@ function TimeCurves(props) {
             onClick={nextDate}
             disabled={dayjs(currentDate).isSame(maxDate, 'day')}
           >
-            <ArrowForwardIosOutlinedIcon />
+            <ArrowForwardIosOutlinedIcon fontSize="small" />
           </IconButton>
           {chartType === 'LINE_CHART_TYPE' && (
             <>
@@ -225,14 +225,14 @@ function TimeCurves(props) {
                   style: { fontSize: '1rem' },
                   startAdornment: (
                     <IconButton edge="start" size="small">
-                      <TodayOutlinedIcon />
+                      <TodayOutlinedIcon fontSize="small" />
                     </IconButton>
                   ),
                 }}
               />
               {compareDate && (
                 <IconButton onClick={() => setCompareDate(null)}>
-                  <ClearIcon />
+                  <ClearIcon fontSize="small" />
                 </IconButton>
               )}
             </>
