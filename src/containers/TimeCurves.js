@@ -21,44 +21,8 @@ import Loading from 'components/Loading'
 
 import { periodUnit, labelTotalPeriod } from 'services/utils'
 
-const ControlsWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-`
-const CounterWrapper = styled.div`
-  display: flex;
-  & > div {
-    margin-left: 8px;
-  }
-`
-const DateControlsWrapper = styled.div`
-  padding-top: 0;
-  display: flex;
-  align-items: center;
-`
-
-const ChartWrapper = styled.div`
-  padding-top: 16px;
-  padding-bottom: 24px;
-  min-height: 450px;
-`
-
-export const Widget = styled.div`
-  width: 100%;
-  min-height: 180px;
-  padding: 16px 24px;
-  margin-bottom: 24px;
-  @media (max-width: 768px) {
-    padding: 24px;
-    margin-bottom: 16px;
-  }
-  background-color: #fff;
-  border-radius: 0;
-`
-
 const filterDataWithPeriod = ({ refDate, period, data }) => {
+  const filteredData = []
   switch (period) {
     case 'DAILY':
       return data.filter(
@@ -72,14 +36,23 @@ const filterDataWithPeriod = ({ refDate, period, data }) => {
     case 'MONTHLY':
       return data.filter((item) => dayjs(item?.date).isSame(refDate, 'month'))
     case 'YEARLY':
-      return data.filter((item) => dayjs(item?.date).isSame(refDate, 'year'))
+      for (let i = 0; i < data.length; i++) {
+        if (dayjs(data[i]?.date).isSame(refDate, 'year')) {
+          filteredData.push(data[i])
+        }
+      }
+      return filteredData
     default:
       return []
   }
 }
 
 const totalValueWithData = (data) => {
-  return data.reduce((prev, current) => prev + current?.value, 0)
+  let total = 0
+  for (let i = 0; i < data.length; i++) {
+    total += data[i]?.value || 0
+  }
+  return total
 }
 
 function TimeCurves(props) {
@@ -101,15 +74,15 @@ function TimeCurves(props) {
     const firstItem = data?.[0]
     const firstDate = dayjs(firstItem?.date)
     firstDate.startOf('day')
-    setMinDate(firstDate)
 
-    const lastItem = data.pop?.()
+    const lastItem = data?.[data.length - 1]
     let lastDate = dayjs(lastItem?.date)
     if (lastDate.hour() === 0) {
       lastDate = lastDate.subtract(1, 'hour')
     }
     lastDate.startOf('day')
 
+    setMinDate(firstDate)
     setMaxDate(lastDate)
     setCurrentDate(lastDate)
   }, [data])
@@ -150,7 +123,7 @@ function TimeCurves(props) {
     (event) => {
       event.preventDefault()
       const prevDate = dayjs(currentDate).subtract(1, periodUnit(period))
-      setCurrentDate(prevDate)
+      setCurrentDate(prevDate.isBefore(minDate) ? minDate : prevDate)
     },
     [currentDate, period]
   )
@@ -159,7 +132,7 @@ function TimeCurves(props) {
     (event) => {
       event.preventDefault()
       const nextDate = dayjs(currentDate).add(1, periodUnit(period))
-      setCurrentDate(nextDate)
+      setCurrentDate(nextDate.isAfter(maxDate) ? maxDate : nextDate)
     },
     [currentDate, period]
   )
@@ -271,3 +244,40 @@ function TimeCurves(props) {
 }
 
 export default React.memo(TimeCurves)
+
+const ControlsWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+`
+const CounterWrapper = styled.div`
+  display: flex;
+  & > div {
+    margin-left: 8px;
+  }
+`
+const DateControlsWrapper = styled.div`
+  padding-top: 0;
+  display: flex;
+  align-items: center;
+`
+
+const ChartWrapper = styled.div`
+  padding-top: 16px;
+  padding-bottom: 24px;
+  min-height: 450px;
+`
+
+export const Widget = styled.div`
+  width: 100%;
+  min-height: 180px;
+  padding: 16px 24px;
+  margin-bottom: 24px;
+  @media (max-width: 768px) {
+    padding: 24px;
+    margin-bottom: 16px;
+  }
+  background-color: #fff;
+  border-radius: 0;
+`

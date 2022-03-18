@@ -20,48 +20,6 @@ import TimeCurvesContext from 'contexts/TimeCurvesContext'
 import { CSVLink } from 'react-csv'
 import { CnmcformatData } from 'services/utils'
 
-const ExtraButtonsWrapper = styled.div`
-  flex-grow: 1;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  padding: 0 0 12px;
-
-  & > ul {
-    border: 0;
-    padding: 0;
-    margin: 0;
-    background: transparent;
-    display: flex;
-    list-style: none;
-
-    & li {
-      background-color: #585857;
-      margin: 0;
-      padding: 0;
-
-      &.active {
-        background-color: #96b633;
-      }
-
-      &:last-child {
-        margin-left: 16px;
-      }
-
-      .controlBtn {
-        display: flex;
-        align-items: center;
-        padding: 8px 12px;
-        color: #fff;
-        font-weight: bold;
-        background: transparent;
-        border: 0;
-        text-decoration: none;
-      }
-    }
-  }
-`
-
 function TimeCurvesPage(props) {
   const { language } = useParams()
   const { t, i18n } = useTranslation()
@@ -84,18 +42,34 @@ function TimeCurvesPage(props) {
   }, [language, i18n])
 
   useEffect(function () {
-    getTimeCurves({
-      token,
-      cups,
-      currentMonth,
-    })
-      .then((response) => {
-        setTimeCurves(response || [])
+    const requestData = async () => {
+      const response = await getTimeCurves({
+        token,
+        cups,
+        currentMonth,
       })
-      .catch((error) => {
-        console.log(error)
-        setTimeCurves([])
+
+      const response2 = await getTimeCurves({
+        token,
+        cups,
+        currentMonth: dayjs().subtract(1, 'year').format('YYYYMM'),
       })
+
+      const response3 = await getTimeCurves({
+        token,
+        cups,
+        currentMonth: dayjs().subtract(2, 'year').format('YYYYMM'),
+      })
+
+      const response4 = await getTimeCurves({
+        token,
+        cups,
+        currentMonth: dayjs().subtract(3, 'year').format('YYYYMM'),
+      })
+
+      setTimeCurves([...response4, ...response3, ...response2, ...response])
+    }
+    requestData()
   }, [])
 
   const DownloadButton = (props) => {
@@ -183,3 +157,45 @@ function TimeCurvesPage(props) {
 }
 
 export default TimeCurvesPage
+
+const ExtraButtonsWrapper = styled.div`
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 0 12px;
+
+  & > ul {
+    border: 0;
+    padding: 0;
+    margin: 0;
+    background: transparent;
+    display: flex;
+    list-style: none;
+
+    & li {
+      background-color: #585857;
+      margin: 0;
+      padding: 0;
+
+      &.active {
+        background-color: #96b633;
+      }
+
+      &:last-child {
+        margin-left: 16px;
+      }
+
+      .controlBtn {
+        display: flex;
+        align-items: center;
+        padding: 8px 12px;
+        color: #fff;
+        font-weight: bold;
+        background: transparent;
+        border: 0;
+        text-decoration: none;
+      }
+    }
+  }
+`

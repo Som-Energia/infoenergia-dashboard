@@ -95,11 +95,9 @@ export const groupWeeklyData = (data) => {
 }
 
 export const agregateDates = (dates, agregatedDate) => {
-  const totalValue = dates.reduce((prev, current) => prev + current?.value, 0)
-
   const result = {
     date: agregatedDate,
-    value: totalValue,
+    value: 0,
     valley: 0,
     peak: 0,
     flat: 0,
@@ -108,6 +106,7 @@ export const agregateDates = (dates, agregatedDate) => {
   dates.forEach((item) => {
     const period = getPeriod(item?.date)
     result[period] += item?.value
+    result.value += item?.value
   })
 
   return result
@@ -138,19 +137,29 @@ export const groupMonthlyData = (data) => {
 }
 
 export const groupYearlyData = (data) => {
-  const year = []
-  const firstDay = data[0]?.date
-  for (let month = 1; month <= 12; month++) {
-    const days = data.filter((item) => dayjs(item?.date).month() === month)
-
-    const result = agregateDates(
-      days,
-      dayjs(firstDay).date(1).month(month).valueOf()
-    )
-
-    year.push(result)
+  const result = {}
+  for (let i = 0; i < data.length; i++) {
+    const current = dayjs(data[i].date).startOf('month').valueOf()
+    if (!result[current]?.value) {
+      result[current] = { date: current, value: 0, valley: 0, peak: 0, flat: 0 }
+    }
+    const period = getPeriod(data[i].date)
+    result[current][period] += data[i].value
+    result[current].value += data[i].value
   }
-  return year
+  return Object.values(result)
+}
+
+export const groupYearlyDataByDay = (data) => {
+  const result = {}
+  for (let i = 0; i < data.length; i++) {
+    const current = dayjs(data[i].date).startOf('day').valueOf()
+    if (!result[current]?.value) {
+      result[current] = { date: current, value: 0 }
+    }
+    result[current].value += data[i].value
+  }
+  return Object.values(result)
 }
 
 const weekday = require('dayjs/plugin/weekday')
@@ -210,7 +219,9 @@ export const groupDataByPeriod = (data, period, type) => {
     case 'MONTHLY':
       return type === 'barChart' ? groupMonthlyData(data) : data
     case 'YEARLY':
-      return groupYearlyData(data)
+      return type === 'barChart'
+        ? groupYearlyData(data)
+        : groupYearlyDataByDay(data)
     default:
       return type === 'barChart' ? groupDailyData(data) : data
   }

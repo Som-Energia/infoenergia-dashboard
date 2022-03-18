@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useMemo } from 'react'
 import styled from 'styled-components'
 
 import {
@@ -29,18 +29,10 @@ const ChartWrapper = styled.div`
 `
 
 function TimeCurvesLineChart({ period, data = [], compareData = [] }) {
-  const [mixedData, setMixedData] = useState([])
-
-  useEffect(() => {
+  const mixedData = useMemo(() => {
     const groupedData = groupDataByPeriod(data, period, 'lineChart')
-
-    if (compareData.length) {
-      const mixedDataArr = mergeData(groupedData, compareData)
-      setMixedData(mixedDataArr)
-    } else {
-      setMixedData(groupedData)
-    }
-  }, [data, compareData, period])
+    return mergeData(groupedData, compareData)
+  }, [data, period, compareData])
 
   return (
     <ChartWrapper>

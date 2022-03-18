@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 
 import {
   Bar,
@@ -20,8 +20,11 @@ import {
   formatDecimal,
 } from 'services/utils'
 
-function TimeCurvesBarChart({ data, period, compareData = [] }) {
-  const groupedData = groupDataByPeriod(data, period, 'barChart')
+function TimeCurvesBarChart({ data, period }) {
+  const groupedData = useMemo(
+    () => groupDataByPeriod(data, period, 'barChart'),
+    [data, period]
+  )
 
   return (
     <div style={{ height: '450px' }}>
