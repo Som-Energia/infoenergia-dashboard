@@ -114,7 +114,7 @@ function TimeCurvesPage(props) {
         <li>
           <DownloadButton>
             <GetAppIcon fontSize="small" />
-            &nbsp;{t('Descarrega')}
+            &nbsp;{t('DOWNLOAD')}
           </DownloadButton>
         </li>
       </ul>
@@ -126,25 +126,25 @@ function TimeCurvesPage(props) {
       <Tabs
         tabs={[
           {
-            title: t('Diària'),
+            title: t('DAILY'),
             content: (
               <TimeCurves period="DAILY" chartType={type} data={timeCurves} />
             ),
           },
           {
-            title: t('Setmanal'),
+            title: t('WEEKLY'),
             content: (
               <TimeCurves period="WEEKLY" chartType={type} data={timeCurves} />
             ),
           },
           {
-            title: t('Mensual'),
+            title: t('MONTHLY'),
             content: (
               <TimeCurves period="MONTHLY" chartType={type} data={timeCurves} />
             ),
           },
           {
-            title: t('Anual'),
+            title: t('YEARLY'),
             content: (
               <TimeCurves period="YEARLY" chartType={type} data={timeCurves} />
             ),

@@ -44,6 +44,7 @@
   "LAST_UPDATE": "Actualizado",
   "COOLING": "Invierno",
   "HEATING": "Verano",
+
   "WORKING_DAYS": "Laborables",
   "WORKING_VALLEY": "Valle 00h a 08h",
   "WORKING_FLAT_1": "Llano 08h a 10h",
@@ -58,6 +59,13 @@
   "TOTAL_WEEKLY": "Total semanal",
   "TOTAL_MONTHLY": "Total mensual",
   "TOTAL_YEARLY": "Total anual",
+
+  "DAILY": "Diaria",
+  "WEEKLY": "Semanal",
+  "MONTHLY": "Mensual",
+  "YEARLY": "Anual",
+
+  "DOWNLOAD": "Descarga",
 
   "CONSUME_ADVICE": "Esta ha sido tu distribución durante los últimos 12 meses, puedes modificarla cambiando tus hábitos."
 }
