@@ -31,7 +31,7 @@ function TimeCurvesPage(props) {
     token,
     contract,
     cups,
-    currentMonth = dayjs().format('YYYYMM'),
+    now = dayjs(),
   } = props
 
   const [type, setType] = useState('LINE_CHART_TYPE')
@@ -43,34 +43,36 @@ function TimeCurvesPage(props) {
 
   useEffect(function () {
     const requestData = async () => {
+      // TODO: use Promise.all() to parallelize
+      // TODO: use [3,2,1,0].map() to reduce duplication
       const response = await getTimeCurves({
         token,
         cups,
-        currentMonth,
+        currentMonth: now.subtract(0, 'year').format('YYYYMM'),
       })
 
       const response2 = await getTimeCurves({
         token,
         cups,
-        currentMonth: dayjs().subtract(1, 'year').format('YYYYMM'),
+        currentMonth: now.subtract(1, 'year').format('YYYYMM'),
       })
 
       const response3 = await getTimeCurves({
         token,
         cups,
-        currentMonth: dayjs().subtract(2, 'year').format('YYYYMM'),
+        currentMonth: now.subtract(2, 'year').format('YYYYMM'),
       })
 
       const response4 = await getTimeCurves({
         token,
         cups,
-        currentMonth: dayjs().subtract(3, 'year').format('YYYYMM'),
+        currentMonth: now.subtract(3, 'year').format('YYYYMM'),
       })
 
       setTimeCurves([...response4, ...response3, ...response2, ...response])
     }
     requestData()
-  }, [])
+  }, [token, cups])
 
   const DownloadButton = (props) => {
     const { children } = props
