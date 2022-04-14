@@ -43,33 +43,16 @@ function TimeCurvesPage(props) {
 
   useEffect(function () {
     const requestData = async () => {
-      // TODO: use Promise.all() to parallelize
-      // TODO: use [3,2,1,0].map() to reduce duplication
-      const response = await getTimeCurves({
-        token,
-        cups,
-        currentMonth: now.subtract(0, 'year').format('YYYYMM'),
-      })
-
-      const response2 = await getTimeCurves({
-        token,
-        cups,
-        currentMonth: now.subtract(1, 'year').format('YYYYMM'),
-      })
-
-      const response3 = await getTimeCurves({
-        token,
-        cups,
-        currentMonth: now.subtract(2, 'year').format('YYYYMM'),
-      })
-
-      const response4 = await getTimeCurves({
-        token,
-        cups,
-        currentMonth: now.subtract(3, 'year').format('YYYYMM'),
-      })
-
-      setTimeCurves([...response4, ...response3, ...response2, ...response])
+      const responses = await Promise.all(
+        [3,2,1,0].map((yearsago) => {
+          return getTimeCurves({
+            token,
+            cups,
+            currentMonth: now.subtract(yearsago, 'year').format('YYYYMM'),
+          })
+        })
+      )
+      setTimeCurves(responses.flat())
     }
     requestData()
   }, [token, cups])
