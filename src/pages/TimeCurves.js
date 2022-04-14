@@ -29,12 +29,12 @@ function TimeCurvesPage(props) {
 
   const {
     token,
-    contract,
-    cups,
     now = dayjs(),
   } = props
 
   const [type, setType] = useState('LINE_CHART_TYPE')
+  const [cups, setCups] = useState(props.cups)
+  const [contract, setContract] = useState(props.contract)
 
   useEffect(() => {
     language && i18n.changeLanguage(language)
@@ -56,6 +56,12 @@ function TimeCurvesPage(props) {
     }
     requestData()
   }, [token, cups])
+
+  window.switchcontract = (newContract, newCups) => {
+    setTimeCurves([])
+    setContract(newContract)
+    setCups(newCups)
+  }
 
   const DownloadButton = (props) => {
     const { children } = props
