@@ -20,7 +20,7 @@
   "REGULAR": "Regular",
   "PICK": "Punta",
   "VALLEY": "Vall",
-  "SUPERVALLEY": "Supervall",
+  "FLAT": "Pla",
   "WEEKLY_AVERAGE": "Mitjana setmanal",
   "BETWEEN_WEEKDAYS": "Entre setmana",
   "WEEKEND": "Cap de semana",
@@ -59,6 +59,13 @@
   "TOTAL_WEEKLY": "Total setmanal",
   "TOTAL_MONTHLY": "Total mensual",
   "TOTAL_YEARLY": "Total anual",
+
+  "DAILY": "Diària",
+  "WEEKLY": "Setmanal",
+  "MONTHLY": "Mensual",
+  "YEARLY": "Anual",
+
+  "DOWNLOAD": "Descàrrega",
 
   "CONSUME_ADVICE": "Aquesta ha estat la teva distribució durant els últims 12 mesos, pots modificar-la canviant els teus hàbits."
 }
