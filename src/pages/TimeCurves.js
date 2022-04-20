@@ -29,12 +29,12 @@ function TimeCurvesPage(props) {
 
   const {
     token,
-    contract,
-    cups,
-    currentMonth = dayjs().format('YYYYMM'),
+    now = dayjs(),
   } = props
 
   const [type, setType] = useState('LINE_CHART_TYPE')
+  const [cups, setCups] = useState(props.cups)
+  const [contract, setContract] = useState(props.contract)
 
   useEffect(() => {
     language && i18n.changeLanguage(language)
@@ -43,34 +43,25 @@ function TimeCurvesPage(props) {
 
   useEffect(function () {
     const requestData = async () => {
-      const response = await getTimeCurves({
-        token,
-        cups,
-        currentMonth,
-      })
-
-      const response2 = await getTimeCurves({
-        token,
-        cups,
-        currentMonth: dayjs().subtract(1, 'year').format('YYYYMM'),
-      })
-
-      const response3 = await getTimeCurves({
-        token,
-        cups,
-        currentMonth: dayjs().subtract(2, 'year').format('YYYYMM'),
-      })
-
-      const response4 = await getTimeCurves({
-        token,
-        cups,
-        currentMonth: dayjs().subtract(3, 'year').format('YYYYMM'),
-      })
-
-      setTimeCurves([...response4, ...response3, ...response2, ...response])
+      const responses = await Promise.all(
+        [3,2,1,0].map((yearsago) => {
+          return getTimeCurves({
+            token,
+            cups,
+            currentMonth: now.subtract(yearsago, 'year').format('YYYYMM'),
+          })
+        })
+      )
+      setTimeCurves(responses.flat())
     }
     requestData()
-  }, [])
+  }, [token, cups])
+
+  window.switchcontract = (newContract, newCups) => {
+    setTimeCurves([])
+    setContract(newContract)
+    setCups(newCups)
+  }
 
   const DownloadButton = (props) => {
     const { children } = props
