@@ -58,5 +58,6 @@
     "MONTHLY": "Mensual",
     "YEARLY": "Anual",
     "DOWNLOAD": "Descàrrega",
-    "CONSUME_ADVICE": "Aquesta ha estat la teva distribució durant els últims 12 mesos, pots modificar-la canviant els teus hàbits."
+    "CONSUME_ADVICE": "Aquesta ha estat la teva distribució durant els últims 12 mesos, pots modificar-la canviant els teus hàbits.",
+    "ONLY_FOR_20TD": "Aquesta funcionalitat només està disponible per contractes amb tarifa 2.0TD"
 }
