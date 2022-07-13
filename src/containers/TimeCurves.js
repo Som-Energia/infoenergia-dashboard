@@ -56,7 +56,7 @@ const totalValueWithData = (data) => {
 }
 
 function TimeCurves(props) {
-  const { data, chartType, period } = props
+  const { data, chartType, period, tariff } = props
   const { t } = useTranslation()
 
   const { filteredTimeCurves, setFilteredTimeCurves } =

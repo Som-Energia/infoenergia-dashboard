@@ -30,6 +30,7 @@ function TimeCurvesPage(props) {
   const {
     token,
     now = dayjs(),
+    tariff
   } = props
 
   const [type, setType] = useState('LINE_CHART_TYPE')
@@ -119,25 +120,25 @@ function TimeCurvesPage(props) {
           {
             title: t('DAILY'),
             content: (
-              <TimeCurves period="DAILY" chartType={type} data={timeCurves} />
+              <TimeCurves period="DAILY" chartType={type} data={timeCurves} tariff={tariff} />
             ),
           },
           {
             title: t('WEEKLY'),
             content: (
-              <TimeCurves period="WEEKLY" chartType={type} data={timeCurves} />
+              <TimeCurves period="WEEKLY" chartType={type} data={timeCurves} tariff={tariff} />
             ),
           },
           {
             title: t('MONTHLY'),
             content: (
-              <TimeCurves period="MONTHLY" chartType={type} data={timeCurves} />
+              <TimeCurves period="MONTHLY" chartType={type} data={timeCurves} tariff={tariff} />
             ),
           },
           {
             title: t('YEARLY'),
             content: (
-              <TimeCurves period="YEARLY" chartType={type} data={timeCurves} />
+              <TimeCurves period="YEARLY" chartType={type} data={timeCurves} tariff={tariff} />
             ),
           },
         ]}
