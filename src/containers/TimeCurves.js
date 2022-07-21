@@ -25,15 +25,10 @@ import { periodUnit, labelTotalPeriod } from 'services/utils'
 
 const useStyles = makeStyles((theme) => ({
     message: {
-        marginTop: theme.spacing(2),
-        fontWeight: '400',
+        marginTop: theme.spacing(4),
         fontSize: '1rem',
-        lineHeight: '1.75',
         textAlign: 'center',
-        color: '#6f6262',
-        '& a': {
-          color: '#fe6444 !important'
-        }
+        color: theme?.typography?.color,
       },
   }))
 
