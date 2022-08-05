@@ -4,6 +4,8 @@ import { useTranslation } from 'react-i18next'
 
 import Grid from '@material-ui/core/Grid'
 import Skeleton from '@material-ui/lab/Skeleton'
+import Typography from '@material-ui/core/Typography'
+import { makeStyles } from '@material-ui/core/styles'
 
 import TipicalDailyProfileChart from 'components/TipicalDailyProfile/TipicalDailyProfileChart'
 import Counter from 'components/Counter'
@@ -20,9 +22,21 @@ import { getDailyProfile } from 'services/api'
 import ErrorOutlineIcon from '@material-ui/icons/Error'
 import LegendPeriod from 'components/TipicalDailyProfile/LegendPeriod'
 
+
+const useStyles = makeStyles((theme) => ({
+    message: {
+        marginTop: theme.spacing(4),
+        fontSize: '1rem',
+        textAlign: 'center',
+        color: theme?.typography?.color,
+      },
+  }))
+
+
 function TipicalDailyProfile(props) {
-  const { contract, token } = props
+  const { contract, token, tariff } = props
   const { t } = useTranslation()
+  const classes = useStyles()
 
   const [data, setData] = useState({})
   const [isLoading, setIsLoading] = useState(true)
@@ -42,6 +56,12 @@ function TipicalDailyProfile(props) {
   return (
     <>
       <Widget>
+      {tariff !== '2.0TD' ? (
+        <Typography className={classes.message}>
+          {t('ONLY_FOR_20TD')}
+        </Typography>
+      ) : (
+        <>
         <Grid item xs={12}>
           <CounterWrapper>
             <Counter
@@ -87,6 +107,8 @@ function TipicalDailyProfile(props) {
             </Message>
           </Grid>
         </Grid>
+        </>
+      )}
       </Widget>
       <Separator />
 
@@ -95,7 +117,15 @@ function TipicalDailyProfile(props) {
           <DistributionByUserType {...props} />
         </Widget>
         <Widget>
+        {tariff !== '2.0TD' ? (
+          <Typography className={classes.message}>
+            {t('ONLY_FOR_20TD')}
+          </Typography>
+        ) : (
+        <>
           <DistributionByPeriod {...props} />
+        </>
+      )}
         </Widget>
       </WidgetGrid>
 
