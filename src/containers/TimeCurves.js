@@ -154,58 +154,27 @@ function TimeCurves(props) {
     <Widget>
       {tariff !== '2.0TD' && chartType === 'BAR_CHART_TYPE' ? (
         <Typography className={classes.message}>
-        {t('ONLY_FOR_20TD')}
-    </Typography>
+          {t('ONLY_FOR_20TD')}
+        </Typography>
       ) : (
-      <>
-      <ControlsWrapper>
-        <DateControlsWrapper>
-          <IconButton
-            onClick={prevDate}
-            disabled={dayjs(currentDate).isSame(minDate, 'day')}
-          >
-            <ArrowBackIosOutlinedIcon fontSize="small" />
-          </IconButton>
-          <DatePicker
-            value={currentDate}
-            minDate={minDate}
-            maxDate={maxDate}
-            variant="inline"
-            autoOk
-            size="small"
-            inputVariant="outlined"
-            onChange={setCurrentDate}
-            format="DD/MM/YYYY"
-            InputProps={{
-              style: { fontSize: '1rem' },
-              startAdornment: (
-                <IconButton edge="start" size="small">
-                  <TodayOutlinedIcon fontSize="small" />
-                </IconButton>
-              ),
-            }}
-          />
-          <IconButton
-            onClick={nextDate}
-            disabled={dayjs(currentDate).isSame(maxDate, 'day')}
-          >
-            <ArrowForwardIosOutlinedIcon fontSize="small" />
-          </IconButton>
-          {chartType === 'LINE_CHART_TYPE' && (
-            <>
+        <>
+          <ControlsWrapper>
+            <DateControlsWrapper>
+              <IconButton
+                onClick={prevDate}
+                disabled={dayjs(currentDate).isSame(minDate, 'day')}
+              >
+                <ArrowBackIosOutlinedIcon fontSize="small" />
+              </IconButton>
               <DatePicker
-                value={compareDate}
+                value={currentDate}
                 minDate={minDate}
                 maxDate={maxDate}
                 variant="inline"
-                placeholder="Comparar"
                 autoOk
                 size="small"
                 inputVariant="outlined"
-                onChange={setCompareDate}
-                shouldDisableDate={(date) =>
-                  dayjs(date).isSame(currentDate, 'day')
-                }
+                onChange={setCurrentDate}
                 format="DD/MM/YYYY"
                 InputProps={{
                   style: { fontSize: '1rem' },
@@ -216,49 +185,80 @@ function TimeCurves(props) {
                   ),
                 }}
               />
-              {compareDate && (
-                <IconButton onClick={() => setCompareDate(null)}>
-                  <ClearIcon fontSize="small" />
-                </IconButton>
+              <IconButton
+                onClick={nextDate}
+                disabled={dayjs(currentDate).isSame(maxDate, 'day')}
+              >
+                <ArrowForwardIosOutlinedIcon fontSize="small" />
+              </IconButton>
+              {chartType === 'LINE_CHART_TYPE' && (
+                <>
+                  <DatePicker
+                    value={compareDate}
+                    minDate={minDate}
+                    maxDate={maxDate}
+                    variant="inline"
+                    placeholder="Comparar"
+                    autoOk
+                    size="small"
+                    inputVariant="outlined"
+                    onChange={setCompareDate}
+                    shouldDisableDate={(date) =>
+                      dayjs(date).isSame(currentDate, 'day')
+                    }
+                    format="DD/MM/YYYY"
+                    InputProps={{
+                      style: { fontSize: '1rem' },
+                      startAdornment: (
+                        <IconButton edge="start" size="small">
+                          <TodayOutlinedIcon fontSize="small" />
+                        </IconButton>
+                      ),
+                    }}
+                  />
+                  {compareDate && (
+                    <IconButton onClick={() => setCompareDate(null)}>
+                      <ClearIcon fontSize="small" />
+                    </IconButton>
+                  )}
+                </>
               )}
-            </>
-          )}
-        </DateControlsWrapper>
-        <CounterWrapper>
-          <Counter
-            value={totalKwh}
-            title={t(labelTotalPeriod(period))}
-            date={dayjs(currentDate).format('DD/MM/YYYY')}
-          />
-          {chartType === 'LINE_CHART_TYPE' && compareDate && (
-            <Counter
-              value={compareTotalKwh}
-              title={t(labelTotalPeriod(period))}
-              date={dayjs(compareDate).format('DD/MM/YYYY')}
-              color="secondary"
-            />
-          )}
-        </CounterWrapper>
-      </ControlsWrapper>
-      <ChartWrapper>
-        {!data.length ? (
-          <Loading />
-        ) : chartType === 'LINE_CHART_TYPE' ? (
-          <TimeCurvesLineChart
-            data={filteredTimeCurves}
-            compareData={compareData}
-            period={period}
-          />
-        ) : (
-          <TimeCurvesBarChart
-            data={filteredTimeCurves}
-            compareData={compareData}
-            period={period}
-          />
-        )}
-      </ChartWrapper>
-      {chartType === 'BAR_CHART_TYPE' && <LegendPeriod />}
-      </>
+            </DateControlsWrapper>
+            <CounterWrapper>
+              <Counter
+                value={totalKwh}
+                title={t(labelTotalPeriod(period))}
+                date={dayjs(currentDate).format('DD/MM/YYYY')}
+              />
+              {chartType === 'LINE_CHART_TYPE' && compareDate && (
+                <Counter
+                  value={compareTotalKwh}
+                  title={t(labelTotalPeriod(period))}
+                  date={dayjs(compareDate).format('DD/MM/YYYY')}
+                  color="secondary"
+                />
+              )}
+            </CounterWrapper>
+          </ControlsWrapper>
+          <ChartWrapper>
+            {!data.length ? (
+              <Loading />
+            ) : chartType === 'LINE_CHART_TYPE' ? (
+              <TimeCurvesLineChart
+                data={filteredTimeCurves}
+                compareData={compareData}
+                period={period}
+              />
+            ) : (
+              <TimeCurvesBarChart
+                data={filteredTimeCurves}
+                compareData={compareData}
+                period={period}
+              />
+            )}
+          </ChartWrapper>
+          {chartType === 'BAR_CHART_TYPE' && <LegendPeriod />}
+        </>
       )}
     </Widget>
   )
