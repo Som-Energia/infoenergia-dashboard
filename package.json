@@ -1,7 +1,7 @@
 {
   "name": "infoenergia",
   "version": "1.2.0",
-  "homepage": "/static/infoenergia",
+  "homepage": "/static/infoenergy",
   "private": false,
   "dependencies": {
     "@date-io/dayjs": "1.x",
