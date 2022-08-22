@@ -31,7 +31,6 @@ function App(props) {
     <>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-
         <MuiPickersUtilsProvider utils={DayJsUtils}>
           <Suspense fallback={<></>}>
             <Router>

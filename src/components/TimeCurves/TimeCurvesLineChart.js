@@ -31,7 +31,8 @@ const ChartWrapper = styled.div`
 function TimeCurvesLineChart({ period, data = [], compareData = [] }) {
   const mixedData = useMemo(() => {
     const groupedData = groupDataByPeriod(data, period, 'lineChart')
-    return mergeData(groupedData, compareData)
+    const groupedComparedData = groupDataByPeriod(compareData, period, 'lineChart')
+    return mergeData(groupedData, groupedComparedData)
   }, [data, period, compareData])
 
   return (
