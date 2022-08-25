@@ -48,5 +48,6 @@ export function getPeriod(date) {
   if (hour < 14) return 'peak'
   if (hour < 18) return 'flat'
   if (hour < 22) return 'peak'
+  if (hour < 24) return 'flat'
   return 'valley'
 }
