@@ -6,7 +6,7 @@ import dayjs from 'dayjs'
 import 'dayjs/locale/ca'
 import 'dayjs/locale/es'
 
-import TipicialDailyProfile from '../containers/TipicalDailyProfile'
+import TipicalDailyProfile from '../containers/TipicalDailyProfile'
 import TipicalWeeklyProfile from '../containers/TipicalWeeklyProfile'
 import LastMonthProfile from '../containers/LastMonthsProfile'
 import SeasonalProfile from '../containers/SeasonalProfile'
@@ -26,7 +26,7 @@ function EnergyUse(props) {
   const tabs = [
     {
       title: t('TIPICAL_DAILY_PROFILE'),
-      content: <TipicialDailyProfile {...props} />,
+      content: <TipicalDailyProfile {...props} />,
     },
     {
       title: t('TIPICAL_WEEKLY_PROFILE'),
