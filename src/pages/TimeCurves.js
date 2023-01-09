@@ -39,21 +39,24 @@ function TimeCurvesPage(props) {
     language ? dayjs.locale(language) : dayjs.locale('es')
   }, [language, i18n])
 
-  useEffect(function () {
-    const requestData = async () => {
-      const responses = await Promise.all(
-        [3,2,1,0].map((yearsago) => {
-          return getTimeCurves({
-            token,
-            cups,
-            currentMonth: now.subtract(yearsago, 'year').format('YYYYMM'),
+  useEffect(
+    function () {
+      const requestData = async () => {
+        const responses = await Promise.all(
+          [3, 2, 1, 0].map((yearsago) => {
+            return getTimeCurves({
+              token,
+              cups,
+              currentMonth: now.subtract(yearsago, 'year').format('YYYYMM'),
+            })
           })
-        })
-      )
-      setTimeCurves(responses.flat())
-    }
-    requestData()
-  }, [token, cups])
+        )
+        setTimeCurves(responses.flat())
+      }
+      requestData()
+    },
+    [token, cups]
+  )
 
   window.switchcontract = (newContract, newCups, newTariff) => {
     setTimeCurves([])
@@ -118,25 +121,45 @@ function TimeCurvesPage(props) {
           {
             title: t('DAILY'),
             content: (
-              <TimeCurves period="DAILY" chartType={type} data={timeCurves} tariff={tariff} />
+              <TimeCurves
+                period="DAILY"
+                chartType={type}
+                data={timeCurves}
+                tariff={tariff}
+              />
             ),
           },
           {
             title: t('WEEKLY'),
             content: (
-              <TimeCurves period="WEEKLY" chartType={type} data={timeCurves} tariff={tariff} />
+              <TimeCurves
+                period="WEEKLY"
+                chartType={type}
+                data={timeCurves}
+                tariff={tariff}
+              />
             ),
           },
           {
             title: t('MONTHLY'),
             content: (
-              <TimeCurves period="MONTHLY" chartType={type} data={timeCurves} tariff={tariff} />
+              <TimeCurves
+                period="MONTHLY"
+                chartType={type}
+                data={timeCurves}
+                tariff={tariff}
+              />
             ),
           },
           {
             title: t('YEARLY'),
             content: (
-              <TimeCurves period="YEARLY" chartType={type} data={timeCurves} tariff={tariff} />
+              <TimeCurves
+                period="YEARLY"
+                chartType={type}
+                data={timeCurves}
+                tariff={tariff}
+              />
             ),
           },
         ]}
