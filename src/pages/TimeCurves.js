@@ -27,14 +27,11 @@ function TimeCurvesPage(props) {
   const { timeCurves, setTimeCurves, filteredTimeCurves } =
     useContext(TimeCurvesContext)
 
-  const {
-    token,
-    now = dayjs(),
-    tariff
-  } = props
+  const { token, now = dayjs() } = props
 
   const [type, setType] = useState('LINE_CHART_TYPE')
   const [cups, setCups] = useState(props.cups)
+  const [tariff, setTariff] = useState(props.tariff)
   const [contract, setContract] = useState(props.contract)
 
   useEffect(() => {
@@ -58,10 +55,11 @@ function TimeCurvesPage(props) {
     requestData()
   }, [token, cups])
 
-  window.switchcontract = (newContract, newCups) => {
+  window.switchcontract = (newContract, newCups, newTariff) => {
     setTimeCurves([])
     setContract(newContract)
     setCups(newCups)
+    setTariff(newTariff)
   }
 
   const DownloadButton = (props) => {
