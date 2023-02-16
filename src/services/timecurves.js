@@ -10,7 +10,7 @@ const { INFOENERGIA_API_URL, WEBFORMS_API_URL } = window.config? window.config :
 }
 
 
-let MARKET_HOLIDAYS = []
+export let MARKET_HOLIDAYS = []
 
 export function getTimeCurves({ cups, token, currentMonth }) {
   return fetch(`${INFOENERGIA_API_URL}/CCHFact/${cups}/${currentMonth}`, {
@@ -45,13 +45,20 @@ getMarketHolidays().then((holidays) => {
 // TODO: This is a Mock!!!!
 export function getPeriod(datetime) {
   datetime = dayjs(datetime)
+  const day = datetime.isoWeekday()
+  if (day >= 6) return 'valley'
+  const isodate = datetime.format('YYYY-MM-DD')
+  if (MARKET_HOLIDAYS.includes(isodate)) return 'valley'
   const hour = datetime.hour()
-  if (hour<8) return 'valley'
-  if (hour<10) return 'flat'
-  if (hour<14) return 'peak'
-  if (hour<18) return 'flat'
-  if (hour<22) return 'peak'
-  return 'flat'
+  const periodSequence = ['valley', 'flat', 'peak', 'flat', 'peak', 'flat']
+  const generalPeriodTimes = [8, 10, 14, 18, 22, 24]
+  for (let i = 0; i < periodSequence.length; i++) {
+    const timeuntil = generalPeriodTimes[i]
+    if (hour < timeuntil) {
+      return periodSequence[i]
+    }
+  }
+  return periodSequence.slice(-1)
   // valley, peak, flat
   /*
   datetime = dayjs(datetime)
