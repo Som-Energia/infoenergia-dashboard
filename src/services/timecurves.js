@@ -44,14 +44,14 @@ getMarketHolidays().then((holidays) => {
 
 // TODO: This is a Mock!!!!
 export function getPeriod(datetime) {
-  datetime = dayjs(datetime)
-  const day = datetime.isoWeekday()
-  if (day >= 6) return 'valley'
-  const isodate = datetime.format('YYYY-MM-DD')
-  if (MARKET_HOLIDAYS.includes(isodate)) return 'valley'
-  const hour = datetime.hour()
   const periodSequence = ['valley', 'flat', 'peak', 'flat', 'peak', 'flat']
   const generalPeriodTimes = [8, 10, 14, 18, 22, 24]
+  datetime = dayjs(datetime)
+  const day = datetime.isoWeekday()
+  if (day >= 6) return periodSequence[0] // 'valley'
+  const isodate = datetime.format('YYYY-MM-DD')
+  if (MARKET_HOLIDAYS.includes(isodate)) return periodSequence[0] // 'valley'
+  const hour = datetime.hour()
   for (let i = 0; i < periodSequence.length; i++) {
     const timeuntil = generalPeriodTimes[i]
     if (hour < timeuntil) {
