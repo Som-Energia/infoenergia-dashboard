@@ -3,12 +3,13 @@ import dayjs from 'dayjs'
 const isoWeek = require('dayjs/plugin/isoWeek')
 dayjs.extend(isoWeek)
 
-const { INFOENERGIA_API_URL, WEBFORMS_API_URL } = window.config? window.config : {
-  // Just for testing
-  INFOENERGIA_API_URL:'caca',
-  WEBFORMS_API_URL: 'caca',
-}
-
+const { INFOENERGIA_API_URL, WEBFORMS_API_URL } = window.config
+  ? window.config
+  : {
+      // Just for testing
+      INFOENERGIA_API_URL: 'caca',
+      WEBFORMS_API_URL: 'caca',
+    }
 
 export let MARKET_HOLIDAYS = []
 
@@ -45,9 +46,7 @@ getMarketHolidays().then((holidays) => {
 // TODO: This is a Mock!!!!
 export function getPeriod(datetime) {
   const periodTimes = [8, 10, 14, 18, 22, 24]
-
   datetime = dayjs(datetime)
-
   const seasonPeriods = periodes['LowPower'].seasons[1]
   const lesserPeriod = seasonPeriods[seasonPeriods.length - 1]
   // weekdays
