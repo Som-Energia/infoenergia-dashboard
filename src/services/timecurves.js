@@ -44,42 +44,28 @@ getMarketHolidays().then((holidays) => {
 
 // TODO: This is a Mock!!!!
 export function getPeriod(datetime) {
-  const periodSequence = ['valley', 'flat', 'peak', 'flat', 'peak', 'flat']
-  const generalPeriodTimes = [8, 10, 14, 18, 22, 24]
+  const seasonPeriods = ['peak', 'flat', 'valley']
+  const periodTimes = [8, 10, 14, 18, 22, 24]
+  const lesserPeriod = seasonPeriods[seasonPeriods.length - 1]
+
   datetime = dayjs(datetime)
+  // weekdays
   const day = datetime.isoWeekday()
-  if (day >= 6) return periodSequence[0] // 'valley'
+  if (day >= 6) return lesserPeriod
+  // holidays
   const isodate = datetime.format('YYYY-MM-DD')
-  if (MARKET_HOLIDAYS.includes(isodate)) return periodSequence[0] // 'valley'
+  if (MARKET_HOLIDAYS.includes(isodate)) return lesserPeriod
+  // labour days by time
+  const dailySequence = [2, 1, 0, 1, 0, 1]
   const hour = datetime.hour()
-  for (let i = 0; i < periodSequence.length; i++) {
-    const timeuntil = generalPeriodTimes[i]
+  for (let i = 0; i < dailySequence.length; i++) {
+    const timeuntil = periodTimes[i]
     if (hour < timeuntil) {
-      return periodSequence[i]
+      return seasonPeriods[dailySequence[i]]
     }
   }
-  return periodSequence.slice(-1)
-  // valley, peak, flat
-  /*
-  datetime = dayjs(datetime)
-  const day = datetime.isoWeekday()
-  if (day >= 6) return 'valley'
-  const isodate = datetime.format('YYYY-MM-DD')
-  if (MARKET_HOLIDAYS.includes(isodate)) return 'valley'
-  const hour = datetime.hour()
-  const periodStructureName = 'LowPower' // TODO
-  const periodStructure = periodes[periodStructureName]
-  const month = datetime.month() + 1
-  const [peak, flat, valley] = periodStructure.seasons[month]
-  const periodSequence = [valley, flat, peak, flat, peak, flat]
-  for (let i = 0; i < periodSequence.length; i++) {
-    const timeuntil = periodStructure.times[i]
-    if (hour < timeuntil) {
-      return periodSequence[i]
-    }
-  }
-  return periodSequence.slice(-1)
-  */
+  // TODO: untested
+  return lesserPeriod
 }
 
 var generalPeriodTimes = [8, 10, 14, 18, 22, 24]
