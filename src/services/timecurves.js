@@ -44,11 +44,12 @@ getMarketHolidays().then((holidays) => {
 
 // TODO: This is a Mock!!!!
 export function getPeriod(datetime) {
-  const seasonPeriods = ['peak', 'flat', 'valley']
   const periodTimes = [8, 10, 14, 18, 22, 24]
-  const lesserPeriod = seasonPeriods[seasonPeriods.length - 1]
 
   datetime = dayjs(datetime)
+
+  const seasonPeriods = periodes['LowPower'].seasons[1]
+  const lesserPeriod = seasonPeriods[seasonPeriods.length - 1]
   // weekdays
   const day = datetime.isoWeekday()
   if (day >= 6) return lesserPeriod
