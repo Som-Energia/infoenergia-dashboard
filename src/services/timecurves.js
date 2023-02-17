@@ -65,11 +65,11 @@ export function getPeriod(datetime, timetable='LowPower') {
   return lesserPeriod
 }
 
-let lowPowerPeriodTimes = [8, 10, 14, 18, 22, 24]
-let peninsularPeriodTimes = [8, 9, 14, 18, 22, 24]
-let insularPeriodTimes = [8, 10, 15, 18, 22, 24]
+const lowPowerPeriodTimes = [8, 10, 14, 18, 22, 24]
+const peninsularPeriodTimes = [8, 9, 14, 18, 22, 24]
+const insularPeriodTimes = [8, 10, 15, 18, 22, 24]
 
-let periodes = {
+const periodes = {
   LowPower: {
     times: lowPowerPeriodTimes,
     seasons: {
