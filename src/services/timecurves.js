@@ -47,7 +47,7 @@ getMarketHolidays().then((holidays) => {
 export function getPeriod(datetime) {
   const periodTimes = [8, 10, 14, 18, 22, 24]
   datetime = dayjs(datetime)
-  const seasonPeriods = periodes['LowPower'].seasons[1]
+  const seasonPeriods = periodes['LowPower'].seasons[12]
   const lesserPeriod = seasonPeriods[seasonPeriods.length - 1]
   // weekdays
   const day = datetime.isoWeekday()
@@ -68,12 +68,13 @@ export function getPeriod(datetime) {
   return lesserPeriod
 }
 
-var generalPeriodTimes = [8, 10, 14, 18, 22, 24]
-var specialPeriodTimes = [8, 9, 14, 18, 22, 24]
+let lowPowerPeriodTimes = [8, 10, 14, 18, 22, 24]
+let peninsularPeriodTimes = [8, 9, 14, 18, 22, 24]
+let insularPeriodTimes = [8, 10, 15, 18, 22, 24]
 
-var periodes = {
+let periodes = {
   LowPower: {
-    times: generalPeriodTimes,
+    times: lowPowerPeriodTimes,
     seasons: {
       1: ['peak', 'flat', 'valley'],
       2: ['peak', 'flat', 'valley'],
@@ -90,7 +91,7 @@ var periodes = {
     },
   },
   Peninsula: {
-    times: specialPeriodTimes,
+    times: peninsularPeriodTimes,
     seasons: {
       1: ['P1', 'P2', 'P6'],
       2: ['P1', 'P2', 'P6'],
@@ -107,7 +108,7 @@ var periodes = {
     },
   },
   Balears: {
-    times: generalPeriodTimes,
+    times: insularPeriodTimes,
     seasons: {
       1: ['P3', 'P4', 'P6'],
       2: ['P3', 'P4', 'P6'],
@@ -124,7 +125,7 @@ var periodes = {
     },
   },
   Canaries: {
-    times: generalPeriodTimes,
+    times: insularPeriodTimes,
     seasons: {
       1: ['P2', 'P4', 'P6'],
       2: ['P2', 'P4', 'P6'],
