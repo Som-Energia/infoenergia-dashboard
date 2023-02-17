@@ -41,13 +41,10 @@ getMarketHolidays().then((holidays) => {
   MARKET_HOLIDAYS = holidays?.data || []
 })
 
-//export function getPeriod(tariff, zone, datetime) {}
-
-// TODO: This is a Mock!!!!
-export function getPeriod(datetime) {
-  const periodTimes = [8, 10, 14, 18, 22, 24]
+export function getPeriod(datetime, timetable='LowPower') {
+  const periodTimes = periodes[timetable].times
   datetime = dayjs(datetime)
-  const seasonPeriods = periodes['LowPower'].seasons[12]
+  const seasonPeriods = periodes[timetable].seasons[datetime.month()+1]
   const lesserPeriod = seasonPeriods[seasonPeriods.length - 1]
   // weekdays
   const day = datetime.isoWeekday()
@@ -90,7 +87,7 @@ let periodes = {
       12: ['peak', 'flat', 'valley'],
     },
   },
-  Peninsula: {
+  Peninsular: {
     times: peninsularPeriodTimes,
     seasons: {
       1: ['P1', 'P2', 'P6'],
@@ -107,7 +104,7 @@ let periodes = {
       12: ['P1', 'P2', 'P6'],
     },
   },
-  Balears: {
+  Balearic: {
     times: insularPeriodTimes,
     seasons: {
       1: ['P3', 'P4', 'P6'],
@@ -124,7 +121,7 @@ let periodes = {
       12: ['P3', 'P4', 'P6'],
     },
   },
-  Canaries: {
+  Canary: {
     times: insularPeriodTimes,
     seasons: {
       1: ['P2', 'P4', 'P6'],
