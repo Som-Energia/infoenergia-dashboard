@@ -7,8 +7,8 @@ const { INFOENERGIA_API_URL, WEBFORMS_API_URL } = window.config
   ? window.config
   : {
       // Just for testing
-      INFOENERGIA_API_URL: 'caca',
-      WEBFORMS_API_URL: 'caca',
+      INFOENERGIA_API_URL: null,
+      WEBFORMS_API_URL: null,
     }
 
 export let MARKET_HOLIDAYS = []
