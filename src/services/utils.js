@@ -292,6 +292,12 @@ export const period2Color = {
   valley: '#c4dd8c',
   flat: '#96b633',
   peak: '#f2970f',
+  P1: '#E45356',
+  P2: '#F1A10C',
+  P3: '#76562D',
+  P4: '#58B9C0',
+  P5: '#ED95A1',
+  P6: '#706E6F',
 }
 
 export const colorPeriod = (date) => {
