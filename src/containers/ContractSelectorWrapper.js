@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, createContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
 
@@ -16,8 +16,10 @@ const contracts = Object.assign(
 )
 const contractNames = contractList.map((contract) => contract.name)
 
+export const ContractContext = createContext(null)
+
 function ContractSelectorWrapper({ children }) {
-  const [currentContract, setCurrentContract] = useState(contractList[0])
+  const [currentContract, setCurrentContract] = useState(contractNames[0])
   const { language } = useParams()
   const { t, i18n } = useTranslation()
 
@@ -27,7 +29,7 @@ function ContractSelectorWrapper({ children }) {
   }, [language, i18n])
 
   return (
-    <>
+    <ContractContext.Provider value={contracts[currentContract]}>
       <section className="section infoenergy container">
         <section className="pageHeader">
           <div className="row">
@@ -79,7 +81,7 @@ function ContractSelectorWrapper({ children }) {
           </p>
         </section>
       </section>
-    </>
+    </ContractContext.Provider>
   )
 }
 

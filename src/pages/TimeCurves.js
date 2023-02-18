@@ -16,6 +16,7 @@ import Tabs from 'components/Tabs'
 import TimeCurves from 'containers/TimeCurves'
 import { getTimeCurves } from 'services/timecurves'
 import TimeCurvesContext from 'contexts/TimeCurvesContext'
+import { ContractContext } from 'containers/ContractSelectorWrapper'
 
 import { CSVLink } from 'react-csv'
 import { CnmcformatData } from 'services/utils'
@@ -26,13 +27,11 @@ function TimeCurvesPage(props) {
 
   const { timeCurves, setTimeCurves, filteredTimeCurves } =
     useContext(TimeCurvesContext)
+  const contract = useContext(ContractContext)
 
   const { token, now = dayjs() } = props
 
   const [type, setType] = useState('LINE_CHART_TYPE')
-  const [cups, setCups] = useState(props.cups)
-  const [tariff, setTariff] = useState(props.tariff)
-  const [contract, setContract] = useState(props.contract)
 
   useEffect(() => {
     language && i18n.changeLanguage(language)
@@ -41,12 +40,13 @@ function TimeCurvesPage(props) {
 
   useEffect(
     function () {
+      setTimeCurves([])
       const requestData = async () => {
         const responses = await Promise.all(
           [3, 2, 1, 0].map((yearsago) => {
             return getTimeCurves({
               token,
-              cups,
+              cups: contract.cups,
               currentMonth: now.subtract(yearsago, 'year').format('YYYYMM'),
             })
           })
@@ -55,28 +55,21 @@ function TimeCurvesPage(props) {
       }
       requestData()
     },
-    [token, cups]
+    [token, contract.cups]
   )
-
-  window.switchcontract = (newContract, newCups, newTariff) => {
-    setTimeCurves([])
-    setContract(newContract)
-    setCups(newCups)
-    setTariff(newTariff)
-  }
 
   const DownloadButton = (props) => {
     const { children } = props
 
     const [headers, data] = CnmcformatData({
       data: filteredTimeCurves,
-      cups: cups,
+      cups: contract.cups,
     })
 
     return (
       <CSVLink
         className="controlBtn"
-        filename={`infoenergia-${contract}.csv`}
+        filename={`infoenergia-${contract.name}.csv`}
         headers={headers}
         data={data}
       >
@@ -125,7 +118,7 @@ function TimeCurvesPage(props) {
                 period="DAILY"
                 chartType={type}
                 data={timeCurves}
-                tariff={tariff}
+                tariff={contract.tariff}
               />
             ),
           },
@@ -136,7 +129,7 @@ function TimeCurvesPage(props) {
                 period="WEEKLY"
                 chartType={type}
                 data={timeCurves}
-                tariff={tariff}
+                tariff={contract.tariff}
               />
             ),
           },
@@ -147,7 +140,7 @@ function TimeCurvesPage(props) {
                 period="MONTHLY"
                 chartType={type}
                 data={timeCurves}
-                tariff={tariff}
+                tariff={contract.tariff}
               />
             ),
           },
@@ -158,7 +151,7 @@ function TimeCurvesPage(props) {
                 period="YEARLY"
                 chartType={type}
                 data={timeCurves}
-                tariff={tariff}
+                tariff={contract.tariff}
               />
             ),
           },

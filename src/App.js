@@ -7,6 +7,7 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 
 import { createTheme, ThemeProvider } from '@material-ui/core/styles'
 import { TimeCurvesContextProvider } from 'contexts/TimeCurvesContext'
+import ContractSelectorWrapper from 'containers/ContractSelectorWrapper'
 
 import './i18n/i18n'
 import './App.css'
@@ -21,9 +22,11 @@ function App(props) {
     const TimeCurves = lazy(() => import('./pages/TimeCurves'))
 
     return (
-      <TimeCurvesContextProvider>
-        <TimeCurves {...props} />
-      </TimeCurvesContextProvider>
+      <ContractSelectorWrapper>
+        <TimeCurvesContextProvider>
+          <TimeCurves {...props} />
+        </TimeCurvesContextProvider>
+      </ContractSelectorWrapper>
     )
   }
 
