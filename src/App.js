@@ -15,7 +15,11 @@ import './App.css'
 function App(props) {
   const loadEnergyUse = () => {
     const EnergyUse = lazy(() => import('./pages/EnergyUse'))
-    return <EnergyUse {...props} />
+    return (
+      <ContractSelectorWrapper>
+        <EnergyUse {...props} />
+      </ContractSelectorWrapper>
+    )
   }
 
   const loadTimeCurves = () => {

@@ -21,3 +21,9 @@ It correctly bundles React in production mode and optimizes the build for the be
 
 The build is minified and the filenames include the hashes.<br />
 Your app is ready to be deployed!
+
+### Setting development data
+
+- Copy .env.development.example as .env.development
+- Fill the contract list and the token
+- Trick: if you connect to the real OV infoenergia page as any user, and you inspect the code, the html contains both.
