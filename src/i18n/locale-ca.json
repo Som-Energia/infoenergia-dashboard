@@ -1,4 +1,8 @@
 {
+    "SECTION_TITLE_HOURLY_CURVES": "Corbes horàries",
+    "CURRENT_CONTRACT": "Estàs visualitzant el contracte",
+    "ERROR_NO_ACTIVE_CONTRACTS": "Actualment, no té contractes actius.",
+    "ERROR_NO_INFOENERGIA_TOKEN": "El teu usuari no disposa de les dades necessàries per accedir a aquesta secció. Pots contactar amb nosaltres per a més informació.",
     "TIPICAL_DAILY_PROFILE": "Perfil típic diari",
     "TIPICAL_WEEKLY_PROFILE": "Perfil típic setmanal",
     "LAST_3_MONTH_PROFILE": "Perfil dels últims 3 mesos",

@@ -1,4 +1,10 @@
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useParams } from 'react-router-dom'
+
+import dayjs from 'dayjs'
+import 'dayjs/locale/ca'
+import 'dayjs/locale/es'
 
 const empoweringToken = document.getElementById('root').dataset.token
 const contractList = JSON.parse(
@@ -12,6 +18,13 @@ const contractNames = contractList.map((contract) => contract.name)
 
 function ContractSelectorWrapper({ children }) {
   const [currentContract, setCurrentContract] = useState(contractList[0])
+  const { language } = useParams()
+  const { t, i18n } = useTranslation()
+
+  useEffect(() => {
+    language && i18n.changeLanguage(language)
+    language ? dayjs.locale(language) : dayjs.locale('es')
+  }, [language, i18n])
 
   return (
     <>
@@ -20,13 +33,13 @@ function ContractSelectorWrapper({ children }) {
           <div className="row">
             <div className="col-12 col-md-7">
               <img src={process.env.PUBLIC_URL + '/infoenergy_box.svg'} />
-              <b> {'trans Curvas horarias'} </b>
+              <b> {t('SECTION_TITLE_HOURLY_CURVES')} </b>
             </div>
             <div className="col-12 col-md-5">
               <div className="container-contract-selector">
                 <form action="" id="contract-selector-form">
                   <label htmlFor="contract-selector">
-                    {'trans Estáis modificando el contrato'}
+                    {t('CURRENT_CONTRACT')}
                   </label>
                   <select
                     name="contract"
@@ -48,15 +61,13 @@ function ContractSelectorWrapper({ children }) {
           </div>
         </section>
         <section className="section infoenergy-container container">
-          {contracts.length === 0 ? (
+          {contractNames.length === 0 ? (
             <p className="warning" id="no-data">
-              {'trans Actualmente, no tiene contratos activos.'}
+              {t('ERROR_NO_ACTIVE_CONTRACTS')}
             </p>
           ) : !empoweringToken ? (
             <p className="warning" id="no-allow">
-              {
-                'trans Su usuario no dispone de los datos necesarios para acceder a esta sección, puedes contactar con nosotros para mas información.'
-              }
+              {t('ERROR_NO_INFOENERGIA_TOKEN')}
             </p>
           ) : (
             <div>{children}</div>

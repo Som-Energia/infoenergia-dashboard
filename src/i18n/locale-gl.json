@@ -1,4 +1,8 @@
 {
+    "SECTION_TITLE_HOURLY_CURVES": "Curvas horarias",
+    "CURRENT_CONTRACT": "Estás a visualizar o contrato",
+    "ERROR_NO_ACTIVE_CONTRACTS": "Actualmente, non ten contratos activos.",
+    "ERROR_NO_INFOENERGIA_TOKEN": "O teu usuario non dispón dos datos necesarios para acceder a esta sección; podes contactar connosco para máis información.",
     "TIPICAL_WEEKLY_PROFILE": "Perfil típico semanal",
     "LAST_3_MONTH_PROFILE": "Perfil dos últimos 3 meses",
     "SEASONAL_PROFILE": "Perfil estacional",
