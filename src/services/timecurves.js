@@ -22,7 +22,10 @@ export function getTimeCurves({ cups, token, currentMonth }) {
     }),
   })
     .then((response) => response.json())
-    .catch((error) => console.error(error))
+    .catch((error) => {
+      console.error('getTimeCurves', error)
+      return []
+    })
 }
 
 export function getMarketHolidays() {
@@ -41,10 +44,10 @@ getMarketHolidays().then((holidays) => {
   MARKET_HOLIDAYS = holidays?.data || []
 })
 
-export function getPeriod(datetime, timetable='LowPower') {
+export function getPeriod(datetime, timetable = 'LowPower') {
   const periodTimes = periodes[timetable].times
   datetime = dayjs(datetime)
-  const seasonPeriods = periodes[timetable].seasons[datetime.month()+1]
+  const seasonPeriods = periodes[timetable].seasons[datetime.month() + 1]
   const lesserPeriod = seasonPeriods[seasonPeriods.length - 1]
   // weekdays
   const day = datetime.isoWeekday()
