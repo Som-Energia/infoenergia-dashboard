@@ -18,7 +18,7 @@ function ContractSelectorWrapper({ children }) {
         <section className="pageHeader">
           <div className="row">
             <div className="col-12 col-md-7">
-              <img src="static 'front/img/icons/infoenergy_box.svg'" alt="" />
+              <img src={process.env.PUBLIC_URL + '/infoenergy_box.svg'} />
               <b> {'trans Curvas horarias'} </b>
             </div>
             <div className="col-12 col-md-5">
