@@ -1,6 +1,9 @@
 import axios from 'axios'
 
-const { HEMAN_API_URL } = window.config
+const HEMAN_API_URL = document.getElementById('root')
+  ? document.getElementById('root').dataset.hemanApiUrl
+  : null // For tests
+
 const API_PREFIX = 'InfoenergiaReport/data'
 
 export const getDailyProfile = async (contract, token) => {
