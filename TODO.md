@@ -2,6 +2,7 @@
 
 ### Energy Use
 
+- [ ] ContractSelectorWrappre: end refactor by changing the title
 - [ ] tooltip data format
 - [X] tab last 3 months profile
 - [X] tab seasonal profile
@@ -13,7 +14,7 @@
 
 ### Time Curve
 
-- [ ] add translations with i18next
+- [x] add translations with i18next
 - [ ] compare option for all tabs
 - [ ] mobile style for all tabs
 - [ ] fix style problem material-ui - bootstrap

@@ -3,18 +3,17 @@ import dayjs from 'dayjs'
 const isoWeek = require('dayjs/plugin/isoWeek')
 dayjs.extend(isoWeek)
 
-const { INFOENERGIA_API_URL, WEBFORMS_API_URL } = window.config
-  ? window.config
-  : {
-      // Just for testing
-      INFOENERGIA_API_URL: null,
-      WEBFORMS_API_URL: null,
-    }
+const HEMAN_API_URL = document.getElementById('root')
+  ? document.getElementById('root').dataset.hemanApiUrl
+  : null // For tests
+const WEBFORMS_API_URL = document.getElementById('root')
+  ? document.getElementById('root').dataset.webformsApiUrl
+  : null // For tests
 
 export let MARKET_HOLIDAYS = []
 
 export function getTimeCurves({ cups, token, currentMonth }) {
-  return fetch(`${INFOENERGIA_API_URL}/CCHFact/${cups}/${currentMonth}`, {
+  return fetch(`${HEMAN_API_URL}/CCHFact/${cups}/${currentMonth}`, {
     method: 'GET',
     headers: new Headers({
       Authorization: `token ${token}`,

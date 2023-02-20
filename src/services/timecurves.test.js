@@ -1,4 +1,3 @@
-//window.config = jest.fn().mockReturnValue({ INFOENERGIA_API_URL: 'caca', WEBFORMS_API_URL: 'caca' })   // poc mocking window
 
 import { getPeriod, MARKET_HOLIDAYS } from './timecurves'
 import { render } from '@testing-library/react'
