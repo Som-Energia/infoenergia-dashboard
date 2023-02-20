@@ -2,28 +2,28 @@
 
 InfoEnergia react dashboard for Som Energia Virtual Office.
 
-## Available Scripts
-
-In the project directory, you can run:
-
-### `yarn start`
-
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-### Setting development data
+## Development setup
 
 - Copy .env.development.example as .env.development
 - Fill the contract list and the token
 - Trick: if you connect to the real OV infoenergia page as any user, and you inspect the code, the html contains both.
+- Run `npm start` to launch the application, a blank page will open, ignore it.
+- Reference urls:
+    - http://localhost:3000/es/infoenergy/
+    - http://localhost:3000/es/infoenergy/energy-use
+
+To run the tests
+
+```bash
+npm run test
+```
+
+## Deploy into oficina virtual
+
+This command will build and copy the files to oficinavirtual.
+In order to work both repositories (`infoenergia-dashboard` and `oficinavirtual`)
+should be cloned at the same directory level and with their default names.
+
+```bash
+npm run build:ov
+```
