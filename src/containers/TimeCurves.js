@@ -56,7 +56,7 @@ const totalValueWithData = (data) => {
 }
 
 function TimeCurves(props) {
-  const { data, chartType, period, tariff } = props
+  const { data, chartType, period, contract } = props
   const { t } = useTranslation()
 
   const { filteredTimeCurves, setFilteredTimeCurves } =
@@ -136,9 +136,6 @@ function TimeCurves(props) {
     },
     [currentDate, period]
   )
-  // TODO: Incorporate location
-  const timetable = tariff === '2.0TD' ? 'LowPower' : 'Peninsular'
-  console.log(timetable)
   return (
     <Widget>
       {
@@ -239,7 +236,7 @@ function TimeCurves(props) {
                 data={filteredTimeCurves}
                 compareData={compareData}
                 period={period}
-                timetable={timetable}
+                timetable={contract.timetable}
               />
             )}
           </ChartWrapper>
