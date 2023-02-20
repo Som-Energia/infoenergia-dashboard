@@ -14,8 +14,12 @@ import GetAppIcon from '@material-ui/icons/GetApp'
 
 import Tabs from 'components/Tabs'
 import TimeCurves from 'containers/TimeCurves'
-import ContractSelectorWrapper, { ContractContext } from 'containers/ContractSelectorWrapper'
-import TimeCurvesContext, { TimeCurvesContextProvider } from 'contexts/TimeCurvesContext'
+import ContractSelectorWrapper, {
+  ContractContext,
+} from 'containers/ContractSelectorWrapper'
+import TimeCurvesContext, {
+  TimeCurvesContextProvider,
+} from 'contexts/TimeCurvesContext'
 
 import { CSVLink } from 'react-csv'
 import { CnmcformatData } from 'services/utils'
@@ -24,8 +28,7 @@ function TimeCurvesPage(props) {
   const { language } = useParams()
   const { t, i18n } = useTranslation()
 
-  const { timeCurves, filteredTimeCurves } =
-    useContext(TimeCurvesContext)
+  const { timeCurves, filteredTimeCurves } = useContext(TimeCurvesContext)
   const contract = useContext(ContractContext)
 
   const [type, setType] = useState('LINE_CHART_TYPE')
@@ -94,7 +97,7 @@ function TimeCurvesPage(props) {
               period="DAILY"
               chartType={type}
               data={timeCurves}
-              tariff={contract.tariff}
+              contract={contract}
             />
           ),
         },
@@ -105,7 +108,7 @@ function TimeCurvesPage(props) {
               period="WEEKLY"
               chartType={type}
               data={timeCurves}
-              tariff={contract.tariff}
+              contract={contract}
             />
           ),
         },
@@ -116,7 +119,7 @@ function TimeCurvesPage(props) {
               period="MONTHLY"
               chartType={type}
               data={timeCurves}
-              tariff={contract.tariff}
+              contract={contract}
             />
           ),
         },
@@ -127,7 +130,7 @@ function TimeCurvesPage(props) {
               period="YEARLY"
               chartType={type}
               data={timeCurves}
-              tariff={contract.tariff}
+              contract={contract}
             />
           ),
         },
@@ -140,7 +143,7 @@ function TimeCurvesPage(props) {
 function TimeCurvePageWrapper(props) {
   const { language } = useParams()
   const { t, i18n } = useTranslation()
-  const { token, now=dayjs() } = props;
+  const { token, now = dayjs() } = props
   useEffect(() => {
     language && i18n.changeLanguage(language)
     language ? dayjs.locale(language) : dayjs.locale('es')
