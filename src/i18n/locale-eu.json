@@ -1,5 +1,6 @@
 {
     "SECTION_TITLE_HOURLY_CURVES": "Ordutegi-kurbak",
+    "SECTION_TITLE_ENERGY_USE": "Energia-erabilera",
     "CURRENT_CONTRACT": "Kontratua bistaratzen ari zara",
     "ERROR_NO_ACTIVE_CONTRACTS": "Une honetan ez duzu kontratu aktiborik.",
     "ERROR_NO_INFOENERGIA_TOKEN": "Zure erabiltzaileak ez ditu atal honetan sartzeko beharrezko datuak. Jar zaitez gurekin harremanetan informazio gehiago behar baduzu.",

@@ -1,5 +1,6 @@
 {
     "SECTION_TITLE_HOURLY_CURVES": "Corbes horàries",
+    "SECTION_TITLE_ENERGY_USE": "Ús de l'energia",
     "CURRENT_CONTRACT": "Estàs visualitzant el contracte",
     "ERROR_NO_ACTIVE_CONTRACTS": "Actualment, no té contractes actius.",
     "ERROR_NO_INFOENERGIA_TOKEN": "El teu usuari no disposa de les dades necessàries per accedir a aquesta secció. Pots contactar amb nosaltres per a més informació.",

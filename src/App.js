@@ -6,31 +6,23 @@ import DayJsUtils from '@date-io/dayjs'
 import CssBaseline from '@material-ui/core/CssBaseline'
 
 import { createTheme, ThemeProvider } from '@material-ui/core/styles'
-import { TimeCurvesContextProvider } from 'contexts/TimeCurvesContext'
-import ContractSelectorWrapper from 'containers/ContractSelectorWrapper'
 
 import './i18n/i18n'
 import './App.css'
 
 function App(props) {
+
   const loadEnergyUse = () => {
     const EnergyUse = lazy(() => import('./pages/EnergyUse'))
-    return (
-      <ContractSelectorWrapper>
+    return  (
         <EnergyUse {...props} />
-      </ContractSelectorWrapper>
     )
   }
 
   const loadTimeCurves = () => {
-    const TimeCurves = lazy(() => import('./pages/TimeCurves'))
-
+    const TimeCurvesWrapper = lazy(() => import('./pages/TimeCurves'))
     return (
-      <ContractSelectorWrapper>
-        <TimeCurvesContextProvider>
-          <TimeCurves {...props} />
-        </TimeCurvesContextProvider>
-      </ContractSelectorWrapper>
+          <TimeCurvesWrapper {...props} />
     )
   }
 

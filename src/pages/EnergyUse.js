@@ -10,7 +10,7 @@ import TipicalDailyProfile from '../containers/TipicalDailyProfile'
 import TipicalWeeklyProfile from '../containers/TipicalWeeklyProfile'
 import LastMonthProfile from '../containers/LastMonthsProfile'
 import SeasonalProfile from '../containers/SeasonalProfile'
-import { ContractContext } from '../containers/ContractSelectorWrapper'
+import ContractSelectorWrapper, { ContractContext } from '../containers/ContractSelectorWrapper'
 
 import Tabs from '../components/Tabs'
 
@@ -68,13 +68,32 @@ function EnergyUse(props) {
     },
   ]
 
-  return token && contract ? (
-    <div>
-      <Tabs tabs={tabs} initialTab={0} />
-    </div>
-  ) : (
-    <div>{t('NO_DATA')}</div>
+  return (
+    <>
+      {token && contract ? (
+        <Tabs tabs={tabs} initialTab={0} />
+      ) : (
+        <div>{t('NO_DATA')}</div>
+      )}
+    </>
+  )
+
+}
+
+function EnergyUsePageWrapper(props) {
+  const { language } = useParams()
+  const { t, i18n } = useTranslation()
+
+  useEffect(() => {
+    language && i18n.changeLanguage(language)
+    language ? dayjs.locale(language) : dayjs.locale('es')
+  }, [language, i18n])
+
+  return (
+    <ContractSelectorWrapper title={t('SECTION_TITLE_ENERGY_USE')}>
+      <EnergyUse {...props} />
+    </ContractSelectorWrapper>
   )
 }
 
-export default EnergyUse
+export default EnergyUsePageWrapper

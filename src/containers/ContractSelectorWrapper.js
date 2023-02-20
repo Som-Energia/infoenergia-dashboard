@@ -18,7 +18,7 @@ const contractNames = contractList.map((contract) => contract.name)
 
 export const ContractContext = createContext(null)
 
-function ContractSelectorWrapper({ children }) {
+function ContractSelectorWrapper({title, children }) {
   const [currentContract, setCurrentContract] = useState(contractNames[0])
   const { language } = useParams()
   const { t, i18n } = useTranslation()
@@ -35,7 +35,7 @@ function ContractSelectorWrapper({ children }) {
           <div className="row">
             <div className="col-12 col-md-7">
               <img src={process.env.PUBLIC_URL + '/infoenergy_box.svg'} />
-              <b> {t('SECTION_TITLE_HOURLY_CURVES')} </b>
+              <b> {t(title)} </b>
             </div>
             <div className="col-12 col-md-5">
               <div className="container-contract-selector">
