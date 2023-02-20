@@ -67,6 +67,39 @@ export function getPeriod(datetime, timetable = 'LowPower') {
   return lesserPeriod
 }
 
+
+
+export function getLegendFromTimeTable(zone){
+
+  const intervals = []
+  let firstTime = 0;
+  const currentZone = periodes[zone];
+  currentZone.times.forEach(hour => {
+    intervals.push({start:firstTime,end:hour})
+    firstTime = hour
+  })
+  const groupingPeriodMonth = {}
+  
+  Object.keys(currentZone.seasons).forEach(season => {
+    const groupPeriods = currentZone.seasons[season]
+    const intervalPeriods = []
+    
+    if(groupingPeriodMonth[groupPeriods.join('-')]){
+    	groupingPeriodMonth[groupPeriods.join('-')].months.push(season) 
+    } 
+    else{
+    	intervals.forEach((interval,index) => {
+        const period = index===0?groupPeriods[2]:index%2===0?groupPeriods[0]:groupPeriods[1]        
+        intervalPeriods.push({...interval,period:period})
+      })
+  		const periodInfo = {months:[season], intervalPeriods:intervalPeriods}
+  		groupingPeriodMonth[groupPeriods.join('-')] = periodInfo 
+    }
+  })
+}
+
+
+
 const lowPowerPeriodTimes = [8, 10, 14, 18, 22, 24]
 const peninsularPeriodTimes = [8, 9, 14, 18, 22, 24]
 const insularPeriodTimes = [8, 10, 15, 18, 22, 24]
