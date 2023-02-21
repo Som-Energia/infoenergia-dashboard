@@ -1,6 +1,7 @@
 import React, { useState, useEffect, createContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
+import infoenergyBox from 'images/infoenergy_box.svg'
 
 import dayjs from 'dayjs'
 import 'dayjs/locale/ca'
@@ -18,7 +19,7 @@ const contractNames = contractList.map((contract) => contract.name)
 
 export const ContractContext = createContext(null)
 
-function ContractSelectorWrapper({title, children }) {
+function ContractSelectorWrapper({ title, children }) {
   const [currentContract, setCurrentContract] = useState(contractNames[0])
   const { language } = useParams()
   const { t, i18n } = useTranslation()
@@ -34,7 +35,7 @@ function ContractSelectorWrapper({title, children }) {
         <section className="pageHeader">
           <div className="row">
             <div className="col-12 col-md-7">
-              <img src={process.env.PUBLIC_URL + '/infoenergy_box.svg'} />
+              <img src={infoenergyBox} />
               <b> {t(title)} </b>
             </div>
             <div className="col-12 col-md-5">
