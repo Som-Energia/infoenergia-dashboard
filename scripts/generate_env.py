@@ -94,15 +94,15 @@ contracts.
 
 Examples:
 
-search_cases.py bynif 12345678X
+generate_env.py bypartner 12345678X
 
-search_cases.py bycontract 12345
+generate_env.py bycontract 12345
 
-search_cases.py bycontract --tariff 2.0TD
+generate_env.py bycontract --tariff 2.0TD
 
-search_cases.py bycontract --tariff 2.0TD --zone balearic
+generate_env.py bycontract --tariff 2.0TD --zone balearic
 
-search_cases.py bycontract --tariff 2.0TD --zone balearic
+generate_env.py bycontract --tariff 2.0TD --zone balearic
 """
 )
 def cli():
