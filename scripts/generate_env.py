@@ -3,6 +3,7 @@ import click
 import configdb
 import erppeek
 import json
+from random import randrange
 
 """
 Use cases:
@@ -77,7 +78,7 @@ def search_partner_by_contract_traits(
         polissa_filters += zone_conditions[zone]
 
     polissa_ids = polissa_model.search(polissa_filters)
-    polisses = polissa_model.read(polissa_ids[10], ["titular"])
+    polisses = polissa_model.read(polissa_ids[randrange(len(polissa_ids))], ["titular"])
 
     return polisses["titular"][0]
 
