@@ -240,7 +240,7 @@ function TimeCurves(props) {
               />
             )}
           </ChartWrapper>
-          {chartType === 'BAR_CHART_TYPE' && <LegendPeriod />}
+          {chartType === 'BAR_CHART_TYPE' && <LegendPeriod contract={contract}/>}
         </>
       }
     </Widget>

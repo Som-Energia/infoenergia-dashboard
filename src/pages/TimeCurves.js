@@ -24,41 +24,33 @@ import TimeCurvesContext, {
 import { CSVLink } from 'react-csv'
 import { CnmcformatData } from 'services/utils'
 
-function TimeCurvesPage(props) {
-  const { language } = useParams()
-  const { t, i18n } = useTranslation()
-
-  const { timeCurves, filteredTimeCurves } = useContext(TimeCurvesContext)
+const DownloadButton = (props) => {
+  const { children } = props
+  const { filteredTimeCurves } = useContext(TimeCurvesContext)
   const contract = useContext(ContractContext)
 
-  const [type, setType] = useState('LINE_CHART_TYPE')
 
-  useEffect(() => {
-    language && i18n.changeLanguage(language)
-    language ? dayjs.locale(language) : dayjs.locale('es')
-  }, [language, i18n])
+  const [headers, data] = CnmcformatData({
+    data: filteredTimeCurves,
+    cups: contract.cups,
+  })
 
-  const DownloadButton = (props) => {
-    const { children } = props
+  return (
+    <CSVLink
+      className="controlBtn"
+      filename={`infoenergia-${contract.name}.csv`}
+      headers={headers}
+      data={data}
+    >
+      {children}
+    </CSVLink>
+  )
+}
 
-    const [headers, data] = CnmcformatData({
-      data: filteredTimeCurves,
-      cups: contract.cups,
-    })
-
-    return (
-      <CSVLink
-        className="controlBtn"
-        filename={`infoenergia-${contract.name}.csv`}
-        headers={headers}
-        data={data}
-      >
-        {children}
-      </CSVLink>
-    )
-  }
-
-  const ExtraControls = () => (
+const ExtraControls = (props) => {
+  const {type, setType} = props
+  const {t} = useTranslation()
+  return (
     <ExtraButtonsWrapper>
       <ul>
         <li className={type === 'LINE_CHART_TYPE' ? 'active' : null}>
@@ -86,6 +78,21 @@ function TimeCurvesPage(props) {
       </ul>
     </ExtraButtonsWrapper>
   )
+}
+
+function TimeCurvesPage(props) {
+  const { language } = useParams()
+  const { t, i18n } = useTranslation()
+
+  const { timeCurves } = useContext(TimeCurvesContext)
+  const contract = useContext(ContractContext)
+  const [type, setType] = useState('LINE_CHART_TYPE')
+
+
+  useEffect(() => {
+    language && i18n.changeLanguage(language)
+    language ? dayjs.locale(language) : dayjs.locale('es')
+  }, [language, i18n])
 
   return (
     <Tabs
@@ -135,7 +142,7 @@ function TimeCurvesPage(props) {
           ),
         },
       ]}
-      extra={<ExtraControls />}
+      extra={<ExtraControls type={type} setType={setType} />}
     />
   )
 }

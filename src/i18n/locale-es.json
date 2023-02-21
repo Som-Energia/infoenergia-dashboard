@@ -64,5 +64,18 @@
     "YEARLY": "Anual",
     "DOWNLOAD": "Descarga",
     "CONSUME_ADVICE": "Esta ha sido tu distribución durante los últimos 12 meses, puedes modificarla cambiando tus hábitos.",
-    "ONLY_FOR_20TD": "Esta funcionalidad solo esta disponible para contratos con tarifa 2.0TD"
+    "ONLY_FOR_20TD": "Esta funcionalidad solo esta disponible para contratos con tarifa 2.0TD",
+    "MONTH_NAME_1":"Enero",
+    "MONTH_NAME_2":"Febrero",
+    "MONTH_NAME_3":"Marzo",
+    "MONTH_NAME_4":"Abril",
+    "MONTH_NAME_5":"Mayo",
+    "MONTH_NAME_6":"Junio",
+    "MONTH_NAME_7":"Julio",
+    "MONTH_NAME_8":"Agosto",
+    "MONTH_NAME_9":"Septiembre",
+    "MONTH_NAME_10":"Octubre",
+    "MONTH_NAME_11":"Noviembre",
+    "MONTH_NAME_12":"Diciembre",
+    "ALL_YEAR_NAME":"Todo el año"
 }

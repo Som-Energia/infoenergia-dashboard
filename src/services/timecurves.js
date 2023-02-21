@@ -67,38 +67,85 @@ export function getPeriod(datetime, timetable = 'LowPower') {
   return lesserPeriod
 }
 
-
-
-export function getLegendFromTimeTable(zone){
-
-  const intervals = []
-  let firstTime = 0;
-  const currentZone = periodes[zone];
-  currentZone.times.forEach(hour => {
-    intervals.push({start:firstTime,end:hour})
-    firstTime = hour
-  })
-  const groupingPeriodMonth = {}
-  
-  Object.keys(currentZone.seasons).forEach(season => {
-    const groupPeriods = currentZone.seasons[season]
-    const intervalPeriods = []
-    
-    if(groupingPeriodMonth[groupPeriods.join('-')]){
-    	groupingPeriodMonth[groupPeriods.join('-')].months.push(season) 
-    } 
-    else{
-    	intervals.forEach((interval,index) => {
-        const period = index===0?groupPeriods[2]:index%2===0?groupPeriods[0]:groupPeriods[1]        
-        intervalPeriods.push({...interval,period:period})
-      })
-  		const periodInfo = {months:[season], intervalPeriods:intervalPeriods}
-  		groupingPeriodMonth[groupPeriods.join('-')] = periodInfo 
-    }
-  })
+export function getMonthCode(num) {
+  const months = {
+    1:"MONTH_NAME_1",
+    2:"MONTH_NAME_2",
+    3:"MONTH_NAME_3",
+    4:"MONTH_NAME_4",
+    5:"MONTH_NAME_5",
+    6:"MONTH_NAME_6",
+    7:"MONTH_NAME_7",
+    8:"MONTH_NAME_8",
+    9:"MONTH_NAME_9",
+    10:"MONTH_NAME_10",
+    11:"MONTH_NAME_11",
+    12:"MONTH_NAME_12",
+    13:"ALL_YEAR_NAME",
+  }
+  return months[num]
 }
 
+export function getIntervalsFromZone(zone) {
+  const intervals = []
+  let firstTime = 0
+  const currentZone = periodes[zone]
+  currentZone.times.forEach((hour) => {
+    intervals.push({ start: firstTime, end: hour })
+    firstTime = hour
+  })
+  return intervals
+}
 
+export function getLegendFromTimeTable(zone) {
+  const intervals = getIntervalsFromZone(zone)
+  const currentZone = periodes[zone]
+  const groupingPeriodMonth = {}
+  const weekendAndHolidays = []
+  Object.keys(currentZone.seasons).forEach((season) => {
+    const groupPeriods = currentZone.seasons[season]
+    const intervalPeriods = []
+
+    if (groupingPeriodMonth[groupPeriods.join('-')]) {
+      groupingPeriodMonth[groupPeriods.join('-')].months.push(
+        getMonthCode(season)
+      )
+      if (groupingPeriodMonth[groupPeriods.join('-')].months.length === 12) {
+        groupingPeriodMonth[groupPeriods.join('-')].months = [getMonthCode(13)]
+      }
+    } else {
+      intervals.forEach((interval, index) => {
+        const period =
+          index === 0
+            ? groupPeriods[2]
+            : index % 2 === 0
+            ? groupPeriods[0]
+            : groupPeriods[1]
+        intervalPeriods.push({ ...interval, period: period })
+        if (weekendAndHolidays.length !== intervals.length) {
+          weekendAndHolidays.push({ ...interval, period: groupPeriods[2] })
+        }
+      })
+
+      const periodInfo = {
+        months: [getMonthCode(season)],
+        intervalPeriods: intervalPeriods,
+      }
+      groupingPeriodMonth[groupPeriods.join('-')] = periodInfo
+    }
+  })
+
+  return {
+    intervals: intervals,
+    groupingPeriodMonth: groupingPeriodMonth,
+    weekendAndHolidays: {
+      valleyPeriod: {
+        months: [getMonthCode(13)],
+        intervalPeriods: weekendAndHolidays,
+      },
+    },
+  }
+}
 
 const lowPowerPeriodTimes = [8, 10, 14, 18, 22, 24]
 const peninsularPeriodTimes = [8, 9, 14, 18, 22, 24]

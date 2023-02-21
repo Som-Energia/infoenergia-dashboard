@@ -64,5 +64,18 @@
     "YEARLY": "Anual",
     "DOWNLOAD": "Descàrrega",
     "CONSUME_ADVICE": "Aquesta ha estat la teva distribució durant els últims 12 mesos, pots modificar-la canviant els teus hàbits.",
-    "ONLY_FOR_20TD": "Aquesta funcionalitat només està disponible per contractes amb tarifa 2.0TD"
+    "ONLY_FOR_20TD": "Aquesta funcionalitat només està disponible per contractes amb tarifa 2.0TD",
+    "NAME_MONTH_1":"Gener",
+    "NAME_MONTH_2":"Febrer",
+    "NAME_MONTH_3":"Març",
+    "NAME_MONTH_4":"Abril",
+    "NAME_MONTH_5":"Maig",
+    "NAME_MONTH_6":"Juny",
+    "NAME_MONTH_7":"Juliol",
+    "NAME_MONTH_8":"Agost",
+    "NAME_MONTH_9":"Setembre",
+    "NAME_MONTH_10":"Octubre",
+    "NAME_MONTH_11":"Novembre",
+    "NAME_MONTH_12":"Desembre",
+    "NAME_ALL_YEAR":"Tot l'any"
 }
