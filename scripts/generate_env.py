@@ -141,7 +141,7 @@ def bypartner(vat, erp_instance):
 @click.option(
     "--tariff",
     "-t",
-    type=click.Choice(["2.0TD", "3.0TD"]),
+    type=click.Choice(["2.0TD", "3.0TD", "6.1TD", "6.2TD", "6.3TD", "6.4TD", "3.0TDVE", "6.1TDVE"]),
     default="2.0TD",
     help="Filter by contract",
 )
