@@ -77,5 +77,6 @@
     "MONTH_NAME_10":"Octubre",
     "MONTH_NAME_11":"Noviembre",
     "MONTH_NAME_12":"Diciembre",
-    "ALL_YEAR_NAME":"Todo el año"
+    "ALL_YEAR_NAME":"Todo el año",
+    "NAME_WEEKEND_HOLIDAYS":"Fines de semana y festivos"
 }

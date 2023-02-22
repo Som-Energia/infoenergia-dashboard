@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next'
 
 const useStyles = makeStyles({
   table: {
-    minWidth: 650    
+    minWidth: 650,
   },
   squareColor: {
     width: '16px',
@@ -21,20 +21,24 @@ const useStyles = makeStyles({
   },
 })
 
-const TableItem = ({ data }) => {
+const TableItem = ({ data, isLast }) => {
   const classes = useStyles()
   const { t } = useTranslation()
   const monthsData = data.months.map((element) => t(element))
-  
+
   return (
     <>
       <TableCell>
-        <span>{monthsData.join(', ')}</span>
+        {isLast ? (
+          <b>{monthsData.join(', ')}</b>
+        ) : (
+          <span>{monthsData.join(', ')}</span>
+        )}
       </TableCell>
       {data.intervalPeriods.map((element, index) => {
         return (
           <TableCell key={element + index}>
-            <span className="item">
+            <span>
               <span
                 className={classes.squareColor}
                 style={{
@@ -52,20 +56,20 @@ const TableItem = ({ data }) => {
   )
 }
 
-
 export default function DenseTable({ header, data }) {
   const classes = useStyles()
-  
+  const { t } = useTranslation()
+
   return (
-    <TableContainer >
+    <TableContainer>
       <Table className={classes.table} size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
-            <TableCell>Mesos</TableCell>
+            <TableCell><b>{t('WORKING_DAYS')}</b></TableCell>
             {header.map((element, index) => {
               return (
                 <TableCell key={element + index}>
-                  {element.start + 'h - ' + element.end + 'h'}
+                  <b>{element.start + 'h - ' + element.end + 'h'}</b>
                 </TableCell>
               )
             })}
@@ -75,7 +79,10 @@ export default function DenseTable({ header, data }) {
           {data
             ? Object.keys(data).map((element, index) => (
                 <TableRow key={element + index}>
-                  <TableItem data={data[element]} />
+                  <TableItem
+                    data={data[element]}
+                    isLast={Object.keys(data).length === index+1}
+                  />
                 </TableRow>
               ))
             : null}

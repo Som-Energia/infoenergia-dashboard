@@ -69,19 +69,19 @@ export function getPeriod(datetime, timetable = 'LowPower') {
 
 export function getMonthCode(num) {
   const months = {
-    1:"MONTH_NAME_1",
-    2:"MONTH_NAME_2",
-    3:"MONTH_NAME_3",
-    4:"MONTH_NAME_4",
-    5:"MONTH_NAME_5",
-    6:"MONTH_NAME_6",
-    7:"MONTH_NAME_7",
-    8:"MONTH_NAME_8",
-    9:"MONTH_NAME_9",
-    10:"MONTH_NAME_10",
-    11:"MONTH_NAME_11",
-    12:"MONTH_NAME_12",
-    13:"ALL_YEAR_NAME",
+    1: 'MONTH_NAME_1',
+    2: 'MONTH_NAME_2',
+    3: 'MONTH_NAME_3',
+    4: 'MONTH_NAME_4',
+    5: 'MONTH_NAME_5',
+    6: 'MONTH_NAME_6',
+    7: 'MONTH_NAME_7',
+    8: 'MONTH_NAME_8',
+    9: 'MONTH_NAME_9',
+    10: 'MONTH_NAME_10',
+    11: 'MONTH_NAME_11',
+    12: 'MONTH_NAME_12',
+    13: 'ALL_YEAR_NAME',
   }
   return months[num]
 }
@@ -135,15 +135,14 @@ export function getLegendFromTimeTable(zone) {
     }
   })
 
+  groupingPeriodMonth.weekendHolidays = {
+    months: ['NAME_WEEKEND_HOLIDAYS'],
+    intervalPeriods: weekendAndHolidays,
+  }
+
   return {
     intervals: intervals,
     groupingPeriodMonth: groupingPeriodMonth,
-    weekendAndHolidays: {
-      valleyPeriod: {
-        months: [getMonthCode(13)],
-        intervalPeriods: weekendAndHolidays,
-      },
-    },
   }
 }
 

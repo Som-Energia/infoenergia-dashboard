@@ -77,5 +77,6 @@
     "NAME_MONTH_10":"Octubre",
     "NAME_MONTH_11":"Novembre",
     "NAME_MONTH_12":"Desembre",
-    "NAME_ALL_YEAR":"Tot l'any"
+    "NAME_ALL_YEAR":"Tot l'any",
+    "NAME_WEEKEND_HOLIDAYS":"Caps de setmana i festius"
 }
