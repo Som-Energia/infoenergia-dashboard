@@ -136,7 +136,7 @@ export function getLegendFromTimeTable(zone) {
   })
 
   groupingPeriodMonth.weekendHolidays = {
-    months: ['NAME_WEEKEND_HOLIDAYS'],
+    months: [getMonthCode(13)],
     intervalPeriods: weekendAndHolidays,
   }
 

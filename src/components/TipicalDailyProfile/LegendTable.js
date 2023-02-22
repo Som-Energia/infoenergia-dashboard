@@ -13,6 +13,9 @@ const useStyles = makeStyles({
   table: {
     minWidth: 650,
   },
+  tableCell: {
+    border: 0,
+  },
   squareColor: {
     width: '16px',
     height: '16px',
@@ -28,30 +31,36 @@ const TableItem = ({ data, isLast }) => {
 
   return (
     <>
-      <TableCell>
-        {isLast ? (
-          <b>{monthsData.join(', ')}</b>
-        ) : (
-          <span>{monthsData.join(', ')}</span>
-        )}
-      </TableCell>
-      {data.intervalPeriods.map((element, index) => {
-        return (
-          <TableCell key={element + index}>
-            <span>
-              <span
-                className={classes.squareColor}
-                style={{
-                  backgroundColor: period2Color[element.period],
-                }}
-              ></span>
-              <span>
-                <b>{element.period}</b>
-              </span>
-            </span>
+      {isLast ? (
+        <TableRow>
+          <TableCell className={classes.tableCell}>
+            <b>{t('NAME_WEEKEND_HOLIDAYS')}</b>
           </TableCell>
-        )
-      })}
+        </TableRow>
+      ) : null}
+
+      <TableRow>
+        <TableCell className={classes.tableCell}>
+          <span>{monthsData.join(', ')}</span>
+        </TableCell>
+        {data.intervalPeriods.map((element, index) => {
+          return (
+            <TableCell className={classes.tableCell} key={element + index}>
+              <span>
+                <span
+                  className={classes.squareColor}
+                  style={{
+                    backgroundColor: period2Color[element.period],
+                  }}
+                ></span>
+                <span>
+                  <b>{element.period}</b>
+                </span>
+              </span>
+            </TableCell>
+          )
+        })}
+      </TableRow>
     </>
   )
 }
@@ -65,10 +74,10 @@ export default function DenseTable({ header, data }) {
       <Table className={classes.table} size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
-            <TableCell><b>{t('WORKING_DAYS')}</b></TableCell>
+            <TableCell className={classes.tableCell}></TableCell>
             {header.map((element, index) => {
               return (
-                <TableCell key={element + index}>
+                <TableCell className={classes.tableCell} key={element + index}>
                   <b>{element.start + 'h - ' + element.end + 'h'}</b>
                 </TableCell>
               )
@@ -76,14 +85,18 @@ export default function DenseTable({ header, data }) {
           </TableRow>
         </TableHead>
         <TableBody>
+          <TableRow>
+            <TableCell className={classes.tableCell}>
+              <b>{t('WORKING_DAYS')}</b>
+            </TableCell>
+          </TableRow>
           {data
             ? Object.keys(data).map((element, index) => (
-                <TableRow key={element + index}>
-                  <TableItem
-                    data={data[element]}
-                    isLast={Object.keys(data).length === index+1}
-                  />
-                </TableRow>
+                <TableItem
+                  key={element + index}
+                  data={data[element]}
+                  isLast={Object.keys(data).length === index + 1}
+                />
               ))
             : null}
         </TableBody>
