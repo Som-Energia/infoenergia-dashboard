@@ -34,7 +34,7 @@ const TableItem = ({ data, isLast }) => {
       {isLast ? (
         <TableRow>
           <TableCell className={classes.tableCell}>
-            <b>{t('NAME_WEEKEND_HOLIDAYS')}</b>
+            <b>{t('WEEKEND_HOLIDAYS')}</b>
           </TableCell>
         </TableRow>
       ) : null}
