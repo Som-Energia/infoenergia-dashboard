@@ -81,7 +81,7 @@ export function getMonthCode(num) {
     10: 'MONTH_NAME_10',
     11: 'MONTH_NAME_11',
     12: 'MONTH_NAME_12',
-    13: 'ALL_YEAR_NAME',
+    13: 'ALL_YEAR',
   }
   return months[num]
 }
