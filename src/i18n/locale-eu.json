@@ -20,11 +20,11 @@
     "REGULAR": "Erregularra",
     "SEASONAL_PROFILE": "Urtaroaren araberako profila",
     "NO_DATA": "Ez dugu nahikoa daturik irudikapena egiteko",
-    "WEEKEND_DAYS": "Asteburua eta jaiegunak",
+    "WEEKEND_DAYS": "Asteburua eta estatuko jaiegunak",
     "VALLEY": "Sakonunea",
     "WEEKLY_AVERAGE": "Asteko batezbestekoa",
     "BETWEEN_WEEKDAYS": "Astean zehar",
-    "WEEKEND": "Asteburuan",
+    "WEEKEND": "Asteburuak eta estatuko jaiegunak",
     "AVG_USE": "Batez besteko erabilera",
     "STAND_DAILY_USE": "Ohiko eguneko erabilera",
     "ENERGY_USE": "Energia-erabilera",
@@ -42,7 +42,7 @@
     "LAST_UPDATE": "Azken eguneratzea",
     "COOLING": "Negua",
     "HEATING": "Uda",
-    "WORKING_DAYS": "Lanegunak",
+    "WORKING_DAYS": "Lanegunak, Ostiral Santua eta estatuak ez diren jaiegunak",
     "FLAT": "Une arrunta",
     "USE_NULL": "huts iraunkorra",
     "WORKING_FLAT_1": "Une arrunta: 8:00etatik 10:00etara",
@@ -77,5 +77,5 @@
     "MONTH_NAME_11":"Azaroa",
     "MONTH_NAME_12":"Abendua",
     "ALL_YEAR_NAME":"Urte osoan",
-    "NAME_WEEKEND_HOLIDAYS":"Asteburu eta jaiegunetan"
+    "NAME_WEEKEND_HOLIDAYS":"Asteburua eta estatuko jaiegunak"
 }

@@ -20,7 +20,7 @@
     "LAST_UPDATE": "Última actualización",
     "COOLING": "Inverno",
     "HEATING": "Verán",
-    "WORKING_DAYS": "Laborábeis",
+    "WORKING_DAYS": "Laborábeis, Venres Santo e festivos non estatais",
     "TIPICAL_DAILY_PROFILE": "Perfil típico diario",
     "REGULAR": "Regular",
     "PICK": "Punta",
@@ -50,7 +50,7 @@
     "WORKING_FLAT_2": "Chan: de 14 h a 18 h",
     "WORKING_PEAK_2": "Punta: de 18 h a 22 h",
     "WORKING_FLAT_3": "Chan: de 22 h a 00 h",
-    "WEEKEND_DAYS": "Fin de semana e festivos",
+    "WEEKEND_DAYS": "Fin de semana e festivos estatais",
     "WEEKEND_VALLEY": "Val: de 00 h a 00 h",
     "TOTAL_DAILY": "Total diaria",
     "TOTAL_WEEKLY": "Total semanal",
@@ -76,5 +76,5 @@
     "MONTH_NAME_10":"Outubro",
     "MONTH_NAME_11":"Novembro",
     "MONTH_NAME_12":"Decembro",
-    "ALL_YEAR_NAME":"Fins de semana e festivos"
+    "ALL_YEAR_NAME":"Fins de semana e festivos estatais"
 }
