@@ -6,6 +6,29 @@ import json
 from random import randrange
 from consolemsg import fail
 
+usage="""\
+Generates the content for a .env.development file
+in order to emulate the dashboard inside
+the virtual office with a given user logged in.
+You can locate the user by nif or by traits of their
+contracts.
+
+Examples:
+
+generate_env.py --vat 12345678X
+
+generate_env.py --contract 12345
+
+generate_env.py --contract 12345 --relation pagador
+
+generate_env.py --tariff 2.0TD
+
+generate_env.py --tariff 2.0TD --zone balearic
+
+generate_env.py --tariff 2.0TD --zone canary
+"""
+)
+
 def unlistify(x):
     """Given a list of result, returns the first one or None if no result"""
     if type(x) not in (tuple, list):
@@ -112,24 +135,7 @@ def search_partner_by_contract_name(erp, contract, relation='titular'):
     return fk_id(polissa[relation])
 
 @click.command(
-    help="""\
-Generates a .env.development to emulate the dashboard
-being inside the virtual office with a given user logged.
-You can locate the user by nif or by traits of their
-contracts.
-
-Examples:
-
-generate_env.py --vat 12345678X
-
-generate_env.py --contract 12345
-
-generate_env.py --tariff 2.0TD
-
-generate_env.py --tariff 2.0TD --zone balearic
-
-generate_env.py --tariff 2.0TD --zone balearic
-"""
+    help=usage,
 )
 @click.option(
     "--erp",
