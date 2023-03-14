@@ -166,7 +166,7 @@ generate_env.py --tariff 2.0TD --zone balearic
 @click.option(
     "--relation",
     "-r",
-    type=click.Choice(["titular", "pagador", "administadora"]),
+    type=click.Choice(["titular", "pagador", "administradora"]),
     default="titular",
     help="Use this relation to filter partner by contract",
 )
