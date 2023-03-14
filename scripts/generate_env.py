@@ -177,14 +177,13 @@ def cli(vat, tariff, zone, contract, relation, erp_instance):
     erp = erppeek.Client(**configdb.erppeek_profiles.get(erp_instance))
     if vat:
         partner_id = search_partner_by_vat(erp, vat)
-        if not partner_id:
-            fail(f"No partner found with VAT {vat}")
     elif contract:
         partner_id = search_partner_by_contract_name(erp, contract, relation)
-        if not partner_id:
-            fail(f"No contract found {contract}")
     else:
         partner_id = search_partner_by_contract_traits(erp, tariff, zone, relation)
+
+    if not partner_id:
+        fail(f"No case not found")
 
     output_config(erp, partner_id)
 
