@@ -14,10 +14,12 @@ def unlistify(x):
 
 def fk_id(x):
     """Given a foreign key tuple (id, name) return the id"""
+    if not x: return None
     return x[0]
 
 def fk_name(x):
     """Given a foreign key tuple (id, name) return the name"""
+    if not x: return None
     return x[1]
 
 def timetable(polissa):
