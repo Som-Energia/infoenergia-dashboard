@@ -43,10 +43,10 @@ getMarketHolidays().then((holidays) => {
   MARKET_HOLIDAYS = holidays?.data || []
 })
 
-export function getPeriod(datetime, timetable = 'LowPower') {
-  const periodTimes = periodes[timetable].times
+export function getPeriod(datetime, tariffTimetableId = 'Taula_Peatges_20') {
+  const periodTimes = periodes[tariffTimetableId].times
   datetime = dayjs(datetime)
-  const seasonPeriods = periodes[timetable].seasons[datetime.month() + 1]
+  const seasonPeriods = periodes[tariffTimetableId].seasons[datetime.month() + 1]
   const lesserPeriod = seasonPeriods[seasonPeriods.length - 1]
   // weekdays
   const day = datetime.isoWeekday()
@@ -151,7 +151,7 @@ const peninsularPeriodTimes = [8, 9, 14, 18, 22, 24]
 const insularPeriodTimes = [8, 10, 15, 18, 22, 24]
 
 const periodes = {
-  LowPower: {
+  Taula_Peatges_20: {
     times: lowPowerPeriodTimes,
     seasons: {
       1: ['peak', 'flat', 'valley'],
@@ -168,7 +168,7 @@ const periodes = {
       12: ['peak', 'flat', 'valley'],
     },
   },
-  Peninsular: {
+  Taula_Peatges_30_60_Peninsular: {
     times: peninsularPeriodTimes,
     seasons: {
       1: ['P1', 'P2', 'P6'],
@@ -185,7 +185,7 @@ const periodes = {
       12: ['P1', 'P2', 'P6'],
     },
   },
-  Balearic: {
+  Taula_Peatges_30_60_Balears: {
     times: insularPeriodTimes,
     seasons: {
       1: ['P3', 'P4', 'P6'],
@@ -202,7 +202,7 @@ const periodes = {
       12: ['P3', 'P4', 'P6'],
     },
   },
-  Canary: {
+  Taula_Peatges_30_60_Canaries: {
     times: insularPeriodTimes,
     seasons: {
       1: ['P2', 'P4', 'P6'],

@@ -74,9 +74,9 @@ export const formatTooltip = (value) => {
   return [`${formatNumber(value / 1000)} kWh`, null]
 }
 
-export const agregateDates = (dates, agregatedDate, timetable) => {
+export const agregateDates = (dates, agregatedDate, tariffTimetableId) => {
   const base =
-    timetable === 'LowPower'
+  tariffTimetableId === 'Taula_Peatges_20'
       ? {
           valley: 0,
           peak: 0,
@@ -97,7 +97,7 @@ export const agregateDates = (dates, agregatedDate, timetable) => {
   }
 
   dates.forEach((item) => {
-    const period = getPeriod(item?.date, timetable)
+    const period = getPeriod(item?.date, tariffTimetableId)
     result[period] += item?.value
     result.value += item?.value
   })
@@ -105,7 +105,7 @@ export const agregateDates = (dates, agregatedDate, timetable) => {
   return result
 }
 
-export const groupWeeklyData = (data, timetable) => {
+export const groupWeeklyData = (data, tariffTimetableId) => {
   const isoWeek = require('dayjs/plugin/isoWeek')
   dayjs.extend(isoWeek)
   const weekly = []
@@ -117,7 +117,7 @@ export const groupWeeklyData = (data, timetable) => {
       dayjs(firstDay)
         .add(day - 1, 'd')
         .valueOf(),
-      timetable
+        tariffTimetableId
     )
     weekly.push(result)
   }
@@ -125,13 +125,13 @@ export const groupWeeklyData = (data, timetable) => {
   return weekly
 }
 
-export const groupDailyData = (data, timetable) => {
+export const groupDailyData = (data, tariffTimetableId) => {
   return data.map((item) => {
-    return agregateDates([item], item?.date, timetable)
+    return agregateDates([item], item?.date, tariffTimetableId)
   })
 }
 
-export const groupMonthlyData = (data, timetable) => {
+export const groupMonthlyData = (data, tariffTimetableId) => {
   const month = []
   const firstDay = data[0]?.date
   for (let day = 1; day <= dayjs(firstDay).daysInMonth(); day++) {
@@ -142,7 +142,7 @@ export const groupMonthlyData = (data, timetable) => {
       dayjs(firstDay)
         .add(day - 1, 'd')
         .valueOf(),
-      timetable
+        tariffTimetableId
     )
 
     month.push(result)
@@ -150,9 +150,9 @@ export const groupMonthlyData = (data, timetable) => {
   return month
 }
 
-export const groupYearlyData = (data, timetable) => {
+export const groupYearlyData = (data, tariffTimetableId) => {
   const base =
-    timetable === 'LowPower'
+  tariffTimetableId === 'Taula_Peatges_20'
       ? {
           valley: 0,
           peak: 0,
@@ -177,7 +177,7 @@ export const groupYearlyData = (data, timetable) => {
         ...base,
       }
     }
-    const period = getPeriod(data[i].date, timetable)
+    const period = getPeriod(data[i].date, tariffTimetableId)
     result[current][period] += data[i].value
     result[current].value += data[i].value
   }
@@ -250,19 +250,19 @@ export const groupDataByPeriod = (
   data,
   period,
   type,
-  timetable = 'LowPower'
+  tariffTimetableId = 'Taula_Peatges_20'
 ) => {
   switch (period) {
     case 'WEEKLY':
-      return type === 'barChart' ? groupWeeklyData(data, timetable) : data
+      return type === 'barChart' ? groupWeeklyData(data, tariffTimetableId) : data
     case 'MONTHLY':
-      return type === 'barChart' ? groupMonthlyData(data, timetable) : data
+      return type === 'barChart' ? groupMonthlyData(data, tariffTimetableId) : data
     case 'YEARLY':
       return type === 'barChart'
-        ? groupYearlyData(data, timetable)
+        ? groupYearlyData(data, tariffTimetableId)
         : groupYearlyDataByDay(data)
     default:
-      return type === 'barChart' ? groupDailyData(data, timetable) : data
+      return type === 'barChart' ? groupDailyData(data, tariffTimetableId) : data
   }
 }
 

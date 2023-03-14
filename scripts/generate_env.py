@@ -22,12 +22,12 @@ def fk_name(x):
 
 def timetable(polissa):
     if fk_name(polissa["tarifa"]) == "2.0TD":
-        return "LowPower"
+        return "Taula_Peatges_20"
     if fk_name(polissa["cups"]).startswith("ES003160"):
-        return "Canary"
+        return "Taula_Peatges_30_60_Canaries"
     if "_INSULAR" in fk_name(polissa["llista_preu"]):
-        return "Balearic"
-    return "Peninsular"
+        return "Taula_Peatges_30_60_Balears"
+    return "Taula_Peatges_30_60_Peninsular"
 
 
 def output_config(erp, partner_id):
@@ -42,7 +42,7 @@ def output_config(erp, partner_id):
     data = [
         dict(
             name=polissa["name"],
-            timetable=timetable(polissa),
+            tariff_timetable_id=timetable(polissa),
             cups=fk_name(polissa["cups"]),
             tariff=fk_name(polissa["tarifa"]),
             address=polissa["cups_direccio"],

@@ -1,6 +1,5 @@
 
 import { getPeriod, MARKET_HOLIDAYS } from './timecurves'
-import { render } from '@testing-library/react'
 /*
 - getPeriod - Getting a period
     - LowPower - when the tariff is 2.0
@@ -64,95 +63,95 @@ describe('getPeriod: Obtaining the period to apply at a given time', () => {
     })
     describe('Given a highpower tariff in the peninsula', () => {
         test('Labour day before 8:00 should return valley', () => {
-            expect(getPeriod(labour_07_30, 'Peninsular')).toBe('P6')
+            expect(getPeriod(labour_07_30, 'Taula_Peatges_30_60_Peninsular')).toBe('P6')
         })
         test('Labour day before 10:00 should return flat', () => {
-            expect(getPeriod(labour_08_30, 'Peninsular')).toBe('P2')
+            expect(getPeriod(labour_08_30, 'Taula_Peatges_30_60_Peninsular')).toBe('P2')
         })
         test('Labour day before 14:00 should return peak', () => {
-            expect(getPeriod(labour_09_30, 'Peninsular')).toBe('P1')
-            expect(getPeriod(labour_11_30, 'Peninsular')).toBe('P1')
+            expect(getPeriod(labour_09_30, 'Taula_Peatges_30_60_Peninsular')).toBe('P1')
+            expect(getPeriod(labour_11_30, 'Taula_Peatges_30_60_Peninsular')).toBe('P1')
         })
         test('Labour day before 18:00 should return flat', () => {
-            expect(getPeriod(labour_14_30, 'Peninsular')).toBe('P2')
-            expect(getPeriod(labour_15_30, 'Peninsular')).toBe('P2')
+            expect(getPeriod(labour_14_30, 'Taula_Peatges_30_60_Peninsular')).toBe('P2')
+            expect(getPeriod(labour_15_30, 'Taula_Peatges_30_60_Peninsular')).toBe('P2')
         })
         test('Labour day before 22:00 should return peak', () => {
-            expect(getPeriod(labour_18_30, 'Peninsular')).toBe('P1')
+            expect(getPeriod(labour_18_30, 'Taula_Peatges_30_60_Peninsular')).toBe('P1')
         })
         test('Labour day after 22:00 should return flat', () => {
-            expect(getPeriod(labour_22_30, 'Peninsular')).toBe('P2')
+            expect(getPeriod(labour_22_30, 'Taula_Peatges_30_60_Peninsular')).toBe('P2')
         })
         test('Weekend day any time should return valley', () => {
-            expect(getPeriod(weekend_11_30, 'Peninsular')).toBe('P6')
+            expect(getPeriod(weekend_11_30, 'Taula_Peatges_30_60_Peninsular')).toBe('P6')
         })
         test('Holiday day any time should return valley', () => {
-            expect(getPeriod(holiday_11_30, 'Peninsular')).toBe('P6')
+            expect(getPeriod(holiday_11_30, 'Taula_Peatges_30_60_Peninsular')).toBe('P6')
         })
     })
     describe('Given a highpower tariff in the Balearic Islands', () => {
         test('Labour day before 8:00 should return valley', () => {
-            expect(getPeriod(labour_07_30, 'Balearic')).toBe('P6')
+            expect(getPeriod(labour_07_30, 'Taula_Peatges_30_60_Balears')).toBe('P6')
         })
         test('Labour day before 10:00 should return flat', () => {
-            expect(getPeriod(labour_08_30, 'Balearic')).toBe('P4')
-            expect(getPeriod(labour_09_30, 'Balearic')).toBe('P4')
+            expect(getPeriod(labour_08_30, 'Taula_Peatges_30_60_Balears')).toBe('P4')
+            expect(getPeriod(labour_09_30, 'Taula_Peatges_30_60_Balears')).toBe('P4')
         })
         test('Labour day before 15:00 should return peak', () => {
-            expect(getPeriod(labour_11_30, 'Balearic')).toBe('P3')
-            expect(getPeriod(labour_14_30, 'Balearic')).toBe('P3')
+            expect(getPeriod(labour_11_30, 'Taula_Peatges_30_60_Balears')).toBe('P3')
+            expect(getPeriod(labour_14_30, 'Taula_Peatges_30_60_Balears')).toBe('P3')
         })
         test('Labour day before 18:00 should return flat', () => {
-            expect(getPeriod(labour_15_30, 'Balearic')).toBe('P4')
+            expect(getPeriod(labour_15_30, 'Taula_Peatges_30_60_Balears')).toBe('P4')
         })
         test('Labour day before 22:00 should return peak', () => {
-            expect(getPeriod(labour_18_30, 'Balearic')).toBe('P3')
+            expect(getPeriod(labour_18_30, 'Taula_Peatges_30_60_Balears')).toBe('P3')
         })
         test('Labour day after 22:00 should return flat', () => {
-            expect(getPeriod(labour_22_30, 'Balearic')).toBe('P4')
+            expect(getPeriod(labour_22_30, 'Taula_Peatges_30_60_Balears')).toBe('P4')
         })
         test('Weekend day any time should return valley', () => {
-            expect(getPeriod(weekend_11_30, 'Balearic')).toBe('P6')
+            expect(getPeriod(weekend_11_30, 'Taula_Peatges_30_60_Balears')).toBe('P6')
         })
         test('Holiday day any time should return valley', () => {
-            expect(getPeriod(holiday_11_30, 'Balearic')).toBe('P6')
+            expect(getPeriod(holiday_11_30, 'Taula_Peatges_30_60_Balears')).toBe('P6')
         })
     })
 
     describe('Given a highpower tariff in the Canary Islands', () => {
         test('Labour day before 8:00 should return valley', () => {
-            expect(getPeriod(labour_07_30, 'Canary')).toBe('P6')
+            expect(getPeriod(labour_07_30, 'Taula_Peatges_30_60_Canaries')).toBe('P6')
         })
         test('Labour day before 10:00 should return flat', () => {
-            expect(getPeriod(labour_08_30, 'Canary')).toBe('P3')
-            expect(getPeriod(labour_09_30, 'Canary')).toBe('P3')
+            expect(getPeriod(labour_08_30, 'Taula_Peatges_30_60_Canaries')).toBe('P3')
+            expect(getPeriod(labour_09_30, 'Taula_Peatges_30_60_Canaries')).toBe('P3')
         })
         test('Labour day before 15:00 should return peak', () => {
-            expect(getPeriod(labour_11_30, 'Canary')).toBe('P2')
-            expect(getPeriod(labour_14_30, 'Canary')).toBe('P2')
+            expect(getPeriod(labour_11_30, 'Taula_Peatges_30_60_Canaries')).toBe('P2')
+            expect(getPeriod(labour_14_30, 'Taula_Peatges_30_60_Canaries')).toBe('P2')
         })
         test('Labour day before 18:00 should return flat', () => {
-            expect(getPeriod(labour_15_30, 'Canary')).toBe('P3')
+            expect(getPeriod(labour_15_30, 'Taula_Peatges_30_60_Canaries')).toBe('P3')
         })
         test('Labour day before 22:00 should return peak', () => {
-            expect(getPeriod(labour_18_30, 'Canary')).toBe('P2')
+            expect(getPeriod(labour_18_30, 'Taula_Peatges_30_60_Canaries')).toBe('P2')
         })
         test('Labour day after 22:00 should return flat', () => {
-            expect(getPeriod(labour_22_30, 'Canary')).toBe('P3')
+            expect(getPeriod(labour_22_30, 'Taula_Peatges_30_60_Canaries')).toBe('P3')
         })
         test('Weekend day any time should return valley', () => {
-            expect(getPeriod(weekend_11_30, 'Canary')).toBe('P6')
+            expect(getPeriod(weekend_11_30, 'Taula_Peatges_30_60_Canaries')).toBe('P6')
         })
         test('Holiday day any time should return valley', () => {
-            expect(getPeriod(holiday_11_30, 'Canary')).toBe('P6')
+            expect(getPeriod(holiday_11_30, 'Taula_Peatges_30_60_Canaries')).toBe('P6')
         })
     })
     describe('Given a high power tariff month changes season', () => {
         test('Labour day before 8:00 should return valley', () => {
-            expect(getPeriod(labour_08_30_july, 'LowPower')).toBe('flat')
-            expect(getPeriod(labour_08_30_july, 'Peninsular')).toBe('P2')
-            expect(getPeriod(labour_08_30_july, 'Canary')).toBe('P3')
-            expect(getPeriod(labour_08_30_july, 'Balearic')).toBe('P2')
+            expect(getPeriod(labour_08_30_july, 'Taula_Peatges_20')).toBe('flat')
+            expect(getPeriod(labour_08_30_july, 'Taula_Peatges_30_60_Peninsular')).toBe('P2')
+            expect(getPeriod(labour_08_30_july, 'Taula_Peatges_30_60_Canaries')).toBe('P3')
+            expect(getPeriod(labour_08_30_july, 'Taula_Peatges_30_60_Balears')).toBe('P2')
         })
     })
     
