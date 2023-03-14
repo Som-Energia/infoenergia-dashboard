@@ -4,26 +4,35 @@ import configdb
 import erppeek
 import json
 from random import randrange
+from consolemsg import fail
 
-"""
-Use cases:
-- [ ] Search all contract of a client having at least one 3.0TD contract
-- [ ] Search all contract of a client having at least one 3.0TD contract in Balearic islands/Canary islands/ Peninsular
-- [ ] Search all contract of a client having contracts in different timetables (2.0TD, Balearic, Canary, Peninsular)
-"""
+def unlistify(x):
+    """Given a list of result, returns the first one or None if no result"""
+    if type(x) not in (tuple, list):
+        return x
+    return (x or [None])[0]
 
+def fk_id(x):
+    """Given a foreign key tuple (id, name) return the id"""
+    return x[0]
+
+def fk_name(x):
+    """Given a foreign key tuple (id, name) return the name"""
+    return x[1]
 
 def timetable(polissa):
-    if polissa["tarifa"][1] == "2.0TD":
+    if fk_name(polissa["tarifa"]) == "2.0TD":
         return "LowPower"
-    if polissa["cups"][1].startswith("ES003160"):
+    if fk_name(polissa["cups"]).startswith("ES003160"):
         return "Canary"
-    if "_INSULAR" in polissa["llista_preu"][1]:
+    if "_INSULAR" in fk_name(polissa["llista_preu"]):
         return "Balearic"
     return "Peninsular"
 
 
-def output_config(erp, partner):
+def output_config(erp, partner_id):
+    partner_model = erp.model("res.partner")
+    partner = partner_model.read(partner_id)
     polissa_model = erp.model("giscedata.polissa")
     polissa_filters = [
         ("titular", "=", partner["id"]),
@@ -34,8 +43,8 @@ def output_config(erp, partner):
         dict(
             name=polissa["name"],
             timetable=timetable(polissa),
-            cups=polissa["cups"][1],
-            tariff=polissa["tarifa"][1],
+            cups=fk_name(polissa["cups"]),
+            tariff=fk_name(polissa["tarifa"]),
             address=polissa["cups_direccio"],
         )
         for polissa in polisses
@@ -55,6 +64,7 @@ def search_partner_by_contract_traits(
     erp,
     tariff,
     zone,
+    relation="titular",
 ):
     polissa_model = erp.model("giscedata.polissa")
     polissa_filters = [
@@ -78,22 +88,28 @@ def search_partner_by_contract_traits(
         polissa_filters += zone_conditions[zone]
 
     polissa_ids = polissa_model.search(polissa_filters)
-    polisses = polissa_model.read(polissa_ids[randrange(len(polissa_ids))], ["titular"])
+    polisses = polissa_model.read(polissa_ids[randrange(len(polissa_ids))], [relation])
 
-    return polisses["titular"][0]
+    return fk_id(polisses[relation])
 
+def search_partner_by_vat(erp, vat):
+    partner_model = erp.model("res.partner")
+    vat = vat if vat[:2].isalpha() else "ES" + vat
+    return unlistify(partner_model.search([
+            ("vat", "=", vat),
+    ]))
 
-erp_option = click.option(
-    "--erp",
-    "-e",
-    "erp_instance",
-    type=click.Choice(configdb.erppeek_profiles.keys()),
-    default="prod",
-    help="ERP instance",
-)
+def search_partner_by_contract_name(erp, contract, relation='titular'):
+    polissa_model = erp.model("giscedata.polissa")
+    contract_id = unlistify(polissa_model.search([
+            ("name", "=", contract),
+    ]))
+    if not contract_id:
+        return None
+    polissa = unlistify(polissa_model.read(contract_id, [relation]))
+    return fk_id(polissa[relation])
 
-
-@click.group(
+@click.command(
     help="""\
 Generates a .env.development to emulate the dashboard
 being inside the virtual office with a given user logged.
@@ -102,63 +118,73 @@ contracts.
 
 Examples:
 
-generate_env.py bypartner 12345678X
+generate_env.py --vat 12345678X
 
-generate_env.py bycontract 12345
+generate_env.py --contract 12345
 
-generate_env.py bycontract --tariff 2.0TD
+generate_env.py --tariff 2.0TD
 
-generate_env.py bycontract --tariff 2.0TD --zone balearic
+generate_env.py --tariff 2.0TD --zone balearic
 
-generate_env.py bycontract --tariff 2.0TD --zone balearic
+generate_env.py --tariff 2.0TD --zone balearic
 """
 )
-def cli():
-    pass
-
-
-@cli.command(
-    help="Generate .env.development for a given user having VAT as nif/vat",
+@click.option(
+    "--erp",
+    "-e",
+    "erp_instance",
+    type=click.Choice(configdb.erppeek_profiles.keys()),
+    default="prod",
+    help="ERP instance",
 )
-@erp_option
-@click.argument(
-    "vat",
+@click.option(
+    "--vat",
+    "-v",
+    default=None,
+    help="Filter by partner VAT or NIF",
 )
-def bypartner(vat, erp_instance):
-    erp = erppeek.Client(**configdb.erppeek_profiles.get(erp_instance))
-    partner_model = erp.model("res.partner")
-    vat = vat if vat[:2].isalpha() else "ES" + vat
-    partner = partner_model.read(
-        [
-            ("vat", "=", vat),
-        ]
-    )[0]
-    output_config(erp, partner)
-
-
-@cli.command()
-@erp_option
 @click.option(
     "--tariff",
     "-t",
     type=click.Choice(["2.0TD", "3.0TD", "6.1TD", "6.2TD", "6.3TD", "6.4TD", "3.0TDVE", "6.1TDVE"]),
     default="2.0TD",
-    help="Filter by contract",
+    help="Filter by contract tariff",
 )
 @click.option(
     "--zone",
     "-z",
     type=click.Choice(["canary", "balearic", "peninsular"]),
     default=None,
+    help="Filter by contract electric zone",
 )
-def bycontract(tariff, zone, erp_instance):
+@click.option(
+    "--contract",
+    "-c",
+    help="Filter by contract name",
+    default=None,
+)
+@click.option(
+    "--relation",
+    "-r",
+    type=click.Choice(["titular", "pagador", "administadora"]),
+    default="titular",
+    help="Use this relation to filter partner by contract",
+)
+def cli(vat, tariff, zone, contract, relation, erp_instance):
     """Select the user by the traits of their contracts"""
     erp = erppeek.Client(**configdb.erppeek_profiles.get(erp_instance))
-    partner_id = search_partner_by_contract_traits(erp, tariff, zone)
+    if vat:
+        partner_id = search_partner_by_vat(erp, vat)
+        if not partner_id:
+            fail(f"No partner found with VAT {vat}")
+    elif contract:
+        partner_id = search_partner_by_contract_name(erp, contract, relation)
+        if not partner_id:
+            fail(f"No contract found {contract}")
+    else:
+        partner_id = search_partner_by_contract_traits(erp, tariff, zone, relation)
 
-    partner_model = erp.model("res.partner")
-    partner = partner_model.read(partner_id)
-    output_config(erp, partner)
+    output_config(erp, partner_id)
 
 
 if __name__ == "__main__":
