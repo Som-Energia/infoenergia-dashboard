@@ -92,9 +92,6 @@ function TipicalDailyProfile(props) {
 
         <Grid container>
           <Grid item xs={12}>
-            <LegendPeriod />
-          </Grid>
-          <Grid item xs={12}>
             <Message>
               <div className="iconWrapper">
                 <ErrorOutlineIcon fontSize="large" />
