@@ -20,7 +20,6 @@ import { Widget } from 'containers/TipicalDailyProfile/DistributionCharts'
 import { getDailyProfile } from 'services/api'
 
 import ErrorOutlineIcon from '@material-ui/icons/Error'
-import LegendPeriod from 'components/TipicalDailyProfile/LegendPeriod'
 
 
 const useStyles = makeStyles((theme) => ({
