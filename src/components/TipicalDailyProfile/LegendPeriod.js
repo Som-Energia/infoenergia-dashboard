@@ -10,7 +10,7 @@ const LegendPeriod = ({ contract }) => {
   useEffect(() => {
     setLegend(getLegendFromTimeTable(contract.tariff_timetable_id))
   }, [contract])
-  
+
   return (
     <LegendWrapper>
       {legend ? (

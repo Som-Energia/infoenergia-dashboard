@@ -78,9 +78,9 @@ export const agregateDates = (dates, agregatedDate, tariffTimetableId) => {
   const base =
   tariffTimetableId === 'Taula_Peatges_20'
       ? {
-          valley: 0,
-          peak: 0,
-          flat: 0,
+          VALLEY: 0,
+          PICK: 0,
+          FLAT: 0,
         }
       : {
           P1: 0,
@@ -154,9 +154,9 @@ export const groupYearlyData = (data, tariffTimetableId) => {
   const base =
   tariffTimetableId === 'Taula_Peatges_20'
       ? {
-          valley: 0,
-          peak: 0,
-          flat: 0,
+          VALLEY: 0,
+          PICK: 0,
+          FLAT: 0,
         }
       : {
           P1: 0,
@@ -328,9 +328,9 @@ export const completeYearData = (origData) => {
 }
 
 export const period2Color = {
-  valley: '#c4dd8c',
-  flat: '#96b633',
-  peak: '#f2970f',
+  VALLEY: '#c4dd8c',
+  FLAT: '#96b633',
+  PICK: '#f2970f',
   P1: '#E45356',
   P2: '#F1A10C',
   P3: '#76562D',

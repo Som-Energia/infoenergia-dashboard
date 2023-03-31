@@ -54,7 +54,7 @@ const TableItem = ({ data, isLast }) => {
                   }}
                 ></span>
                 <span>
-                  <b>{element.period}</b>
+                  <b>{t(element.period)}</b>
                 </span>
               </span>
             </TableCell>
