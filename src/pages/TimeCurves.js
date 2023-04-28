@@ -14,77 +14,43 @@ import GetAppIcon from '@material-ui/icons/GetApp'
 
 import Tabs from 'components/Tabs'
 import TimeCurves from 'containers/TimeCurves'
-import { getTimeCurves } from 'services/timecurves'
-import TimeCurvesContext from 'contexts/TimeCurvesContext'
+import ContractSelectorWrapper, {
+  ContractContext,
+} from 'containers/ContractSelectorWrapper'
+import TimeCurvesContext, {
+  TimeCurvesContextProvider,
+} from 'contexts/TimeCurvesContext'
 
 import { CSVLink } from 'react-csv'
 import { CnmcformatData } from 'services/utils'
 
-function TimeCurvesPage(props) {
-  const { language } = useParams()
-  const { t, i18n } = useTranslation()
+const DownloadButton = (props) => {
+  const { children } = props
+  const { filteredTimeCurves } = useContext(TimeCurvesContext)
+  const contract = useContext(ContractContext)
 
-  const { timeCurves, setTimeCurves, filteredTimeCurves } =
-    useContext(TimeCurvesContext)
 
-  const {
-    token,
-    now = dayjs(),
-    tariff
-  } = props
+  const [headers, data] = CnmcformatData({
+    data: filteredTimeCurves,
+    cups: contract.cups,
+  })
 
-  const [type, setType] = useState('LINE_CHART_TYPE')
-  const [cups, setCups] = useState(props.cups)
-  const [contract, setContract] = useState(props.contract)
+  return (
+    <CSVLink
+      className="controlBtn"
+      filename={`infoenergia-${contract.name}.csv`}
+      headers={headers}
+      data={data}
+    >
+      {children}
+    </CSVLink>
+  )
+}
 
-  useEffect(() => {
-    language && i18n.changeLanguage(language)
-    language ? dayjs.locale(language) : dayjs.locale('es')
-  }, [language, i18n])
-
-  useEffect(function () {
-    const requestData = async () => {
-      const responses = await Promise.all(
-        [3,2,1,0].map((yearsago) => {
-          return getTimeCurves({
-            token,
-            cups,
-            currentMonth: now.subtract(yearsago, 'year').format('YYYYMM'),
-          })
-        })
-      )
-      setTimeCurves(responses.flat())
-    }
-    requestData()
-  }, [token, cups])
-
-  window.switchcontract = (newContract, newCups) => {
-    setTimeCurves([])
-    setContract(newContract)
-    setCups(newCups)
-  }
-
-  const DownloadButton = (props) => {
-    const { children } = props
-
-    const [headers, data] = CnmcformatData({
-      data: filteredTimeCurves,
-      cups: cups,
-    })
-
-    return (
-      <CSVLink
-        className="controlBtn"
-        filename={`infoenergia-${contract}.csv`}
-        headers={headers}
-        data={data}
-      >
-        {children}
-      </CSVLink>
-    )
-  }
-
-  const ExtraControls = () => (
+const ExtraControls = (props) => {
+  const {type, setType} = props
+  const {t} = useTranslation()
+  return (
     <ExtraButtonsWrapper>
       <ul>
         <li className={type === 'LINE_CHART_TYPE' ? 'active' : null}>
@@ -112,43 +78,94 @@ function TimeCurvesPage(props) {
       </ul>
     </ExtraButtonsWrapper>
   )
+}
+
+function TimeCurvesPage(props) {
+  const { language } = useParams()
+  const { t, i18n } = useTranslation()
+
+  const { timeCurves } = useContext(TimeCurvesContext)
+  const contract = useContext(ContractContext)
+  const [type, setType] = useState('LINE_CHART_TYPE')
+
+
+  useEffect(() => {
+    language && i18n.changeLanguage(language)
+    language ? dayjs.locale(language) : dayjs.locale('es')
+  }, [language, i18n])
 
   return (
-    <div>
-      <Tabs
-        tabs={[
-          {
-            title: t('DAILY'),
-            content: (
-              <TimeCurves period="DAILY" chartType={type} data={timeCurves} tariff={tariff} />
-            ),
-          },
-          {
-            title: t('WEEKLY'),
-            content: (
-              <TimeCurves period="WEEKLY" chartType={type} data={timeCurves} tariff={tariff} />
-            ),
-          },
-          {
-            title: t('MONTHLY'),
-            content: (
-              <TimeCurves period="MONTHLY" chartType={type} data={timeCurves} tariff={tariff} />
-            ),
-          },
-          {
-            title: t('YEARLY'),
-            content: (
-              <TimeCurves period="YEARLY" chartType={type} data={timeCurves} tariff={tariff} />
-            ),
-          },
-        ]}
-        extra={<ExtraControls />}
-      />
-    </div>
+    <Tabs
+      tabs={[
+        {
+          title: t('DAILY'),
+          content: (
+            <TimeCurves
+              period="DAILY"
+              chartType={type}
+              data={timeCurves}
+              contract={contract}
+            />
+          ),
+        },
+        {
+          title: t('WEEKLY'),
+          content: (
+            <TimeCurves
+              period="WEEKLY"
+              chartType={type}
+              data={timeCurves}
+              contract={contract}
+            />
+          ),
+        },
+        {
+          title: t('MONTHLY'),
+          content: (
+            <TimeCurves
+              period="MONTHLY"
+              chartType={type}
+              data={timeCurves}
+              contract={contract}
+            />
+          ),
+        },
+        {
+          title: t('YEARLY'),
+          content: (
+            <TimeCurves
+              period="YEARLY"
+              chartType={type}
+              data={timeCurves}
+              contract={contract}
+            />
+          ),
+        },
+      ]}
+      extra={<ExtraControls type={type} setType={setType} />}
+    />
   )
 }
 
-export default TimeCurvesPage
+function TimeCurvePageWrapper(props) {
+  const { language } = useParams()
+  const { t, i18n } = useTranslation()
+  const { token, now = dayjs() } = props
+  useEffect(() => {
+    language && i18n.changeLanguage(language)
+    language ? dayjs.locale(language) : dayjs.locale('es')
+  }, [language, i18n])
+
+  return (
+    <ContractSelectorWrapper title={t('SECTION_TITLE_HOURLY_CURVES')}>
+      <TimeCurvesContextProvider token={token} now={now}>
+        <TimeCurvesPage {...props}></TimeCurvesPage>
+      </TimeCurvesContextProvider>
+    </ContractSelectorWrapper>
+  )
+}
+
+export default TimeCurvePageWrapper
 
 const ExtraButtonsWrapper = styled.div`
   flex-grow: 1;

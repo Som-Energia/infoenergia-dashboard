@@ -1,5 +1,8 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+# editors
+.*sw?
+
 # dependencies
 /node_modules
 /.pnp
@@ -10,6 +13,12 @@
 
 # production
 /build
+
+# db config
+configdb.py
+
+# python cache
+__pycache__
 
 # misc
 .DS_Store

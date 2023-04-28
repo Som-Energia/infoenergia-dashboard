@@ -20,7 +20,6 @@ import { Widget } from 'containers/TipicalDailyProfile/DistributionCharts'
 import { getDailyProfile } from 'services/api'
 
 import ErrorOutlineIcon from '@material-ui/icons/Error'
-import LegendPeriod from 'components/TipicalDailyProfile/LegendPeriod'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -91,9 +90,6 @@ function TipicalDailyProfile(props) {
         <Separator />
 
         <Grid container>
-          <Grid item xs={12}>
-            <LegendPeriod />
-          </Grid>
           <Grid item xs={12}>
             <Message>
               <div className="iconWrapper">

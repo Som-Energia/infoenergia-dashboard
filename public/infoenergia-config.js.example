@@ -1,5 +1,2 @@
 window.config = {
-  HEMAN_API_URL: '',
-  INFOENERGIA_API_URL: '',
-  WEBFORMS_API_URL: '',
 }

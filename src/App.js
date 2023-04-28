@@ -2,11 +2,10 @@ import React, { lazy, Suspense } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { MuiPickersUtilsProvider } from '@material-ui/pickers'
 import DayJsUtils from '@date-io/dayjs'
-
+import DevelopmentIndex from './pages/DevelopmentIndex'
 import CssBaseline from '@material-ui/core/CssBaseline'
 
 import { createTheme, ThemeProvider } from '@material-ui/core/styles'
-import { TimeCurvesContextProvider } from 'contexts/TimeCurvesContext'
 
 import './i18n/i18n'
 import './App.css'
@@ -18,13 +17,8 @@ function App(props) {
   }
 
   const loadTimeCurves = () => {
-    const TimeCurves = lazy(() => import('./pages/TimeCurves'))
-
-    return (
-      <TimeCurvesContextProvider>
-        <TimeCurves {...props} />
-      </TimeCurvesContextProvider>
-    )
+    const TimeCurvesWrapper = lazy(() => import('./pages/TimeCurves'))
+    return <TimeCurvesWrapper {...props} />
   }
 
   return (
@@ -35,7 +29,9 @@ function App(props) {
           <Suspense fallback={<></>}>
             <Router>
               <Switch>
-                <Route exact path="/" render={loadEnergyUse} />
+                <Route exact path="/">
+                  <DevelopmentIndex />
+                </Route>
                 <Route
                   exact
                   path="/:language/infoenergy"

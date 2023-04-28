@@ -10,8 +10,6 @@ import ArrowBackIosOutlinedIcon from '@material-ui/icons/ArrowBackIosOutlined'
 import ArrowForwardIosOutlinedIcon from '@material-ui/icons/ArrowForwardIosOutlined'
 import TodayOutlinedIcon from '@material-ui/icons/TodayOutlined'
 import ClearIcon from '@material-ui/icons/Clear'
-import Typography from '@material-ui/core/Typography'
-import { makeStyles } from '@material-ui/core/styles'
 
 import Counter from 'components/Counter'
 import TimeCurvesBarChart from 'components/TimeCurves/TimeCurvesBarChart'
@@ -22,16 +20,6 @@ import TimeCurvesContext from 'contexts/TimeCurvesContext'
 import Loading from 'components/Loading'
 
 import { periodUnit, labelTotalPeriod } from 'services/utils'
-
-const useStyles = makeStyles((theme) => ({
-    message: {
-        marginTop: theme.spacing(4),
-        fontSize: '1rem',
-        textAlign: 'center',
-        color: theme?.typography?.color,
-      },
-  }))
-
 
 const filterDataWithPeriod = ({ refDate, period, data }) => {
   const filteredData = []
@@ -68,9 +56,8 @@ const totalValueWithData = (data) => {
 }
 
 function TimeCurves(props) {
-  const { data, chartType, period, tariff } = props
+  const { data, chartType, period, contract } = props
   const { t } = useTranslation()
-  const classes = useStyles()
 
   const { filteredTimeCurves, setFilteredTimeCurves } =
     useContext(TimeCurvesContext)
@@ -149,14 +136,9 @@ function TimeCurves(props) {
     },
     [currentDate, period]
   )
-
   return (
     <Widget>
-      {tariff !== '2.0TD' && chartType === 'BAR_CHART_TYPE' ? (
-        <Typography className={classes.message}>
-          {t('ONLY_FOR_20TD')}
-        </Typography>
-      ) : (
+      {
         <>
           <ControlsWrapper>
             <DateControlsWrapper>
@@ -254,12 +236,13 @@ function TimeCurves(props) {
                 data={filteredTimeCurves}
                 compareData={compareData}
                 period={period}
+                tariffTimetableId={contract.tariff_timetable_id}
               />
             )}
           </ChartWrapper>
-          {chartType === 'BAR_CHART_TYPE' && <LegendPeriod />}
+          {chartType === 'BAR_CHART_TYPE' && <LegendPeriod contract={contract}/>}
         </>
-      )}
+      }
     </Widget>
   )
 }

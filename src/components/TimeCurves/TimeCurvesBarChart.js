@@ -20,9 +20,9 @@ import {
   formatDecimal,
 } from 'services/utils'
 
-function TimeCurvesBarChart({ data, period }) {
+function TimeCurvesBarChart({ data, period, tariffTimetableId }) {
   const groupedData = useMemo(
-    () => groupDataByPeriod(data, period, 'barChart'),
+    () => groupDataByPeriod(data, period, 'barChart', tariffTimetableId),
     [data, period]
   )
 
