@@ -27,7 +27,6 @@ generate_env.py --tariff 2.0TD --zone balearic
 
 generate_env.py --tariff 2.0TD --zone canary
 """
-)
 
 def unlistify(x):
     """Given a list of result, returns the first one or None if no result"""
@@ -57,7 +56,11 @@ def timetable(polissa):
 
 def output_config(erp, partner_id):
     partner_model = erp.model("res.partner")
-    partner = partner_model.read(partner_id)
+    partner = partner_model.read(partner_id, [
+        'vat',
+        'empowering_token',
+        'name',
+    ])
     polissa_model = erp.model("giscedata.polissa")
     polissa_filters = [
         ("titular", "=", partner["id"]),
