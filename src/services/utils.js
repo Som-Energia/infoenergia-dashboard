@@ -1,6 +1,10 @@
 import * as dayjs from 'dayjs'
 import { getPeriod } from 'services/timecurves'
 
+export const capitalizeWord = (word) => {
+  return word.charAt(0).toUpperCase() + word.slice(1);
+}
+
 export const formatNumber = (num) => {
   return num.toLocaleString('es-ES')
 }
