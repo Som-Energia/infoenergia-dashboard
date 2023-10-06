@@ -21,6 +21,12 @@ function App(props) {
     return <TimeCurvesWrapper {...props} />
   }
 
+  const loadGenerationKwh = () => {
+    const ProductionConsumption = lazy(() => import('./pages/ProductionConsumption'))
+    return <ProductionConsumption {...props} />
+  }
+
+
   return (
     <>
       <ThemeProvider theme={theme}>
@@ -40,6 +46,10 @@ function App(props) {
                 <Route
                   path="/:language/infoenergy/energy-use"
                   render={loadEnergyUse}
+                />
+                <Route
+                  path="/:language/infoenergy/generationkwh/production-consumption"
+                  render={loadGenerationKwh}
                 />
               </Switch>
             </Router>
