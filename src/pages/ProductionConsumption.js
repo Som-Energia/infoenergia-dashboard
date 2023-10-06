@@ -91,7 +91,6 @@ function ProductionConsumption(props) {
     t('GENERATION_KWH_USE_SECTION_TITLE'),
     t('GENERATION_KWH_BAG_SECTION_TITLE'),
   ]
-  const { setSelectedDate, setViewTypeValue } = useContext(GenerationUseContext)
 
   const { setSelectedDate, setViewTypeValue } = useContext(GenerationUseContext)
 
