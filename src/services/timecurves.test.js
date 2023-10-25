@@ -3,8 +3,8 @@ import { getPeriod, MARKET_HOLIDAYS } from './timecurves'
 /*
 - getPeriod - Getting a period
     - LowPower - when the tariff is 2.0
-        - labour day peak  - and a labour day is peak -> returns 'peak'
-        - labour day flat  - and a labour day is flat -> returns 'flat'
+        - labour day peak  - and a labour day is peak -> returns 'PICK'
+        - labour day flat  - and a labour day is flat -> returns 'FLAT'
         - labour day valley
         - weekend -> valley
         - bank holiday -> valley
@@ -35,30 +35,30 @@ describe('getPeriod: Obtaining the period to apply at a given time', () => {
 
     describe('Given a low power tariff', () => {
         test('Labour day before 8:00 should return valley', () => {
-            expect(getPeriod(labour_07_30)).toBe('valley')
+            expect(getPeriod(labour_07_30)).toBe('VALLEY')
         })
         test('Labour day before 10:00 should return flat', () => {
-            expect(getPeriod(labour_08_30)).toBe('flat')
-            expect(getPeriod(labour_09_30)).toBe('flat')
+            expect(getPeriod(labour_08_30)).toBe('FLAT')
+            expect(getPeriod(labour_09_30)).toBe('FLAT')
         })
         test('Labour day before 14:00 should return peak', () => {
-            expect(getPeriod(labour_11_30)).toBe('peak')
+            expect(getPeriod(labour_11_30)).toBe('PICK')
         })
         test('Labour day before 18:00 should return flat', () => {
-            expect(getPeriod(labour_14_30)).toBe('flat')
-            expect(getPeriod(labour_15_30)).toBe('flat')
+            expect(getPeriod(labour_14_30)).toBe('FLAT')
+            expect(getPeriod(labour_15_30)).toBe('FLAT')
         })
         test('Labour day before 22:00 should return peak', () => {
-            expect(getPeriod(labour_18_30)).toBe('peak')
+            expect(getPeriod(labour_18_30)).toBe('PICK')
         })
         test('Labour day after 22:00 should return flat', () => {
-            expect(getPeriod(labour_22_30)).toBe('flat')
+            expect(getPeriod(labour_22_30)).toBe('FLAT')
         })
         test('Weekend day any time should return valley', () => {
-            expect(getPeriod(weekend_11_30)).toBe('valley')
+            expect(getPeriod(weekend_11_30)).toBe('VALLEY')
         })
         test('Holiday day any time should return valley', () => {
-            expect(getPeriod(holiday_11_30)).toBe('valley')
+            expect(getPeriod(holiday_11_30)).toBe('VALLEY')
         })
     })
     describe('Given a highpower tariff in the peninsula', () => {
@@ -148,7 +148,7 @@ describe('getPeriod: Obtaining the period to apply at a given time', () => {
     })
     describe('Given a high power tariff month changes season', () => {
         test('Labour day before 8:00 should return valley', () => {
-            expect(getPeriod(labour_08_30_july, 'Taula_Peatges_20')).toBe('flat')
+            expect(getPeriod(labour_08_30_july, 'Taula_Peatges_20')).toBe('FLAT')
             expect(getPeriod(labour_08_30_july, 'Taula_Peatges_30_60_Peninsular')).toBe('P2')
             expect(getPeriod(labour_08_30_july, 'Taula_Peatges_30_60_Canaries')).toBe('P3')
             expect(getPeriod(labour_08_30_july, 'Taula_Peatges_30_60_Balears')).toBe('P2')
