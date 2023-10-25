@@ -27,7 +27,7 @@ export default function DevelopmentIndex() {
             <a href={`/${lang}/infoenergy/energy-use`}>{"Ús de l'energia"}</a>
           </li>
           <li>
-            <a href={`/${lang}/infoenergy/generationkwh/production-consumption`}>{"Generationkwh producció i consum"}</a>
+            <a href={`/${lang}/investments/production-consumption`}>{"Generationkwh producció i consum"}</a>
           </li>
         </ul>
       </section>
