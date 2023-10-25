@@ -65,6 +65,7 @@
     "DOWNLOAD": "Descàrrega",
     "CONSUME_ADVICE": "Aquesta ha estat la teva distribució durant els últims 12 mesos, pots modificar-la canviant els teus hàbits.",
     "ONLY_FOR_20TD": "Aquesta funcionalitat només està disponible per contractes amb tarifa 2.0TD",
+<<<<<<< HEAD
     "MONTH_NAME_1": "Gener",
     "MONTH_NAME_2": "Febrer",
     "MONTH_NAME_3": "Març",
@@ -78,5 +79,6 @@
     "MONTH_NAME_11": "Novembre",
     "MONTH_NAME_12": "Desembre",
     "ALL_YEAR": "Tot l'any",
-    "WEEKEND_HOLIDAYS": "Caps de setmana i festius estatals"
+    "WEEKEND_HOLIDAYS": "Caps de setmana i festius estatals",
+    "GENERATION_MAIN_PRIORITY":"Prioritari"
 }
