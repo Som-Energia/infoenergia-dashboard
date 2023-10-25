@@ -154,23 +154,14 @@ export const groupMonthlyData = (data, tariffTimetableId) => {
   return month
 }
 
-<<<<<<< HEAD
 
-=======
->>>>>>> ✨ Added functions to format date, format data to consumption table, ordinals, etc
 export const groupYearlyDataAccumulation = (data, tariffTimetableId) => {
   const base =
     tariffTimetableId === 'Taula_Peatges_20'
       ? {
-<<<<<<< HEAD
-          PICK: 0,
-          FLAT: 0,
-          VALLEY: 0,
-=======
           VALLEY: 0,
           PICK: 0,
           FLAT: 0,
->>>>>>> ✨ Added functions to format date, format data to consumption table, ordinals, etc
         }
       : {
           P1: 0,
@@ -182,20 +173,11 @@ export const groupYearlyDataAccumulation = (data, tariffTimetableId) => {
         }
 
   const result = { ...base }
-<<<<<<< HEAD
   Object.keys(data).forEach((element) => {
     const period = getPeriod(element, tariffTimetableId)
     result[period] += data[element]
     result.value += data[element]
   })
-
-=======
-  for (let i = 0; i < data.length; i++) {
-    const period = getPeriod(data[i].date, tariffTimetableId)
-    result[period] += data[i].value
-    result.value += data[i].value
-  }
->>>>>>> ✨ Added functions to format date, format data to consumption table, ordinals, etc
   return result
 }
 
@@ -433,12 +415,7 @@ export const CnmcformatData = ({ data, cups }) => {
 }
 
 export const CsvformatData = (data) => {
-<<<<<<< HEAD
-  const formatedHeaders = data.columns.map((element) => ({
-=======
-
   const formatedHeaders = data.columns.map(element => ({
->>>>>>> ✨ Added functions to format date, format data to consumption table, ordinals, etc
     label: element,
     key: element,
   }))

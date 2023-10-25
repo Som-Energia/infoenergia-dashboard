@@ -54,11 +54,7 @@ function App(props) {
                   render={loadEnergyUse}
                 />
                 <Route
-<<<<<<< HEAD
                   path="/:language/investments/production-consumption"
-=======
-                  path="/:language/infoenergy/generationkwh/production-consumption"
->>>>>>> ✨ Added url for generation info page
                   render={loadGenerationKwh}
                 />
               </Switch>
