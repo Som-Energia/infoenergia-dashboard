@@ -1,15 +1,22 @@
-import React, {useState} from 'react'
+import React, { useEffect, useContext } from 'react'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import { makeStyles } from '@material-ui/core/styles'
 import { Grid } from '@material-ui/core'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
+import KwhBag from '../containers/Generation/KwhBag'
 import Use from '../containers/Generation/Use'
-import GenerationKwhTable from '../containers/Generation/GenerationKwhTable'
-/* import Switch from '@material-ui/core/Switch' */
-import DatePicker from 'components/DatePicker/DatePicker'
-import { capitalizeWord } from 'services/utils'
+import { useParams } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+import dayjs from 'dayjs'
+import { CsvformatData } from '../services/utils'
+import { CSVLink } from 'react-csv'
+import GetAppIcon from '@material-ui/icons/GetApp'
+import GenerationUseContext, {
+  GenerationUseContextProvider,
+} from 'contexts/GenerationUseContext'
+import ExtraControls from 'components/ExtraControls/ExtraControlsHeader'
 
 const useStyles = makeStyles((theme) => ({
   tab: {
@@ -23,6 +30,13 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
+  },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
   },
 }))
 
@@ -46,6 +60,23 @@ function TabPanel(props) {
   )
 }
 
+const DownloadButton = () => {
+  const { assignmentsTableFormat } = useContext(GenerationUseContext)
+  const [headers, data] = CsvformatData(assignmentsTableFormat)
+  const { t } = useTranslation()
+  return (
+    <CSVLink
+      className="controlBtn"
+      filename={`generationkwh.csv`}
+      headers={headers}
+      data={data}
+    >
+      <GetAppIcon fontSize="small" />
+      &nbsp;{t('DOWNLOAD')}
+    </CSVLink>
+  )
+}
+
 function a11yProps(index) {
   return {
     id: `simple-tab-${index}`,
@@ -53,23 +84,16 @@ function a11yProps(index) {
   }
 }
 
-function Panel({ title, value, index }) {
-  return (
-    <TabPanel value={value} index={index}>
-      {title}
-    </TabPanel>
-  )
-}
+const sections = ['ÚS', 'BOSSA DE KWH']
 
-const sections = ['Primer', 'Segon', 'Tercer']
+function ProductionConsumption(props) {
+  const { language } = useParams()
+  const { i18n } = useTranslation()
 
-function ProductionConsumption() {
-  const [selectedDate, setSelectedDate] = useState(new Date())
-  /* const [intervalType, setIntervalType] = useState('month') */
-
-  const handleDateChange = (date) => {
-    setSelectedDate(date)
-  }
+  useEffect(() => {
+    language && i18n.changeLanguage(language)
+    language ? dayjs.locale(language) : dayjs.locale('es')
+  }, [language, i18n])
 
   const [value, setValue] = React.useState(0)
   const classes = useStyles()
@@ -77,91 +101,48 @@ function ProductionConsumption() {
     setValue(newValue)
   }
 
+  const { assignmentsConsumption } = props
+
   function getPanel(value, index, element) {
     if (value === 0) {
       return (
         <TabPanel value={value} index={index}>
-          <Use key={index} title={element} value={value} index={index} />
+          <Use {...props} />
         </TabPanel>
       )
     } else if (value === 1) {
       return (
         <TabPanel value={value} index={index}>
-          <Grid style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <Box
-              component="label"
-              container
-              style={{ alignItems: 'center', display: 'flex', gap: '20px' }}
-              spacing={1}
-            >
-              {/* <Typography component="div">
-                <Grid component="label" container alignItems="center" spacing={1}>
-                  <Grid item>Mensual</Grid>
-                  <Grid item>
-                    <Switch />
-                  </Grid>
-                  <Grid item>Anual</Grid>
-                </Grid>
-              </Typography> */}
-              <DatePicker
-                selectedDate={selectedDate}
-                handleDateChange={handleDateChange}
-                type={'month'}
-              />
-            </Box>
-            <Box
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'flex-end',
-                gap: '10px',
-              }}
-            >
-              <Typography
-                variant="h4"
-                component="h1"
-                style={{ color: '#96B633' }}
-              >
-                400 kWh
-              </Typography>
-              <Box
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'flex-end',
-                }}
-              >
-                <Typography style={{ fontWeight: 'bold' }}>
-                  Total {capitalizeWord(selectedDate.toLocaleString('ca-ES',{month:'long'}))}
-                </Typography>
-                <Typography style={{ color: '#96B633' }}>{selectedDate.getFullYear()}</Typography>
-              </Box>
-            </Box>
-          </Grid>
-          <GenerationKwhTable />
+          <KwhBag {...props} />
         </TabPanel>
       )
-    } else {
-      return <Panel key={index} title={element} value={value} index={index} />
-    }
+    } 
   }
 
   return (
-    <Grid>
-      <Grid container className={classes.divRoot}>
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          aria-label="disabled tabs example"
-        >
-          <Tab label="Active" {...a11yProps} />
-          <Tab label="Disabled" {...a11yProps} />
-          <Tab label="Active" {...a11yProps} />
-        </Tabs>
-        <button>DESCARREGA</button>
+    <GenerationUseContextProvider
+      generationAssignments={assignmentsConsumption}
+    >
+      <Grid>
+        <Grid container className={classes.divRoot}>
+          <Tabs
+            value={value}
+            textColor="primary"
+            onChange={handleChange}
+            aria-label="disabled tabs example"
+            indicatorColor="primary"
+          >
+            {sections.map((element) => (
+              <Tab key={element} label={element} {...a11yProps} />
+            ))}
+          </Tabs>
+          <ExtraControls>
+            <DownloadButton />
+          </ExtraControls>
+        </Grid>
+        {sections.map((element, index) => getPanel(value, index, element))}
       </Grid>
-      {sections.map((element, index) => getPanel(value, index, element))}
-    </Grid>
+    </GenerationUseContextProvider>
   )
 }
 
