@@ -2,7 +2,7 @@ import * as dayjs from 'dayjs'
 import { getPeriod } from 'services/timecurves'
 
 export const capitalizeWord = (word) => {
-  return word.charAt(0).toUpperCase() + word.slice(1);
+  return word.charAt(0).toUpperCase() + word.slice(1)
 }
 
 export const formatNumber = (num) => {
@@ -80,7 +80,7 @@ export const formatTooltip = (value) => {
 
 export const agregateDates = (dates, agregatedDate, tariffTimetableId) => {
   const base =
-  tariffTimetableId === 'Taula_Peatges_20'
+    tariffTimetableId === 'Taula_Peatges_20'
       ? {
           VALLEY: 0,
           PICK: 0,
@@ -121,7 +121,7 @@ export const groupWeeklyData = (data, tariffTimetableId) => {
       dayjs(firstDay)
         .add(day - 1, 'd')
         .valueOf(),
-        tariffTimetableId
+      tariffTimetableId
     )
     weekly.push(result)
   }
@@ -146,7 +146,7 @@ export const groupMonthlyData = (data, tariffTimetableId) => {
       dayjs(firstDay)
         .add(day - 1, 'd')
         .valueOf(),
-        tariffTimetableId
+      tariffTimetableId
     )
 
     month.push(result)
@@ -154,9 +154,35 @@ export const groupMonthlyData = (data, tariffTimetableId) => {
   return month
 }
 
+export const groupYearlyDataAccumulation = (data, tariffTimetableId) => {
+  const base =
+    tariffTimetableId === 'Taula_Peatges_20'
+      ? {
+          VALLEY: 0,
+          PICK: 0,
+          FLAT: 0,
+        }
+      : {
+          P1: 0,
+          P2: 0,
+          P3: 0,
+          P4: 0,
+          P5: 0,
+          P6: 0,
+        }
+
+  const result = { ...base }
+  for (let i = 0; i < data.length; i++) {
+    const period = getPeriod(data[i].date, tariffTimetableId)
+    result[period] += data[i].value
+    result.value += data[i].value
+  }
+  return result
+}
+
 export const groupYearlyData = (data, tariffTimetableId) => {
   const base =
-  tariffTimetableId === 'Taula_Peatges_20'
+    tariffTimetableId === 'Taula_Peatges_20'
       ? {
           VALLEY: 0,
           PICK: 0,
@@ -181,6 +207,7 @@ export const groupYearlyData = (data, tariffTimetableId) => {
         ...base,
       }
     }
+
     const period = getPeriod(data[i].date, tariffTimetableId)
     result[current][period] += data[i].value
     result[current].value += data[i].value
@@ -258,15 +285,21 @@ export const groupDataByPeriod = (
 ) => {
   switch (period) {
     case 'WEEKLY':
-      return type === 'barChart' ? groupWeeklyData(data, tariffTimetableId) : data
+      return type === 'barChart'
+        ? groupWeeklyData(data, tariffTimetableId)
+        : data
     case 'MONTHLY':
-      return type === 'barChart' ? groupMonthlyData(data, tariffTimetableId) : data
+      return type === 'barChart'
+        ? groupMonthlyData(data, tariffTimetableId)
+        : data
     case 'YEARLY':
       return type === 'barChart'
         ? groupYearlyData(data, tariffTimetableId)
         : groupYearlyDataByDay(data)
     default:
-      return type === 'barChart' ? groupDailyData(data, tariffTimetableId) : data
+      return type === 'barChart'
+        ? groupDailyData(data, tariffTimetableId)
+        : data
   }
 }
 
@@ -368,6 +401,24 @@ export const CnmcformatData = ({ data, cups }) => {
   return [formatedHeaders, formatedData]
 }
 
+export const CsvformatData = (data) => {
+  
+  const formatedHeaders = data.columns.map(element => ({
+    label: element,
+    key: element,
+  }))
+
+  const formatedData = data.rows.map((element) => {
+    const row = {}
+    Object.keys(element).forEach((field, index) => {
+      row[data.columns[index]] = element[field]
+    })
+    return row
+  })
+
+  return [formatedHeaders, formatedData]
+}
+
 export const periodUnit = (period) => {
   switch (period) {
     case 'DAILY':
@@ -396,4 +447,96 @@ export const labelTotalPeriod = (period) => {
     default:
       return ''
   }
+}
+
+export const formatOrdinals = (lang, number) => {
+  const catSuffix = {
+    1: 'r',
+    2: 'n',
+    3: 'r',
+    4: 't',
+    other: 'è',
+  }
+
+  if (lang === 'ca') {
+    const key = number >= 5 ? 'other' : number
+    const suffix = catSuffix[key]
+    return `${number}${suffix}`
+  } else {
+    return `${number}${'º'}`
+  }
+}
+
+export const getDataForTable = (assignmentsConsumption, data, getPriority) => {
+  const dataT = {}
+  const columns3 = [
+    'Contracte / Adreça',
+    'Prioritat',
+    'Vall (P3)',
+    'Pla (P2)',
+    'Punta (P1)',
+    'Total',
+  ]
+  const columns6 = [
+    'Contracte / Adreça',
+    'Prioritat',
+    'P6',
+    'P5',
+    'P4',
+    'P3',
+    'P2',
+    'P1',
+    'Total',
+  ]
+  const lengths = Object.keys(data).map((id) => Object.keys(data[id]).length)
+  let maxLength = Math.max(...lengths)
+  maxLength = maxLength === 0 ? 3 : maxLength
+
+  let total = 0
+  dataT.columns = maxLength < 6 ? columns3 : columns6
+  dataT.rows = assignmentsConsumption.map((element) => {
+    const kwhs = Object.values(data[element.id])
+    const rowKwh = kwhs
+      ? kwhs.reduce(
+          (accumulated, currentValue) => accumulated + currentValue,
+          0
+        )
+      : 0
+
+    total = total + rowKwh
+
+    const emptyData = {}
+    if (!kwhs || kwhs.length < maxLength) {
+      for (let i = kwhs.length; i < maxLength; i++) {
+        if (!emptyData[element.id]) {
+          emptyData[element.id] = {}
+        }
+        emptyData[element.id]['P' + (i + 1)] = '-'
+      }
+    }
+
+    const dataTmpCopy = JSON.parse(JSON.stringify(data[element.id]))
+    Object.keys(dataTmpCopy).forEach((id) => {
+      dataTmpCopy[id] = dataTmpCopy[id] + ' kWh'
+    })
+    const newData = { ...dataTmpCopy, ...emptyData[element.id] }
+    const contractNumber = element.contract.split('-')
+
+    return {
+      id: contractNumber[1] + ' - ' + element.contract_address,
+      priority: getPriority(element.priority),
+      ...newData,
+      total: rowKwh + ' kWh',
+    }
+  })
+  dataT.total = total
+
+  return dataT
+}
+
+export function formatMMYYYY(date) {
+  const month = (date.getMonth() + 1).toString().padStart(2, '0') // Month is zero-based, so add 1
+  const year = date.getFullYear().toString()
+
+  return `${year}-${month}`
 }
