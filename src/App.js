@@ -11,6 +11,10 @@ import './i18n/i18n'
 import './App.css'
 
 function App(props) {
+  const assignmentsConsumption = JSON.parse(
+    document.getElementById('generation-assignments-data').textContent
+  )
+
   const loadEnergyUse = () => {
     const EnergyUse = lazy(() => import('./pages/EnergyUse'))
     return <EnergyUse {...props} />
@@ -22,10 +26,11 @@ function App(props) {
   }
 
   const loadGenerationKwh = () => {
-    const ProductionConsumption = lazy(() => import('./pages/ProductionConsumption'))
-    return <ProductionConsumption {...props} />
+    const ProductionConsumption = lazy(() =>
+      import('./pages/ProductionConsumption')
+    )
+    return <ProductionConsumption {...props} assignmentsConsumption={assignmentsConsumption} />
   }
-
 
   return (
     <>
@@ -48,7 +53,7 @@ function App(props) {
                   render={loadEnergyUse}
                 />
                 <Route
-                  path="/:language/infoenergy/generationkwh/production-consumption"
+                  path="/:language/investments/production-consumption"
                   render={loadGenerationKwh}
                 />
               </Switch>
