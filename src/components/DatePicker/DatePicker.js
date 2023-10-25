@@ -3,12 +3,6 @@ import MonthPicker from './MonthPicker'
 import YearPicker from './YearPicker'
 
 function DatePicker({ type, selectedDate, handleDateChange }) {
-/*   const [selectedDate, setSelectedDate] = useState(null)
-
-  const handleDateChange = (date, event) => {
-    event.preventDefault()
-    setSelectedDate(date)
-  } */
 
   const addMonths = (months) => {
     const newDate = new Date(selectedDate)
