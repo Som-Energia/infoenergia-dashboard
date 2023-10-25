@@ -9,7 +9,6 @@ import {registerLocale} from 'react-datepicker'
 registerLocale('ca',ca)
 registerLocale('es',es)
 
-
 function DatePicker({ type, selectedDate, handleDateChange }) {
 
   const { language } = useParams()

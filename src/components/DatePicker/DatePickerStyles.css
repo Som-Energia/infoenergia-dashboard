@@ -50,15 +50,15 @@
   background-color: #fff; /* Background color */
   padding: 4px; /* Add padding */
 }
-  
+
 .react-datepicker__month-text{
   font-size: 1rem;
   text-transform: capitalize;
-} 
+}
 
 .react-datepicker__year-text{
   font-size: 1rem;
-} 
+}
 
   /* Override the selected day styles */
 .react-datepicker__month-text--selected {
@@ -68,16 +68,16 @@
 
 .react-datepicker__month-text--selected:hover {
   color: #96b633; /* Material-UI primary color */
-  background-color: #d3d1d1; /* Text color */ 
+  background-color: #d3d1d1; /* Text color */
 }
 
 /* Override the selected day styles */
 .react-datepicker__year-text--selected {
   background-color: #96b633; /* Material-UI primary color */
-  color: #fff; /* Text color */    
+  color: #fff; /* Text color */
 }
 
 .react-datepicker__year-text--selected:hover {
   color: #96b633; /* Material-UI primary color */
-  background-color: #d3d1d1; /* Text color */ 
+  background-color: #d3d1d1; /* Text color */
 }
