@@ -1,145 +1,154 @@
-import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import { purple } from '@material-ui/core/colors';
-import FormGroup from '@material-ui/core/FormGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Switch from '@material-ui/core/Switch';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
+import React, { useContext } from 'react'
+import { makeStyles } from '@material-ui/core/styles'
+import Table from '@material-ui/core/Table'
+import TableBody from '@material-ui/core/TableBody'
+import TableCell from '@material-ui/core/TableCell'
+import TableContainer from '@material-ui/core/TableContainer'
+import TableHead from '@material-ui/core/TableHead'
+import TableRow from '@material-ui/core/TableRow'
+import Paper from '@material-ui/core/Paper'
+import Typography from '@material-ui/core/Typography'
+import DatePicker from 'components/DatePicker/DatePicker'
+import Box from '@material-ui/core/Box'
+import Grid from '@material-ui/core/Grid'
+import { capitalizeWord } from 'services/utils'
+import { useTranslation } from 'react-i18next'
+import FormControl from '@material-ui/core/FormControl'
+import Select from '@material-ui/core/Select'
+import GenerationUseContext from '../../contexts/GenerationUseContext'
 
-const PurpleSwitch = withStyles({
-  switchBase: {
-    color: purple[300],
-    '&$checked': {
-      color: purple[500],
-    },
-    '&$checked + $track': {
-      backgroundColor: purple[500],
-    },
+const useStyles = makeStyles({
+  table: {
+    minWidth: 650,
   },
-  checked: {},
-  track: {},
-})(Switch);
+})
 
-const IOSSwitch = withStyles((theme) => ({
-  root: {
-    width: 42,
-    height: 26,
-    padding: 0,
-    margin: theme.spacing(1),
-  },
-  switchBase: {
-    padding: 1,
-    '&$checked': {
-      transform: 'translateX(16px)',
-      color: theme.palette.common.white,
-      '& + $track': {
-        backgroundColor: '#52d869',
-        opacity: 1,
-        border: 'none',
-      },
-    },
-    '&$focusVisible $thumb': {
-      color: '#52d869',
-      border: '6px solid #fff',
-    },
-  },
-  thumb: {
-    width: 24,
-    height: 24,
-  },
-  track: {
-    borderRadius: 26 / 2,
-    border: `1px solid ${theme.palette.grey[400]}`,
-    backgroundColor: theme.palette.grey[50],
-    opacity: 1,
-    transition: theme.transitions.create(['background-color', 'border']),
-  },
-  checked: {},
-  focusVisible: {},
-}))(({ classes, ...props }) => {
-  return (
-    <Switch
-      focusVisibleClassName={classes.focusVisible}
-      disableRipple
-      classes={{
-        root: classes.root,
-        switchBase: classes.switchBase,
-        thumb: classes.thumb,
-        track: classes.track,
-        checked: classes.checked,
-      }}
-      {...props}
-    />
-  );
-});
+const viewTypes = ['month', 'year']
 
-const AntSwitch = withStyles((theme) => ({
-  root: {
-    width: 28,
-    height: 16,
-    padding: 0,
-    display: 'flex',
-  },
-  switchBase: {
-    padding: 2,
-    color: theme.palette.grey[500],
-    '&$checked': {
-      transform: 'translateX(12px)',
-      color: theme.palette.common.white,
-      '& + $track': {
-        opacity: 1,
-        backgroundColor: theme.palette.primary.main,
-        borderColor: theme.palette.primary.main,
-      },
-    },
-  },
-  thumb: {
-    width: 12,
-    height: 12,
-    boxShadow: 'none',
-  },
-  track: {
-    border: `1px solid ${theme.palette.grey[500]}`,
-    borderRadius: 16 / 2,
-    opacity: 1,
-    backgroundColor: theme.palette.common.white,
-  },
-  checked: {},
-}))(Switch);
+export default function Use() {
+  const { t } = useTranslation()
+  const {
+    selectedDate,
+    viewTypeValue,
+    setSelectedDate,
+    setViewTypeValue,
+    assignmentsTableFormat,
+  } = useContext(GenerationUseContext)
+  const classes = useStyles()
 
-export default function CustomizedSwitches() {
-  const [state, setState] = React.useState({
-    checkedA: true,
-    checkedB: true,
-    checkedC: true,
-  });
+  const handleDateChange = (date, event) => {
+    if (event) {
+      event.preventDefault()
+    }
+    setSelectedDate(date)
+  }
 
-  const handleChange = (event) => {
-    setState({ ...state, [event.target.name]: event.target.checked });
-  };
+  const handleViewTypeChange = (event) => {
+    setViewTypeValue(event.target.value)
+  }
 
-  console.log("HOLAA")
 
   return (
-    <FormGroup>
-      <FormControlLabel
-        control={<PurpleSwitch checked={state.checkedA} onChange={handleChange} name="checkedA" />}
-        label="Custom color"
-      />
-      <FormControlLabel
-        control={<IOSSwitch checked={state.checkedB} onChange={handleChange} name="checkedB" />}
-        label="iOS style"
-      />
-      <Typography component="div">
-        <Grid component="label" container alignItems="center" spacing={1}>
-          <Grid item>Off</Grid>
-          <Grid item>
-            <AntSwitch checked={state.checkedC} onChange={handleChange} name="checkedC" />
-          </Grid>
-          <Grid item>On</Grid>
+    <>
+      <Grid
+        container
+        style={{ display: 'flex', justifyContent: 'space-between' }}
+      >
+        <Grid
+          item
+          xs={12}
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'flex-end',
+            gap: '10px',
+          }}
+        >
+          <Typography variant="h4" component="h1" style={{ color: '#96B633' }}>
+            {assignmentsTableFormat.total + ' kWh'}
+          </Typography>
+          <Box
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'flex-end',
+            }}
+          >
+            <Typography style={{ fontWeight: 'bold' }}>
+              Total{' '}
+              {capitalizeWord(
+                selectedDate.toLocaleString('ca-ES', { month: 'long' })
+              )}
+            </Typography>
+            <Typography style={{ color: '#96B633' }}>
+              {selectedDate.getFullYear()}
+            </Typography>
+          </Box>
         </Grid>
-      </Typography>
-    </FormGroup>
-  );
+        <Grid
+          container
+          item
+          xs={12}
+          component="label"
+          style={{
+            alignItems: 'center',
+            display: 'flex',
+            justifyContent: 'space-between',
+            gap: '20px',
+          }}
+          spacing={1}
+        >
+          <Grid item xs={12} sm={2}>
+            <DatePicker
+              selectedDate={selectedDate}
+              handleDateChange={handleDateChange}
+              type={viewTypes[viewTypeValue]}
+            />
+          </Grid>
+          <Grid item xs={12} sm={2}>
+            <FormControl fullWidth>
+              <Select
+                native
+                value={viewTypeValue}
+                onChange={handleViewTypeChange}
+                inputProps={{
+                  name: 'viewType',
+                  id: 'type-view-select',
+                }}
+              >
+                <option id="month-option" value={0}>
+                  {t('Month')}
+                </option>
+                <option id="year-option" value={1}>
+                  {t('Year')}
+                </option>
+              </Select>
+            </FormControl>
+          </Grid>
+        </Grid>
+      </Grid>
+
+      <TableContainer component={Paper}>
+        <Table className={classes.table} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              {assignmentsTableFormat.columns.map((element) => (
+                <TableCell key={element}>{element}</TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+          <TableBody id='table-body-assignment-consumption'>
+            {assignmentsTableFormat?.rows.map((element) => (
+              <TableRow key={element.id}>
+                {Object.keys(element).map((id, index) => (
+                  <TableCell key={element[id] + index}>{element[id]}</TableCell>
+                ))}
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </>
+  )
 }
