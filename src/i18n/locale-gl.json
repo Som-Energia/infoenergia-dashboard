@@ -78,5 +78,15 @@
     "MONTH_NAME_12": "Decembro",
     "ALL_YEAR": "Todo o ano",
     "WEEKEND_HOLIDAYS": "Fins de semana e festivos estatais",
-    "ONLY_FOR_20TD": ""
+    "ONLY_FOR_20TD": "",
+    "GENERATION_MAIN_PRIORITY":"Prioritario",
+    "GENERATION_KWH_BAG_TITLE":"Bolsa de kWh acumulados o día de hoxe",
+    "GENERATION_KWH_BAG_TABLE_PERIOD":"Període",
+    "GENERATION_KWH_BAG_TABLE_KWH":"KWH",
+    "GENERATION_SELECT_3_PERIODS":"3 Períodos",
+    "GENERATION_SELECT_6_PERIODS":"6 Períodos",
+    "GENERATION_KWH_BAG_DESCRIPTION":"<p>Data da última factura do contrato Principal: {{date}}.</p><p>Estes kWh son os pendentes de asignar. Cantos máis días transcorreran desde a data de emisión da última factura do contrato principal, máis kWh haberá na bolsa.</p>",
+    "GENERATION_KWH_SELECT_MONTH":"Mensual",
+    "GENERATION_KWH_SELECT_YEAR":"Anual",
+    "GENERATION_KWH_USE_TOTAL":"Total {{month}}"
 }
