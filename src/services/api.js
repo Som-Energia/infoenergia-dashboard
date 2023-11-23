@@ -101,3 +101,13 @@ export const getkWhRemaining = async (token) => {
     return response?.data
   })
 }
+
+export const getLastInvoiceDatePriorityContract = async (token) => {
+  return axios({
+    method: 'GET',
+    url: '/investments/last-invoice-date-from-priority-contract',
+    headers: { Authorization: token },
+  }).then((response) => {
+    return response?.data
+  })
+}

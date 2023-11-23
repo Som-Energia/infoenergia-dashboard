@@ -172,11 +172,11 @@ export const groupYearlyDataAccumulation = (data, tariffTimetableId) => {
         }
 
   const result = { ...base }
-  for (let i = 0; i < data.length; i++) {
-    const period = getPeriod(data[i].date, tariffTimetableId)
-    result[period] += data[i].value
-    result.value += data[i].value
-  }
+  Object.keys(data).forEach((element) => {
+    const period = getPeriod(element, tariffTimetableId)
+    result[period] += data[element]
+    result.value += data[element]
+  })
   return result
 }
 
@@ -402,8 +402,7 @@ export const CnmcformatData = ({ data, cups }) => {
 }
 
 export const CsvformatData = (data) => {
-  
-  const formatedHeaders = data.columns.map(element => ({
+  const formatedHeaders = data.columns.map((element) => ({
     label: element,
     key: element,
   }))
@@ -469,31 +468,41 @@ export const formatOrdinals = (lang, number) => {
 
 export const getDataForTable = (assignmentsConsumption, data, getPriority) => {
   const dataT = {}
-  const columns3 = [
-    'Contracte / Adreça',
-    'Prioritat',
-    'Vall (P3)',
-    'Pla (P2)',
-    'Punta (P1)',
-    'Total',
-  ]
-  const columns6 = [
-    'Contracte / Adreça',
-    'Prioritat',
-    'P6',
-    'P5',
-    'P4',
-    'P3',
-    'P2',
-    'P1',
-    'Total',
-  ]
+  const columns3 = {
+    labels: [
+      'Contracte / Adreça',
+      'Prioritat',
+      'Vall (P3)',
+      'Pla (P2)',
+      'Punta (P1)',
+      'Total',
+    ],
+    dataKeys: ['P3', 'P2', 'P1'],
+  }
+  const columns6 = {
+    labels: [
+      'Contracte / Adreça',
+      'Prioritat',
+      'P6',
+      'P5',
+      'P4',
+      'P3',
+      'P2',
+      'P1',
+      'Total',
+    ],
+    dataKeys: ['P6', 'P5', 'P4', 'P3', 'P2', 'P1'],
+  }
   const lengths = Object.keys(data).map((id) => Object.keys(data[id]).length)
   let maxLength = Math.max(...lengths)
   maxLength = maxLength === 0 ? 3 : maxLength
 
   let total = 0
-  dataT.columns = maxLength < 6 ? columns3 : columns6
+
+  const periodNum = maxLength === 3
+  dataT.columns = maxLength < 6 ? columns3.labels : columns6.labels
+  dataT.dataKeys = maxLength < 6 ? columns3.dataKeys : columns6.dataKeys
+
   dataT.rows = assignmentsConsumption.map((element) => {
     const kwhs = Object.values(data[element.id])
     const rowKwh = kwhs
@@ -519,7 +528,13 @@ export const getDataForTable = (assignmentsConsumption, data, getPriority) => {
     Object.keys(dataTmpCopy).forEach((id) => {
       dataTmpCopy[id] = dataTmpCopy[id] + ' kWh'
     })
-    const newData = { ...dataTmpCopy, ...emptyData[element.id] }
+    
+    const tmpData = { ...dataTmpCopy, ...emptyData[element.id] }
+    const newData = {}
+    dataT.dataKeys.forEach(element => {
+      newData[element] = tmpData[element] || '-'
+    })
+    
     const contractNumber = element.contract.split('-')
 
     return {
@@ -530,8 +545,7 @@ export const getDataForTable = (assignmentsConsumption, data, getPriority) => {
     }
   })
   dataT.total = total
-
-  return dataT
+  return { data: dataT, is3period: periodNum }
 }
 
 export function formatMMYYYY(date) {

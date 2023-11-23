@@ -35,7 +35,7 @@ export function formatMMYYYY(date) {
 describe('Generation use section', () => {
   const getById = queryByAttribute.bind(null, 'id')
 
-  test('CShould be the value 0 in select element', () => {
+  test('Should be the value 0 in select element', () => {
     const lang = 'ca'
     const dom = render(
       <MemoryRouter
@@ -51,10 +51,10 @@ describe('Generation use section', () => {
 
     const selectElement = getById(dom.container, 'type-view-select')
     expect(selectElement).toHaveValue('0')
-    expect(selectElement).toHaveTextContent('Month')
+    expect(selectElement).toHaveTextContent('GENERATION_KWH_SELECT_MONTH')
   })
 
-  test('CShould be the value 1 in select element', () => {
+  test('Should be the value 1 in select element', () => {
     const lang = 'ca'
     const dom = render(
       <MemoryRouter
@@ -70,7 +70,7 @@ describe('Generation use section', () => {
 
     const selectElement = getById(dom.container, 'type-view-select')
     expect(selectElement).toHaveValue('1')
-    expect(selectElement).toHaveTextContent('Year')
+    expect(selectElement).toHaveTextContent('GENERATION_KWH_SELECT_YEAR')
   })
 
   test('Pick some month', () => {

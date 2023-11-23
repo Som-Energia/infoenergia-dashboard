@@ -1,8 +1,9 @@
 import { createContext, useState, useEffect } from 'react'
-import { getConsumption, /* getkWhRemaining */ } from '../services/api'
+import { getConsumption, getkWhRemaining } from '../services/api'
 import { formatOrdinals, getDataForTable } from '../services/utils'
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
+
 
 const initValues = {
   selectedDate: null,
@@ -20,16 +21,20 @@ export const GenerationUseContextProvider = (props) => {
     initViewTypeValue = 0,
     initSelectedDate = new Date(),
     initAssignmentsTableFormat = { columns: [], rows: [], total: 0 },
-    /* initKWhRemaining = [], */
-    isTestMode = false,
+    initKWhRemaining = [],
+    isTestMode = false
   } = props
 
   const [selectedDate, setSelectedDate] = useState(initSelectedDate)
+  const [is3Period, setIs3Period] = useState(false)
   const [viewTypeValue, setViewTypeValue] = useState(initViewTypeValue)
+  const [loadingUse, setLoadingUse] = useState(false)
+  const [loadingRemain, setLoadingRemain] = useState(false)
+
   const [assignmentsTableFormat, setAssignmentsTableFormat] = useState(
     initAssignmentsTableFormat
   )
- /*  const [kWhRemaining, setkWhRemaining] = useState(initKWhRemaining) */
+  const [kWhRemaining , setkWhRemaining] = useState(initKWhRemaining)
 
   const getPriority = (priorityNumber) => {
     return priorityNumber === 0
@@ -37,8 +42,9 @@ export const GenerationUseContextProvider = (props) => {
       : formatOrdinals(language, priorityNumber + 1)
   }
 
-  const getData = async () => {
+  const getUseData = async () => {
     try {
+      setLoadingUse(true)
       const consumption = await getConsumption(
         selectedDate,
         token,
@@ -49,10 +55,23 @@ export const GenerationUseContextProvider = (props) => {
         consumption,
         getPriority
       )
-      setAssignmentsTableFormat(assignmentsTableFormat)
-   /*    const gwkRemaining = await getkWhRemaining(token)
-      setkWhRemaining(gwkRemaining) */
+      setIs3Period(assignmentsTableFormat.is3period)
+      setAssignmentsTableFormat(assignmentsTableFormat.data)
+      setLoadingUse(false)
     } catch (e) {
+      setLoadingUse(false)
+      console.log(e)
+    }
+  }
+
+  const getRemainigData = async () => {
+    try {
+      setLoadingRemain(true)
+      const gwkRemaining = await getkWhRemaining(token)
+      setkWhRemaining(gwkRemaining)
+      setLoadingRemain(false)
+    } catch (e) {
+      setLoadingRemain(false)
       console.log(e)
     }
   }
@@ -60,7 +79,16 @@ export const GenerationUseContextProvider = (props) => {
   useEffect(
     function () {
       if (!isTestMode) {
-        getData()
+        getRemainigData()
+      }
+    },
+    []
+  )
+
+  useEffect(
+    function () {
+      if (!isTestMode) {
+        getUseData()
       }
     },
     [viewTypeValue, generationAssignments, selectedDate]
@@ -74,7 +102,10 @@ export const GenerationUseContextProvider = (props) => {
         viewTypeValue,
         setViewTypeValue,
         assignmentsTableFormat,
-        /* kWhRemaining, */
+        kWhRemaining,
+        loadingUse,
+        loadingRemain,
+        is3Period
       }}
     >
       {props.children}

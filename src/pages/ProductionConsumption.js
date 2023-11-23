@@ -116,7 +116,7 @@ function ProductionConsumption(props) {
           <KwhBag {...props} />
         </TabPanel>
       )
-    } 
+    }
   }
 
   return (
@@ -136,9 +136,11 @@ function ProductionConsumption(props) {
               <Tab key={element} label={element} {...a11yProps} />
             ))}
           </Tabs>
-          <ExtraControls>
-            <DownloadButton />
-          </ExtraControls>
+          {value === 0 ? (
+            <ExtraControls>
+              <DownloadButton />
+            </ExtraControls>
+          ) : null}
         </Grid>
         {sections.map((element, index) => getPanel(value, index, element))}
       </Grid>
