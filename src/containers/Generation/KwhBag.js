@@ -20,7 +20,6 @@ import { useTranslation } from 'react-i18next'
 import Loading from 'components/Loading'
 import { getLastInvoiceDatePriorityContract } from '../../services/api'
 
-
 function createData(periodes, kwh) {
   return { periodes, kwh }
 }
