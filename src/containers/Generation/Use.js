@@ -94,7 +94,10 @@ export default function Use() {
               >
                 <Typography style={{ fontWeight: 'bold' }}>
                   {t('GENERATION_KWH_USE_TOTAL', {
-                    month: t(getMonthCode(selectedDate.getMonth() + 1)),
+                    month:
+                      viewTypes[viewTypeValue] === 'month'
+                        ? t(getMonthCode(selectedDate.getMonth() + 1))
+                        : t('YEARLY'),
                   })}
                 </Typography>
                 <Typography style={{ color: '#96B633' }}>
@@ -151,7 +154,7 @@ export default function Use() {
               <TableHead>
                 <TableRow>
                   {assignmentsTableFormat.columns.map((element) => (
-                    <TableCell key={element}>{element}</TableCell>
+                    <TableCell key={element}>{t(element)}</TableCell>
                   ))}
                 </TableRow>
               </TableHead>

@@ -9,16 +9,14 @@ import {
   Legend,
   ResponsiveContainer,
 } from 'recharts'
-import { period2Color } from '../services/utils'
 import 'resize-observer-polyfill/dist/ResizeObserver.global'
 
-
-const StackedBarChart = ({data}) => {
+const StackedBarChart = ({ data }) => {
   return (
     <div>
       <ResponsiveContainer height={400}>
         <BarChart
-          data={[data]}
+          data={[data.periods]}
           margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
         >
           <CartesianGrid strokeDasharray="3 3" />
@@ -26,7 +24,14 @@ const StackedBarChart = ({data}) => {
           <YAxis />
           <Tooltip />
           <Legend />
-          {Object.keys(data).map((element) => <Bar key={element} dataKey={element} stackId="a" fill={period2Color[element]} />)}
+          {Object.keys(data.periods).map((element) => (
+            <Bar
+              key={element}
+              dataKey={element}
+              stackId="a"
+              fill={data.fills[element]}
+            />
+          ))}
         </BarChart>
       </ResponsiveContainer>
     </div>

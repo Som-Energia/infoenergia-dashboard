@@ -14,11 +14,12 @@ import {
 } from '@material-ui/core'
 import Paper from '@material-ui/core/Paper'
 import { makeStyles } from '@material-ui/core/styles'
-import { groupYearlyDataAccumulation } from '../../services/utils'
+import { groupYearlyDataAccumulation, period2ColorKwhBag } from '../../services/utils'
 import GenerationUseContext from '../../contexts/GenerationUseContext'
 import { useTranslation } from 'react-i18next'
 import Loading from 'components/Loading'
 import { getLastInvoiceDatePriorityContract } from '../../services/api'
+
 
 function createData(periodes, kwh) {
   return { periodes, kwh }
@@ -62,17 +63,18 @@ export default function KwhBag(props) {
   const groupedData = useMemo(() => {
     const groupData = groupYearlyDataAccumulation(kWhRemaining, periods)
     delete groupData.value
-    const data = {}
+    const data = {periods:{},fills:{}}
     Object.keys(groupData).forEach((element) => {
-      data[t(element)] = groupData[element]
+      data.periods[t(element)] = groupData[element]
+      data.fills[t(element)] = period2ColorKwhBag[element]
     })
     return data
   }, [kWhRemaining, periods])
 
   const rows = useMemo(
     () =>
-      Object.keys(groupedData).map((element) => {
-        return createData(t(element), groupedData[element])
+      Object.keys(groupedData.periods).map((element) => {
+        return createData(t(element), groupedData.periods[element])
       }),
     [groupedData]
   )
