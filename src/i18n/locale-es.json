@@ -88,5 +88,11 @@
     "GENERATION_KWH_BAG_DESCRIPTION":"<p>Fecha de la última factura del contrato principal: {{date}}.</p><p>Estos kWh son los pendientes de asignar. Cuantos más días hayan transcurrido desde la fecha de emisión de la última factura del contrato principal, más kWh habrá en la bolsa.</p>",
     "GENERATION_KWH_SELECT_MONTH":"Mensual",
     "GENERATION_KWH_SELECT_YEAR":"Anual",
-    "GENERATION_KWH_USE_TOTAL":"Total {{month}}"
+    "GENERATION_KWH_USE_TOTAL":"Total {{month}}",
+    "GENERATION_KWH_USE_TABLE_CONTRACT_ADDRESS":"Contrato / Dirección",
+    "GENERATION_KWH_USE_TABLE_PRIORITY":"Prioridad",
+    "GENERATION_KWH_USE_TABLE_VALLEY":"Valle (P3)",
+    "GENERATION_KWH_USE_TABLE_FLAT":"Plano (P2)",
+    "GENERATION_KWH_USE_TABLE_PICK":"Punta (P1)",
+    "GENERATION_KWH_USE_TABLE_TOTAL":"Total"
 }

@@ -364,6 +364,18 @@ export const completeYearData = (origData) => {
   return data
 }
 
+export const period2ColorKwhBag = {
+  VALLEY: '#E45356',
+  FLAT: '#58B9C0',
+  PICK: '#F1A10C',
+  P1: '#E45356',
+  P2: '#F1A10C',
+  P3: '#76562D',
+  P4: '#58B9C0',
+  P5: '#ED95A1',
+  P6: '#706E6F',
+}
+
 export const period2Color = {
   VALLEY: '#c4dd8c',
   FLAT: '#96b633',
@@ -470,26 +482,26 @@ export const getDataForTable = (assignmentsConsumption, data, getPriority) => {
   const dataT = {}
   const columns3 = {
     labels: [
-      'Contracte / Adreça',
-      'Prioritat',
-      'Vall (P3)',
-      'Pla (P2)',
-      'Punta (P1)',
-      'Total',
+      'GENERATION_KWH_USE_TABLE_CONTRACT_ADDRESS',
+      'GENERATION_KWH_USE_TABLE_PRIORITY',
+      'GENERATION_KWH_USE_TABLE_VALLEY',
+      'GENERATION_KWH_USE_TABLE_FLAT',
+      'GENERATION_KWH_USE_TABLE_PICK',
+      'GENERATION_KWH_USE_TABLE_TOTAL',
     ],
     dataKeys: ['P3', 'P2', 'P1'],
   }
   const columns6 = {
     labels: [
-      'Contracte / Adreça',
-      'Prioritat',
+      'GENERATION_KWH_USE_TABLE_CONTRACT_ADDRESS',
+      'GENERATION_KWH_USE_TABLE_PRIORITY',
       'P6',
       'P5',
       'P4',
       'P3',
       'P2',
       'P1',
-      'Total',
+      'GENERATION_KWH_USE_TABLE_TOTAL',
     ],
     dataKeys: ['P6', 'P5', 'P4', 'P3', 'P2', 'P1'],
   }
@@ -528,13 +540,13 @@ export const getDataForTable = (assignmentsConsumption, data, getPriority) => {
     Object.keys(dataTmpCopy).forEach((id) => {
       dataTmpCopy[id] = dataTmpCopy[id] + ' kWh'
     })
-    
+
     const tmpData = { ...dataTmpCopy, ...emptyData[element.id] }
     const newData = {}
-    dataT.dataKeys.forEach(element => {
+    dataT.dataKeys.forEach((element) => {
       newData[element] = tmpData[element] || '-'
     })
-    
+
     const contractNumber = element.contract.split('-')
 
     return {

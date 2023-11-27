@@ -89,5 +89,11 @@
     "GENERATION_KWH_BAG_DESCRIPTION":"<p>Kontratu nagusiaren azken fakturaren data: {{date}}.</p><p>KWh hauek oraindik esleitu gabe daude. Zenbat eta egun gehiago igaro kontratu nagusiaren azken faktura igorri den datatik, hainbat eta kWh gehiago egongo dira poltsan.</p>",
     "GENERATION_KWH_SELECT_MONTH":"Hilekoa",
     "GENERATION_KWH_SELECT_YEAR":"Urtekoa",
-    "GENERATION_KWH_USE_TOTAL":"Guztira {{month}}"
+    "GENERATION_KWH_USE_TOTAL":"Guztira {{month}}",
+    "GENERATION_KWH_USE_TABLE_CONTRACT_ADDRESS":"Kontratua / Helbidea",
+    "GENERATION_KWH_USE_TABLE_PRIORITY":"Lehentasuna",
+    "GENERATION_KWH_USE_TABLE_VALLEY":"Sakonunea (P3)",
+    "GENERATION_KWH_USE_TABLE_FLAT":"Une arrunta (P2)",
+    "GENERATION_KWH_USE_TABLE_PICK":"Puntako unea (P1)",
+    "GENERATION_KWH_USE_TABLE_TOTAL":"Guztira"
 }

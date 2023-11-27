@@ -90,5 +90,11 @@
     "GENERATION_KWH_BAG_DESCRIPTION":"<p>Data de l'última factura del contracte principal: {{date}}.</p><p>Aquests kWh són els pendents d'assignar. Com més dies hagin transcorregut des de la data d'emissió de l'última factura del contracte principal, més kWh hi haurà a la bossa.</p>",
     "GENERATION_KWH_SELECT_MONTH":"Mensual",
     "GENERATION_KWH_SELECT_YEAR":"Anual",
-    "GENERATION_KWH_USE_TOTAL":"Total {{month}}"
+    "GENERATION_KWH_USE_TOTAL":"Total {{month}}",
+    "GENERATION_KWH_USE_TABLE_CONTRACT_ADDRESS":"Contracte / Adreça",
+    "GENERATION_KWH_USE_TABLE_PRIORITY":"Prioritat",
+    "GENERATION_KWH_USE_TABLE_VALLEY":"Vall (P3)",
+    "GENERATION_KWH_USE_TABLE_FLAT":"Pla (P2)",
+    "GENERATION_KWH_USE_TABLE_PICK":"Punta (P1)",
+    "GENERATION_KWH_USE_TABLE_TOTAL":"Total"
 }
