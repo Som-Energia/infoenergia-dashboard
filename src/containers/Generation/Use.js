@@ -110,7 +110,6 @@ export default function Use() {
               container
               item
               xs={12}
-              component="label"
               style={{
                 alignItems: 'center',
                 display: 'flex',

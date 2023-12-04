@@ -1,9 +1,18 @@
 import React from 'react'
 import MonthPicker from './MonthPicker'
 import YearPicker from './YearPicker'
+import { useParams } from 'react-router-dom'
+import ca from 'date-fns/locale/ca'
+import es from 'date-fns/locale/es'
+import {registerLocale} from 'react-datepicker'
+
+registerLocale('ca',ca)
+registerLocale('es',es)
+
 
 function DatePicker({ type, selectedDate, handleDateChange }) {
 
+  const { language } = useParams()
   const addMonths = (months) => {
     const newDate = new Date(selectedDate)
     newDate.setMonth(newDate.getMonth() + months)
@@ -35,6 +44,7 @@ function DatePicker({ type, selectedDate, handleDateChange }) {
           substract={subtractMonths}
           selectedDate={selectedDate}
           handleDateChange={handleDateChange}
+          lang={language}
         />
       ) : (
         <YearPicker
@@ -42,6 +52,7 @@ function DatePicker({ type, selectedDate, handleDateChange }) {
           substract={subtractYears}
           selectedDate={selectedDate}
           handleDateChange={handleDateChange}
+          lang={language}
         />
       )}
     </>

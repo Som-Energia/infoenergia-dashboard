@@ -6,7 +6,7 @@ import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
 import './DatePickerStyles.css'
 
-function MonthPicker({ add, substract, selectedDate, handleDateChange }) {
+function MonthPicker({ add, substract, selectedDate, handleDateChange, lang }) {
 
   return (
     <Box
@@ -26,6 +26,7 @@ function MonthPicker({ add, substract, selectedDate, handleDateChange }) {
         dateFormat="MM/yyyy"
         showMonthYearPicker
         id='month-picker'
+        locale={lang}
       />
       <IconButton onClick={() => add(1)}>
         <ArrowForwardIosIcon />
