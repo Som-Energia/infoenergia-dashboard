@@ -82,7 +82,7 @@ export default function KwhBag(props) {
   const getDate = async () => {
     try {
       const result = await getLastInvoiceDatePriorityContract(token)
-      setDate(result.date)
+      setDate(result?.data?.date)
     } catch (e) {
       console.log(e)
     }

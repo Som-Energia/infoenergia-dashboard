@@ -52,7 +52,7 @@ export const GenerationUseContextProvider = (props) => {
       )
       const assignmentsTableFormat = getDataForTable(
         generationAssignments,
-        consumption,
+        consumption.data,
         getPriority
       )
       setIs3Period(assignmentsTableFormat.is3period)
@@ -68,7 +68,7 @@ export const GenerationUseContextProvider = (props) => {
     try {
       setLoadingRemain(true)
       const gwkRemaining = await getkWhRemaining(token)
-      setkWhRemaining(gwkRemaining)
+      setkWhRemaining(gwkRemaining?.data)
       setLoadingRemain(false)
     } catch (e) {
       setLoadingRemain(false)
