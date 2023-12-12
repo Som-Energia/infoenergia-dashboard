@@ -76,8 +76,8 @@ describe('Generation use section', () => {
   test('Pick some month', () => {
     const lang = 'ca'
     const date = new Date()
-    const monthAbbreviation = date.toLocaleString('default', { month: 'short' })
-
+    const monthAbbreviation = date.toLocaleString(lang, { month: 'short' })
+  
     const dateFormatted = formatMMYYYY(date)
     const dom = render(
       <MemoryRouter
