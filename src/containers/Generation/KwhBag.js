@@ -194,7 +194,7 @@ export default function KwhBag(props) {
           id="date-info"
           dangerouslySetInnerHTML={{
             __html: t('GENERATION_KWH_BAG_DESCRIPTION', {
-              date: new Date(date).toLocaleDateString(),
+              date: new Date(date).toLocaleDateString("es-ES"),
             }),
           }}
         />
