@@ -96,6 +96,8 @@ function ProductionConsumption(props) {
 
   const { setSelectedDate, setViewTypeValue } = useContext(GenerationUseContext)
 
+  const { setSelectedDate, setViewTypeValue } = useContext(GenerationUseContext)
+
   useEffect(() => {
     language && i18n.changeLanguage(language)
     language ? dayjs.locale(language) : dayjs.locale('es')
