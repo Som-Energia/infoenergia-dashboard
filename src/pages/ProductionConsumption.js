@@ -5,7 +5,6 @@ import { makeStyles } from '@material-ui/core/styles'
 import { Grid } from '@material-ui/core'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
-import KwhBag from '../containers/Generation/KwhBag'
 import Use from '../containers/Generation/Use'
 import Record from 'containers/Generation/Record'
 import { useParams } from 'react-router-dom'
@@ -92,6 +91,8 @@ function ProductionConsumption(props) {
     t('GENERATION_KWH_USE_SECTION_TITLE'),
     t('GENERATION_KWH_BAG_SECTION_TITLE'),
   ]
+
+  const { setSelectedDate, setViewTypeValue } = useContext(GenerationUseContext)
 
   const { setSelectedDate, setViewTypeValue } = useContext(GenerationUseContext)
 
