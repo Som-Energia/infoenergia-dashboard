@@ -34,6 +34,8 @@ export function formatMMYYYY(date) {
 
 describe('Generation use section', () => {
   const getById = queryByAttribute.bind(null, 'id')
+  const mockHandleDateChange = jest.fn()
+  const mockHandleViewTypeChange = jest.fn()
 
   test('Should be the value 0 in select element', () => {
     const lang = 'ca'
@@ -85,7 +87,7 @@ describe('Generation use section', () => {
       >
         <Route exact path="/:language/investments/production-consumption">
           <GenerationUseContextProvider initViewTypeValue={0} isTestMode={true}>
-            <Use />
+            <Use handleDateChange={mockHandleDateChange} />
           </GenerationUseContextProvider>
         </Route>
       </MemoryRouter>
@@ -105,6 +107,8 @@ describe('Generation use section', () => {
 
     // Optionally, assert that the input field displays the selected date
     expect(datePickerInput).toHaveValue(dateFormatted) //
+    expect(mockHandleDateChange).toHaveBeenCalled()
+
   })
 
   test('Should change the type of viewdata', () => {
@@ -122,7 +126,7 @@ describe('Generation use section', () => {
             isTestMode={true}
             setViewTypeValue={mockSetViewTypeValue}
           >
-            <Use />
+            <Use handleViewTypeChange={mockHandleViewTypeChange} />
           </GenerationUseContextProvider>
         </Route>
       </MemoryRouter>
@@ -133,8 +137,8 @@ describe('Generation use section', () => {
     act(() => {
       userEvent.selectOptions(selectElement, optionToSelect)
     })
+    expect(mockHandleViewTypeChange).toHaveBeenCalledTimes(1)
 
-    expect(selectElement).toHaveValue(optionToSelect)
   })
 
   test('Should show the list of consumption', () => {
@@ -159,7 +163,6 @@ describe('Generation use section', () => {
       </MemoryRouter>
     )
 
-
     const tableBody = getById(
       dom.container,
       'table-body-assignment-consumption'
@@ -174,10 +177,46 @@ describe('Generation use section', () => {
     const firstCells = within(firstContentRow).getAllByRole('cell') // Assuming cells have a role attribute set to 'cell'
     const firstCellText = firstCells.map((cell) => cell.textContent)
 
-    const arrayToCompare = consumption.rows.map(element => Object.values(element))
+    const arrayToCompare = consumption.rows.map((element) =>
+      Object.values(element)
+    )
 
     // Replace 'expectedData' with the actual data you expect to be in that cell
     expect(firstCellText).toEqual(expect.arrayContaining(arrayToCompare[0]))
-    
- })
+  })
+
+  test('Should show loading component', async () => {
+    const lang = 'ca'
+    const dom = render(
+      <MemoryRouter
+        initialEntries={[`/${lang}/investments/production-consumption`]}
+      >
+        <Route exact path="/:language/investments/production-consumption">
+          <GenerationUseContextProvider isTestMode={true} isloadingUse={true}>
+            <Use />
+          </GenerationUseContextProvider>
+        </Route>
+      </MemoryRouter>
+    )
+    const loadingComponent = getById(dom.container, 'loading-use-id')
+    expect(loadingComponent).toBeInTheDocument()
+  })
+
+  test('Should show loading component', async () => {
+    const lang = 'ca'
+    const dom = render(
+      <MemoryRouter
+        initialEntries={[`/${lang}/investments/production-consumption`]}
+      >
+        <Route exact path="/:language/investments/production-consumption">
+          <GenerationUseContextProvider isTestMode={true} isloadingUse={true}>
+            <Use />
+          </GenerationUseContextProvider>
+        </Route>
+      </MemoryRouter>
+    )
+    const loadingComponent = getById(dom.container, 'loading-use-id')
+    expect(loadingComponent).toBeInTheDocument()
+  })
+
 })

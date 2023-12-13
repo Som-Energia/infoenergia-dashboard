@@ -5,8 +5,8 @@ import { makeStyles } from '@material-ui/core/styles'
 import { Grid } from '@material-ui/core'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
-import KwhBag from '../containers/Generation/KwhBag'
 import Use from '../containers/Generation/Use'
+import Record from 'containers/Generation/Record'
 import { useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import dayjs from 'dayjs'
@@ -91,6 +91,8 @@ function ProductionConsumption(props) {
     t('GENERATION_KWH_USE_SECTION_TITLE'),
     t('GENERATION_KWH_BAG_SECTION_TITLE'),
   ]
+  const { setSelectedDate, setViewTypeValue } = useContext(GenerationUseContext)
+
   useEffect(() => {
     language && i18n.changeLanguage(language)
     language ? dayjs.locale(language) : dayjs.locale('es')
@@ -104,17 +106,36 @@ function ProductionConsumption(props) {
 
   const { assignmentsConsumption } = props
 
-  function getPanel(value, index, element) {
+  const handleDateChange = (date, event) => {
+    if (event) {
+      event.preventDefault()
+    }
+    setSelectedDate(date)
+  }
+
+  const handleViewTypeChange = (event) => {
+    setViewTypeValue(event.target.value)
+  }
+
+  const getPanel = (value, index, element) => {
     if (value === 0) {
       return (
         <TabPanel value={value} index={index}>
-          <Use {...props} />
+          <Use
+            handleDateChange={handleDateChange}
+            handleViewTypeChange={handleViewTypeChange}
+            {...props}
+          />
         </TabPanel>
       )
     } else if (value === 1) {
       return (
         <TabPanel value={value} index={index}>
-          <KwhBag {...props} />
+          <Record
+            handleDateChange={handleDateChange}
+            handleViewTypeChange={handleViewTypeChange}
+            {...props}
+          />
         </TabPanel>
       )
     }

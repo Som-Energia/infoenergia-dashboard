@@ -12,32 +12,21 @@ import Loading from 'components/Loading'
 
 const viewTypes = ['month', 'year']
 
-export default function Use({ children }) {
+export default function RightsManage({
+  children,
+  handleDateChange,
+  handleViewTypeChange,
+  isLoading,
+}) {
   const { t } = useTranslation()
-  const {
-    selectedDate,
-    viewTypeValue,
-    setSelectedDate,
-    setViewTypeValue,
-    assignmentsTableFormat,
-    loadingUse,
-  } = useContext(GenerationUseContext)
-
-  const handleDateChange = (date, event) => {
-    if (event) {
-      event.preventDefault()
-    }
-    setSelectedDate(date)
-  }
-
-  const handleViewTypeChange = (event) => {
-    setViewTypeValue(event.target.value)
-  }
+  const { selectedDate, viewTypeValue, assignmentsTableFormat } =
+    useContext(GenerationUseContext)
 
   return (
     <>
-      {loadingUse ? (
+      {isLoading ? (
         <Grid
+          id="loading-comp-id"
           style={{
             display: 'flex',
             justifyContent: 'center',

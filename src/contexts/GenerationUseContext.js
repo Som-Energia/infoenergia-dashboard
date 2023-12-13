@@ -22,14 +22,16 @@ export const GenerationUseContextProvider = (props) => {
     initSelectedDate = new Date(),
     initAssignmentsTableFormat = { columns: [], rows: [], total: 0 },
     initKWhRemaining = [],
-    isTestMode = false
+    isTestMode = false,
+    isloadingUse = false,
+    isloadingRemain = false
   } = props
 
   const [selectedDate, setSelectedDate] = useState(initSelectedDate)
   const [is3Period, setIs3Period] = useState(false)
   const [viewTypeValue, setViewTypeValue] = useState(initViewTypeValue)
-  const [loadingUse, setLoadingUse] = useState(false)
-  const [loadingRemain, setLoadingRemain] = useState(false)
+  const [loadingUse, setLoadingUse] = useState(isloadingUse)
+  const [loadingRemain, setLoadingRemain] = useState(isloadingRemain)
 
   const [assignmentsTableFormat, setAssignmentsTableFormat] = useState(
     initAssignmentsTableFormat
