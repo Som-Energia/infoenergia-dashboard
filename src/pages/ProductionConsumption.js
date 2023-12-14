@@ -84,12 +84,13 @@ function a11yProps(index) {
   }
 }
 
-const sections = ['ÚS', 'BOSSA DE KWH']
-
 function ProductionConsumption(props) {
   const { language } = useParams()
-  const { i18n } = useTranslation()
-
+  const { i18n, t } = useTranslation()
+  const sections = [
+    t('GENERATION_KWH_USE_SECTION_TITLE'),
+    t('GENERATION_KWH_BAG_SECTION_TITLE'),
+  ]
   useEffect(() => {
     language && i18n.changeLanguage(language)
     language ? dayjs.locale(language) : dayjs.locale('es')
