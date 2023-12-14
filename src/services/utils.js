@@ -158,9 +158,9 @@ export const groupYearlyDataAccumulation = (data, tariffTimetableId) => {
   const base =
     tariffTimetableId === 'Taula_Peatges_20'
       ? {
-          VALLEY: 0,
           PICK: 0,
           FLAT: 0,
+          VALLEY: 0,
         }
       : {
           P1: 0,
@@ -365,9 +365,9 @@ export const completeYearData = (origData) => {
 }
 
 export const period2ColorKwhBag = {
-  VALLEY: '#E45356',
-  FLAT: '#58B9C0',
-  PICK: '#F1A10C',
+  VALLEY: '#76562D',
+  FLAT: '#F1A10C',
+  PICK: '#E45356',
   P1: '#E45356',
   P2: '#F1A10C',
   P3: '#76562D',
