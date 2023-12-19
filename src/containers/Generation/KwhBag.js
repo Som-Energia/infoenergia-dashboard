@@ -61,12 +61,13 @@ export default function KwhBag(props) {
   const classes = useStyles()
 
   const groupedData = useMemo(() => {
+
     const groupData = groupYearlyDataAccumulation(kWhRemaining, periods)
     delete groupData.value
     const data = {periods:{},fills:{}}
     Object.keys(groupData).forEach((element) => {
-      data.periods[t(element)] = groupData[element]
-      data.fills[t(element)] = period2ColorKwhBag[element]
+      data.periods[t(element+'_P')] = groupData[element]
+      data.fills[t(element+'_P')] = period2ColorKwhBag[element]
     })
     return data
   }, [kWhRemaining, periods])
