@@ -99,6 +99,9 @@ export const getkWhRemaining = async (token) => {
     headers: { Authorization: token },
   }).then((response) => {
     return response?.data
+  }).catch((error) => {
+    console.log(error)
+    throw error
   })
 }
 
