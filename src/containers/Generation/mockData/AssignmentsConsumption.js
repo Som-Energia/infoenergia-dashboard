@@ -10,7 +10,7 @@ export const consumption = {
     rows: [
         {
             id: " 0013117 - . Jacint Verdaguer, 42, 3er 1a 8970 (Sant Joan Despí)",
-            priority: "Prioritario",
+            priority: "Principal",
             P2: "0 kWh",
             P3: "0 kWh",
             P1: "0 kWh",

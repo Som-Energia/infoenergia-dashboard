@@ -159,9 +159,9 @@ export const groupYearlyDataAccumulation = (data, tariffTimetableId) => {
   const base =
     tariffTimetableId === 'Taula_Peatges_20'
       ? {
-          VALLEY: 0,
           PICK: 0,
           FLAT: 0,
+          VALLEY: 0,
         }
       : {
           P1: 0,

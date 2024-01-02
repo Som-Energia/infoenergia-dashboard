@@ -80,7 +80,7 @@ export const getSeasonalProfile = async (contract, token) => {
 }
 
 export const getConsumption = async (date, token, type) => {
-  const urlY = '/investments/assignments-consumption-yearly/' 
+  const urlY = '/investments/assignments-consumption-yearly/'
   const urlM = '/investments/assignments-consumption-monthly/'
 
   return axios({
