@@ -1,0 +1,83 @@
+.react-datepicker__input-container input{
+    border: 1px solid #bdbcbc;
+    background-color: #ffffff;
+    height: 30px;
+    padding: 5px;
+    border-radius: none;
+}
+
+/* DatePickerStyles.css */
+/* Override the default styles for the container */
+.react-datepicker-popper {
+    z-index: 1500; /* Ensure the date picker appears above other elements */
+    border: none; /* Remove border */
+    border-radius: none;
+}
+
+/* Override the default styles for the calendar */
+.react-datepicker {
+  font-family: 'Roboto', sans-serif; /* Use the Material-UI font or another suitable font */
+  box-shadow: none; /* Remove box shadow */
+}
+
+/* Override the header styles */
+.react-datepicker__header {
+  background-color: #96b633; /* Material-UI primary color */
+  border: none; /* Remove header border */
+  color: #fff; /* Text color for the header */
+}
+
+/* Override the month year dropdown styles */
+.react-datepicker__current-month {
+  font-size: 1.5rem; /* Adjust font size */
+  font-weight: bold; /* Make it bold */
+  margin-bottom: 10px; /* Add some spacing */
+}
+
+/* Override the month year dropdown button styles */
+.react-datepicker__current-month-button {
+  background: none; /* Remove background */
+  border: none; /* Remove border */
+  color: #fff; /* Text color for the button */
+  font-weight: bold; /* Make it bold */
+  padding: 0; /* Remove padding */
+}
+
+/* Override the month year dropdown select styles */
+.react-datepicker__month-dropdown,
+.react-datepicker__year-dropdown {
+  border: 1px solid #ccc; /* Add a subtle border */
+  background-color: #fff; /* Background color */
+  padding: 4px; /* Add padding */
+}
+  
+.react-datepicker__month-text{
+  font-size: 1rem;
+  text-transform: capitalize;
+} 
+
+.react-datepicker__year-text{
+  font-size: 1rem;
+} 
+
+  /* Override the selected day styles */
+.react-datepicker__month-text--selected {
+  background-color: #96b633; /* Material-UI primary color */
+  color: #fff; /* Text color */
+}
+
+.react-datepicker__month-text--selected:hover {
+  color: #96b633; /* Material-UI primary color */
+  background-color: #d3d1d1; /* Text color */ 
+}
+
+/* Override the selected day styles */
+.react-datepicker__year-text--selected {
+  background-color: #96b633; /* Material-UI primary color */
+  color: #fff; /* Text color */    
+}
+
+.react-datepicker__year-text--selected:hover {
+  color: #96b633; /* Material-UI primary color */
+  background-color: #d3d1d1; /* Text color */ 
+}
