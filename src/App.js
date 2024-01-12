@@ -11,9 +11,10 @@ import './i18n/i18n'
 import './App.css'
 
 function App(props) {
-  const assignmentsConsumption = JSON.parse(
-    document.getElementById('generation-assignments-data').textContent
-  )
+
+  const generationAssignments = document.getElementById('generation-assignments-data')
+  const assignmentsConsumption = generationAssignments ? JSON.parse(generationAssignments.textContent) : {};
+
 
   const loadEnergyUse = () => {
     const EnergyUse = lazy(() => import('./pages/EnergyUse'))
