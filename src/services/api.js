@@ -92,6 +92,16 @@ export const getConsumption = async (date, token, type) => {
   })
 }
 
+export const getkWhRecord = async (date, token) => {
+  return axios({
+    method: 'GET',
+    url: '/investments/assignments-kwh-rights/'+date.getFullYear(),
+    headers: { Authorization: token },
+  }).then((response) => {
+    return response?.data
+  })
+}
+
 export const getkWhRemaining = async (token) => {
   return axios({
     method: 'GET',
