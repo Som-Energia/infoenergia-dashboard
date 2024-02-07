@@ -5,33 +5,29 @@ import ArrowBackIosOutlinedIcon from '@material-ui/icons/ArrowBackIosOutlined'
 import ArrowForwardIosOutlinedIcon from '@material-ui/icons/ArrowForwardIosOutlined'
 import TodayOutlinedIcon from '@material-ui/icons/TodayOutlined'
 import { DatePicker } from '@material-ui/pickers'
+import { periodUnit } from '../../services/utils'
 import dayjs from 'dayjs'
 
+const MONTH = 'MONTHLY'
+const YEAR = 'YEARLY'
+
 function CustomDatePicker({ type, selectedDate, handleDateChange }) {
-
-function DatePicker({ type, selectedDate, handleDateChange }) {
-
-  const { language } = useParams()
-  const addMonths = (months) => {
-    const newDate = dayjs(selectedDate)
-    newDate.setMonth(newDate.getMonth() + months)
+  const addMonths = () => {
+    const newDate = dayjs(selectedDate).add(1, periodUnit(MONTH))
     handleDateChange(newDate)
   }
-  function subtractMonths(months) {
-    const newDate = dayjs(selectedDate)
-    newDate.setMonth(newDate.getMonth() - months)
+  function subtractMonths() {
+    const newDate = dayjs(selectedDate).subtract(1, periodUnit(MONTH))
     handleDateChange(newDate)
   }
 
-  function addYears(years) {
-    const newDate = dayjs(selectedDate)
-    newDate.setFullYear(newDate.getFullYear() + years)
+  function addYears() {
+    const newDate = dayjs(selectedDate).add(1, periodUnit(YEAR))
     handleDateChange(newDate)
   }
 
-  function subtractYears(years) {
-    const newDate = dayjs(selectedDate)
-    newDate.setFullYear(newDate.getFullYear() - years)
+  function subtractYears() {
+    const newDate = dayjs(selectedDate).subtract(1, periodUnit(YEAR))
     handleDateChange(newDate)
   }
 
@@ -42,6 +38,7 @@ function DatePicker({ type, selectedDate, handleDateChange }) {
         substract: subtractMonths,
         view: ['month'],
         format: 'MM/YYYY',
+        id: 'month-picker',
       }
     } else {
       return {
@@ -49,13 +46,13 @@ function DatePicker({ type, selectedDate, handleDateChange }) {
         substract: subtractYears,
         view: ['year'],
         format: 'YYYY',
+        id: 'year-picker',
       }
     }
   }
 
   const picker = getPickerConf(type)
 
-  console.log("Data seleccionada",selectedDate)
   return (
     <ControlsWrapper>
       <DateControlsWrapper>
@@ -63,6 +60,7 @@ function DatePicker({ type, selectedDate, handleDateChange }) {
           <ArrowBackIosOutlinedIcon fontSize="small" />
         </IconButton>
         <DatePicker
+          id={picker.id}
           views={picker.view}
           value={selectedDate}
           variant="inline"
