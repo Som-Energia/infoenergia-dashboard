@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useMemo, useState } from 'react'
 import Grid from '@material-ui/core/Grid'
-import StackedBarChart from 'components/StackedBarChart'
+import StackedBarChart from 'components/Generation/StackedBarChart'
 import {
   TableContainer,
   Table,
@@ -8,18 +8,20 @@ import {
   TableHead,
   TableRow,
   TableCell,
-  FormControl,
-  Select,
   Typography,
 } from '@material-ui/core'
 import Paper from '@material-ui/core/Paper'
 import { makeStyles } from '@material-ui/core/styles'
-import { groupYearlyDataAccumulation, period2ColorKwhBag } from '../../services/utils'
+import {
+  groupYearlyDataAccumulation,
+  period2ColorKwhBag,
+  getCodeToText
+} from '../../services/utils'
 import GenerationUseContext from '../../contexts/GenerationUseContext'
 import { useTranslation } from 'react-i18next'
 import Loading from 'components/Loading'
 import { getLastInvoiceDatePriorityContract } from '../../services/api'
-
+import PeriodSelector from '../../components/Generation/PeriodSelector'
 
 function createData(periodes, kwh) {
   return { periodes, kwh }
@@ -49,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function KwhBag(props) {
   const { token, lastInvoiceDatePriorityContract } = props
-  const { kWhRemaining, loadingRemain, is3Period } =
+  const { kWhRemaining, loadingRemain } =
     useContext(GenerationUseContext)
   const [periods, setPeriods] = useState('Taula_Peatges_20')
   const [date, setDate] = useState(lastInvoiceDatePriorityContract)
@@ -61,10 +63,9 @@ export default function KwhBag(props) {
   const classes = useStyles()
 
   const groupedData = useMemo(() => {
-
     const groupData = groupYearlyDataAccumulation(kWhRemaining, periods)
     delete groupData.value
-    const data = {periods:{},fills:{}}
+    const data = { periods: {}, fills: {} }
     Object.keys(groupData).forEach((element) => {
       data.periods[t(element+'_P')] = groupData[element]
       data.fills[t(element+'_P')] = period2ColorKwhBag[element]
@@ -119,29 +120,7 @@ export default function KwhBag(props) {
             gap: '10px',
           }}
         >
-          <FormControl fullWidth>
-            <Select
-              native
-              value={periods}
-              onChange={handleChange}
-              inputProps={{
-                name: 'viewType',
-                id: 'period-select',
-              }}
-            >
-              <option id="month-option" value={'Taula_Peatges_20'}>
-                {t('GENERATION_SELECT_3_PERIODS')}
-              </option>
-              {is3Period ? null : (
-                <option
-                  id="year-option"
-                  value={'Taula_Peatges_30_60_Peninsular'}
-                >
-                  {t('GENERATION_SELECT_6_PERIODS')}
-                </option>
-              )}
-            </Select>
-          </FormControl>
+          <PeriodSelector handleChange={handleChange} periods={periods}/>
         </Grid>
       </Grid>
       <Grid
@@ -195,7 +174,7 @@ export default function KwhBag(props) {
           id="date-info"
           dangerouslySetInnerHTML={{
             __html: t('GENERATION_KWH_BAG_DESCRIPTION', {
-              date: new Date(date).toLocaleDateString("es-ES"),
+              date: new Date(date).toLocaleDateString('es-ES'),
             }),
           }}
         />
