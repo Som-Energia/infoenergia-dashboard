@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import Typography from '@material-ui/core/Typography'
 import DatePicker from 'components/DatePicker/DatePicker'
 import Box from '@material-ui/core/Box'
@@ -9,18 +9,34 @@ import Select from '@material-ui/core/Select'
 import GenerationUseContext from '../../contexts/GenerationUseContext'
 import { getMonthCode } from 'services/timecurves'
 import Loading from 'components/Loading'
-
-const viewTypes = ['month', 'year']
+import PeriodSelector from './PeriodSelector'
+import { useParams } from 'react-router-dom'
+import dayjs from 'dayjs'
+import 'dayjs/locale/ca'
+import 'dayjs/locale/es'
 
 export default function RightsManage({
   children,
   handleDateChange,
   handleViewTypeChange,
+  handlePeriodChange,
+  periods,
   isLoading,
+  selectedDate,
+  viewTypeValue,
+  total,
 }) {
+  
   const { t } = useTranslation()
-  const { selectedDate, viewTypeValue, assignmentsTableFormat } =
-    useContext(GenerationUseContext)
+  const { MONTH } = useContext(GenerationUseContext)
+
+  const { language } = useParams()
+  const { i18n } = useTranslation()
+  useEffect(() => {
+    language && i18n.changeLanguage(language)
+    language ? dayjs.locale(language) : dayjs.locale('es')
+
+  }, [language, i18n])
 
   return (
     <>
@@ -57,7 +73,7 @@ export default function RightsManage({
                 component="h1"
                 style={{ color: '#96B633' }}
               >
-                {assignmentsTableFormat.total + ' kWh'}
+                <strong>{total}</strong> kWh
               </Typography>
               <Box
                 style={{
@@ -69,13 +85,13 @@ export default function RightsManage({
                 <Typography style={{ fontWeight: 'bold' }}>
                   {t('GENERATION_KWH_USE_TOTAL', {
                     month:
-                      viewTypes[viewTypeValue] === 'month'
-                        ? t(getMonthCode(selectedDate.getMonth() + 1))
+                      viewTypeValue === MONTH
+                        ? t(getMonthCode(dayjs(selectedDate).month() + 1))
                         : t('YEARLY'),
                   })}
                 </Typography>
                 <Typography style={{ color: '#96B633' }}>
-                  {selectedDate.getFullYear()}
+                  {dayjs(selectedDate).year()}
                 </Typography>
               </Box>
             </Grid>
@@ -92,33 +108,43 @@ export default function RightsManage({
               }}
               spacing={1}
             >
-              <Grid item xs={12} sm={2}>
+              <Grid item xs={12} sm={3}>
                 <DatePicker
-                  selectedDate={selectedDate}
+                  selectedDate={dayjs(selectedDate)}
                   handleDateChange={handleDateChange}
-                  type={viewTypes[viewTypeValue]}
+                  type={viewTypeValue}
                 />
               </Grid>
-              <Grid item xs={12} sm={2}>
-                <FormControl fullWidth>
-                  <Select
-                    native
-                    value={viewTypeValue}
-                    onChange={handleViewTypeChange}
-                    inputProps={{
-                      name: 'viewType',
-                      id: 'type-view-select',
-                    }}
-                  >
-                    <option id="month-option" value={0}>
-                      {t('GENERATION_KWH_SELECT_MONTH')}
-                    </option>
-                    <option id="year-option" value={1}>
-                      {t('GENERATION_KWH_SELECT_YEAR')}
-                    </option>
-                  </Select>
-                </FormControl>
-              </Grid>
+              {handleViewTypeChange ? (
+                <Grid item xs={12} sm={3}>
+                  <FormControl fullWidth>
+                    <Select
+                      native
+                      value={viewTypeValue}
+                      onChange={handleViewTypeChange}
+                      inputProps={{
+                        name: 'viewType',
+                        id: 'type-view-select',
+                      }}
+                    >
+                      <option id="month-option" value={'month'}>
+                        {t('GENERATION_KWH_SELECT_MONTH')}
+                      </option>
+                      <option id="year-option" value={'year'}>
+                        {t('GENERATION_KWH_SELECT_YEAR')}
+                      </option>
+                    </Select>
+                  </FormControl>
+                </Grid>
+              ) : null}
+              {handlePeriodChange ? (
+                <Grid item xs={12} sm={2}>
+                  <PeriodSelector
+                    handleChange={handlePeriodChange}
+                    periods={periods}
+                  />
+                </Grid>
+              ) : null}
             </Grid>
           </Grid>
 
