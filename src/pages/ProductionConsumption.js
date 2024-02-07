@@ -6,17 +6,16 @@ import { Grid } from '@material-ui/core'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
 import Use from '../containers/Generation/Use'
+import KwhBag from 'containers/Generation/KwhBag'
 import Record from 'containers/Generation/Record'
 import { useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import dayjs from 'dayjs'
-import { CsvformatData } from '../services/utils'
+import { CsvformatData, kwhRecordToCsvformatData } from '../services/utils'
 import { CSVLink } from 'react-csv'
 import GetAppIcon from '@material-ui/icons/GetApp'
-import GenerationUseContext, {
-  GenerationUseContextProvider,
-} from 'contexts/GenerationUseContext'
+import GenerationUseContext from 'contexts/GenerationUseContext'
 import ExtraControls from 'components/ExtraControls/ExtraControlsHeader'
+import dayjs from 'dayjs'
 
 const useStyles = makeStyles((theme) => ({
   tab: {
@@ -60,14 +59,13 @@ function TabPanel(props) {
   )
 }
 
-const DownloadButton = () => {
-  const { assignmentsTableFormat } = useContext(GenerationUseContext)
-  const [headers, data] = CsvformatData(assignmentsTableFormat)
+const DownloadButton = ({ csvData, filename }) => {
+  const [headers, data] = csvData
   const { t } = useTranslation()
   return (
     <CSVLink
       className="controlBtn"
-      filename={`generationkwh.csv`}
+      filename={filename}
       headers={headers}
       data={data}
     >
@@ -89,18 +87,23 @@ function ProductionConsumption(props) {
   const { i18n, t } = useTranslation()
   const sections = [
     t('GENERATION_KWH_USE_SECTION_TITLE'),
+    t('GENERATION_KWH_RECORD_SECTION_TITLE'),
     t('GENERATION_KWH_BAG_SECTION_TITLE'),
   ]
-
-  const { setSelectedDate, setViewTypeValue } = useContext(GenerationUseContext)
-
-  const { setSelectedDate, setViewTypeValue } = useContext(GenerationUseContext)
-
-  const { setSelectedDate, setViewTypeValue } = useContext(GenerationUseContext)
+  const {
+    setSelectedDate,
+    setViewTypeValue,
+    selectedDate,
+    viewTypeValue,
+    assignmentsTableFormat,
+    loadingUse,
+    loadingRecord,
+    YEAR,
+    kWhRecord
+  } = useContext(GenerationUseContext)
 
   useEffect(() => {
     language && i18n.changeLanguage(language)
-    language ? dayjs.locale(language) : dayjs.locale('es')
   }, [language, i18n])
 
   const [value, setValue] = React.useState(0)
@@ -109,13 +112,11 @@ function ProductionConsumption(props) {
     setValue(newValue)
   }
 
-  const { assignmentsConsumption } = props
-
   const handleDateChange = (date, event) => {
     if (event) {
       event.preventDefault()
     }
-    setSelectedDate(date)
+    setSelectedDate(dayjs(date))
   }
 
   const handleViewTypeChange = (event) => {
@@ -129,6 +130,10 @@ function ProductionConsumption(props) {
           <Use
             handleDateChange={handleDateChange}
             handleViewTypeChange={handleViewTypeChange}
+            selectedDate={selectedDate}
+            viewTypeValue={viewTypeValue}
+            assignmentsTableFormat={assignmentsTableFormat}
+            loading={loadingUse}
             {...props}
           />
         </TabPanel>
@@ -137,6 +142,19 @@ function ProductionConsumption(props) {
       return (
         <TabPanel value={value} index={index}>
           <Record
+            handleDateChange={handleDateChange}
+            selectedDate={selectedDate}
+            viewTypeValue={YEAR}
+            loading={loadingRecord}
+            kWhRecord={kWhRecord}
+            {...props}
+          />
+        </TabPanel>
+      )
+    } else {
+      return (
+        <TabPanel value={value} index={index}>
+          <KwhBag
             handleDateChange={handleDateChange}
             handleViewTypeChange={handleViewTypeChange}
             {...props}
@@ -147,31 +165,38 @@ function ProductionConsumption(props) {
   }
 
   return (
-    <GenerationUseContextProvider
-      generationAssignments={assignmentsConsumption}
-    >
-      <Grid>
-        <Grid container className={classes.divRoot}>
-          <Tabs
-            value={value}
-            textColor="primary"
-            onChange={handleChange}
-            aria-label="disabled tabs example"
-            indicatorColor="primary"
-          >
-            {sections.map((element) => (
-              <Tab key={element} label={element} {...a11yProps} />
-            ))}
-          </Tabs>
-          {value === 0 ? (
-            <ExtraControls>
-              <DownloadButton />
-            </ExtraControls>
-          ) : null}
-        </Grid>
-        {sections.map((element, index) => getPanel(value, index, element))}
+    <Grid>
+      <Grid container className={classes.divRoot}>
+        <Tabs
+          value={value}
+          textColor="primary"
+          onChange={handleChange}
+          aria-label="disabled tabs example"
+          indicatorColor="primary"
+        >
+          {sections.map((element) => (
+            <Tab key={element} label={element} {...a11yProps} />
+          ))}
+        </Tabs>
+        {value === 0 && !loadingUse ? (
+          <ExtraControls>
+            <DownloadButton
+              csvData={CsvformatData(assignmentsTableFormat)}
+              filename={'generationkwh-use.csv'}
+            />
+          </ExtraControls>
+        ) : null}
+        {value === 1 && !loadingRecord ? (
+          <ExtraControls>
+            <DownloadButton
+              csvData={kwhRecordToCsvformatData(kWhRecord, t)}
+              filename={'generationkwh-prod.csv'}
+            />
+          </ExtraControls>
+        ) : null}
       </Grid>
-    </GenerationUseContextProvider>
+      {sections.map((element, index) => getPanel(value, index, element))}
+    </Grid>
   )
 }
 
