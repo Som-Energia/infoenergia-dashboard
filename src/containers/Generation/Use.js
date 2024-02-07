@@ -1,16 +1,21 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import Table from '../../components/Table'
-import GenerationUseContext from '../../contexts/GenerationUseContext'
 import RightsManage from 'components/Generation/RightsManage'
 import Grid from '@material-ui/core/Grid'
 import Loading from 'components/Loading'
 
-export default function Use({ handleViewTypeChange, handleDateChange }) {
-  const { selectedDate, viewTypeValue, assignmentsTableFormat, loadingUse } =
-    useContext(GenerationUseContext)
+export default function Use({
+  handleViewTypeChange,
+  handleDateChange,
+  selectedDate,
+  viewTypeValue,
+  assignmentsTableFormat,
+  loading,
+}) {
+
   return (
     <>
-      {loadingUse ? (
+      {loading ? (
         <Grid
           id="loading-use-id"
           style={{
@@ -27,8 +32,8 @@ export default function Use({ handleViewTypeChange, handleDateChange }) {
           handleDateChange={handleDateChange}
           viewTypeValue={viewTypeValue}
           selectedDate={selectedDate}
-          assignmentsTableFormat={assignmentsTableFormat}
-          isLoading={loadingUse}
+          total={assignmentsTableFormat.total}
+          isLoading={loading}
         >
           <Table
             columns={assignmentsTableFormat.columns}
