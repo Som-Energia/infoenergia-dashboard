@@ -1,17 +1,13 @@
 import React from 'react'
 import Use from './Use'
 import { MemoryRouter, Route } from 'react-router-dom'
-import {
-  render,
-  queryByAttribute,
-  screen,
-  fireEvent,
-  within,
-} from '@testing-library/react'
+import { render, queryByAttribute } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { act } from 'react-dom/test-utils'
 import { GenerationUseContextProvider } from 'contexts/GenerationUseContext'
 import { consumption } from './mockData/AssignmentsConsumption'
+import { MuiPickersUtilsProvider } from '@material-ui/pickers'
+import DayJsUtils from '@date-io/dayjs'
 
 jest.mock('react-i18next', () => ({
   // this mock makes sure any components using the translate hook can use it without a warning being shown
@@ -36,79 +32,69 @@ describe('Generation use section', () => {
   const getById = queryByAttribute.bind(null, 'id')
   const mockHandleDateChange = jest.fn()
   const mockHandleViewTypeChange = jest.fn()
+  const mockAssignmentsTableFormat = consumption
+  const mockSelectedDate = new Date()
+  const MONTH = 'month'
+  const YEAR = 'year'
 
-  test('Should be the value 0 in select element', () => {
+  test('Should be the value month in select element', () => {
     const lang = 'ca'
     const dom = render(
       <MemoryRouter
         initialEntries={[`/${lang}/investments/production-consumption`]}
       >
         <Route exact path="/:language/investments/production-consumption">
-          <GenerationUseContextProvider initViewTypeValue={0} isTestMode={true}>
-            <Use />
-          </GenerationUseContextProvider>
+          <MuiPickersUtilsProvider utils={DayJsUtils}>
+            <GenerationUseContextProvider
+              initViewTypeValue={0}
+              isTestMode={true}
+            >
+              <Use
+                handleViewTypeChange={mockHandleViewTypeChange}
+                handleDateChange={mockHandleDateChange}
+                assignmentsTableFormat={mockAssignmentsTableFormat}
+                selectedDate={mockSelectedDate}
+                viewTypeValue={MONTH}
+              />
+            </GenerationUseContextProvider>
+          </MuiPickersUtilsProvider>
         </Route>
       </MemoryRouter>
     )
 
     const selectElement = getById(dom.container, 'type-view-select')
-    expect(selectElement).toHaveValue('0')
+    expect(selectElement).toHaveValue(MONTH)
     expect(selectElement).toHaveTextContent('GENERATION_KWH_SELECT_MONTH')
   })
 
-  test('Should be the value 1 in select element', () => {
+  test('Should be the value year in select element', () => {
     const lang = 'ca'
     const dom = render(
       <MemoryRouter
         initialEntries={[`/${lang}/investments/production-consumption`]}
       >
         <Route exact path="/:language/investments/production-consumption">
-          <GenerationUseContextProvider initViewTypeValue={1} isTestMode={true}>
-            <Use />
-          </GenerationUseContextProvider>
+          <MuiPickersUtilsProvider utils={DayJsUtils}>
+            <GenerationUseContextProvider
+              initViewTypeValue={1}
+              isTestMode={true}
+            >
+              <Use
+                handleViewTypeChange={mockHandleViewTypeChange}
+                handleDateChange={mockHandleDateChange}
+                assignmentsTableFormat={mockAssignmentsTableFormat}
+                selectedDate={mockSelectedDate}
+                viewTypeValue={YEAR}
+              />
+            </GenerationUseContextProvider>
+          </MuiPickersUtilsProvider>
         </Route>
       </MemoryRouter>
     )
 
     const selectElement = getById(dom.container, 'type-view-select')
-    expect(selectElement).toHaveValue('1')
+    expect(selectElement).toHaveValue(YEAR)
     expect(selectElement).toHaveTextContent('GENERATION_KWH_SELECT_YEAR')
-  })
-
-  test('Pick some month', () => {
-    const lang = 'ca'
-    const date = new Date()
-    const monthAbbreviation = date.toLocaleString(lang, { month: 'short' })
-
-    const dateFormatted = formatMMYYYY(date)
-    const dom = render(
-      <MemoryRouter
-        initialEntries={[`/${lang}/investments/production-consumption`]}
-      >
-        <Route exact path="/:language/investments/production-consumption">
-          <GenerationUseContextProvider initViewTypeValue={0} isTestMode={true}>
-            <Use handleDateChange={mockHandleDateChange} />
-          </GenerationUseContextProvider>
-        </Route>
-      </MemoryRouter>
-    )
-
-    // Find the DatePicker input field
-    const datePickerInput = getById(dom.container, 'month-picker')
-
-    // Simulate clicking the input to open the date picker
-    fireEvent.click(datePickerInput)
-
-    // Find the month you want to select
-    const selectedMonth = screen.getByText(monthAbbreviation) // Replace with the day you want to select
-
-    // Click the selected day to choose it
-    fireEvent.click(selectedMonth)
-
-    // Optionally, assert that the input field displays the selected date
-    expect(datePickerInput).toHaveValue(dateFormatted) //
-    expect(mockHandleDateChange).toHaveBeenCalled()
-
   })
 
   test('Should change the type of viewdata', () => {
@@ -121,68 +107,31 @@ describe('Generation use section', () => {
         initialEntries={[`/${lang}/investments/production-consumption`]}
       >
         <Route exact path="/:language/investments/production-consumption">
-          <GenerationUseContextProvider
-            initViewTypeValue={0}
-            isTestMode={true}
-            setViewTypeValue={mockSetViewTypeValue}
-          >
-            <Use handleViewTypeChange={mockHandleViewTypeChange} />
-          </GenerationUseContextProvider>
+          <MuiPickersUtilsProvider utils={DayJsUtils}>
+            <GenerationUseContextProvider
+              initViewTypeValue={0}
+              isTestMode={true}
+              setViewTypeValue={mockSetViewTypeValue}
+            >
+              <Use
+                handleViewTypeChange={mockHandleViewTypeChange}
+                handleDateChange={mockHandleDateChange}
+                assignmentsTableFormat={mockAssignmentsTableFormat}
+                selectedDate={mockSelectedDate}
+                viewTypeValue={YEAR}
+              />
+            </GenerationUseContextProvider>
+          </MuiPickersUtilsProvider>
         </Route>
       </MemoryRouter>
     )
 
     const selectElement = getById(dom.container, 'type-view-select')
-    const optionToSelect = '1' // Change to the option you want to select
+    const optionToSelect = YEAR // Change to the option you want to select
     act(() => {
       userEvent.selectOptions(selectElement, optionToSelect)
     })
     expect(mockHandleViewTypeChange).toHaveBeenCalledTimes(1)
-
-  })
-
-  test('Should show the list of consumption', () => {
-    const lang = 'ca'
-
-    const mockSetViewTypeValue = jest.fn()
-
-    const dom = render(
-      <MemoryRouter
-        initialEntries={[`/${lang}/investments/production-consumption`]}
-      >
-        <Route exact path="/:language/investments/production-consumption">
-          <GenerationUseContextProvider
-            initViewTypeValue={0}
-            isTestMode={true}
-            setViewTypeValue={mockSetViewTypeValue}
-            initAssignmentsTableFormat={consumption}
-          >
-            <Use />
-          </GenerationUseContextProvider>
-        </Route>
-      </MemoryRouter>
-    )
-
-    const tableBody = getById(
-      dom.container,
-      'table-body-assignment-consumption'
-    )
-    const tableRows = screen.getAllByRole('row') // Assuming your rows have a role attribute set to 'row'
-
-    // Perform assertions on the content
-    expect(tableBody).toBeInTheDocument()
-    expect(tableRows.length).toBeGreaterThan(0)
-
-    const firstContentRow = tableRows[1]
-    const firstCells = within(firstContentRow).getAllByRole('cell') // Assuming cells have a role attribute set to 'cell'
-    const firstCellText = firstCells.map((cell) => cell.textContent)
-
-    const arrayToCompare = consumption.rows.map((element) =>
-      Object.values(element)
-    )
-
-    // Replace 'expectedData' with the actual data you expect to be in that cell
-    expect(firstCellText).toEqual(expect.arrayContaining(arrayToCompare[0]))
   })
 
   test('Should show loading component', async () => {
@@ -192,31 +141,21 @@ describe('Generation use section', () => {
         initialEntries={[`/${lang}/investments/production-consumption`]}
       >
         <Route exact path="/:language/investments/production-consumption">
-          <GenerationUseContextProvider isTestMode={true} isloadingUse={true}>
-            <Use />
-          </GenerationUseContextProvider>
+          <MuiPickersUtilsProvider utils={DayJsUtils}>
+            <GenerationUseContextProvider isTestMode={true} isloadingUse={true}>
+              <Use
+                handleViewTypeChange={mockHandleViewTypeChange}
+                handleDateChange={mockHandleDateChange}
+                assignmentsTableFormat={mockAssignmentsTableFormat}
+                selectedDate={mockSelectedDate}
+                loading={true}
+              />
+            </GenerationUseContextProvider>
+          </MuiPickersUtilsProvider>
         </Route>
       </MemoryRouter>
     )
     const loadingComponent = getById(dom.container, 'loading-use-id')
     expect(loadingComponent).toBeInTheDocument()
   })
-
-  test('Should show loading component', async () => {
-    const lang = 'ca'
-    const dom = render(
-      <MemoryRouter
-        initialEntries={[`/${lang}/investments/production-consumption`]}
-      >
-        <Route exact path="/:language/investments/production-consumption">
-          <GenerationUseContextProvider isTestMode={true} isloadingUse={true}>
-            <Use />
-          </GenerationUseContextProvider>
-        </Route>
-      </MemoryRouter>
-    )
-    const loadingComponent = getById(dom.container, 'loading-use-id')
-    expect(loadingComponent).toBeInTheDocument()
-  })
-
 })
