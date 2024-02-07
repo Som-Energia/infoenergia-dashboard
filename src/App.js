@@ -4,6 +4,7 @@ import { MuiPickersUtilsProvider } from '@material-ui/pickers'
 import DayJsUtils from '@date-io/dayjs'
 import DevelopmentIndex from './pages/DevelopmentIndex'
 import CssBaseline from '@material-ui/core/CssBaseline'
+import { GenerationUseContextProvider } from 'contexts/GenerationUseContext'
 
 import { createTheme, ThemeProvider } from '@material-ui/core/styles'
 
@@ -30,7 +31,15 @@ function App(props) {
     const ProductionConsumption = lazy(() =>
       import('./pages/ProductionConsumption')
     )
-    return <ProductionConsumption {...props} assignmentsConsumption={assignmentsConsumption} />
+    return (
+      <GenerationUseContextProvider
+        generationAssignments={assignmentsConsumption}
+      >
+        <ProductionConsumption
+          {...props}
+        />
+      </GenerationUseContextProvider>
+    )
   }
 
   return (
