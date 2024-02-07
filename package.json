@@ -12,7 +12,7 @@
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
-    "axios": "^1.6.2",
+    "axios": "^1.6.5",
     "date-fns": "^2.30.0",
     "dayjs": "^1.11.0",
     "i18next": "^21.6.14",
@@ -25,7 +25,6 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "^5.0.0",
     "recharts": "^2.1.9",
-    "resize-observer-polyfill": "^1.5.1",
     "styled-components": "^5.3.3"
   },
   "devDependencies": {
@@ -39,7 +38,9 @@
     "eslint-plugin-promise": "^4.3.1",
     "eslint-plugin-react": "^7.22.0",
     "eslint-plugin-standard": "^5.0.0",
-    "prettier": "^2.2.1"
+    "mutationobserver-shim": "^0.3.7",
+    "prettier": "^2.2.1",
+    "resize-observer-polyfill": "^1.5.1"
   },
   "eslintConfig": {
     "extends": [
@@ -52,6 +53,11 @@
     "build:ov": "env-cmd -f .env.ov  --use-shell \"npm run build && ./scripts/rename-assets-ov.sh\"",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "^axios$": "axios/dist/node/axios.cjs"
+    }
   },
   "browserslist": {
     "production": [
