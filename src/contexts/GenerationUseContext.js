@@ -1,9 +1,12 @@
 import { createContext, useState, useEffect } from 'react'
-import { getConsumption, getkWhRemaining } from '../services/api'
-import { formatOrdinals, getDataForTable } from '../services/utils'
+import { getConsumption, getkWhRemaining, getkWhRecord } from '../services/api'
+import {
+  formatOrdinals,
+  getDataForTable
+} from '../services/utils'
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
-
+import dayjs from 'dayjs'
 
 const initValues = {
   selectedDate: null,
@@ -13,18 +16,23 @@ const initValues = {
 const GenerationUseContext = createContext(initValues)
 
 export const GenerationUseContextProvider = (props) => {
+  const MONTH = 'month'
+  const YEAR = 'year'
+
   const { t } = useTranslation()
   const { language } = useParams()
   const {
     token,
     generationAssignments,
-    initViewTypeValue = 0,
-    initSelectedDate = new Date(),
+    initViewTypeValue = MONTH,
+    initSelectedDate = dayjs(),
     initAssignmentsTableFormat = { columns: [], rows: [], total: 0 },
     initKWhRemaining = [],
+    initKWhRecord = [],
     isTestMode = false,
     isloadingUse = false,
-    isloadingRemain = false
+    isloadingRemain = false,
+    isloadingRecord = false,
   } = props
 
   const [selectedDate, setSelectedDate] = useState(initSelectedDate)
@@ -32,16 +40,26 @@ export const GenerationUseContextProvider = (props) => {
   const [viewTypeValue, setViewTypeValue] = useState(initViewTypeValue)
   const [loadingUse, setLoadingUse] = useState(isloadingUse)
   const [loadingRemain, setLoadingRemain] = useState(isloadingRemain)
+  const [loadingRecord, setLoadingRecord] = useState(isloadingRecord)
 
   const [assignmentsTableFormat, setAssignmentsTableFormat] = useState(
     initAssignmentsTableFormat
   )
-  const [kWhRemaining , setkWhRemaining] = useState(initKWhRemaining)
+  const [kWhRemaining, setkWhRemaining] = useState(initKWhRemaining)
+  const [kWhRecord, setkWhRecord] = useState(initKWhRecord)
 
   const getPriority = (priorityNumber) => {
     return priorityNumber === 0
       ? t('GENERATION_MAIN_PRIORITY')
       : formatOrdinals(language, priorityNumber + 1)
+  }
+
+  const Is3Period = () => {
+    let result = true
+    generationAssignments.forEach((element) => {
+      result = result && element.contract_tariff.includes('2.0')
+    })
+    setIs3Period(result)
   }
 
   const getUseData = async () => {
@@ -55,9 +73,9 @@ export const GenerationUseContextProvider = (props) => {
       const assignmentsTableFormat = getDataForTable(
         generationAssignments,
         consumption.data,
-        getPriority
+        getPriority,
+        t
       )
-      setIs3Period(assignmentsTableFormat.is3period)
       setAssignmentsTableFormat(assignmentsTableFormat.data)
       setLoadingUse(false)
     } catch (e) {
@@ -78,14 +96,32 @@ export const GenerationUseContextProvider = (props) => {
     }
   }
 
+  const getRecordData = async () => {
+    try {
+      setLoadingRecord(true)
+      const gkwRecord = await getkWhRecord(selectedDate, token)
+      setkWhRecord(gkwRecord?.data)
+      setLoadingRecord(false)
+    } catch (e) {
+      setLoadingRecord(false)
+      console.log(e)
+    }
+  }
+
   useEffect(
     function () {
       if (!isTestMode) {
-        getRemainigData()
+        getRecordData()
       }
     },
-    []
+    [selectedDate]
   )
+
+  useEffect(function () {
+    if (!isTestMode) {
+      getRemainigData()
+    }
+  }, [])
 
   useEffect(
     function () {
@@ -94,6 +130,15 @@ export const GenerationUseContextProvider = (props) => {
       }
     },
     [viewTypeValue, generationAssignments, selectedDate]
+  )
+
+  useEffect(
+    function () {
+      if (!isTestMode) {
+        Is3Period()
+      }
+    },
+    [generationAssignments]
   )
 
   return (
@@ -105,9 +150,13 @@ export const GenerationUseContextProvider = (props) => {
         setViewTypeValue,
         assignmentsTableFormat,
         kWhRemaining,
+        kWhRecord,
         loadingUse,
         loadingRemain,
-        is3Period
+        loadingRecord,
+        is3Period,
+        MONTH,
+        YEAR
       }}
     >
       {props.children}
