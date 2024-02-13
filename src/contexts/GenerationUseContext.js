@@ -57,7 +57,7 @@ export const GenerationUseContextProvider = (props) => {
   const Is3Period = () => {
     let result = true
     generationAssignments.forEach((element) => {
-      result = result && element.contract_tariff.includes('2.0')
+      result = result && (element.contract_tariff.includes('2.0') || element.contract_tariff==="")
     })
     setIs3Period(result)
   }

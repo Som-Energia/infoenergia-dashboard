@@ -585,13 +585,15 @@ export const getDataForTable = (
 }
 
 export function generationKwhRecordData(khwRecordData, periods, t) {
+
   const groupData = groupDataByPeriod(
     khwRecordData,
     'YEARLY',
     'barChart',
     periods
   )
-  const keys = getBaseKeys(periods)
+
+  const keys = getBaseKeys(periods,1)
   let total = 0
   const data = { periods: [], fills: {}, keys: [], total: 0 }
 

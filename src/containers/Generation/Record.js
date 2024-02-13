@@ -2,10 +2,10 @@ import React, { useMemo, useState } from 'react'
 import RightsManage from 'components/Generation/RightsManage'
 import Grid from '@material-ui/core/Grid'
 import Loading from 'components/Loading'
-import { period2ColorKwhBag, generationKwhRecordData } from 'services/utils'
+import {/* period2ColorKwhBag, */ generationKwhRecordData } from 'services/utils'
 import CustomBarChart from 'components/Generation/CustomBarChart'
 import { useTranslation } from 'react-i18next'
-
+import { useParams } from 'react-router-dom'
 
 export default function Record({
   handleDateChange,
@@ -16,7 +16,7 @@ export default function Record({
 }) {
   const [periods, setPeriods] = useState('Taula_Peatges_20')
   const { t } = useTranslation()
-
+  const { language } = useParams()
   const handleChange = (event) => {
     setPeriods(event.target.value)
   }
@@ -61,9 +61,9 @@ export default function Record({
             <CustomBarChart
               data={groupedData}
               period={'YEARLY'}
-              tariffTimetableId={periods}
-              periodColor={period2ColorKwhBag}
               legend={true}
+              type={'BAR'}
+              lang={language}
             />
           </Grid>
         </RightsManage>
