@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { formatMMYYYY } from './utils'
 
 const HEMAN_API_URL = document.getElementById('root')
   ? document.getElementById('root').dataset.hemanApiUrl
@@ -85,7 +84,17 @@ export const getConsumption = async (date, token, type) => {
 
   return axios({
     method: 'GET',
-    url: parseInt(type) === 0 ? urlM + formatMMYYYY(date) : urlY +  date.getFullYear(),
+    url: parseInt(type) === 0 ? urlM + date.format('MM-YYYY') : urlY +  date.year(),
+    headers: { Authorization: token },
+  }).then((response) => {
+    return response?.data
+  })
+}
+
+export const getkWhRecord = async (date, token) => {
+  return axios({
+    method: 'GET',
+    url: '/investments/assignments-kwh-rights/'+date.year(),
     headers: { Authorization: token },
   }).then((response) => {
     return response?.data

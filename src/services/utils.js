@@ -1,4 +1,4 @@
-import * as dayjs from 'dayjs'
+import dayjs from 'dayjs'
 import { getPeriod } from 'services/timecurves'
 
 export const capitalizeWord = (word) => {
@@ -68,6 +68,10 @@ export const formatTooltipLabel = (period, value, type = 'barChart') => {
       return type === 'barChart'
         ? dayjs(value).format('DD/MM/YYYY')
         : formatWithHour(value)
+    case 'YEARLY':
+      return type === 'barChart'
+        ? dayjs(value).format('MM/YYYY')
+        : formatWithHour(value)
     default:
       return dayjs(value).format('DD/MM/YYYY')
   }
@@ -75,25 +79,12 @@ export const formatTooltipLabel = (period, value, type = 'barChart') => {
 
 export const formatTooltip = (value) => {
   if (value === 0) return [null, null]
-  return [`${formatNumber(value / 1000)} kWh`, null]
+  return [`${value} kWh`, null]
 }
 
 export const agregateDates = (dates, agregatedDate, tariffTimetableId) => {
-  const base =
-    tariffTimetableId === 'Taula_Peatges_20'
-      ? {
-          VALLEY: 0,
-          PICK: 0,
-          FLAT: 0,
-        }
-      : {
-          P1: 0,
-          P2: 0,
-          P3: 0,
-          P4: 0,
-          P5: 0,
-          P6: 0,
-        }
+  const base = getBaseKeys(tariffTimetableId)
+
   const result = {
     date: agregatedDate,
     value: 0,
@@ -154,52 +145,55 @@ export const groupMonthlyData = (data, tariffTimetableId) => {
   return month
 }
 
-
-export const groupYearlyDataAccumulation = (data, tariffTimetableId) => {
-  const base =
-    tariffTimetableId === 'Taula_Peatges_20'
+export const getBaseKeys = (tariffTimetableId, order = 0) => {
+  if (tariffTimetableId === 'Taula_Peatges_20') {
+    return order === 0
       ? {
+          VALLEY: 0,
+          PICK: 0,
+          FLAT: 0,
+        }
+      : {
           PICK: 0,
           FLAT: 0,
           VALLEY: 0,
         }
-      : {
-          P1: 0,
-          P2: 0,
-          P3: 0,
-          P4: 0,
-          P5: 0,
-          P6: 0,
-        }
+  } else {
+    return {
+      P1: 0,
+      P2: 0,
+      P3: 0,
+      P4: 0,
+      P5: 0,
+      P6: 0,
+    }
+  }
+}
+
+export const groupYearlyDataAccumulation = (data, tariffTimetableId) => {
+  const base = getBaseKeys(tariffTimetableId, 1)
 
   const result = { ...base }
-  Object.keys(data).forEach((element) => {
+
+  /* Object.keys(data).forEach((element) => {
     const period = getPeriod(element, tariffTimetableId)
     result[period] += data[element]
     result.value += data[element]
+  }) */
+
+  data.forEach((element) => {
+    const period = getPeriod(element.date, tariffTimetableId)
+    result[period] += element.value
+    result.value += element.value
   })
 
   return result
 }
 
 export const groupYearlyData = (data, tariffTimetableId) => {
-  const base =
-    tariffTimetableId === 'Taula_Peatges_20'
-      ? {
-          VALLEY: 0,
-          PICK: 0,
-          FLAT: 0,
-        }
-      : {
-          P1: 0,
-          P2: 0,
-          P3: 0,
-          P4: 0,
-          P5: 0,
-          P6: 0,
-        }
-
+  const base = getBaseKeys(tariffTimetableId)
   const result = {}
+
   for (let i = 0; i < data.length; i++) {
     const current = dayjs(data[i].date).startOf('month').valueOf()
     if (!result[current]?.value) {
@@ -416,7 +410,7 @@ export const CnmcformatData = ({ data, cups }) => {
 }
 
 export const CsvformatData = (data) => {
-  const formatedHeaders = data.columns.map((element) => ({
+  const formatedHeaders = data.columns.map(element => ({
     label: element,
     key: element,
   }))
@@ -426,6 +420,30 @@ export const CsvformatData = (data) => {
     Object.keys(element).forEach((field, index) => {
       row[data.columns[index]] = element[field]
     })
+    return row
+  })
+
+  return [formatedHeaders, formatedData]
+}
+
+export const kwhRecordToCsvformatData = (data, t) => {
+
+  const columns = [t('DATE'), t('HOUR'), t('PRODUCTION_KWH')]
+
+  const formatedHeaders = columns.map((element) => ({
+    label: element,
+    key: element,
+  }))
+
+  const formatedData = data.map((element) => {
+    const dataFormated = dayjs(element.date).format('MM/YYYY')
+    const hour = dayjs(element.date).hour()
+
+    const row = {}
+    row[columns[0]] = dataFormated
+    row[columns[1]] = hour
+    row[columns[2]] = element.value
+
     return row
   })
 
@@ -480,30 +498,35 @@ export const formatOrdinals = (lang, number) => {
   }
 }
 
-export const getDataForTable = (assignmentsConsumption, data, getPriority) => {
+export const getDataForTable = (
+  assignmentsConsumption,
+  data,
+  getPriority,
+  t
+) => {
   const dataT = {}
   const columns3 = {
     labels: [
-      'GENERATION_KWH_USE_TABLE_CONTRACT_ADDRESS',
-      'GENERATION_KWH_USE_TABLE_PRIORITY',
-      'GENERATION_KWH_USE_TABLE_VALLEY',
-      'GENERATION_KWH_USE_TABLE_FLAT',
-      'GENERATION_KWH_USE_TABLE_PICK',
-      'GENERATION_KWH_USE_TABLE_TOTAL',
+      t('GENERATION_KWH_USE_TABLE_CONTRACT_ADDRESS'),
+      t('GENERATION_KWH_USE_TABLE_PRIORITY'),
+      t('GENERATION_KWH_USE_TABLE_VALLEY'),
+      t('GENERATION_KWH_USE_TABLE_FLAT'),
+      t('GENERATION_KWH_USE_TABLE_PICK'),
+      t('GENERATION_KWH_USE_TABLE_TOTAL'),
     ],
     dataKeys: ['P3', 'P2', 'P1'],
   }
   const columns6 = {
     labels: [
-      'GENERATION_KWH_USE_TABLE_CONTRACT_ADDRESS',
-      'GENERATION_KWH_USE_TABLE_PRIORITY',
+      t('GENERATION_KWH_USE_TABLE_CONTRACT_ADDRESS'),
+      t('GENERATION_KWH_USE_TABLE_PRIORITY'),
       'P6',
       'P5',
       'P4',
       'P3',
       'P2',
       'P1',
-      'GENERATION_KWH_USE_TABLE_TOTAL',
+      t('GENERATION_KWH_USE_TABLE_TOTAL'),
     ],
     dataKeys: ['P6', 'P5', 'P4', 'P3', 'P2', 'P1'],
   }
@@ -513,7 +536,6 @@ export const getDataForTable = (assignmentsConsumption, data, getPriority) => {
 
   let total = 0
 
-  const periodNum = maxLength === 3
   dataT.columns = maxLength < 6 ? columns3.labels : columns6.labels
   dataT.dataKeys = maxLength < 6 ? columns3.dataKeys : columns6.dataKeys
 
@@ -559,12 +581,41 @@ export const getDataForTable = (assignmentsConsumption, data, getPriority) => {
     }
   })
   dataT.total = total
-  return { data: dataT, is3period: periodNum }
+  return { data: dataT }
 }
 
-export function formatMMYYYY(date) {
-  const month = (date.getMonth() + 1).toString().padStart(2, '0') // Month is zero-based, so add 1
-  const year = date.getFullYear().toString()
+export function generationKwhRecordData(khwRecordData, periods, t) {
 
-  return `${year}-${month}`
+  const groupData = groupDataByPeriod(
+    khwRecordData,
+    'YEARLY',
+    'barChart',
+    periods
+  )
+
+  const keys = getBaseKeys(periods,1)
+  let total = 0
+  const data = { periods: [], fills: {}, keys: [], total: 0 }
+
+  Object.keys(groupData).forEach((element) => {
+    const tmpObj = {}
+
+    Object.keys(groupData[element]).forEach((elKey) => {
+      tmpObj[t(getCodeToText(elKey))] = groupData[element][elKey]
+      data.fills[t(getCodeToText(elKey))] = period2ColorKwhBag[elKey]
+    })
+    total = total + tmpObj.value
+    data.periods.push(tmpObj)
+  })
+  data.keys = Object.keys(keys).map((element) => t(getCodeToText(element)))
+  data.total = total
+
+  return data
+}
+
+export function getCodeToText(code) {
+  if (code === 'VALLEY' || code === 'PICK' || code === 'FLAT') {
+    code = code + '_P'
+  }
+  return code
 }

@@ -79,7 +79,7 @@
     "MONTH_NAME_12":"Diciembre",
     "ALL_YEAR":"Todo el año",
     "WEEKEND_HOLIDAYS":"Fines de semana y festivos estatales",
-    "GENERATION_MAIN_PRIORITY":"Principal",
+    "GENERATION_MAIN_PRIORITY":"Prioritario",
     "GENERATION_KWH_BAG_TITLE":"Bolsa de kWh acumulados a día de hoy",
     "GENERATION_KWH_BAG_TABLE_PERIOD":"Período",
     "GENERATION_KWH_BAG_TABLE_KWH":"KWH",
@@ -97,6 +97,7 @@
     "GENERATION_KWH_USE_TABLE_TOTAL":"Total",
     "GENERATION_KWH_USE_SECTION_TITLE":"USO",
     "GENERATION_KWH_BAG_SECTION_TITLE":"BOLSA DE KWH",
+    "GENERATION_KWH_RECORD_SECTION_TITLE":"PRODUCCIÓN",
     "VALLEY_P":"Vall (P3)",
     "PICK_P":"Punta (P1)",
     "FLAT_P":"Pla (P2)"

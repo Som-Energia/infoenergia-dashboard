@@ -236,7 +236,7 @@ function TimeCurves(props) {
                 data={filteredTimeCurves}
                 compareData={compareData}
                 period={period}
-                tariffTimetableId={contract.tariff_timetable_id}
+                tariffTimetableId={contract?.tariff_timetable_id}
               />
             )}
           </ChartWrapper>
