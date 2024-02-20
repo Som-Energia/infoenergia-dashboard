@@ -9,6 +9,8 @@ import { useParams } from 'react-router-dom'
 import dayjs from 'dayjs'
 import 'dayjs/locale/ca'
 import 'dayjs/locale/es'
+import 'dayjs/locale/eu'
+import 'dayjs/locale/gl'
 
 const initValues = {
   selectedDate: null,
