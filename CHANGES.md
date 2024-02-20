@@ -1,6 +1,6 @@
 # Change Log
 
-## Unreleased
+## 1.0.2 2024-02-20
 
 - Add new subsection (production) inside Production and Comsumption section
 
