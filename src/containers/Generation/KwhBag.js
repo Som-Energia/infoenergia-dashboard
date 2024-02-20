@@ -14,8 +14,7 @@ import Paper from '@material-ui/core/Paper'
 import { makeStyles } from '@material-ui/core/styles'
 import {
   groupYearlyDataAccumulation,
-  period2ColorKwhBag,
-  getCodeToText
+  period2ColorKwhBag
 } from '../../services/utils'
 import GenerationUseContext from '../../contexts/GenerationUseContext'
 import { useTranslation } from 'react-i18next'

@@ -7,6 +7,8 @@ import {
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
 import dayjs from 'dayjs'
+import 'dayjs/locale/ca'
+import 'dayjs/locale/es'
 
 const initValues = {
   selectedDate: null,
@@ -21,11 +23,12 @@ export const GenerationUseContextProvider = (props) => {
 
   const { t } = useTranslation()
   const { language } = useParams()
+
   const {
     token,
     generationAssignments,
     initViewTypeValue = MONTH,
-    initSelectedDate = dayjs(),
+    initSelectedDate = dayjs().locale(language),
     initAssignmentsTableFormat = { columns: [], rows: [], total: 0 },
     initKWhRemaining = [],
     initKWhRecord = [],
@@ -34,6 +37,8 @@ export const GenerationUseContextProvider = (props) => {
     isloadingRemain = false,
     isloadingRecord = false,
   } = props
+
+
 
   const [selectedDate, setSelectedDate] = useState(initSelectedDate)
   const [is3Period, setIs3Period] = useState(false)
