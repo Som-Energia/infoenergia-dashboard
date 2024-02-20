@@ -12,7 +12,7 @@ const MONTH = 'MONTHLY'
 const YEAR = 'YEARLY'
 
 function CustomDatePicker({ type, selectedDate, handleDateChange }) {
-  const addMonths = () => {
+  function addMonths(){
     const newDate = dayjs(selectedDate).add(1, periodUnit(MONTH))
     handleDateChange(newDate)
   }
