@@ -409,6 +409,16 @@ export const CnmcformatData = ({ data, cups }) => {
   return [formatedHeaders, formatedData]
 }
 
+export const convertDataFromWattsToKwh = data =>
+  data.map(({ value, ...rest }) => {
+    const parsedValue = parseFloat(value);
+    const convertedValue = Number.isNaN(parsedValue) ? value : parsedValue / 1000;
+    return {
+      ...rest,
+      value: convertedValue,
+    };
+  });
+
 export const CsvformatData = (data) => {
   const formatedHeaders = data.columns.map(element => ({
     label: element,
