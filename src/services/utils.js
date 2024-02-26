@@ -78,8 +78,9 @@ export const formatTooltipLabel = (period, value, type = 'barChart') => {
 }
 
 export const formatTooltip = (value) => {
-  if (value === 0) return [null, null]
-  return [`${value} kWh`, null]
+  const numericValue = Number(value)
+  if (isNaN(numericValue) || numericValue === 0) return [null, null]
+  return [`${numericValue.toString().replace('.', ',')} kWh`, null]
 }
 
 export const agregateDates = (dates, agregatedDate, tariffTimetableId) => {

@@ -1,4 +1,4 @@
-import { convertDataFromWattsToKwh } from './utils';
+import { convertDataFromWattsToKwh, formatTooltip } from './utils';
 
 describe('convertDataFromWattsToKwh', () => {
   it('should convert data from watts to kWh', () => {
@@ -28,5 +28,37 @@ describe('convertDataFromWattsToKwh', () => {
     const result = convertDataFromWattsToKwh(testData);
 
     expect(result).toEqual(testData);
+  });
+});
+
+describe('formatTooltip', () => {
+  it('should format numeric value correctly', () => {
+    const value = 123.45;
+    const expected = ['123,45 kWh', null];
+    expect(formatTooltip(value)).toEqual(expected);
+  });
+
+  it('should handle non-numeric value', () => {
+    const value = 'abc';
+    const expected = [null, null];
+    expect(formatTooltip(value)).toEqual(expected);
+  });
+
+  it('should handle zero value', () => {
+    const value = 0;
+    const expected = [null, null];
+    expect(formatTooltip(value)).toEqual(expected);
+  });
+
+  it('should handle string representation of a numeric value', () => {
+    const value = '123.45';
+    const expected = ['123,45 kWh', null];
+    expect(formatTooltip(value)).toEqual(expected);
+  });
+
+  it('should handle negative numeric value', () => {
+    const value = -123.45;
+    const expected = ['-123,45 kWh', null];
+    expect(formatTooltip(value)).toEqual(expected);
   });
 });
