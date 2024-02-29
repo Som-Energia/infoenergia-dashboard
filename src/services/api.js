@@ -84,7 +84,7 @@ export const getConsumption = async (date, token, type) => {
 
   return axios({
     method: 'GET',
-    url: parseInt(type) === 0 ? urlM + date.format('MM-YYYY') : urlY +  date.year(),
+    url: type === 'month' ? urlM + date.format('YYYY-MM') : urlY +  date.year(),
     headers: { Authorization: token },
   }).then((response) => {
     return response?.data
