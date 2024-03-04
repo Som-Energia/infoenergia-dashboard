@@ -33,6 +33,12 @@ describe('formatTooltip', () => {
     expect(formatTooltip(value)).toEqual(expected);
   });
 
+  it('should display maximum 3 decimal points', () => {
+    const value = 123.4567890;
+    const expected = ['123,456 kWh', null];
+    expect(formatTooltip(value)).toEqual(expected);
+  });
+
   it('should handle non-numeric value', () => {
     const value = 'abc';
     const expected = [null, null];

@@ -78,10 +78,11 @@ export const formatTooltipLabel = (period, value, type = 'barChart') => {
 }
 
 export const formatTooltip = (value) => {
-  const numericValue = Number(value)
-  if (isNaN(numericValue) || numericValue === 0) return [null, null]
-  return [`${numericValue.toString().replace('.', ',')} kWh`, null]
-}
+  const numericValue = Number(value);
+  if (isNaN(numericValue) || numericValue === 0) return [null, null];
+  const formattedValue = numericValue.toString().split('.')[0] + ',' + numericValue.toString().split('.')[1].slice(0, 3);
+  return [`${formattedValue} kWh`, null];
+};
 
 export const agregateDates = (dates, agregatedDate, tariffTimetableId) => {
   const base = getBaseKeys(tariffTimetableId)
