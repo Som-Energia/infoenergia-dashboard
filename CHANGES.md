@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.0.4 2024-03-04
+
+- Fix time curve point unit measurement
+
 ## 1.0.3 2024-02-29
 
 - Fix the function that get the use data
