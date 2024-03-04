@@ -54,9 +54,9 @@ function TimeCurvesLineChart({ period, data = [], compareData = [] }) {
             type="number"
             domain={[0, 'auto']}
             axisLine={false}
-            tickCount={8}
+            tickCount={7}
             tickLine={false}
-            tickFormatter={(tickItem) => `${formatDecimal(tickItem / 1000)}`}
+            tickFormatter={(tickItem) => `${formatDecimal(tickItem)}`}
             tick={{ fontSize: '1rem', transform: 'translate(0, 0)' }}
           >
             <Label

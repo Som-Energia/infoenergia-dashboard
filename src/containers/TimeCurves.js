@@ -19,7 +19,7 @@ import LegendPeriod from 'components/TipicalDailyProfile/LegendPeriod'
 import TimeCurvesContext from 'contexts/TimeCurvesContext'
 import Loading from 'components/Loading'
 
-import { periodUnit, labelTotalPeriod } from 'services/utils'
+import { periodUnit, labelTotalPeriod, convertDataFromWattsToKwh } from 'services/utils'
 
 const filterDataWithPeriod = ({ refDate, period, data }) => {
   const filteredData = []
@@ -227,13 +227,13 @@ function TimeCurves(props) {
               <Loading />
             ) : chartType === 'LINE_CHART_TYPE' ? (
               <TimeCurvesLineChart
-                data={filteredTimeCurves}
+                data={convertDataFromWattsToKwh(filteredTimeCurves)}
                 compareData={compareData}
                 period={period}
               />
             ) : (
               <TimeCurvesBarChart
-                data={filteredTimeCurves}
+                data={convertDataFromWattsToKwh(filteredTimeCurves)}
                 compareData={compareData}
                 period={period}
                 tariffTimetableId={contract?.tariff_timetable_id}

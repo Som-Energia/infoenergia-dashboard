@@ -78,8 +78,9 @@ export const formatTooltipLabel = (period, value, type = 'barChart') => {
 }
 
 export const formatTooltip = (value) => {
-  if (value === 0) return [null, null]
-  return [`${value} kWh`, null]
+  const numericValue = Number(value)
+  if (isNaN(numericValue) || numericValue === 0) return [null, null]
+  return [`${numericValue.toString().replace('.', ',')} kWh`, null]
 }
 
 export const agregateDates = (dates, agregatedDate, tariffTimetableId) => {
@@ -408,6 +409,16 @@ export const CnmcformatData = ({ data, cups }) => {
 
   return [formatedHeaders, formatedData]
 }
+
+export const convertDataFromWattsToKwh = data =>
+  data.map(({ value, ...rest }) => {
+    const parsedValue = parseFloat(value);
+    const convertedValue = Number.isNaN(parsedValue) ? value : parsedValue / 1000;
+    return {
+      ...rest,
+      value: convertedValue,
+    };
+  });
 
 export const CsvformatData = (data) => {
   const formatedHeaders = data.columns.map(element => ({

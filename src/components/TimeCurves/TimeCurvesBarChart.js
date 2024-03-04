@@ -44,7 +44,7 @@ function TimeCurvesBarChart({ data, period, tariffTimetableId }) {
             tickCount={7}
             width={75}
             tickLine={false}
-            tickFormatter={(tickItem) => `${formatDecimal(tickItem / 1000)}`}
+            tickFormatter={(tickItem) => `${formatDecimal(tickItem)}`}
             tick={{ fontSize: '1rem', transform: 'translate(0, 0)' }}
           >
             <Label
