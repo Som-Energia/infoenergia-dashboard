@@ -79,8 +79,8 @@ export const getSeasonalProfile = async (contract, token) => {
 }
 
 export const getConsumption = async (date, token, type) => {
-  const urlY = '/investments/assignments-consumption-yearly/'
-  const urlM = '/investments/assignments-consumption-monthly/'
+  const urlY = '/api/investments/assignments-consumption-yearly/'
+  const urlM = '/api/investments/assignments-consumption-monthly/'
 
   return axios({
     method: 'GET',
@@ -94,7 +94,7 @@ export const getConsumption = async (date, token, type) => {
 export const getkWhRecord = async (date, token) => {
   return axios({
     method: 'GET',
-    url: '/investments/assignments-kwh-rights/'+date.year(),
+    url: '/api/investments/assignments-kwh-rights/'+date.year(),
     headers: { Authorization: token },
   }).then((response) => {
     return response?.data
@@ -104,7 +104,7 @@ export const getkWhRecord = async (date, token) => {
 export const getkWhRemaining = async (token) => {
   return axios({
     method: 'GET',
-    url: '/investments/assignments-remaining-kwh-production',
+    url: '/api/investments/assignments-remaining-kwh-production',
     headers: { Authorization: token },
   }).then((response) => {
     return response?.data
@@ -117,7 +117,7 @@ export const getkWhRemaining = async (token) => {
 export const getLastInvoiceDatePriorityContract = async (token) => {
   return axios({
     method: 'GET',
-    url: '/investments/last-invoice-date-from-priority-contract',
+    url: '/api/investments/last-invoice-date-from-priority-contract',
     headers: { Authorization: token },
   }).then((response) => {
     return response?.data
