@@ -1,8 +1,7 @@
 # Change Log
 
-## 1.0.6 2024-04-22
-
-- Fix curve comparison units
+## 1.1.0 2024-04-15
+- Changed the api url in generationkwh calls
 
 ## 1.0.5 2024-03-04
 
