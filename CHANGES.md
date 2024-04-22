@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.0.6 2024-04-22
+
+- Fix curve comparison units
+
 ## 1.0.5 2024-03-04
 
 - Fix time curve max decimals
