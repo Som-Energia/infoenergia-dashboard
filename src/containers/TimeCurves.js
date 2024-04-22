@@ -228,13 +228,13 @@ function TimeCurves(props) {
             ) : chartType === 'LINE_CHART_TYPE' ? (
               <TimeCurvesLineChart
                 data={convertDataFromWattsToKwh(filteredTimeCurves)}
-                compareData={compareData}
+                compareData={convertDataFromWattsToKwh(compareData)}
                 period={period}
               />
             ) : (
               <TimeCurvesBarChart
                 data={convertDataFromWattsToKwh(filteredTimeCurves)}
-                compareData={compareData}
+                compareData={convertDataFromWattsToKwh(compareData)}
                 period={period}
                 tariffTimetableId={contract?.tariff_timetable_id}
               />
