@@ -65,10 +65,14 @@ export default function KwhBag(props) {
     const groupData = groupYearlyDataAccumulation(kWhRemaining, periods)
     delete groupData.value
     const data = { periods: {}, fills: {} }
-    Object.keys(groupData).forEach((element) => {
-      data.periods[t(element+'_P')] = groupData[element]
-      data.fills[t(element+'_P')] = period2ColorKwhBag[element]
+    const groupDataKeys = Object.keys(groupData)
+    const is3Period = groupDataKeys.length === 3;
+    groupDataKeys.forEach((element) => {
+      const suffix = is3Period ? '_P' : '';
+      data.periods[t(element + suffix)] = groupData[element]
+      data.fills[t(element + suffix)] = period2ColorKwhBag[element]
     })
+
     return data
   }, [kWhRemaining, periods])
 
@@ -119,7 +123,7 @@ export default function KwhBag(props) {
             gap: '10px',
           }}
         >
-          <PeriodSelector handleChange={handleChange} periods={periods}/>
+          <PeriodSelector handleChange={handleChange} periods={periods} />
         </Grid>
       </Grid>
       <Grid

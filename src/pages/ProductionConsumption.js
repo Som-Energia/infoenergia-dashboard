@@ -87,8 +87,8 @@ function ProductionConsumption(props) {
   const { i18n, t } = useTranslation()
   const sections = [
     t('GENERATION_KWH_USE_SECTION_TITLE'),
-    t('GENERATION_KWH_RECORD_SECTION_TITLE'),
     t('GENERATION_KWH_BAG_SECTION_TITLE'),
+    t('GENERATION_KWH_RECORD_SECTION_TITLE'),
   ]
   const {
     setSelectedDate,
@@ -141,12 +141,9 @@ function ProductionConsumption(props) {
     } else if (value === 1) {
       return (
         <TabPanel value={value} index={index}>
-          <Record
+          <KwhBag
             handleDateChange={handleDateChange}
-            selectedDate={selectedDate}
-            viewTypeValue={YEAR}
-            loading={loadingRecord}
-            kWhRecord={kWhRecord}
+            handleViewTypeChange={handleViewTypeChange}
             {...props}
           />
         </TabPanel>
@@ -154,9 +151,12 @@ function ProductionConsumption(props) {
     } else {
       return (
         <TabPanel value={value} index={index}>
-          <KwhBag
+          <Record
             handleDateChange={handleDateChange}
-            handleViewTypeChange={handleViewTypeChange}
+            selectedDate={selectedDate}
+            viewTypeValue={YEAR}
+            loading={loadingRecord}
+            kWhRecord={kWhRecord}
             {...props}
           />
         </TabPanel>
