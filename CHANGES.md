@@ -1,5 +1,9 @@
 # Change Log
 
+## Unreleased 
+- Change order of generationkwh subsections
+- Add prefix "api" in the urls of the generationkwh calls
+
 ## 1.1.0 2024-04-15
 - Changed the api url in generationkwh calls
 
