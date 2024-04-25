@@ -1,4 +1,5 @@
 import dayjs from 'dayjs'
+import i18n from 'i18n/i18n'
 import { getPeriod } from 'services/timecurves'
 
 export const capitalizeWord = (word) => {
@@ -77,12 +78,19 @@ export const formatTooltipLabel = (period, value, type = 'barChart') => {
   }
 }
 
-export const formatTooltip = (value) => {
-  const numericValue = Number(value);
-  if (isNaN(numericValue) || numericValue === 0) return [null, null];
-  const formattedValue = numericValue.toString().split('.')[0] + ',' + numericValue.toString().split('.')[1].slice(0, 3);
-  return [`${formattedValue} kWh`, null];
-};
+export const formatTooltip = (value, unit, decimals) => {
+  const asFloat = parseFloat(value)
+  if (asFloat % 1 === 0) return [`${asFloat} ${unit}`, null]
+  if (isNaN(asFloat)) return [`-- ${unit}`, null]
+  const language = i18n.language
+  const localized = asFloat.toLocaleString(language, {
+    maximumFractionDigits: decimals ?? 2,
+    minimumFractionDigits: decimals ?? 2,
+    useGrouping: true,
+  })
+
+  return [`${localized} ${unit}`, null]
+}
 
 export const agregateDates = (dates, agregatedDate, tariffTimetableId) => {
   const base = getBaseKeys(tariffTimetableId)
@@ -411,18 +419,20 @@ export const CnmcformatData = ({ data, cups }) => {
   return [formatedHeaders, formatedData]
 }
 
-export const convertDataFromWattsToKwh = data =>
+export const convertDataFromWattsToKwh = (data) =>
   data.map(({ value, ...rest }) => {
-    const parsedValue = parseFloat(value);
-    const convertedValue = Number.isNaN(parsedValue) ? value : parsedValue / 1000;
+    const parsedValue = parseFloat(value)
+    const convertedValue = Number.isNaN(parsedValue)
+      ? value
+      : parsedValue / 1000
     return {
       ...rest,
       value: convertedValue,
-    };
-  });
+    }
+  })
 
 export const CsvformatData = (data) => {
-  const formatedHeaders = data.columns.map(element => ({
+  const formatedHeaders = data.columns.map((element) => ({
     label: element,
     key: element,
   }))
@@ -439,7 +449,6 @@ export const CsvformatData = (data) => {
 }
 
 export const kwhRecordToCsvformatData = (data, t) => {
-
   const columns = [t('DATE'), t('HOUR'), t('PRODUCTION_KWH')]
 
   const formatedHeaders = columns.map((element) => ({
@@ -597,7 +606,6 @@ export const getDataForTable = (
 }
 
 export function generationKwhRecordData(khwRecordData, periods, t) {
-
   const groupData = groupDataByPeriod(
     khwRecordData,
     'YEARLY',
@@ -605,7 +613,7 @@ export function generationKwhRecordData(khwRecordData, periods, t) {
     periods
   )
 
-  const keys = getBaseKeys(periods,1)
+  const keys = getBaseKeys(periods, 1)
   let total = 0
   const data = { periods: [], fills: {}, keys: [], total: 0 }
 

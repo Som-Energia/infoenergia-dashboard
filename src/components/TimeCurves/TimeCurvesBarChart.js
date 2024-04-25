@@ -56,7 +56,7 @@ function TimeCurvesBarChart({ data, period, tariffTimetableId }) {
           </YAxis>
 
           <Tooltip
-            formatter={formatTooltip}
+            formatter={(value) => formatTooltip(value, 'kWh', 3)}
             labelFormatter={(value) => formatTooltipLabel(period, value)}
             cursor={{ fill: '#f2f2f2bb' }}
             contentStyle={{ fontWeight: 'bold' }}

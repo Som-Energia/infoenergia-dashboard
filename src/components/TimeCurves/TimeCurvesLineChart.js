@@ -67,7 +67,7 @@ function TimeCurvesLineChart({ period, data = [], compareData = [] }) {
             />
           </YAxis>
           <Tooltip
-            formatter={formatTooltip}
+            formatter={(value) => formatTooltip(value, 'kWh', 3)}
             labelFormatter={(value) =>
               formatTooltipLabel(period, value, 'lineChart')
             }
