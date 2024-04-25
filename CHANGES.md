@@ -1,5 +1,8 @@
 # Change Log
 
+## 1.1.1 2024-04-25
+- Fix format tooltip for integers
+
 ## 1.1.0 2024-04-23 
 - Change order of generationkwh subsections
 - Add prefix "api" in the urls of the generationkwh calls
