@@ -6,6 +6,28 @@ import json
 from random import randrange
 from consolemsg import fail
 
+usage="""\
+Generates the content for a .env.development file
+in order to emulate the dashboard inside
+the virtual office with a given user logged in.
+You can locate the user by nif or by traits of their
+contracts.
+
+Examples:
+
+generate_env.py --vat 12345678X
+
+generate_env.py --contract 12345
+
+generate_env.py --contract 12345 --relation pagador
+
+generate_env.py --tariff 2.0TD
+
+generate_env.py --tariff 2.0TD --zone balearic
+
+generate_env.py --tariff 2.0TD --zone canary
+"""
+
 def unlistify(x):
     """Given a list of result, returns the first one or None if no result"""
     if type(x) not in (tuple, list):
@@ -14,10 +36,12 @@ def unlistify(x):
 
 def fk_id(x):
     """Given a foreign key tuple (id, name) return the id"""
+    if not x: return None
     return x[0]
 
 def fk_name(x):
     """Given a foreign key tuple (id, name) return the name"""
+    if not x: return None
     return x[1]
 
 def timetable(polissa):
@@ -32,7 +56,11 @@ def timetable(polissa):
 
 def output_config(erp, partner_id):
     partner_model = erp.model("res.partner")
-    partner = partner_model.read(partner_id)
+    partner = partner_model.read(partner_id, [
+        'vat',
+        'empowering_token',
+        'name',
+    ])
     polissa_model = erp.model("giscedata.polissa")
     polissa_filters = [
         ("titular", "=", partner["id"]),
@@ -110,24 +138,7 @@ def search_partner_by_contract_name(erp, contract, relation='titular'):
     return fk_id(polissa[relation])
 
 @click.command(
-    help="""\
-Generates a .env.development to emulate the dashboard
-being inside the virtual office with a given user logged.
-You can locate the user by nif or by traits of their
-contracts.
-
-Examples:
-
-generate_env.py --vat 12345678X
-
-generate_env.py --contract 12345
-
-generate_env.py --tariff 2.0TD
-
-generate_env.py --tariff 2.0TD --zone balearic
-
-generate_env.py --tariff 2.0TD --zone balearic
-"""
+    help=usage,
 )
 @click.option(
     "--erp",
@@ -166,7 +177,7 @@ generate_env.py --tariff 2.0TD --zone balearic
 @click.option(
     "--relation",
     "-r",
-    type=click.Choice(["titular", "pagador", "administadora"]),
+    type=click.Choice(["titular", "pagador", "administradora"]),
     default="titular",
     help="Use this relation to filter partner by contract",
 )
@@ -175,14 +186,13 @@ def cli(vat, tariff, zone, contract, relation, erp_instance):
     erp = erppeek.Client(**configdb.erppeek_profiles.get(erp_instance))
     if vat:
         partner_id = search_partner_by_vat(erp, vat)
-        if not partner_id:
-            fail(f"No partner found with VAT {vat}")
     elif contract:
         partner_id = search_partner_by_contract_name(erp, contract, relation)
-        if not partner_id:
-            fail(f"No contract found {contract}")
     else:
         partner_id = search_partner_by_contract_traits(erp, tariff, zone, relation)
+
+    if not partner_id:
+        fail(f"No case not found")
 
     output_config(erp, partner_id)
 
