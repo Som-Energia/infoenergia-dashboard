@@ -23,7 +23,7 @@ export const GenerationUseContextProvider = (props) => {
   const MONTH = 'month'
   const YEAR = 'year'
 
-  const { t } = useTranslation()
+  const { i18n,t } = useTranslation()
   const { language } = useParams()
 
   const {
@@ -114,6 +114,11 @@ export const GenerationUseContextProvider = (props) => {
       console.log(e)
     }
   }
+
+  useEffect(() => {
+    language && i18n.changeLanguage(language)
+  }, [language, i18n])
+
 
   useEffect(
     function () {
