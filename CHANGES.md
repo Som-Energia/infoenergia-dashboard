@@ -1,5 +1,8 @@
 # Change Log
 
+## Unreleased
+- Fix lang manage in generationkwh section
+
 ## 1.1.1 2024-04-25
 - Fix format tooltip for integers
 
