@@ -1,6 +1,6 @@
 # Change Log
 
-## Unreleased
+## 1.1.2 2024-05-02
 - Fix lang manage in generationkwh section
 
 ## 1.1.1 2024-04-25
