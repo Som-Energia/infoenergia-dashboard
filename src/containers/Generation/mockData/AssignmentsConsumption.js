@@ -1,11 +1,8 @@
 export const consumption = {
-    columns: [
-        "Contracte / Adreça",
-        "Prioritat",
-        "Vall (P3)",
-        "Pla (P2)",
-        "Punta (P1)",
-        "Total"
+    datKeys: [
+        "P3",
+        "P2",
+        "P1"
     ],
     rows: [
         {
@@ -35,6 +32,14 @@ export const consumption = {
         {
             id: " 0003684 - PLAZA DE LA CONCORDIA, ,7 18518 (Lanteira)",
             priority: "4º",
+            P1: "-",
+            P2: "-",
+            P3: "-",
+            total: "0 kWh"
+        },
+        {
+            id: " 0001589 - PLAZA DE LA DISCUSIÓN, ,8 84334 (Lleida)",
+            priority: "-",
             P1: "-",
             P2: "-",
             P3: "-",
