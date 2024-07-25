@@ -1,4 +1,5 @@
-import { convertDataFromWattsToKwh, formatTooltip } from './utils';
+import { convertDataFromWattsToKwh, formatTooltip, getDataForTable } from './utils';
+import { consumption } from '../containers/Generation/mockData/AssignmentsConsumption'
 
 describe('convertDataFromWattsToKwh', () => {
   it('should convert data from watts to kWh', () => {

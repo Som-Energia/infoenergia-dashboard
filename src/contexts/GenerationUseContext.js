@@ -1,7 +1,6 @@
 import { createContext, useState, useEffect } from 'react'
 import { getConsumption, getkWhRemaining, getkWhRecord } from '../services/api'
 import {
-  formatOrdinals,
   getDataForTable
 } from '../services/utils'
 import { useTranslation } from 'react-i18next'
@@ -23,7 +22,7 @@ export const GenerationUseContextProvider = (props) => {
   const MONTH = 'month'
   const YEAR = 'year'
 
-  const { i18n,t } = useTranslation()
+  const { i18n } = useTranslation()
   const { language } = useParams()
 
   const {
@@ -55,16 +54,10 @@ export const GenerationUseContextProvider = (props) => {
   const [kWhRemaining, setkWhRemaining] = useState(initKWhRemaining)
   const [kWhRecord, setkWhRecord] = useState(initKWhRecord)
 
-  const getPriority = (priorityNumber) => {
-    return priorityNumber === 0
-      ? t('GENERATION_MAIN_PRIORITY')
-      : formatOrdinals(language, priorityNumber + 1)
-  }
-
   const Is3Period = () => {
     let result = true
     generationAssignments.forEach((element) => {
-      result = result && (element.contract_tariff.includes('2.0') || element.contract_tariff==="")
+      result = result && (element.contract_tariff.includes('2.0') || element.contract_tariff === "")
     })
     setIs3Period(result)
   }
@@ -77,11 +70,10 @@ export const GenerationUseContextProvider = (props) => {
         token,
         viewTypeValue
       )
+
       const assignmentsTableFormat = getDataForTable(
         generationAssignments,
-        consumption.data,
-        getPriority,
-        t
+        consumption.data
       )
       setAssignmentsTableFormat(assignmentsTableFormat.data)
       setLoadingUse(false)
