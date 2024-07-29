@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect } from 'react'
 import { getConsumption, getkWhRemaining, getkWhRecord } from '../services/api'
 import {
-  getDataForTable
+  formatOrdinals, getDataForTable
 } from '../services/utils'
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
@@ -11,18 +11,23 @@ import 'dayjs/locale/es'
 import 'dayjs/locale/eu'
 import 'dayjs/locale/gl'
 
+
+
+
+
 const initValues = {
   selectedDate: null,
   viewTypeValue: null,
   assignmentsTableFormat: {},
 }
+
 const GenerationUseContext = createContext(initValues)
 
 export const GenerationUseContextProvider = (props) => {
   const MONTH = 'month'
   const YEAR = 'year'
 
-  const { i18n } = useTranslation()
+  const { t, i18n } = useTranslation()
   const { language } = useParams()
 
   const {
@@ -54,6 +59,30 @@ export const GenerationUseContextProvider = (props) => {
   const [kWhRemaining, setkWhRemaining] = useState(initKWhRemaining)
   const [kWhRecord, setkWhRecord] = useState(initKWhRecord)
 
+  const columns3 = [
+    t('GENERATION_KWH_USE_TABLE_CONTRACT_ADDRESS'),
+    t('GENERATION_KWH_USE_TABLE_PRIORITY'),
+    t('GENERATION_KWH_USE_TABLE_VALLEY'),
+    t('GENERATION_KWH_USE_TABLE_FLAT'),
+    t('GENERATION_KWH_USE_TABLE_PICK'),
+    t('GENERATION_KWH_USE_TABLE_TOTAL'),
+  ]
+
+  const columns6 = [
+    t('GENERATION_KWH_USE_TABLE_CONTRACT_ADDRESS'),
+    t('GENERATION_KWH_USE_TABLE_PRIORITY'),
+    'P6',
+    'P5',
+    'P4',
+    'P3',
+    'P2',
+    'P1',
+    t('GENERATION_KWH_USE_TABLE_TOTAL'),
+  ]
+
+
+
+
   const Is3Period = () => {
     let result = true
     generationAssignments.forEach((element) => {
@@ -61,6 +90,13 @@ export const GenerationUseContextProvider = (props) => {
     })
     setIs3Period(result)
   }
+
+  const getPriority = (priorityNumber) => {
+    return priorityNumber === 0
+      ? t('GENERATION_MAIN_PRIORITY')
+      : formatOrdinals(language, priorityNumber + 1)
+  }
+
 
   const getUseData = async () => {
     try {
@@ -70,11 +106,19 @@ export const GenerationUseContextProvider = (props) => {
         token,
         viewTypeValue
       )
-
+      
       const assignmentsTableFormat = getDataForTable(
         generationAssignments,
         consumption.data
       )
+
+      const assignmentsTableFormatTmp = JSON.parse(JSON.stringify(assignmentsTableFormat.data))
+      const maxLength = assignmentsTableFormatTmp?.dataKeys?.length
+      assignmentsTableFormat.data.columns = maxLength === 3 ? columns3 : columns6
+      assignmentsTableFormatTmp.rows.forEach(row => { row.priority = row.priority !== '-' ? getPriority(row.priority) : '-' })
+
+      assignmentsTableFormat.data.rows = assignmentsTableFormatTmp.rows
+
       setAssignmentsTableFormat(assignmentsTableFormat.data)
       setLoadingUse(false)
     } catch (e) {
