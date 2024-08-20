@@ -1,12 +1,19 @@
 # Change Log
 
+## 1.2.0 2024-08-20
+
+- Add use data of unassigned contracts in generationkwh section 
+
 ## 1.1.2 2024-05-02
+
 - Fix lang manage in generationkwh section
 
 ## 1.1.1 2024-04-25
+
 - Fix format tooltip for integers
 
 ## 1.1.0 2024-04-23 
+
 - Change order of generationkwh subsections
 - Add prefix "api" in the urls of the generationkwh calls
 
