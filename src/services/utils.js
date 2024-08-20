@@ -159,15 +159,15 @@ export const getBaseKeys = (tariffTimetableId, order = 0) => {
   if (tariffTimetableId === 'Taula_Peatges_20') {
     return order === 0
       ? {
-          VALLEY: 0,
-          PICK: 0,
-          FLAT: 0,
-        }
+        VALLEY: 0,
+        PICK: 0,
+        FLAT: 0,
+      }
       : {
-          PICK: 0,
-          FLAT: 0,
-          VALLEY: 0,
-        }
+        PICK: 0,
+        FLAT: 0,
+        VALLEY: 0,
+      }
   } else {
     return {
       P1: 0,
@@ -312,15 +312,15 @@ export const groupDataByPeriod = (
 export const mergeData = (arrData1 = [], arrData2 = []) => {
   return arrData1 > arrData2
     ? arrData1.map((item, index) => ({
-        date: item.date,
-        value: item.value,
-        compValue: arrData2[index]?.value,
-      }))
+      date: item.date,
+      value: item.value,
+      compValue: arrData2[index]?.value,
+    }))
     : arrData2.map((item, index) => ({
-        date: item.date,
-        value: arrData1[index]?.value,
-        compValue: item.value,
-      }))
+      date: item.date,
+      value: arrData1[index]?.value,
+      compValue: item.value,
+    }))
 }
 
 export const completeYearData = (origData) => {
@@ -521,87 +521,126 @@ export const formatOrdinals = (lang, number) => {
 
 export const getDataForTable = (
   assignmentsConsumption,
-  data,
-  getPriority,
-  t
+  data
 ) => {
   const dataT = {}
-  const columns3 = {
-    labels: [
-      t('GENERATION_KWH_USE_TABLE_CONTRACT_ADDRESS'),
-      t('GENERATION_KWH_USE_TABLE_PRIORITY'),
-      t('GENERATION_KWH_USE_TABLE_VALLEY'),
-      t('GENERATION_KWH_USE_TABLE_FLAT'),
-      t('GENERATION_KWH_USE_TABLE_PICK'),
-      t('GENERATION_KWH_USE_TABLE_TOTAL'),
-    ],
-    dataKeys: ['P3', 'P2', 'P1'],
-  }
-  const columns6 = {
-    labels: [
-      t('GENERATION_KWH_USE_TABLE_CONTRACT_ADDRESS'),
-      t('GENERATION_KWH_USE_TABLE_PRIORITY'),
-      'P6',
-      'P5',
-      'P4',
-      'P3',
-      'P2',
-      'P1',
-      t('GENERATION_KWH_USE_TABLE_TOTAL'),
-    ],
-    dataKeys: ['P6', 'P5', 'P4', 'P3', 'P2', 'P1'],
-  }
+
+  const dataKeys3 = ['P3', 'P2', 'P1']
+  const dataKeys6 = ['P6', 'P5', 'P4', 'P3', 'P2', 'P1']
+
+  /*
+    data object contains an array of:
+
+    "contract_number": {
+        "P2": [kwh value],
+        "P3": [kwh value],
+        "P1": [kwh value], 
+        "address": "[Contract address]" 
+    } 
+  */
+
+  let total = 0
+  
   const lengths = Object.keys(data).map((id) => Object.keys(data[id]).length)
   let maxLength = Math.max(...lengths)
   maxLength = maxLength === 0 ? 3 : maxLength
 
-  let total = 0
+  dataT.dataKeys = maxLength < 6 ? dataKeys3 : dataKeys6
 
-  dataT.columns = maxLength < 6 ? columns3.labels : columns6.labels
-  dataT.dataKeys = maxLength < 6 ? columns3.dataKeys : columns6.dataKeys
+  function getRowKwh(kwhs) {
 
-  dataT.rows = assignmentsConsumption.map((element) => {
-    const kwhs = Object.values(data[element.id])
     const rowKwh = kwhs
       ? kwhs.reduce(
-          (accumulated, currentValue) => accumulated + currentValue,
-          0
-        )
+        (accumulated, currentValue) => accumulated + currentValue,
+        0
+      )
       : 0
+    return rowKwh
+  }
 
-    total = total + rowKwh
 
+  function formattedRow(rowData) {
+    return {
+      id: rowData.contractNumber + ' - ' + rowData.contractAddress,
+      priority: rowData.priority,
+      ...rowData.kWhs,
+      total: rowData.totalKWh + ' kWh',
+    }
+  }
+
+  function getEmptyData(kwhs, id) {
     const emptyData = {}
     if (!kwhs || kwhs.length < maxLength) {
       for (let i = kwhs.length; i < maxLength; i++) {
-        if (!emptyData[element.id]) {
-          emptyData[element.id] = {}
+        if (!emptyData[id]) {
+          emptyData[id] = {}
         }
-        emptyData[element.id]['P' + (i + 1)] = '-'
+        emptyData[id]['P' + (i + 1)] = '-'
       }
     }
+    return emptyData
+  }
 
-    const dataTmpCopy = JSON.parse(JSON.stringify(data[element.id]))
+  function comparePriorities(a, b) {
+    if (a.priority === '-') {
+      return 1
+    }
+    if (b.priority === '-' || (a.priority < b.priority)) {
+      return -1
+    }
+    if (a.priority > b.priority) {
+      return 1
+    }
+    return 0
+  }
+
+
+  dataT.rows = Object.keys(data).map((dataKey) => {
+
+    const { number, address, ...periods } = data[dataKey]
+    const kwhs = Object.values(periods)
+
+    const rowKwh = getRowKwh(kwhs)
+    total = total + rowKwh
+
+    const emptyData = getEmptyData(kwhs, dataKey)
+
+    const dataTmpCopy = JSON.parse(JSON.stringify(data[dataKey]))
     Object.keys(dataTmpCopy).forEach((id) => {
       dataTmpCopy[id] = dataTmpCopy[id] + ' kWh'
     })
 
-    const tmpData = { ...dataTmpCopy, ...emptyData[element.id] }
+    const tmpData = { ...dataTmpCopy, ...emptyData[dataKey] }
     const newData = {}
     dataT.dataKeys.forEach((element) => {
       newData[element] = tmpData[element] || '-'
     })
 
-    const contractNumber = element.contract.split('-')
+    let contractAddress = ''
+    let priority = ''
+    let contractNumber = ''
 
-    return {
-      id: contractNumber[1] + ' - ' + element.contract_address,
-      priority: getPriority(element.priority),
-      ...newData,
-      total: rowKwh + ' kWh',
+    const assignment = assignmentsConsumption.find(obj => {
+      const contractNumber = obj.contract.split('-')[1]
+      return parseInt(contractNumber) === parseInt(dataKey)
+    })
+    if (assignment) {
+      contractNumber = assignment?.contract.split('-')[1]
+      contractAddress = assignment?.contract_address
+      priority = assignment.priority
     }
+    else {
+      contractAddress = data[dataKey].address
+      contractNumber = dataKey
+      priority = '-'
+    }
+
+    return formattedRow({ contractAddress: contractAddress, contractNumber: contractNumber, priority: priority, kWhs: newData, totalKWh: rowKwh })
   })
+
+  dataT.rows = dataT.rows.sort(comparePriorities)
   dataT.total = total
+  
   return { data: dataT }
 }
 

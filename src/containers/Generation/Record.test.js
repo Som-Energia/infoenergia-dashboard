@@ -16,6 +16,10 @@ jest.mock('react-i18next', () => ({
       },
     }
   },
+  initReactI18next: {
+    type: '3rdParty',
+    init: () => {},
+  }
 }))
 
 describe('Record section of GenerationkWh', () => {
