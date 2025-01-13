@@ -1,5 +1,8 @@
 # Change Log
 
+## Unrealesed
+- Improve investments Api, divided in two parts, mokc and production 
+
 ## 1.2.0 2024-08-20
 
 - Add use data of unassigned contracts in generationkwh section 
