@@ -1,4 +1,5 @@
 import axios from 'axios'
+import investmentsFactApi from './investmentsFactApi'
 
 const HEMAN_API_URL = document.getElementById('root')
   ? document.getElementById('root').dataset.hemanApiUrl
