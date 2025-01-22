@@ -1,6 +1,6 @@
 # Change Log
 
-## Unrealesed
+## 1.3.0 2025-01-22
 - Improve investments Api, divided in two parts, mokc and production
 - Add new env variables:
     - REACT_APP_GENERATION_ASSIGNMENTS_USE_TABLE
