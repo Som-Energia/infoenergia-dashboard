@@ -4,6 +4,13 @@ export const consumption = {
         "P2",
         "P1"
     ],
+    columns: [
+        "Contracte / Adreça	Prioritat",
+        "Vall (P3)",
+        "Pla (P2)",
+        "Punta (P1)",
+        "Total"
+    ],
     rows: [
         {
             id: " 0013117 - . Jacint Verdaguer, 42, 3er 1a 8970 (Sant Joan Despí)",

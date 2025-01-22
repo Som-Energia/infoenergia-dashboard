@@ -1,5 +1,13 @@
 # Change Log
 
+## Unrealesed
+- Improve investments Api, divided in two parts, mokc and production
+- Add new env variables:
+    - REACT_APP_GENERATION_ASSIGNMENTS_USE_TABLE
+    - REACT_APP_GENERATION_PRODUCTION_CHART
+    - REACT_APP_GENERATION_BAG_KWH
+    - REACT_APP_GENERATION_LAST_INVOICE_DATE 
+
 ## 1.2.0 2024-08-20
 
 - Add use data of unassigned contracts in generationkwh section 
