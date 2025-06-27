@@ -1,6 +1,6 @@
 # Change Log
 
-## unreleased
+## 1.3.1 2025-06-27
 
 - Change icon because new webforms styles
 
