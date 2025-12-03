@@ -95,11 +95,11 @@ function TipicalDailyProfile(props) {
               <div className="iconWrapper">
                 <ErrorOutlineIcon fontSize="large" />
               </div>
-              <p
+              <div
                 dangerouslySetInnerHTML={{
                   __html: t('CONSUME_ADVICE'),
                 }}
-              ></p>
+              ></div>
             </Message>
           </Grid>
         </Grid>

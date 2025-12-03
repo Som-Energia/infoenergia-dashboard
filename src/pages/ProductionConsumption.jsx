@@ -52,7 +52,7 @@ function TabPanel(props) {
     >
       {value === index && (
         <Box p={3}>
-          <Typography>{children}</Typography>
+          <Typography component={'div'}>{children}</Typography>
         </Box>
       )}
     </div>
@@ -126,7 +126,7 @@ function ProductionConsumption(props) {
   const getPanel = (value, index, element) => {
     if (value === 0) {
       return (
-        <TabPanel value={value} index={index}>
+        <TabPanel value={value} key={index} index={index}>
           <Use
             handleDateChange={handleDateChange}
             handleViewTypeChange={handleViewTypeChange}
@@ -140,7 +140,7 @@ function ProductionConsumption(props) {
       )
     } else if (value === 1) {
       return (
-        <TabPanel value={value} index={index}>
+        <TabPanel value={value} key={index} index={index}>
           <KwhBag
             handleDateChange={handleDateChange}
             handleViewTypeChange={handleViewTypeChange}
@@ -150,7 +150,7 @@ function ProductionConsumption(props) {
       )
     } else {
       return (
-        <TabPanel value={value} index={index}>
+        <TabPanel value={value} key={index} index={index}>
           <Record
             handleDateChange={handleDateChange}
             selectedDate={selectedDate}
@@ -174,8 +174,8 @@ function ProductionConsumption(props) {
           aria-label="disabled tabs example"
           indicatorColor="primary"
         >
-          {sections.map((element) => (
-            <Tab key={element} label={element} {...a11yProps} />
+          {sections.map((element, index) => (
+            <Tab key={index} label={element} {...a11yProps} />
           ))}
         </Tabs>
         {value === 0 && !loadingUse ? (
