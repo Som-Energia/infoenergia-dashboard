@@ -79,13 +79,13 @@ def output_config(erp, partner_id):
     ]
 
     print(f"# Client: {partner['vat'].lstrip('ES')} - {partner['name']}")
-    print(f"REACT_APP_DEVEL_TOKEN={partner['empowering_token']}")
-    print(f"REACT_APP_DEVEL_CONTRACTS='{json.dumps(data)}'")
+    print(f"VITE_APP_DEVEL_TOKEN={partner['empowering_token']}")
+    print(f"VITE_APP_DEVEL_CONTRACTS='{json.dumps(data)}'")
     print(f"# testing")
-    print(f"#REACT_APP_HEMAN_API_URL='https://heman-test.somenergia.coop/api'")
+    print(f"#VITE_APP_HEMAN_API_URL='https://heman-test.somenergia.coop/api'")
     print(f"# prod")
-    print(f"REACT_APP_HEMAN_API_URL='https://infoenergia-api.somenergia.coop/api'")
-    print(f"REACT_APP_WEBFORMS_API_URL='https://api.somenergia.coop'")
+    print(f"VITE_APP_HEMAN_API_URL='https://infoenergia-api.somenergia.coop/api'")
+    print(f"VITE_APP_WEBFORMS_API_URL='https://api.somenergia.coop'")
 
 
 def search_partner_by_contract_traits(

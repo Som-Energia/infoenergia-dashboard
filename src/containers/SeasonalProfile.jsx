@@ -9,7 +9,7 @@ import ClimaDependency from '../components/SeasonalProfile/ClimaDependency'
 import LastUpdate from '../components/LastUpdate'
 
 import { ScrollWrapper, ScrollContainer } from '../components/Utils'
-import { Widget } from '../containers/TipicalDailyProfile/DistributionCharts'
+import { Widget } from './TipicalDailyProfile/DistributionCharts'
 
 import { getSeasonalProfile } from '../services/api'
 

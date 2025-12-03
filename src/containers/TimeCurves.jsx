@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useContext } from 'react'
 import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
 
-import * as dayjs from 'dayjs'
+import dayjs from 'dayjs'
 import { DatePicker } from '@material-ui/pickers'
 import IconButton from '@material-ui/core/IconButton'
 
@@ -11,15 +11,15 @@ import ArrowForwardIosOutlinedIcon from '@material-ui/icons/ArrowForwardIosOutli
 import TodayOutlinedIcon from '@material-ui/icons/TodayOutlined'
 import ClearIcon from '@material-ui/icons/Clear'
 
-import Counter from 'components/Counter'
-import TimeCurvesBarChart from 'components/TimeCurves/TimeCurvesBarChart'
-import TimeCurvesLineChart from 'components/TimeCurves/TimeCurvesLineChart'
-import LegendPeriod from 'components/TipicalDailyProfile/LegendPeriod'
+import Counter from '../components/Counter'
+import TimeCurvesBarChart from '../components/TimeCurves/TimeCurvesBarChart'
+import TimeCurvesLineChart from '../components/TimeCurves/TimeCurvesLineChart'
+import LegendPeriod from '../components/TipicalDailyProfile/LegendPeriod'
 
-import TimeCurvesContext from 'contexts/TimeCurvesContext'
-import Loading from 'components/Loading'
+import TimeCurvesContext from '../contexts/TimeCurvesContext'
+import Loading from '../components/Loading'
 
-import { periodUnit, labelTotalPeriod, convertDataFromWattsToKwh } from 'services/utils'
+import { periodUnit, labelTotalPeriod, convertDataFromWattsToKwh } from '../services/utils'
 
 const filterDataWithPeriod = ({ refDate, period, data }) => {
   const filteredData = []

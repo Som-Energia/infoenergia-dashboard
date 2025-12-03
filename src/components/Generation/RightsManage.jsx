@@ -1,14 +1,14 @@
 import React, { useContext, useEffect } from 'react'
 import Typography from '@material-ui/core/Typography'
-import DatePicker from 'components/DatePicker/DatePicker'
+import DatePicker from '../../components/DatePicker/DatePicker'
 import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid'
 import { useTranslation } from 'react-i18next'
 import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
 import GenerationUseContext from '../../contexts/GenerationUseContext'
-import { getMonthCode } from 'services/timecurves'
-import Loading from 'components/Loading'
+import { getMonthCode } from '../../services/timecurves'
+import Loading from '../../components/Loading'
 import PeriodSelector from './PeriodSelector'
 import { useParams } from 'react-router-dom'
 import dayjs from 'dayjs'
@@ -26,7 +26,7 @@ export default function RightsManage({
   viewTypeValue,
   total,
 }) {
-  
+
   const { t } = useTranslation()
   const { MONTH } = useContext(GenerationUseContext)
 

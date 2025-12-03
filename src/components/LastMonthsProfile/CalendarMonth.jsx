@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import * as dayjs from 'dayjs'
+import dayjs from 'dayjs'
 
 import { formatkWhDecimal } from '../../services/utils'
 

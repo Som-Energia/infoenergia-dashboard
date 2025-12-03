@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useMemo, useState } from 'react'
 import Grid from '@material-ui/core/Grid'
-import StackedBarChart from 'components/Generation/StackedBarChart'
+import StackedBarChart from '../../components/Generation/StackedBarChart'
 import {
   TableContainer,
   Table,
@@ -18,7 +18,7 @@ import {
 } from '../../services/utils'
 import GenerationUseContext from '../../contexts/GenerationUseContext'
 import { useTranslation } from 'react-i18next'
-import Loading from 'components/Loading'
+import Loading from '../../components/Loading'
 import { getLastInvoiceDatePriorityContract } from '../../services/api'
 import PeriodSelector from '../../components/Generation/PeriodSelector'
 

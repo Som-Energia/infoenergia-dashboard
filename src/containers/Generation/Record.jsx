@@ -1,9 +1,9 @@
 import React, { useMemo, useState } from 'react'
-import RightsManage from 'components/Generation/RightsManage'
+import RightsManage from '../../components/Generation/RightsManage'
 import Grid from '@material-ui/core/Grid'
-import Loading from 'components/Loading'
-import { generationKwhRecordData } from 'services/utils'
-import CustomBarChart from 'components/Generation/CustomBarChart'
+import Loading from '../../components/Loading'
+import { generationKwhRecordData } from '../../services/utils'
+import CustomBarChart from '../../components/Generation/CustomBarChart'
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
 

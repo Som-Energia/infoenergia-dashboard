@@ -1,6 +1,6 @@
 import dayjs from 'dayjs'
+import isoWeek from 'dayjs/plugin/isoWeek'
 
-const isoWeek = require('dayjs/plugin/isoWeek')
 dayjs.extend(isoWeek)
 
 const HEMAN_API_URL = document.getElementById('root')

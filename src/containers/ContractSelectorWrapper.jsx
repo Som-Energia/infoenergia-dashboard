@@ -1,7 +1,7 @@
 import React, { useState, useEffect, createContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
-import infoenergyBox from 'images/infoenergy_box.svg'
+import infoenergyBox from '../images/infoenergy_box.svg'
 
 import dayjs from 'dayjs'
 import 'dayjs/locale/ca'

@@ -12,7 +12,7 @@ if (root) {
     (name) => { props[name] = root.dataset[name] }
   )
 
-  console.log(`infoenergia version: ${process.env.REACT_APP_VERSION}`)
+  console.log(`infoenergia version: ${import.meta.env.VITE_APP_VERSION}`)
 
   ReactDOM.render(
     <>
@@ -26,3 +26,4 @@ if (root) {
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister()
+

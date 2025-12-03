@@ -1,6 +1,8 @@
 import dayjs from 'dayjs'
-import i18n from 'i18n/i18n'
-import { getPeriod } from 'services/timecurves'
+import i18n from '../i18n/i18n'
+import { getPeriod } from './timecurves'
+import isoWeek from 'dayjs/plugin/isoWeek'
+import weekday from 'dayjs/plugin/weekday'
 
 export const capitalizeWord = (word) => {
   return word.charAt(0).toUpperCase() + word.slice(1)
@@ -11,13 +13,11 @@ export const formatNumber = (num) => {
 }
 
 export const formatDay = (weekDay) => {
-  const isoWeek = require('dayjs/plugin/isoWeek')
   dayjs.extend(isoWeek)
   return dayjs().isoWeekday(weekDay).format('dddd')
 }
 
 export const formatDayHour = (day, hour) => {
-  const isoWeek = require('dayjs/plugin/isoWeek')
   dayjs.extend(isoWeek)
   return dayjs().hour(hour).isoWeekday(day).format('dddd HH')
 }
@@ -111,7 +111,6 @@ export const agregateDates = (dates, agregatedDate, tariffTimetableId) => {
 }
 
 export const groupWeeklyData = (data, tariffTimetableId) => {
-  const isoWeek = require('dayjs/plugin/isoWeek')
   dayjs.extend(isoWeek)
   const weekly = []
   const firstDay = data[0]?.date
@@ -233,7 +232,6 @@ export const groupYearlyDataByDay = (data) => {
   return Object.values(result)
 }
 
-const weekday = require('dayjs/plugin/weekday')
 dayjs.extend(weekday)
 
 export const domainFromData = (data, period) => {
@@ -534,13 +532,13 @@ export const getDataForTable = (
     "contract_number": {
         "P2": [kwh value],
         "P3": [kwh value],
-        "P1": [kwh value], 
-        "address": "[Contract address]" 
-    } 
+        "P1": [kwh value],
+        "address": "[Contract address]"
+    }
   */
 
   let total = 0
-  
+
   const lengths = Object.keys(data).map((id) => Object.keys(data[id]).length)
   let maxLength = Math.max(...lengths)
   maxLength = maxLength === 0 ? 3 : maxLength
@@ -640,7 +638,7 @@ export const getDataForTable = (
 
   dataT.rows = dataT.rows.sort(comparePriorities)
   dataT.total = total
-  
+
   return { data: dataT }
 }
 

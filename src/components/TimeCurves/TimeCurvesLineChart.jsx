@@ -21,7 +21,7 @@ import {
   ticksFromData,
   domainFromData,
   formatDecimal,
-} from 'services/utils'
+} from '../../services/utils'
 
 const ChartWrapper = styled.div`
   height: 450px;

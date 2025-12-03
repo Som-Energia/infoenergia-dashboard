@@ -1,25 +1,35 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 
 import {
   Bar,
+  BarChart,
   CartesianGrid,
   ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
   Label,
-  Legend,
-  BarChart,
 } from 'recharts'
 
-import { formatTooltipLabel, formatXAxis } from 'services/utils'
+import {
+  formatXAxis,
+  formatTooltip,
+  formatTooltipLabel,
+  groupDataByPeriod,
+  period2Color,
+  formatDecimal,
+} from '../../services/utils'
 
-function CustomBarChart({ data, period, legend = false }) {
+function TimeCurvesBarChart({ data, period, tariffTimetableId }) {
+  const groupedData = useMemo(
+    () => groupDataByPeriod(data, period, 'barChart', tariffTimetableId),
+    [data, period]
+  )
 
   return (
     <div style={{ height: '450px' }}>
       <ResponsiveContainer>
-        <BarChart width={730} height={250} data={data.periods}>
+        <BarChart width={730} height={250} data={groupedData}>
           <CartesianGrid stroke="#616161" strokeWidth={0.5} vertical={false} />
           <XAxis
             dataKey="date"
@@ -34,6 +44,7 @@ function CustomBarChart({ data, period, legend = false }) {
             tickCount={7}
             width={75}
             tickLine={false}
+            tickFormatter={(tickItem) => `${formatDecimal(tickItem)}`}
             tick={{ fontSize: '1rem', transform: 'translate(0, 0)' }}
           >
             <Label
@@ -45,25 +56,24 @@ function CustomBarChart({ data, period, legend = false }) {
           </YAxis>
 
           <Tooltip
+            formatter={(value) => formatTooltip(value, 'kWh', 3)}
             labelFormatter={(value) => formatTooltipLabel(period, value)}
             cursor={{ fill: '#f2f2f2bb' }}
             contentStyle={{ fontWeight: 'bold' }}
           />
-          {legend && <Legend />}
-          {data.keys.map((element) => {
-            return (
+          {groupedData &&
+            Object.keys(period2Color).map((key) => (
               <Bar
-                key={element}
+                key={key}
                 stackId="current"
-                dataKey={element}
-                fill={data.fills[element]}
+                dataKey={key}
+                fill={period2Color[key]}
               />
-            )
-          })}
+            ))}
         </BarChart>
       </ResponsiveContainer>
     </div>
   )
 }
 
-export default CustomBarChart
+export default TimeCurvesBarChart

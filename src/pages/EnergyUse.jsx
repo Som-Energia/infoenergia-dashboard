@@ -6,7 +6,7 @@ import dayjs from 'dayjs'
 import 'dayjs/locale/ca'
 import 'dayjs/locale/es'
 
-import TipicalDailyProfile from '../containers/TipicalDailyProfile'
+import TipicalDailyProfile from '../containers/TipicalDailyProfile.jsx'
 import TipicalWeeklyProfile from '../containers/TipicalWeeklyProfile'
 import LastMonthProfile from '../containers/LastMonthsProfile'
 import SeasonalProfile from '../containers/SeasonalProfile'

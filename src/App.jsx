@@ -4,7 +4,7 @@ import { MuiPickersUtilsProvider } from '@material-ui/pickers'
 import DayJsUtils from '@date-io/dayjs'
 import DevelopmentIndex from './pages/DevelopmentIndex'
 import CssBaseline from '@material-ui/core/CssBaseline'
-import { GenerationUseContextProvider } from 'contexts/GenerationUseContext'
+import { GenerationUseContextProvider } from './contexts/GenerationUseContext'
 
 import { createTheme, ThemeProvider } from '@material-ui/core/styles'
 

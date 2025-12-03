@@ -12,17 +12,17 @@ import TimelineOutlinedIcon from '@material-ui/icons/TimelineOutlined'
 import BarChartOutlinedIcon from '@material-ui/icons/BarChartOutlined'
 import GetAppIcon from '@material-ui/icons/GetApp'
 
-import Tabs from 'components/Tabs'
-import TimeCurves from 'containers/TimeCurves'
+import Tabs from '../components/Tabs'
+import TimeCurves from '../containers/TimeCurves'
 import ContractSelectorWrapper, {
   ContractContext,
-} from 'containers/ContractSelectorWrapper'
+} from '../containers/ContractSelectorWrapper'
 import TimeCurvesContext, {
   TimeCurvesContextProvider,
-} from 'contexts/TimeCurvesContext'
+} from '../contexts/TimeCurvesContext'
 
 import { CSVLink } from 'react-csv'
-import { CnmcformatData } from 'services/utils'
+import { CnmcformatData } from '../services/utils'
 
 const DownloadButton = (props) => {
   const { children } = props

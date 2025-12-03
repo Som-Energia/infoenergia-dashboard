@@ -1,8 +1,8 @@
 import React from 'react'
 import Table from '../../components/Table'
-import RightsManage from 'components/Generation/RightsManage'
+import RightsManage from '../../components/Generation/RightsManage'
 import Grid from '@material-ui/core/Grid'
-import Loading from 'components/Loading'
+import Loading from '../../components/Loading'
 
 export default function Use({
   handleViewTypeChange,
