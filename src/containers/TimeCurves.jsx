@@ -3,13 +3,13 @@ import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
 
 import dayjs from 'dayjs'
-import { DatePicker } from '@material-ui/pickers'
-import IconButton from '@material-ui/core/IconButton'
+import { DatePicker } from '@mui/x-date-pickers'
+import IconButton from '@mui/material/IconButton'
 
-import ArrowBackIosOutlinedIcon from '@material-ui/icons/ArrowBackIosOutlined'
-import ArrowForwardIosOutlinedIcon from '@material-ui/icons/ArrowForwardIosOutlined'
-import TodayOutlinedIcon from '@material-ui/icons/TodayOutlined'
-import ClearIcon from '@material-ui/icons/Clear'
+import ArrowBackIosOutlinedIcon from '@mui/icons-material/ArrowBackIosOutlined'
+import ArrowForwardIosOutlinedIcon from '@mui/icons-material/ArrowForwardIosOutlined'
+import TodayOutlinedIcon from '@mui/icons-material/TodayOutlined'
+import ClearIcon from '@mui/icons-material/Clear'
 
 import Counter from '../components/Counter'
 import TimeCurvesBarChart from '../components/TimeCurves/TimeCurvesBarChart'
@@ -62,9 +62,9 @@ function TimeCurves(props) {
   const { filteredTimeCurves, setFilteredTimeCurves } =
     useContext(TimeCurvesContext)
 
-  const [minDate, setMinDate] = useState()
-  const [maxDate, setMaxDate] = useState()
-  const [currentDate, setCurrentDate] = useState()
+  const [minDate, setMinDate] = useState(dayjs())
+  const [maxDate, setMaxDate] = useState(dayjs())
+  const [currentDate, setCurrentDate] = useState(dayjs())
   const [compareDate, setCompareDate] = useState(null)
   const [compareData, setCompareData] = useState([])
   const [totalKwh, setTotalKwh] = useState('-')
@@ -145,7 +145,7 @@ function TimeCurves(props) {
               <IconButton
                 onClick={prevDate}
                 disabled={dayjs(currentDate).isSame(minDate, 'day')}
-              >
+                size="large">
                 <ArrowBackIosOutlinedIcon fontSize="small" />
               </IconButton>
               <DatePicker
@@ -170,7 +170,7 @@ function TimeCurves(props) {
               <IconButton
                 onClick={nextDate}
                 disabled={dayjs(currentDate).isSame(maxDate, 'day')}
-              >
+                size="large">
                 <ArrowForwardIosOutlinedIcon fontSize="small" />
               </IconButton>
               {chartType === 'LINE_CHART_TYPE' && (
@@ -199,7 +199,7 @@ function TimeCurves(props) {
                     }}
                   />
                   {compareDate && (
-                    <IconButton onClick={() => setCompareDate(null)}>
+                    <IconButton onClick={() => setCompareDate(null)} size="large">
                       <ClearIcon fontSize="small" />
                     </IconButton>
                   )}
@@ -244,7 +244,7 @@ function TimeCurves(props) {
         </>
       }
     </Widget>
-  )
+  );
 }
 
 export default React.memo(TimeCurves)

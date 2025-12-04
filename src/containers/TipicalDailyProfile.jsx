@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
 
-import Grid from '@material-ui/core/Grid'
-import Skeleton from '@material-ui/lab/Skeleton'
-import Typography from '@material-ui/core/Typography'
-import { makeStyles } from '@material-ui/core/styles'
+import Grid from '@mui/material/Grid'
+import Skeleton from '@mui/material/Skeleton'
+import Typography from '@mui/material/Typography'
+import makeStyles from '@mui/styles/makeStyles';
 
 import TipicalDailyProfileChart from '../components/TipicalDailyProfile/TipicalDailyProfileChart'
 import Counter from '../components/Counter'
@@ -19,7 +19,7 @@ import { Widget } from './TipicalDailyProfile/DistributionCharts'
 
 import { getDailyProfile } from '../services/api'
 
-import ErrorOutlineIcon from '@material-ui/icons/Error'
+import ErrorOutlineIcon from '@mui/icons-material/Error'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -81,7 +81,7 @@ function TipicalDailyProfile(props) {
             </ScrollContainer>
           ) : data?.errors ? (
             // <NoDataMessage>{t(data.errors)}</NoDataMessage>
-            <NoDataMessage>{t('NO_DATA')}</NoDataMessage>
+            (<NoDataMessage>{t('NO_DATA')}</NoDataMessage>)
           ) : (
             <NoDataMessage>{t('NO_DATA')}</NoDataMessage>
           )}
@@ -107,7 +107,6 @@ function TipicalDailyProfile(props) {
       )}
       </Widget>
       <Separator />
-
       <WidgetGrid>
         <Widget>
           <DistributionByUserType {...props} />
@@ -124,10 +123,9 @@ function TipicalDailyProfile(props) {
       )}
         </Widget>
       </WidgetGrid>
-
       <LastUpdate date={data?.updated} />
     </>
-  )
+  );
 }
 
 export default TipicalDailyProfile

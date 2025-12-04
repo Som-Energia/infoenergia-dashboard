@@ -1,11 +1,11 @@
 import React, { useContext, useEffect } from 'react'
-import Typography from '@material-ui/core/Typography'
-import DatePicker from '../../components/DatePicker/DatePicker'
-import Box from '@material-ui/core/Box'
-import Grid from '@material-ui/core/Grid'
+import Typography from '@mui/material/Typography'
+import CustomDatePicker from '../../components/DatePicker/DatePicker'
+import Box from '@mui/material/Box'
+import Grid from '@mui/material/Grid'
 import { useTranslation } from 'react-i18next'
-import FormControl from '@material-ui/core/FormControl'
-import Select from '@material-ui/core/Select'
+import FormControl from '@mui/material/FormControl'
+import Select from '@mui/material/Select'
 import GenerationUseContext from '../../contexts/GenerationUseContext'
 import { getMonthCode } from '../../services/timecurves'
 import Loading from '../../components/Loading'
@@ -109,7 +109,7 @@ export default function RightsManage({
               spacing={1}
             >
               <Grid item xs={12} sm={3}>
-                <DatePicker
+                <CustomDatePicker
                   selectedDate={dayjs(selectedDate)}
                   handleDateChange={handleDateChange}
                   type={viewTypeValue}

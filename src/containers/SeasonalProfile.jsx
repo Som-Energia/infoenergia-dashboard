@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
 
-import Skeleton from '@material-ui/lab/Skeleton'
+import Skeleton from '@mui/material/Skeleton'
 
 import SeasonalProfileBarChart from '../components/SeasonalProfile/SeasonalProfileBarChart'
 import ClimaDependency from '../components/SeasonalProfile/ClimaDependency'

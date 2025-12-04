@@ -6,8 +6,8 @@ import userEvent from '@testing-library/user-event'
 import { act } from 'react-dom/test-utils'
 import { GenerationUseContextProvider } from '../../contexts/GenerationUseContext'
 import { consumption } from './mockData/AssignmentsConsumption'
-import { MuiPickersUtilsProvider } from '@material-ui/pickers'
-import DayJsUtils from '@date-io/dayjs'
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { vi } from 'vitest'
 
 vi.mock('react-i18next', () => ({
@@ -49,7 +49,7 @@ describe('Generation use section', () => {
         initialEntries={[`/${lang}/investments/production-consumption`]}
       >
         <Route exact path="/:language/investments/production-consumption">
-          <MuiPickersUtilsProvider utils={DayJsUtils}>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
             <GenerationUseContextProvider
               initViewTypeValue={0}
               isTestMode={true}
@@ -62,7 +62,7 @@ describe('Generation use section', () => {
                 viewTypeValue={MONTH}
               />
             </GenerationUseContextProvider>
-          </MuiPickersUtilsProvider>
+          </LocalizationProvider>
         </Route>
       </MemoryRouter>
     )
@@ -79,7 +79,7 @@ describe('Generation use section', () => {
         initialEntries={[`/${lang}/investments/production-consumption`]}
       >
         <Route exact path="/:language/investments/production-consumption">
-          <MuiPickersUtilsProvider utils={DayJsUtils}>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
             <GenerationUseContextProvider
               initViewTypeValue={1}
               isTestMode={true}
@@ -92,7 +92,7 @@ describe('Generation use section', () => {
                 viewTypeValue={YEAR}
               />
             </GenerationUseContextProvider>
-          </MuiPickersUtilsProvider>
+          </LocalizationProvider>
         </Route>
       </MemoryRouter>
     )
@@ -112,7 +112,7 @@ describe('Generation use section', () => {
         initialEntries={[`/${lang}/investments/production-consumption`]}
       >
         <Route exact path="/:language/investments/production-consumption">
-          <MuiPickersUtilsProvider utils={DayJsUtils}>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
             <GenerationUseContextProvider
               initViewTypeValue={0}
               isTestMode={true}
@@ -126,7 +126,7 @@ describe('Generation use section', () => {
                 viewTypeValue={YEAR}
               />
             </GenerationUseContextProvider>
-          </MuiPickersUtilsProvider>
+          </LocalizationProvider>
         </Route>
       </MemoryRouter>
     )
@@ -146,7 +146,7 @@ describe('Generation use section', () => {
         initialEntries={[`/${lang}/investments/production-consumption`]}
       >
         <Route exact path="/:language/investments/production-consumption">
-          <MuiPickersUtilsProvider utils={DayJsUtils}>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
             <GenerationUseContextProvider isTestMode={true} isloadingUse={true}>
               <Use
                 handleViewTypeChange={mockHandleViewTypeChange}
@@ -156,7 +156,7 @@ describe('Generation use section', () => {
                 loading={true}
               />
             </GenerationUseContextProvider>
-          </MuiPickersUtilsProvider>
+          </LocalizationProvider>
         </Route>
       </MemoryRouter>
     )

@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import {
   FormControl,
   Select,
-} from '@material-ui/core'
+} from '@mui/material'
 import GenerationUseContext from '../../contexts/GenerationUseContext'
 import { useTranslation } from 'react-i18next'
 

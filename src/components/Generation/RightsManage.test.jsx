@@ -8,8 +8,8 @@ import {
 import { GenerationUseContextProvider } from '../../contexts/GenerationUseContext'
 import { act } from 'react-dom/test-utils'
 import userEvent from '@testing-library/user-event'
-import { MuiPickersUtilsProvider } from '@material-ui/pickers'
-import DayJsUtils from '@date-io/dayjs'
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { vi } from 'vitest'
 
 vi.mock('react-i18next', () => ({
@@ -57,7 +57,7 @@ describe('Generic Component Rights Manage', () => {
         initialEntries={[`/${lang}/investments/production-consumption`]}
       >
         <Route exact path="/:language/investments/production-consumption">
-          <MuiPickersUtilsProvider utils={DayJsUtils}>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
             <GenerationUseContextProvider
               initViewTypeValue={0}
               isTestMode={true}
@@ -66,7 +66,7 @@ describe('Generic Component Rights Manage', () => {
                 <div id={id}>{CHILDREN_TEXT}</div>
               </RightsManage>
             </GenerationUseContextProvider>
-          </MuiPickersUtilsProvider>
+          </LocalizationProvider>
         </Route>
       </MemoryRouter>
     )
@@ -83,7 +83,7 @@ describe('Generic Component Rights Manage', () => {
         initialEntries={[`/${lang}/investments/production-consumption`]}
       >
         <Route exact path="/:language/investments/production-consumption">
-          <MuiPickersUtilsProvider utils={DayJsUtils}>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
             <GenerationUseContextProvider
               initViewTypeValue={0}
               isTestMode={true}
@@ -92,7 +92,7 @@ describe('Generic Component Rights Manage', () => {
                 <div id={id}>{CHILDREN_TEXT}</div>
               </RightsManage>
             </GenerationUseContextProvider>
-          </MuiPickersUtilsProvider>
+          </LocalizationProvider>
         </Route>
       </MemoryRouter>
     )
@@ -111,7 +111,7 @@ describe('Generic Component Rights Manage', () => {
         initialEntries={[`/${lang}/investments/production-consumption`]}
       >
         <Route exact path="/:language/investments/production-consumption">
-          <MuiPickersUtilsProvider utils={DayJsUtils}>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
             <GenerationUseContextProvider
               initViewTypeValue={0}
               isTestMode={true}
@@ -129,7 +129,7 @@ describe('Generic Component Rights Manage', () => {
                 <div id={id}>{CHILDREN_TEXT}</div>
               </RightsManage>
             </GenerationUseContextProvider>
-          </MuiPickersUtilsProvider>
+          </LocalizationProvider>
         </Route>
       </MemoryRouter>
     )
@@ -147,7 +147,7 @@ describe('Generic Component Rights Manage', () => {
         initialEntries={[`/${lang}/investments/production-consumption`]}
       >
         <Route exact path="/:language/investments/production-consumption">
-          <MuiPickersUtilsProvider utils={DayJsUtils}>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
             <GenerationUseContextProvider
               initViewTypeValue={0}
               isTestMode={true}
@@ -165,7 +165,7 @@ describe('Generic Component Rights Manage', () => {
                 <div id={id}>{CHILDREN_TEXT}</div>
               </RightsManage>
             </GenerationUseContextProvider>
-          </MuiPickersUtilsProvider>
+          </LocalizationProvider>
         </Route>
       </MemoryRouter>
     )
@@ -182,7 +182,7 @@ describe('Generic Component Rights Manage', () => {
         initialEntries={[`/${lang}/investments/production-consumption`]}
       >
         <Route exact path="/:language/investments/production-consumption">
-          <MuiPickersUtilsProvider utils={DayJsUtils}>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
             <GenerationUseContextProvider
               initViewTypeValue={0}
               isTestMode={true}
@@ -200,7 +200,7 @@ describe('Generic Component Rights Manage', () => {
                 <div id={id}>{CHILDREN_TEXT}</div>
               </RightsManage>
             </GenerationUseContextProvider>
-          </MuiPickersUtilsProvider>
+          </LocalizationProvider>
         </Route>
       </MemoryRouter>
     )
@@ -217,7 +217,7 @@ describe('Generic Component Rights Manage', () => {
         initialEntries={[`/${lang}/investments/production-consumption`]}
       >
         <Route exact path="/:language/investments/production-consumption">
-          <MuiPickersUtilsProvider utils={DayJsUtils}>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
             <GenerationUseContextProvider
               initViewTypeValue={0}
               isTestMode={true}
@@ -235,7 +235,7 @@ describe('Generic Component Rights Manage', () => {
                 <div id={id}>{CHILDREN_TEXT}</div>
               </RightsManage>
             </GenerationUseContextProvider>
-          </MuiPickersUtilsProvider>
+          </LocalizationProvider>
         </Route>
       </MemoryRouter>
     )
@@ -253,7 +253,7 @@ describe('Generic Component Rights Manage', () => {
         initialEntries={[`/${lang}/investments/production-consumption`]}
       >
         <Route exact path="/:language/investments/production-consumption">
-          <MuiPickersUtilsProvider utils={DayJsUtils}>
+           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <GenerationUseContextProvider
               initViewTypeValue={0}
               isTestMode={true}
@@ -271,7 +271,7 @@ describe('Generic Component Rights Manage', () => {
                 <div id={id}>{CHILDREN_TEXT}</div>
               </RightsManage>
             </GenerationUseContextProvider>
-          </MuiPickersUtilsProvider>
+          </LocalizationProvider>
         </Route>
       </MemoryRouter>
     )

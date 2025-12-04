@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react'
 import RightsManage from '../../components/Generation/RightsManage'
-import Grid from '@material-ui/core/Grid'
+import Grid from '@mui/material/Grid'
 import Loading from '../../components/Loading'
 import { generationKwhRecordData } from '../../services/utils'
 import CustomBarChart from '../../components/Generation/CustomBarChart'

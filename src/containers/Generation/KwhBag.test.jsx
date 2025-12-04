@@ -6,6 +6,7 @@ import { GenerationUseContextProvider } from '../../contexts/GenerationUseContex
 import userEvent from '@testing-library/user-event'
 import { act } from 'react-dom/test-utils'
 import { vi } from 'vitest'
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 vi.mock('react-i18next', () => ({
   // this mock makes sure any components using the translate hook can use it without a warning being shown
@@ -24,6 +25,35 @@ vi.mock('react-i18next', () => ({
 }))
 
 describe('Generation use section', () => {
+const theme = createTheme({
+  components: {
+    MuiUseMediaQuery: {
+      defaultProps: {
+          noSsr: true,
+      },
+    },
+  },
+  palette: {
+    primary: {
+      main: '#6d8f22',
+    },
+    secondary: {
+      main: '#767676',
+    },
+    background: {
+      default: '#f0f2f2',
+      paper: '#ffffff',
+    },
+    contrastThreshold: 1,
+    tonalOffset: 0.2,
+  },
+  typography: {
+    htmlFontSize: 12,
+  },
+  shape: {
+    borderRadius: 4,
+  },
+})
   const getById = queryByAttribute.bind(null, 'id')
   test('Should change the periods 3 to 6', async () => {
     const lang = 'ca'
@@ -33,7 +63,9 @@ describe('Generation use section', () => {
       >
         <Route exact path="/:language/investments/production-consumption">
           <GenerationUseContextProvider initViewTypeValue={0} isTestMode={true}>
-            <KwhBag lastInvoiceDatePriorityContract={new Date()} />
+            <ThemeProvider theme={theme}>
+              <KwhBag lastInvoiceDatePriorityContract={new Date()} />
+            </ThemeProvider>
           </GenerationUseContextProvider>
         </Route>
       </MemoryRouter>

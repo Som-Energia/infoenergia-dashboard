@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import DistributionPieChart from '../../components/TipicalDailyProfile/DistributionPieChart'
 import DistributionLegend from '../../components/TipicalDailyProfile/DistributionLegend'
 
-import Skeleton from '@material-ui/lab/Skeleton'
+import Skeleton from '@mui/material/Skeleton'
 
 import { getDistributionByTypeOfUse } from '../../services/api'
 

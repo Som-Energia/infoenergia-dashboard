@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useMemo, useState } from 'react'
-import Grid from '@material-ui/core/Grid'
+import Grid from '@mui/material/Grid'
 import StackedBarChart from '../../components/Generation/StackedBarChart'
 import {
   TableContainer,
@@ -9,9 +9,9 @@ import {
   TableRow,
   TableCell,
   Typography,
-} from '@material-ui/core'
-import Paper from '@material-ui/core/Paper'
-import { makeStyles } from '@material-ui/core/styles'
+} from '@mui/material'
+import Paper from '@mui/material/Paper'
+import makeStyles from '@mui/styles/makeStyles';
 import {
   groupYearlyDataAccumulation,
   period2ColorKwhBag
@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
   },
   root: {
     flexGrow: 1,
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: theme.palette?.background?.paper,
   },
   formControl: {
     margin: theme.spacing(1),
@@ -45,8 +45,9 @@ const useStyles = makeStyles((theme) => ({
   },
   selectEmpty: {
     marginTop: theme.spacing(2),
-  },
-}))
+  }
+}
+))
 
 export default function KwhBag(props) {
   const { token, lastInvoiceDatePriorityContract } = props

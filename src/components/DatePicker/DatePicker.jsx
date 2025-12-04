@@ -1,10 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
-import IconButton from '@material-ui/core/IconButton'
-import ArrowBackIosOutlinedIcon from '@material-ui/icons/ArrowBackIosOutlined'
-import ArrowForwardIosOutlinedIcon from '@material-ui/icons/ArrowForwardIosOutlined'
-import TodayOutlinedIcon from '@material-ui/icons/TodayOutlined'
-import { DatePicker } from '@material-ui/pickers'
+import IconButton from '@mui/material/IconButton'
+import ArrowForwardIosOutlinedIcon from '@mui/icons-material/ArrowForwardIosOutlined';
+import TodayOutlinedIcon from '@mui/icons-material/TodayOutlined'
+import ArrowBackIosOutlinedIcon from '@mui/icons-material/ArrowBackIosOutlined'
+import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import { periodUnit } from '../../services/utils'
 import dayjs from 'dayjs'
 
@@ -56,7 +56,7 @@ function CustomDatePicker({ type, selectedDate, handleDateChange }) {
   return (
     <ControlsWrapper>
       <DateControlsWrapper>
-        <IconButton onClick={() => picker.substract(1)}>
+        <IconButton onClick={() => picker.substract(1)} size="large">
           <ArrowBackIosOutlinedIcon fontSize="small" />
         </IconButton>
         <DatePicker
@@ -78,12 +78,12 @@ function CustomDatePicker({ type, selectedDate, handleDateChange }) {
             ),
           }}
         />
-        <IconButton onClick={() => picker.add(1)}>
+        <IconButton onClick={() => picker.add(1)} size="large">
           <ArrowForwardIosOutlinedIcon fontSize="small" />
         </IconButton>
       </DateControlsWrapper>
     </ControlsWrapper>
-  )
+  );
 }
 
 export default CustomDatePicker

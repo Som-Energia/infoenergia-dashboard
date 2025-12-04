@@ -1,10 +1,10 @@
 import React, { useEffect, useContext } from 'react'
-import Tabs from '@material-ui/core/Tabs'
-import Tab from '@material-ui/core/Tab'
-import { makeStyles } from '@material-ui/core/styles'
-import { Grid } from '@material-ui/core'
-import Typography from '@material-ui/core/Typography'
-import Box from '@material-ui/core/Box'
+import Tabs from '@mui/material/Tabs'
+import Tab from '@mui/material/Tab'
+import makeStyles from '@mui/styles/makeStyles';
+import { Grid } from '@mui/material'
+import Typography from '@mui/material/Typography'
+import Box from '@mui/material/Box'
 import Use from '../containers/Generation/Use'
 import KwhBag from '../containers/Generation/KwhBag'
 import Record from '../containers/Generation/Record'
@@ -12,7 +12,7 @@ import { useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { CsvformatData, kwhRecordToCsvformatData } from '../services/utils'
 import { CSVLink } from 'react-csv'
-import GetAppIcon from '@material-ui/icons/GetApp'
+import GetAppIcon from '@mui/icons-material/GetApp'
 import GenerationUseContext from '../contexts/GenerationUseContext'
 import ExtraControls from '../components/ExtraControls/ExtraControlsHeader'
 import dayjs from 'dayjs'
@@ -112,10 +112,7 @@ function ProductionConsumption(props) {
     setValue(newValue)
   }
 
-  const handleDateChange = (date, event) => {
-    if (event) {
-      event.preventDefault()
-    }
+  const handleDateChange = (date) => {
     setSelectedDate(dayjs(date))
   }
 

@@ -8,9 +8,9 @@ import dayjs from 'dayjs'
 import 'dayjs/locale/ca'
 import 'dayjs/locale/es'
 
-import TimelineOutlinedIcon from '@material-ui/icons/TimelineOutlined'
-import BarChartOutlinedIcon from '@material-ui/icons/BarChartOutlined'
-import GetAppIcon from '@material-ui/icons/GetApp'
+import TimelineOutlinedIcon from '@mui/icons-material/TimelineOutlined'
+import BarChartOutlinedIcon from '@mui/icons-material/BarChartOutlined'
+import GetAppIcon from '@mui/icons-material/GetApp'
 
 import Tabs from '../components/Tabs'
 import TimeCurves from '../containers/TimeCurves'

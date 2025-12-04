@@ -1,7 +1,7 @@
 import React from 'react'
 import Table from '../../components/Table'
 import RightsManage from '../../components/Generation/RightsManage'
-import Grid from '@material-ui/core/Grid'
+import Grid from '@mui/material/Grid'
 import Loading from '../../components/Loading'
 
 export default function Use({
