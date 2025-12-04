@@ -2,11 +2,12 @@ import React from 'react'
 import KwhBag from './KwhBag'
 import { MemoryRouter, Route } from 'react-router-dom'
 import { render, queryByAttribute, waitFor } from '@testing-library/react'
-import { GenerationUseContextProvider } from 'contexts/GenerationUseContext'
+import { GenerationUseContextProvider } from '../../contexts/GenerationUseContext'
 import userEvent from '@testing-library/user-event'
 import { act } from 'react-dom/test-utils'
+import { vi } from 'vitest'
 
-jest.mock('react-i18next', () => ({
+vi.mock('react-i18next', () => ({
   // this mock makes sure any components using the translate hook can use it without a warning being shown
   useTranslation: () => {
     return {

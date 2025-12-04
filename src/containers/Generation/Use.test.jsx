@@ -4,12 +4,13 @@ import { MemoryRouter, Route } from 'react-router-dom'
 import { render, queryByAttribute } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { act } from 'react-dom/test-utils'
-import { GenerationUseContextProvider } from 'contexts/GenerationUseContext'
+import { GenerationUseContextProvider } from '../../contexts/GenerationUseContext'
 import { consumption } from './mockData/AssignmentsConsumption'
 import { MuiPickersUtilsProvider } from '@material-ui/pickers'
 import DayJsUtils from '@date-io/dayjs'
+import { vi } from 'vitest'
 
-jest.mock('react-i18next', () => ({
+vi.mock('react-i18next', () => ({
   // this mock makes sure any components using the translate hook can use it without a warning being shown
   useTranslation: () => {
     return {
@@ -34,8 +35,8 @@ export function formatMMYYYY(date) {
 
 describe('Generation use section', () => {
   const getById = queryByAttribute.bind(null, 'id')
-  const mockHandleDateChange = jest.fn()
-  const mockHandleViewTypeChange = jest.fn()
+  const mockHandleDateChange = vi.fn()
+  const mockHandleViewTypeChange = vi.fn()
   const mockAssignmentsTableFormat = consumption
   const mockSelectedDate = new Date()
   const MONTH = 'month'
@@ -104,7 +105,7 @@ describe('Generation use section', () => {
   test('Should change the type of viewdata', () => {
     const lang = 'ca'
 
-    const mockSetViewTypeValue = jest.fn()
+    const mockSetViewTypeValue = vi.fn()
 
     const dom = render(
       <MemoryRouter

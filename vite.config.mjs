@@ -6,4 +6,10 @@ export default defineConfig({
   build: {
     outDir: 'build', // CRA's default build output
   },
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    css: true,
+    setupFiles: './src/tests/setupTests.js'
+  }
 });

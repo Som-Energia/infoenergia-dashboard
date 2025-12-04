@@ -4,16 +4,15 @@ import { MemoryRouter, Route } from 'react-router-dom'
 import {
   render,
   queryByAttribute,
-  screen,
-  fireEvent,
 } from '@testing-library/react'
-import { GenerationUseContextProvider } from 'contexts/GenerationUseContext'
+import { GenerationUseContextProvider } from '../../contexts/GenerationUseContext'
 import { act } from 'react-dom/test-utils'
 import userEvent from '@testing-library/user-event'
 import { MuiPickersUtilsProvider } from '@material-ui/pickers'
 import DayJsUtils from '@date-io/dayjs'
+import { vi } from 'vitest'
 
-jest.mock('react-i18next', () => ({
+vi.mock('react-i18next', () => ({
   // this mock makes sure any components using the translate hook can use it without a warning being shown
   useTranslation: () => {
     return {
@@ -41,9 +40,9 @@ describe('Generic Component Rights Manage', () => {
   const id = 'children-comp'
   const CHILDREN_TEXT = 'CHILDREN'
   const loadingId = 'loading-comp-id'
-  const mockHandleDateChange = jest.fn()
-  const mockHandleViewTypeChange = jest.fn()
-  const mockHandlePeriodChange = jest.fn()
+  const mockHandleDateChange = vi.fn()
+  const mockHandleViewTypeChange = vi.fn()
+  const mockHandlePeriodChange = vi.fn()
   const mockPeriods = 'Taula_Peatges_20'
   const mockSelectedDate = new Date()
   const mockViewTypeValueMonth = 'month'

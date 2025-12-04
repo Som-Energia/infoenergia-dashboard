@@ -2,11 +2,12 @@ import React from 'react'
 import Record from './Record'
 import { MemoryRouter, Route } from 'react-router-dom'
 import { render, queryByAttribute } from '@testing-library/react'
-import mockCurves from '../Generation/mockData/Remaining' // TODO: change this var with kwh record
+import mockCurves from './mockData/Remaining' // TODO: change this var with kwh record
 import { MuiPickersUtilsProvider } from '@material-ui/pickers'
 import DayJsUtils from '@date-io/dayjs'
+import { vi } from 'vitest'
 
-jest.mock('react-i18next', () => ({
+vi.mock('react-i18next', () => ({
   // this mock makes sure any components using the translate hook can use it without a warning being shown
   useTranslation: () => {
     return {
@@ -23,8 +24,8 @@ jest.mock('react-i18next', () => ({
 }))
 
 describe('Record section of GenerationkWh', () => {
-  const mockHandleDateChange = jest.fn()
-  const mockHandleViewTypeChange = jest.fn()
+  const mockHandleDateChange = vi.fn()
+  const mockHandleViewTypeChange = vi.fn()
   const mockSelectedDate = new Date()
   const MONTH = 'month'
 
@@ -42,7 +43,7 @@ describe('Record section of GenerationkWh', () => {
               handleDateChange={mockHandleDateChange}
               selectedDate={mockSelectedDate}
               viewTypeValue={MONTH}
-              loading={true} 
+              loading={true}
               kWhRecord={mockCurves}
             />
           </MuiPickersUtilsProvider>
