@@ -6,6 +6,10 @@ export default defineConfig({
   build: {
     outDir: 'build', // CRA's default build output
   },
+  server: {
+    open: true,
+    port: 3000
+  },
   test: {
     globals: true,
     environment: 'jsdom',
