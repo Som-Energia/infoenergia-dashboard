@@ -26,13 +26,6 @@ vi.mock('react-i18next', () => ({
   }
 }))
 
-export function formatMMYYYY(date) {
-  const month = (date.getMonth() + 1).toString().padStart(2, '0') // Month is zero-based, so add 1
-  const year = date.getFullYear().toString()
-
-  return `${month}/${year}`
-}
-
 describe('Generation use section', () => {
   const getById = queryByAttribute.bind(null, 'id')
   const mockHandleDateChange = vi.fn()

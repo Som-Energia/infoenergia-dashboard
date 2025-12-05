@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import IconButton from '@mui/material/IconButton'
-import ArrowForwardIosOutlinedIcon from '@mui/icons-material/ArrowForwardIosOutlined';
+import ArrowForwardIosOutlinedIcon from '@mui/icons-material/ArrowForwardIosOutlined'
 import TodayOutlinedIcon from '@mui/icons-material/TodayOutlined'
 import ArrowBackIosOutlinedIcon from '@mui/icons-material/ArrowBackIosOutlined'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
@@ -12,7 +12,7 @@ const MONTH = 'MONTHLY'
 const YEAR = 'YEARLY'
 
 function CustomDatePicker({ type, selectedDate, handleDateChange }) {
-  function addMonths(){
+  function addMonths() {
     const newDate = dayjs(selectedDate).add(1, periodUnit(MONTH))
     handleDateChange(newDate)
   }
@@ -60,7 +60,11 @@ function CustomDatePicker({ type, selectedDate, handleDateChange }) {
           <ArrowBackIosOutlinedIcon fontSize="small" />
         </IconButton>
         <DatePicker
-          id={picker.id}
+          slotProps={{
+            textField: {
+              id: picker.id,
+            },
+          }}
           views={picker.view}
           value={selectedDate}
           variant="inline"
@@ -83,7 +87,7 @@ function CustomDatePicker({ type, selectedDate, handleDateChange }) {
         </IconButton>
       </DateControlsWrapper>
     </ControlsWrapper>
-  );
+  )
 }
 
 export default CustomDatePicker

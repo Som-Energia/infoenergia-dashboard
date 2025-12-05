@@ -28,7 +28,7 @@ vi.mock('react-i18next', () => ({
   }
 }))
 
-export function formatMMYYYY(date) {
+function formatMMYYYY(date) {
   const month = (date.getMonth() + 1).toString().padStart(2, '0') // Month is zero-based, so add 1
   const year = date.getFullYear().toString()
 
@@ -281,6 +281,6 @@ describe('Generic Component Rights Manage', () => {
     act(() => {
       userEvent.selectOptions(selectElement, optionToSelect)
     })
-    expect(mockHandleViewTypeChange).toBeCalled()
+    expect(mockHandleViewTypeChange).toHaveBeenCalled()
   })
 })
