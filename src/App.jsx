@@ -7,7 +7,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { createTheme, ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
 
-import './i18n/i18n'
+import i18n from './i18n/i18n'
 import './App.css'
 
 
@@ -47,7 +47,7 @@ function App(props) {
       <StyledEngineProvider injectFirst>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={i18n}>
             <Suspense fallback={<></>}>
               <Router>
                 <Switch>
