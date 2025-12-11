@@ -59,7 +59,7 @@
     "build": "export VITE_APP_VERSION=$(git rev-parse HEAD) && vite build",
     "test": "TZ=Europe/Madrid vitest",
     "test:coverage": "TZ=Europe/Madrid vitest run --coverage",
-    "build:ov": "env-cmd -f .env.ov  --use-shell \"npm run build && ./scripts/rename-assets-ov.sh\""
+    "build:ov": "npm run build  -- --mode=ov"
   },
   "jest": {
     "moduleNameMapper": {
