@@ -1,15 +1,11 @@
 import React from 'react'
 import RightsManage from './RightsManage'
-import { MemoryRouter, Route } from 'react-router-dom'
-import {
-  render,
-  queryByAttribute,
-} from '@testing-library/react'
+import { MemoryRouter, Route, Routes } from 'react-router-dom'
+import { render, queryByAttribute } from '@testing-library/react'
 import { GenerationUseContextProvider } from '../../contexts/GenerationUseContext'
-import { act } from 'react-dom/test-utils'
 import userEvent from '@testing-library/user-event'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { vi } from 'vitest'
 
 vi.mock('react-i18next', () => ({
@@ -25,7 +21,7 @@ vi.mock('react-i18next', () => ({
   initReactI18next: {
     type: '3rdParty',
     init: () => {},
-  }
+  },
 }))
 
 function formatMMYYYY(date) {
@@ -33,6 +29,12 @@ function formatMMYYYY(date) {
   const year = date.getFullYear().toString()
 
   return `${month}/${year}`
+}
+
+
+const routerFutureFlags = {
+  v7_relativeSplatPath: true,
+  v7_startTransition: true,
 }
 
 describe('Generic Component Rights Manage', () => {
@@ -49,25 +51,35 @@ describe('Generic Component Rights Manage', () => {
   const mockViewTypeValueYear = 'year'
   const mockTotal = 3000
 
-  test('Should show the children component', () => {
+  test('Should show the children component', async () => {
     const lang = 'ca'
 
     const dom = render(
       <MemoryRouter
         initialEntries={[`/${lang}/investments/production-consumption`]}
+        future={routerFutureFlags}
       >
-        <Route exact path="/:language/investments/production-consumption">
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <GenerationUseContextProvider
-              initViewTypeValue={0}
-              isTestMode={true}
-            >
-              <RightsManage isLoading={false} selectedDate={mockSelectedDate}>
-                <div id={id}>{CHILDREN_TEXT}</div>
-              </RightsManage>
-            </GenerationUseContextProvider>
-          </LocalizationProvider>
-        </Route>
+        <Routes>
+          <Route
+            exact
+            path="/:language/investments/production-consumption"
+            element={
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <GenerationUseContextProvider
+                  initViewTypeValue={0}
+                  isTestMode={true}
+                >
+                  <RightsManage
+                    isLoading={false}
+                    selectedDate={mockSelectedDate}
+                  >
+                    <div id={id}>{CHILDREN_TEXT}</div>
+                  </RightsManage>
+                </GenerationUseContextProvider>
+              </LocalizationProvider>
+            }
+          />
+        </Routes>
       </MemoryRouter>
     )
 
@@ -75,25 +87,32 @@ describe('Generic Component Rights Manage', () => {
     expect(childElement).toHaveTextContent(CHILDREN_TEXT)
   })
 
-  test('Should show the loading component', () => {
+  test('Should show the loading component', async () => {
     const lang = 'ca'
 
     const dom = render(
       <MemoryRouter
         initialEntries={[`/${lang}/investments/production-consumption`]}
+        future={routerFutureFlags}
       >
-        <Route exact path="/:language/investments/production-consumption">
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <GenerationUseContextProvider
-              initViewTypeValue={0}
-              isTestMode={true}
-            >
-              <RightsManage isLoading={true}>
-                <div id={id}>{CHILDREN_TEXT}</div>
-              </RightsManage>
-            </GenerationUseContextProvider>
-          </LocalizationProvider>
-        </Route>
+        <Routes>
+          <Route
+            exact
+            path="/:language/investments/production-consumption"
+            element={
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <GenerationUseContextProvider
+                  initViewTypeValue={0}
+                  isTestMode={true}
+                >
+                  <RightsManage isLoading={true}>
+                    <div id={id}>{CHILDREN_TEXT}</div>
+                  </RightsManage>
+                </GenerationUseContextProvider>
+              </LocalizationProvider>
+            }
+          ></Route>
+        </Routes>
       </MemoryRouter>
     )
 
@@ -103,34 +122,41 @@ describe('Generic Component Rights Manage', () => {
     expect(loadingComponent).toBeInTheDocument()
   })
 
-  test('Should show the selected Date when type is MONTH', () => {
+  test('Should show the selected Date when type is MONTH', async () => {
     const lang = 'ca'
 
     const dom = render(
       <MemoryRouter
         initialEntries={[`/${lang}/investments/production-consumption`]}
+        future={routerFutureFlags}
       >
-        <Route exact path="/:language/investments/production-consumption">
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <GenerationUseContextProvider
-              initViewTypeValue={0}
-              isTestMode={true}
-            >
-              <RightsManage
-                handleDateChange={mockHandleDateChange}
-                handleViewTypeChange={mockHandleViewTypeChange}
-                handlePeriodChange={mockHandlePeriodChange}
-                periods={mockPeriods}
-                isLoading={false}
-                selectedDate={mockSelectedDate}
-                viewTypeValue={mockViewTypeValueMonth}
-                total={mockTotal}
-              >
-                <div id={id}>{CHILDREN_TEXT}</div>
-              </RightsManage>
-            </GenerationUseContextProvider>
-          </LocalizationProvider>
-        </Route>
+        <Routes>
+          <Route
+            exact
+            path="/:language/investments/production-consumption"
+            element={
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <GenerationUseContextProvider
+                  initViewTypeValue={0}
+                  isTestMode={true}
+                >
+                  <RightsManage
+                    handleDateChange={mockHandleDateChange}
+                    handleViewTypeChange={mockHandleViewTypeChange}
+                    handlePeriodChange={mockHandlePeriodChange}
+                    periods={mockPeriods}
+                    isLoading={false}
+                    selectedDate={mockSelectedDate}
+                    viewTypeValue={mockViewTypeValueMonth}
+                    total={mockTotal}
+                  >
+                    <div id={id}>{CHILDREN_TEXT}</div>
+                  </RightsManage>
+                </GenerationUseContextProvider>
+              </LocalizationProvider>
+            }
+          ></Route>
+        </Routes>
       </MemoryRouter>
     )
 
@@ -139,34 +165,41 @@ describe('Generic Component Rights Manage', () => {
     expect(inputDate.value).toBe(stringData)
   })
 
-  test('Should show the selected Date when type is YEAR', () => {
+  test('Should show the selected Date when type is YEAR', async () => {
     const lang = 'ca'
 
     const dom = render(
       <MemoryRouter
         initialEntries={[`/${lang}/investments/production-consumption`]}
+        future={routerFutureFlags}
       >
-        <Route exact path="/:language/investments/production-consumption">
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <GenerationUseContextProvider
-              initViewTypeValue={0}
-              isTestMode={true}
-            >
-              <RightsManage
-                handleDateChange={mockHandleDateChange}
-                handleViewTypeChange={mockHandleViewTypeChange}
-                handlePeriodChange={mockHandlePeriodChange}
-                periods={mockPeriods}
-                isLoading={false}
-                selectedDate={mockSelectedDate}
-                viewTypeValue={mockViewTypeValueYear}
-                total={mockTotal}
-              >
-                <div id={id}>{CHILDREN_TEXT}</div>
-              </RightsManage>
-            </GenerationUseContextProvider>
-          </LocalizationProvider>
-        </Route>
+        <Routes>
+          <Route
+            exact
+            path="/:language/investments/production-consumption"
+            element={
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <GenerationUseContextProvider
+                  initViewTypeValue={0}
+                  isTestMode={true}
+                >
+                  <RightsManage
+                    handleDateChange={mockHandleDateChange}
+                    handleViewTypeChange={mockHandleViewTypeChange}
+                    handlePeriodChange={mockHandlePeriodChange}
+                    periods={mockPeriods}
+                    isLoading={false}
+                    selectedDate={mockSelectedDate}
+                    viewTypeValue={mockViewTypeValueYear}
+                    total={mockTotal}
+                  >
+                    <div id={id}>{CHILDREN_TEXT}</div>
+                  </RightsManage>
+                </GenerationUseContextProvider>
+              </LocalizationProvider>
+            }
+          ></Route>
+        </Routes>
       </MemoryRouter>
     )
 
@@ -175,33 +208,40 @@ describe('Generic Component Rights Manage', () => {
     expect(inputDate.value).toBe(stringData)
   })
 
-  test('Should be the value month in select element', () => {
+  test('Should be the value month in select element', async () => {
     const lang = 'ca'
     const dom = render(
       <MemoryRouter
         initialEntries={[`/${lang}/investments/production-consumption`]}
+        future={routerFutureFlags}
       >
-        <Route exact path="/:language/investments/production-consumption">
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <GenerationUseContextProvider
-              initViewTypeValue={0}
-              isTestMode={true}
-            >
-              <RightsManage
-                handleDateChange={mockHandleDateChange}
-                handleViewTypeChange={mockHandleViewTypeChange}
-                handlePeriodChange={mockHandlePeriodChange}
-                periods={mockPeriods}
-                isLoading={false}
-                selectedDate={mockSelectedDate}
-                viewTypeValue={mockViewTypeValueMonth}
-                total={mockTotal}
-              >
-                <div id={id}>{CHILDREN_TEXT}</div>
-              </RightsManage>
-            </GenerationUseContextProvider>
-          </LocalizationProvider>
-        </Route>
+        <Routes>
+          <Route
+            exact
+            path="/:language/investments/production-consumption"
+            element={
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <GenerationUseContextProvider
+                  initViewTypeValue={0}
+                  isTestMode={true}
+                >
+                  <RightsManage
+                    handleDateChange={mockHandleDateChange}
+                    handleViewTypeChange={mockHandleViewTypeChange}
+                    handlePeriodChange={mockHandlePeriodChange}
+                    periods={mockPeriods}
+                    isLoading={false}
+                    selectedDate={mockSelectedDate}
+                    viewTypeValue={mockViewTypeValueMonth}
+                    total={mockTotal}
+                  >
+                    <div id={id}>{CHILDREN_TEXT}</div>
+                  </RightsManage>
+                </GenerationUseContextProvider>
+              </LocalizationProvider>
+            }
+          ></Route>
+        </Routes>
       </MemoryRouter>
     )
 
@@ -210,33 +250,40 @@ describe('Generic Component Rights Manage', () => {
     expect(selectElement).toHaveTextContent('GENERATION_KWH_SELECT_YEAR')
   })
 
-  test('Should be the value year in select element', () => {
+  test('Should be the value year in select element', async () => {
     const lang = 'ca'
     const dom = render(
       <MemoryRouter
         initialEntries={[`/${lang}/investments/production-consumption`]}
+        future={routerFutureFlags}
       >
-        <Route exact path="/:language/investments/production-consumption">
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <GenerationUseContextProvider
-              initViewTypeValue={0}
-              isTestMode={true}
-            >
-              <RightsManage
-                handleDateChange={mockHandleDateChange}
-                handleViewTypeChange={mockHandleViewTypeChange}
-                handlePeriodChange={mockHandlePeriodChange}
-                periods={mockPeriods}
-                isLoading={false}
-                selectedDate={mockSelectedDate}
-                viewTypeValue={mockViewTypeValueYear}
-                total={mockTotal}
-              >
-                <div id={id}>{CHILDREN_TEXT}</div>
-              </RightsManage>
-            </GenerationUseContextProvider>
-          </LocalizationProvider>
-        </Route>
+        <Routes>
+          <Route
+            exact
+            path="/:language/investments/production-consumption"
+            element={
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <GenerationUseContextProvider
+                  initViewTypeValue={0}
+                  isTestMode={true}
+                >
+                  <RightsManage
+                    handleDateChange={mockHandleDateChange}
+                    handleViewTypeChange={mockHandleViewTypeChange}
+                    handlePeriodChange={mockHandlePeriodChange}
+                    periods={mockPeriods}
+                    isLoading={false}
+                    selectedDate={mockSelectedDate}
+                    viewTypeValue={mockViewTypeValueYear}
+                    total={mockTotal}
+                  >
+                    <div id={id}>{CHILDREN_TEXT}</div>
+                  </RightsManage>
+                </GenerationUseContextProvider>
+              </LocalizationProvider>
+            }
+          ></Route>
+        </Routes>
       </MemoryRouter>
     )
 
@@ -245,42 +292,47 @@ describe('Generic Component Rights Manage', () => {
     expect(selectElement).toHaveTextContent('GENERATION_KWH_SELECT_MONTH')
   })
 
-  test('Should change the type of viewdata from year to month', () => {
+  test('Should change the type of viewdata from year to month', async () => {
     const lang = 'ca'
 
     const dom = render(
       <MemoryRouter
         initialEntries={[`/${lang}/investments/production-consumption`]}
+        future={routerFutureFlags}
       >
-        <Route exact path="/:language/investments/production-consumption">
-           <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <GenerationUseContextProvider
-              initViewTypeValue={0}
-              isTestMode={true}
-            >
-              <RightsManage
-                handleDateChange={mockHandleDateChange}
-                handleViewTypeChange={mockHandleViewTypeChange}
-                handlePeriodChange={mockHandlePeriodChange}
-                periods={mockPeriods}
-                isLoading={false}
-                selectedDate={mockSelectedDate}
-                viewTypeValue={mockViewTypeValueYear}
-                total={mockTotal}
-              >
-                <div id={id}>{CHILDREN_TEXT}</div>
-              </RightsManage>
-            </GenerationUseContextProvider>
-          </LocalizationProvider>
-        </Route>
+        <Routes>
+          <Route
+            exact
+            path="/:language/investments/production-consumption"
+            element={
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <GenerationUseContextProvider
+                  initViewTypeValue={0}
+                  isTestMode={true}
+                >
+                  <RightsManage
+                    handleDateChange={mockHandleDateChange}
+                    handleViewTypeChange={mockHandleViewTypeChange}
+                    handlePeriodChange={mockHandlePeriodChange}
+                    periods={mockPeriods}
+                    isLoading={false}
+                    selectedDate={mockSelectedDate}
+                    viewTypeValue={mockViewTypeValueYear}
+                    total={mockTotal}
+                  >
+                    <div id={id}>{CHILDREN_TEXT}</div>
+                  </RightsManage>
+                </GenerationUseContextProvider>
+              </LocalizationProvider>
+            }
+          ></Route>
+        </Routes>
       </MemoryRouter>
     )
 
     const selectElement = getById(dom.container, 'type-view-select')
     const optionToSelect = 'month' // Change to the option you want to select
-    act(() => {
-      userEvent.selectOptions(selectElement, optionToSelect)
-    })
+    await userEvent.selectOptions(selectElement, optionToSelect)
     expect(mockHandleViewTypeChange).toHaveBeenCalled()
   })
 })

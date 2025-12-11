@@ -1,10 +1,10 @@
 import React from 'react'
 import Record from './Record'
-import { MemoryRouter, Route } from 'react-router-dom'
+import { MemoryRouter, Route, Routes } from 'react-router-dom'
 import { render, queryByAttribute } from '@testing-library/react'
 import mockCurves from './mockData/Remaining' // TODO: change this var with kwh record
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { vi } from 'vitest'
 
 vi.mock('react-i18next', () => ({
@@ -20,8 +20,13 @@ vi.mock('react-i18next', () => ({
   initReactI18next: {
     type: '3rdParty',
     init: () => {},
-  }
+  },
 }))
+
+const routerFutureFlags = {
+  v7_relativeSplatPath: true,
+  v7_startTransition: true,
+}
 
 describe('Record section of GenerationkWh', () => {
   const mockHandleDateChange = vi.fn()
@@ -35,19 +40,26 @@ describe('Record section of GenerationkWh', () => {
     const dom = render(
       <MemoryRouter
         initialEntries={[`/${lang}/investments/production-consumption`]}
+        future={routerFutureFlags}
       >
-        <Route exact path="/:language/investments/production-consumption">
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <Record
-              handleViewTypeChange={mockHandleViewTypeChange}
-              handleDateChange={mockHandleDateChange}
-              selectedDate={mockSelectedDate}
-              viewTypeValue={MONTH}
-              loading={true}
-              kWhRecord={mockCurves}
-            />
-          </LocalizationProvider>
-        </Route>
+        <Routes>
+          <Route
+            exact
+            path="/:language/investments/production-consumption"
+            element={
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <Record
+                  handleViewTypeChange={mockHandleViewTypeChange}
+                  handleDateChange={mockHandleDateChange}
+                  selectedDate={mockSelectedDate}
+                  viewTypeValue={MONTH}
+                  loading={true}
+                  kWhRecord={mockCurves}
+                />
+              </LocalizationProvider>
+            }
+          ></Route>
+        </Routes>
       </MemoryRouter>
     )
     const loadingComponent = getById(dom.container, 'record-loading-component')
@@ -59,19 +71,26 @@ describe('Record section of GenerationkWh', () => {
     const dom = render(
       <MemoryRouter
         initialEntries={[`/${lang}/investments/production-consumption`]}
+        future={routerFutureFlags}
       >
-        <Route exact path="/:language/investments/production-consumption">
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <Record
-              handleViewTypeChange={mockHandleViewTypeChange}
-              handleDateChange={mockHandleDateChange}
-              selectedDate={mockSelectedDate}
-              viewTypeValue={MONTH}
-              loading={false}
-              kWhRecord={mockCurves}
-            />
-          </LocalizationProvider>
-        </Route>
+        <Routes>
+          <Route
+            exact
+            path="/:language/investments/production-consumption"
+            element={
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <Record
+                  handleViewTypeChange={mockHandleViewTypeChange}
+                  handleDateChange={mockHandleDateChange}
+                  selectedDate={mockSelectedDate}
+                  viewTypeValue={MONTH}
+                  loading={false}
+                  kWhRecord={mockCurves}
+                />
+              </LocalizationProvider>
+            }
+          ></Route>
+        </Routes>
       </MemoryRouter>
     )
     const loadingComponent = getById(dom.container, 'record-loading-component')

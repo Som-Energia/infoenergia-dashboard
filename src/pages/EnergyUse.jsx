@@ -10,7 +10,9 @@ import TipicalDailyProfile from '../containers/TipicalDailyProfile.jsx'
 import TipicalWeeklyProfile from '../containers/TipicalWeeklyProfile'
 import LastMonthProfile from '../containers/LastMonthsProfile'
 import SeasonalProfile from '../containers/SeasonalProfile'
-import ContractSelectorWrapper, { ContractContext } from '../containers/ContractSelectorWrapper'
+import ContractSelectorWrapper, {
+  ContractContext,
+} from '../containers/ContractSelectorWrapper'
 
 import Tabs from '../components/Tabs'
 
@@ -77,7 +79,6 @@ function EnergyUse(props) {
       )}
     </>
   )
-
 }
 
 function EnergyUsePageWrapper(props) {

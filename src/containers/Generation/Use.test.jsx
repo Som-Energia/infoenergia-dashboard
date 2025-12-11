@@ -1,13 +1,12 @@
 import React from 'react'
 import Use from './Use'
-import { MemoryRouter, Route } from 'react-router-dom'
+import { MemoryRouter, Route, Routes } from 'react-router-dom'
 import { render, queryByAttribute } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { act } from 'react-dom/test-utils'
 import { GenerationUseContextProvider } from '../../contexts/GenerationUseContext'
 import { consumption } from './mockData/AssignmentsConsumption'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { vi } from 'vitest'
 
 vi.mock('react-i18next', () => ({
@@ -23,8 +22,13 @@ vi.mock('react-i18next', () => ({
   initReactI18next: {
     type: '3rdParty',
     init: () => {},
-  }
+  },
 }))
+
+const routerFutureFlags = {
+  v7_relativeSplatPath: true,
+  v7_startTransition: true,
+};
 
 describe('Generation use section', () => {
   const getById = queryByAttribute.bind(null, 'id')
@@ -40,23 +44,30 @@ describe('Generation use section', () => {
     const dom = render(
       <MemoryRouter
         initialEntries={[`/${lang}/investments/production-consumption`]}
+        future={routerFutureFlags}
       >
-        <Route exact path="/:language/investments/production-consumption">
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <GenerationUseContextProvider
-              initViewTypeValue={0}
-              isTestMode={true}
-            >
-              <Use
-                handleViewTypeChange={mockHandleViewTypeChange}
-                handleDateChange={mockHandleDateChange}
-                assignmentsTableFormat={mockAssignmentsTableFormat}
-                selectedDate={mockSelectedDate}
-                viewTypeValue={MONTH}
-              />
-            </GenerationUseContextProvider>
-          </LocalizationProvider>
-        </Route>
+        <Routes>
+          <Route
+            exact
+            path="/:language/investments/production-consumption"
+            element={
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <GenerationUseContextProvider
+                  initViewTypeValue={0}
+                  isTestMode={true}
+                >
+                  <Use
+                    handleViewTypeChange={mockHandleViewTypeChange}
+                    handleDateChange={mockHandleDateChange}
+                    assignmentsTableFormat={mockAssignmentsTableFormat}
+                    selectedDate={mockSelectedDate}
+                    viewTypeValue={MONTH}
+                  />
+                </GenerationUseContextProvider>
+              </LocalizationProvider>
+            }
+          ></Route>
+        </Routes>
       </MemoryRouter>
     )
 
@@ -70,23 +81,30 @@ describe('Generation use section', () => {
     const dom = render(
       <MemoryRouter
         initialEntries={[`/${lang}/investments/production-consumption`]}
+        future={routerFutureFlags}
       >
-        <Route exact path="/:language/investments/production-consumption">
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <GenerationUseContextProvider
-              initViewTypeValue={1}
-              isTestMode={true}
-            >
-              <Use
-                handleViewTypeChange={mockHandleViewTypeChange}
-                handleDateChange={mockHandleDateChange}
-                assignmentsTableFormat={mockAssignmentsTableFormat}
-                selectedDate={mockSelectedDate}
-                viewTypeValue={YEAR}
-              />
-            </GenerationUseContextProvider>
-          </LocalizationProvider>
-        </Route>
+        <Routes>
+          <Route
+            exact
+            path="/:language/investments/production-consumption"
+            element={
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <GenerationUseContextProvider
+                  initViewTypeValue={1}
+                  isTestMode={true}
+                >
+                  <Use
+                    handleViewTypeChange={mockHandleViewTypeChange}
+                    handleDateChange={mockHandleDateChange}
+                    assignmentsTableFormat={mockAssignmentsTableFormat}
+                    selectedDate={mockSelectedDate}
+                    viewTypeValue={YEAR}
+                  />
+                </GenerationUseContextProvider>
+              </LocalizationProvider>
+            }
+          ></Route>
+        </Routes>
       </MemoryRouter>
     )
 
@@ -95,7 +113,7 @@ describe('Generation use section', () => {
     expect(selectElement).toHaveTextContent('GENERATION_KWH_SELECT_YEAR')
   })
 
-  test('Should change the type of viewdata', () => {
+  test('Should change the type of viewdata', async () => {
     const lang = 'ca'
 
     const mockSetViewTypeValue = vi.fn()
@@ -103,32 +121,37 @@ describe('Generation use section', () => {
     const dom = render(
       <MemoryRouter
         initialEntries={[`/${lang}/investments/production-consumption`]}
+        future={routerFutureFlags}
       >
-        <Route exact path="/:language/investments/production-consumption">
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <GenerationUseContextProvider
-              initViewTypeValue={0}
-              isTestMode={true}
-              setViewTypeValue={mockSetViewTypeValue}
-            >
-              <Use
-                handleViewTypeChange={mockHandleViewTypeChange}
-                handleDateChange={mockHandleDateChange}
-                assignmentsTableFormat={mockAssignmentsTableFormat}
-                selectedDate={mockSelectedDate}
-                viewTypeValue={YEAR}
-              />
-            </GenerationUseContextProvider>
-          </LocalizationProvider>
-        </Route>
+        <Routes>
+          <Route
+            exact
+            path="/:language/investments/production-consumption"
+            element={
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <GenerationUseContextProvider
+                  initViewTypeValue={0}
+                  isTestMode={true}
+                  setViewTypeValue={mockSetViewTypeValue}
+                >
+                  <Use
+                    handleViewTypeChange={mockHandleViewTypeChange}
+                    handleDateChange={mockHandleDateChange}
+                    assignmentsTableFormat={mockAssignmentsTableFormat}
+                    selectedDate={mockSelectedDate}
+                    viewTypeValue={YEAR}
+                  />
+                </GenerationUseContextProvider>
+              </LocalizationProvider>
+            }
+          ></Route>
+        </Routes>
       </MemoryRouter>
     )
 
     const selectElement = getById(dom.container, 'type-view-select')
     const optionToSelect = YEAR // Change to the option you want to select
-    act(() => {
-      userEvent.selectOptions(selectElement, optionToSelect)
-    })
+    await userEvent.selectOptions(selectElement, optionToSelect)
     expect(mockHandleViewTypeChange).toHaveBeenCalledTimes(1)
   })
 
@@ -137,20 +160,30 @@ describe('Generation use section', () => {
     const dom = render(
       <MemoryRouter
         initialEntries={[`/${lang}/investments/production-consumption`]}
+        future={routerFutureFlags}
       >
-        <Route exact path="/:language/investments/production-consumption">
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <GenerationUseContextProvider isTestMode={true} isloadingUse={true}>
-              <Use
-                handleViewTypeChange={mockHandleViewTypeChange}
-                handleDateChange={mockHandleDateChange}
-                assignmentsTableFormat={mockAssignmentsTableFormat}
-                selectedDate={mockSelectedDate}
-                loading={true}
-              />
-            </GenerationUseContextProvider>
-          </LocalizationProvider>
-        </Route>
+        <Routes>
+          <Route
+            exact
+            path="/:language/investments/production-consumption"
+            element={
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <GenerationUseContextProvider
+                  isTestMode={true}
+                  isloadingUse={true}
+                >
+                  <Use
+                    handleViewTypeChange={mockHandleViewTypeChange}
+                    handleDateChange={mockHandleDateChange}
+                    assignmentsTableFormat={mockAssignmentsTableFormat}
+                    selectedDate={mockSelectedDate}
+                    loading={true}
+                  />
+                </GenerationUseContextProvider>
+              </LocalizationProvider>
+            }
+          ></Route>
+        </Routes>
       </MemoryRouter>
     )
     const loadingComponent = getById(dom.container, 'loading-use-id')

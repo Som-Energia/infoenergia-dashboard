@@ -1,21 +1,26 @@
 import React, { lazy, Suspense } from 'react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import DevelopmentIndex from './pages/DevelopmentIndex'
 import CssBaseline from '@mui/material/CssBaseline'
 import { GenerationUseContextProvider } from './contexts/GenerationUseContext'
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { createTheme, ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
+import { LocalizationProvider as DatePickerLocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import {
+  createTheme,
+  ThemeProvider,
+  StyledEngineProvider,
+} from '@mui/material/styles'
 
 import i18n from './i18n/i18n'
 import './App.css'
 
-
 function App(props) {
-
-  const generationAssignments = document.getElementById('generation-assignments-data')
-  const assignmentsConsumption = generationAssignments ? JSON.parse(generationAssignments.textContent) : {};
-
+  const generationAssignments = document.getElementById(
+    'generation-assignments-data'
+  )
+  const assignmentsConsumption = generationAssignments
+    ? JSON.parse(generationAssignments.textContent)
+    : {}
 
   const loadEnergyUse = () => {
     const EnergyUse = lazy(() => import('./pages/EnergyUse'))
@@ -35,9 +40,7 @@ function App(props) {
       <GenerationUseContextProvider
         generationAssignments={assignmentsConsumption}
       >
-        <ProductionConsumption
-          {...props}
-        />
+        <ProductionConsumption {...props} />
       </GenerationUseContextProvider>
     )
   }
@@ -47,34 +50,40 @@ function App(props) {
       <StyledEngineProvider injectFirst>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={i18n}>
+          <DatePickerLocalizationProvider
+            dateAdapter={AdapterDayjs}
+            adapterLocale={i18n}
+          >
             <Suspense fallback={<></>}>
-              <Router>
-                <Switch>
-                  <Route exact path="/">
-                    <DevelopmentIndex />
-                  </Route>
+              <Router
+                future={{
+                  v7_relativeSplatPath: true,
+                  v7_startTransition: true,
+                }}
+              >
+                <Routes>
+                  <Route exact path="/" element={<DevelopmentIndex />}></Route>
                   <Route
                     exact
                     path="/:language/infoenergy"
-                    render={loadTimeCurves}
+                    element={loadTimeCurves()}
                   />
                   <Route
                     path="/:language/infoenergy/energy-use"
-                    render={loadEnergyUse}
+                    element={loadEnergyUse()}
                   />
                   <Route
                     path="/:language/investments/production-consumption"
-                    render={loadGenerationKwh}
+                    element={loadGenerationKwh()}
                   />
-                </Switch>
+                </Routes>
               </Router>
             </Suspense>
-          </LocalizationProvider>
+          </DatePickerLocalizationProvider>
         </ThemeProvider>
       </StyledEngineProvider>
     </>
-  );
+  )
 }
 
 export default App
