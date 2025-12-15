@@ -158,6 +158,14 @@ function TimeCurves(props) {
                 inputVariant="outlined"
                 onChange={setCurrentDate}
                 format="DD/MM/YYYY"
+                dayOfWeekFormatter={(date) => date.format('dd')}
+                localeText={{ toolbarTitle: currentDate?.year() }}
+                slotProps={{
+                  toolbar:{
+                    toolbarFormat: 'dd., MMM D', 
+                    hidden: false 
+                  }
+                }}
                 InputProps={{
                   style: { fontSize: '1rem' },
                   startAdornment: (
@@ -189,6 +197,14 @@ function TimeCurves(props) {
                       dayjs(date).isSame(currentDate, 'day')
                     }
                     format="DD/MM/YYYY"
+                    dayOfWeekFormatter={(date) => date.format('dd')}
+                    localeText={{ toolbarTitle: compareDate?.year() }}
+                    slotProps={{
+                      toolbar:{
+                        toolbarFormat: 'dd., MMM D', 
+                        hidden: false 
+                      }
+                    }}
                     InputProps={{
                       style: { fontSize: '1rem' },
                       startAdornment: (

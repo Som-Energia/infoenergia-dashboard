@@ -109,4 +109,18 @@ const theme = createTheme({
   shape: {
     borderRadius: 4,
   },
+  components: {
+   MuiPickersToolbar: {
+      styleOverrides: {
+        root: {
+          color: '#fff',
+          borderRadius: '2px',
+          borderWidth: '1px',
+          borderColor: '#6d8f22',
+          border: '1px solid',
+          backgroundColor: '#6d8f22',
+        }
+      }
+    }
+  }
 })

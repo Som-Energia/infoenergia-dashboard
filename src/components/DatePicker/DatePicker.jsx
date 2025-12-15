@@ -38,6 +38,7 @@ function CustomDatePicker({ type, selectedDate, handleDateChange }) {
         substract: subtractMonths,
         view: ['month'],
         format: 'MM/YYYY',
+        toolbarFormat: 'MMMM YYYY',
         id: 'month-picker',
       }
     } else {
@@ -46,6 +47,7 @@ function CustomDatePicker({ type, selectedDate, handleDateChange }) {
         substract: subtractYears,
         view: ['year'],
         format: 'YYYY',
+        toolbarFormat: 'YYYY',
         id: 'year-picker',
       }
     }
@@ -64,6 +66,10 @@ function CustomDatePicker({ type, selectedDate, handleDateChange }) {
             textField: {
               id: picker.id,
             },
+            toolbar: {
+              toolbarFormat: picker.toolbarFormat, 
+              hidden: false 
+            },
           }}
           views={picker.view}
           value={selectedDate}
@@ -73,6 +79,7 @@ function CustomDatePicker({ type, selectedDate, handleDateChange }) {
           inputVariant="outlined"
           onChange={(date, event) => handleDateChange(date, event)}
           format={picker.format}
+          dayOfWeekFormatter={(date) => date.format('dd')}
           InputProps={{
             style: { fontSize: '1rem' },
             startAdornment: (

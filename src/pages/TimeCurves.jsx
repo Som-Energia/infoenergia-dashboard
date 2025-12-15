@@ -80,7 +80,7 @@ const ExtraControls = (props) => {
   )
 }
 
-function TimeCurvesPage(props) {
+function TimeCurvesPage() {
   const { language } = useParams()
   const { t, i18n } = useTranslation()
 
