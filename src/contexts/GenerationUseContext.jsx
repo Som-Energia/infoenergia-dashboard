@@ -27,8 +27,8 @@ export const GenerationUseContextProvider = (props) => {
   const MONTH = 'month'
   const YEAR = 'year'
 
-  const { t, i18n } = useTranslation()
   const { language } = useParams()
+  const { t, i18n } = useTranslation('translation', { lng: language })
 
   const {
     token,
@@ -59,7 +59,7 @@ export const GenerationUseContextProvider = (props) => {
   const [kWhRemaining, setkWhRemaining] = useState(initKWhRemaining)
   const [kWhRecord, setkWhRecord] = useState(initKWhRecord)
 
-  const columns3 = [
+  const threePeriodsColumns = [
     t('GENERATION_KWH_USE_TABLE_CONTRACT_ADDRESS'),
     t('GENERATION_KWH_USE_TABLE_PRIORITY'),
     t('GENERATION_KWH_USE_TABLE_VALLEY'),
@@ -68,7 +68,7 @@ export const GenerationUseContextProvider = (props) => {
     t('GENERATION_KWH_USE_TABLE_TOTAL'),
   ]
 
-  const columns6 = [
+  const sixPeriodsColumns = [
     t('GENERATION_KWH_USE_TABLE_CONTRACT_ADDRESS'),
     t('GENERATION_KWH_USE_TABLE_PRIORITY'),
     'P6',
@@ -106,7 +106,7 @@ export const GenerationUseContextProvider = (props) => {
         token,
         viewTypeValue
       )
-      
+
       const assignmentsTableFormat = getDataForTable(
         generationAssignments,
         consumption.data
@@ -114,7 +114,10 @@ export const GenerationUseContextProvider = (props) => {
 
       const assignmentsTableFormatTmp = JSON.parse(JSON.stringify(assignmentsTableFormat.data))
       const maxLength = assignmentsTableFormatTmp?.dataKeys?.length
-      assignmentsTableFormat.data.columns = maxLength === 3 ? columns3 : columns6
+      assignmentsTableFormat.data.columns = maxLength === 3
+        ? threePeriodsColumns
+        : sixPeriodsColumns
+
       assignmentsTableFormatTmp.rows.forEach(row => { row.priority = row.priority !== '-' ? getPriority(row.priority) : '-' })
 
       assignmentsTableFormat.data.rows = assignmentsTableFormatTmp.rows
