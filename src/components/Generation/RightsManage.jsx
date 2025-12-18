@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 import Typography from '@mui/material/Typography'
-import CustomDatePicker from '../../components/DatePicker/DatePicker'
+import CustomDatePicker from '../CustomDatePicker/CustomDatePicker'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import { useTranslation } from 'react-i18next'
@@ -55,7 +55,7 @@ export default function RightsManage({
         <>
           <Grid
             container
-            style={{ display: 'flex', justifyContent: 'space-between' }}
+            style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem' }}
           >
             <Grid
               item
@@ -110,6 +110,7 @@ export default function RightsManage({
             >
               <Grid item xs={12} sm={3}>
                 <CustomDatePicker
+                  prevNextButtons={true}
                   selectedDate={dayjs(selectedDate)}
                   handleDateChange={handleDateChange}
                   type={viewTypeValue}
@@ -117,7 +118,7 @@ export default function RightsManage({
               </Grid>
               {handleViewTypeChange ? (
                 <Grid item xs={12} sm={3}>
-                  <FormControl fullWidth>
+                  <FormControl fullWidth variant='standard'>
                     <Select
                       native
                       value={viewTypeValue}

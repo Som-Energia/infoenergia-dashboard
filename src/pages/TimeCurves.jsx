@@ -48,8 +48,8 @@ const DownloadButton = (props) => {
 }
 
 const ExtraControls = (props) => {
-  const {type, setType} = props
-  const {t} = useTranslation()
+  const { type, setType } = props
+  const { t } = useTranslation()
   return (
     <ExtraButtonsWrapper>
       <ul>
@@ -196,6 +196,7 @@ const ExtraButtonsWrapper = styled.div`
       }
 
       .controlBtn {
+        font-size: 1rem;
         display: flex;
         align-items: center;
         padding: 8px 12px;

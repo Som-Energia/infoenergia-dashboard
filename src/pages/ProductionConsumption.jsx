@@ -25,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'space-between',
     padding: '20px',
+    minHeight: '95px' // prevents change height with/out DownloadButton
   },
   root: {
     flexGrow: 1,
@@ -108,7 +109,7 @@ function ProductionConsumption(props) {
 
   const [value, setValue] = React.useState(0)
   const classes = useStyles()
-  const handleChange = (event, newValue) => {
+  const handleChange = (_event, newValue) => {
     setValue(newValue)
   }
 
@@ -120,7 +121,7 @@ function ProductionConsumption(props) {
     setViewTypeValue(event.target.value)
   }
 
-  const getPanel = (value, index, element) => {
+  const getPanel = (value, index) => {
     if (value === 0) {
       return (
         <TabPanel value={value} key={index} index={index}>

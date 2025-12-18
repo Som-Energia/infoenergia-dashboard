@@ -91,7 +91,7 @@ export default App
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#6d8f22',
+      main: '#6d8f22', // changed from #96b633 by MUI's recomendation (warn)
     },
     secondary: {
       main: '#767676',
@@ -104,13 +104,13 @@ const theme = createTheme({
     tonalOffset: 0.2,
   },
   typography: {
-    htmlFontSize: 12,
+    htmlFontSize: 14,
   },
   shape: {
-    borderRadius: 4,
+    borderRadius: 0,
   },
   components: {
-   MuiPickersToolbar: {
+    MuiPickersToolbar: {
       styleOverrides: {
         root: {
           color: '#fff',

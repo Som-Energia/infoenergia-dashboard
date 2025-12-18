@@ -1,16 +1,10 @@
-import React, { useState, useEffect, useCallback, useContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
 
 import dayjs from 'dayjs'
-import { DatePicker } from '@mui/x-date-pickers'
 import IconButton from '@mui/material/IconButton'
-
-import ArrowBackIosOutlinedIcon from '@mui/icons-material/ArrowBackIosOutlined'
-import ArrowForwardIosOutlinedIcon from '@mui/icons-material/ArrowForwardIosOutlined'
-import TodayOutlinedIcon from '@mui/icons-material/TodayOutlined'
 import ClearIcon from '@mui/icons-material/Clear'
-
 import Counter from '../components/Counter'
 import TimeCurvesBarChart from '../components/TimeCurves/TimeCurvesBarChart'
 import TimeCurvesLineChart from '../components/TimeCurves/TimeCurvesLineChart'
@@ -19,7 +13,8 @@ import LegendPeriod from '../components/TipicalDailyProfile/LegendPeriod'
 import TimeCurvesContext from '../contexts/TimeCurvesContext'
 import Loading from '../components/Loading'
 
-import { periodUnit, labelTotalPeriod, convertDataFromWattsToKwh } from '../services/utils'
+import { labelTotalPeriod, convertDataFromWattsToKwh } from '../services/utils'
+import CustomDatePicker from '../components/CustomDatePicker/CustomDatePicker'
 
 const filterDataWithPeriod = ({ refDate, period, data }) => {
   const filteredData = []
@@ -91,11 +86,11 @@ function TimeCurves(props) {
     const filtered =
       data?.length > 0
         ? filterDataWithPeriod({
-            refDate: currentDate,
-            period,
-            data,
-            chartType,
-          })
+          refDate: currentDate,
+          period,
+          data,
+          chartType,
+        })
         : []
     setFilteredTimeCurves(filtered)
     const sumTotalKwh = (totalValueWithData(filtered) / 1000).toFixed(0)
@@ -119,101 +114,29 @@ function TimeCurves(props) {
     }
   }, [data, currentDate, period, chartType, compareDate])
 
-  const prevDate = useCallback(
-    (event) => {
-      event.preventDefault()
-      const prevDate = dayjs(currentDate).subtract(1, periodUnit(period))
-      setCurrentDate(prevDate.isBefore(minDate) ? minDate : prevDate)
-    },
-    [currentDate, period]
-  )
-
-  const nextDate = useCallback(
-    (event) => {
-      event.preventDefault()
-      const nextDate = dayjs(currentDate).add(1, periodUnit(period))
-      setCurrentDate(nextDate.isAfter(maxDate) ? maxDate : nextDate)
-    },
-    [currentDate, period]
-  )
   return (
     <Widget>
       {
         <>
           <ControlsWrapper>
             <DateControlsWrapper>
-              <IconButton
-                onClick={prevDate}
-                disabled={dayjs(currentDate).isSame(minDate, 'day')}
-                size="large">
-                <ArrowBackIosOutlinedIcon fontSize="small" />
-              </IconButton>
-              <DatePicker
-                value={currentDate}
+              <CustomDatePicker
+                prevNextButtons={true}
                 minDate={minDate}
                 maxDate={maxDate}
-                variant="inline"
-                autoOk
-                size="small"
-                inputVariant="outlined"
-                onChange={setCurrentDate}
-                format="DD/MM/YYYY"
-                dayOfWeekFormatter={(date) => date.format('dd')}
-                localeText={{ toolbarTitle: currentDate?.year() }}
-                slotProps={{
-                  toolbar:{
-                    toolbarFormat: 'dd., MMM D', 
-                    hidden: false 
-                  }
-                }}
-                InputProps={{
-                  style: { fontSize: '1rem' },
-                  startAdornment: (
-                    <IconButton edge="start" size="small">
-                      <TodayOutlinedIcon fontSize="small" />
-                    </IconButton>
-                  ),
-                }}
+                selectedDate={currentDate}
+                handleDateChange={setCurrentDate}
               />
-              <IconButton
-                onClick={nextDate}
-                disabled={dayjs(currentDate).isSame(maxDate, 'day')}
-                size="large">
-                <ArrowForwardIosOutlinedIcon fontSize="small" />
-              </IconButton>
               {chartType === 'LINE_CHART_TYPE' && (
                 <>
-                  <DatePicker
-                    value={compareDate}
+                  <CustomDatePicker
+                    prevNextButtons={false}
                     minDate={minDate}
                     maxDate={maxDate}
-                    variant="inline"
-                    placeholder="Comparar"
-                    autoOk
-                    size="small"
-                    inputVariant="outlined"
-                    onChange={setCompareDate}
-                    shouldDisableDate={(date) =>
-                      dayjs(date).isSame(currentDate, 'day')
-                    }
-                    format="DD/MM/YYYY"
-                    dayOfWeekFormatter={(date) => date.format('dd')}
-                    localeText={{ toolbarTitle: compareDate?.year() }}
-                    slotProps={{
-                      toolbar:{
-                        toolbarFormat: 'dd., MMM D', 
-                        hidden: false 
-                      }
-                    }}
-                    InputProps={{
-                      style: { fontSize: '1rem' },
-                      startAdornment: (
-                        <IconButton edge="start" size="small">
-                          <TodayOutlinedIcon fontSize="small" />
-                        </IconButton>
-                      ),
-                    }}
-                  />
+                    selectedDate={compareDate}
+                    handleDateChange={setCompareDate}
+                    shouldDisableDate={(date) => dayjs(date).isSame(currentDate, 'day')}
+                  ></CustomDatePicker>
                   {compareDate && (
                     <IconButton onClick={() => setCompareDate(null)} size="large">
                       <ClearIcon fontSize="small" />
@@ -256,7 +179,7 @@ function TimeCurves(props) {
               />
             )}
           </ChartWrapper>
-          {chartType === 'BAR_CHART_TYPE' && <LegendPeriod contract={contract}/>}
+          {chartType === 'BAR_CHART_TYPE' && <LegendPeriod contract={contract} />}
         </>
       }
     </Widget>
@@ -267,15 +190,14 @@ export default React.memo(TimeCurves)
 
 const ControlsWrapper = styled.div`
   display: flex;
+  font-size: 1rem;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
 `
 const CounterWrapper = styled.div`
   display: flex;
-  & > div {
-    margin-left: 8px;
-  }
+  gap: 8px;
 `
 const DateControlsWrapper = styled.div`
   padding-top: 0;

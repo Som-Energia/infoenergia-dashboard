@@ -45,6 +45,7 @@ const ExtraButtonsWrapper = styled.div`
       }
 
       .controlBtn {
+        font-size: 1rem;
         display: flex;
         align-items: center;
         padding: 8px 12px;
