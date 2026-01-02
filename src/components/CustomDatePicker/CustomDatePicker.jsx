@@ -24,11 +24,6 @@ function CustomDatePicker(props) {
     shouldDisableDate = () => { },
   } = props
 
-  /**
-    * Add N days, months or years to date
-    * @param {number} count
-    * @param {string} periodUnit
-    */
   function add(count, periodUnit) {
     let newDate = dayjs(selectedDate).add(count, periodUnit)
     newDate = maxDate && newDate.isAfter(maxDate)
@@ -37,12 +32,6 @@ function CustomDatePicker(props) {
     handleDateChange(newDate)
   }
 
-  /**
-    * Subtract N days, months or years to date
-    *
-    * @param {number} count
-    * @param {string} periodUnit
-    */
   function subtract(count, periodUnit) {
     let newDate = dayjs(selectedDate).subtract(count, periodUnit)
     newDate = minDate && newDate.isBefore(minDate)
