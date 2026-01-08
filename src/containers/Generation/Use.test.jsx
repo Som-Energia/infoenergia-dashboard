@@ -36,8 +36,8 @@ describe('Generation use section', () => {
   const mockHandleViewTypeChange = vi.fn()
   const mockAssignmentsTableFormat = consumption
   const mockSelectedDate = new Date()
-  const MONTH = 'month'
-  const YEAR = 'year'
+  const MONTH = 'MONTHLY'
+  const YEAR = 'YEARLY'
 
   test('Should be the value month in select element', () => {
     const lang = 'ca'

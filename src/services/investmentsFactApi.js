@@ -52,7 +52,7 @@ const getConsumption = async (date, token, type) => {
 
     return investmenAxios({
         method: 'GET',
-        url: type === 'month' ? urlM + date.format('YYYY-MM') : urlY + date.year(),
+        url: type === 'MONTHLY' ? urlM + date.format('YYYY-MM') : urlY + date.year(),
         headers: { Authorization: token, Identifier: "ass_consumption" },
     }).then((response) => {
         return response?.data

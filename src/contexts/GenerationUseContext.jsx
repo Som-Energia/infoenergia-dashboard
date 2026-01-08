@@ -24,8 +24,8 @@ const initValues = {
 const GenerationUseContext = createContext(initValues)
 
 export const GenerationUseContextProvider = (props) => {
-  const MONTH = 'month'
-  const YEAR = 'year'
+  const MONTH = 'MONTHLY'
+  const YEAR = 'YEARLY'
 
   const { language } = useParams()
   const { t, i18n } = useTranslation('translation', { lng: language })

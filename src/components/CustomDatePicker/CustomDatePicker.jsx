@@ -10,6 +10,7 @@ import dayjs from 'dayjs'
 
 const DAY = 'DAILY'
 const MONTH = 'MONTHLY'
+const WEEK = 'WEEKLY'
 const YEAR = 'YEARLY'
 
 function CustomDatePicker(props) {
@@ -41,11 +42,13 @@ function CustomDatePicker(props) {
     handleDateChange(newDate)
   }
 
-  const getPickerConf = () => {
-    if (type === 'month') {
+  const getPickerConf = (type) => {
+
+
+    if (type === MONTH) {
       return {
         add: () => add(1, periodUnit(MONTH)),
-        substract: () => subtract(1, periodUnit(MONTH)),
+        subtract: () => subtract(1, periodUnit(MONTH)),
         view: ['month'],
         format: 'MM/YYYY',
         toolbarFormat: 'MMMM YYYY',
@@ -53,10 +56,10 @@ function CustomDatePicker(props) {
       }
     }
 
-    if (type === 'year') {
+    if (type === YEAR) {
       return {
         add: () => add(1, periodUnit(YEAR)),
-        substract: () => subtract(1, periodUnit(YEAR)),
+        subtract: () => subtract(1, periodUnit(YEAR)),
         view: ['year'],
         format: 'YYYY',
         toolbarFormat: 'YYYY',
@@ -64,9 +67,20 @@ function CustomDatePicker(props) {
       }
     }
 
+    if (type === WEEK) {
+     return {
+        add: () => add(1, periodUnit(WEEK)),
+        subtract: () => subtract(1, periodUnit(WEEK)),
+        view: ['day'],
+        format: 'DD/MM/YYYY',
+        toolbarFormat: 'dd., MMM D',
+        id: 'week-picker',
+      }
+    }
+
     return {
       add: () => add(1, periodUnit(DAY)),
-      substract: () => subtract(1, periodUnit(DAY)),
+      subtract: () => subtract(1, periodUnit(DAY)),
       view: ['day'],
       format: 'DD/MM/YYYY',
       toolbarFormat: 'dd., MMM D',
@@ -84,7 +98,7 @@ function CustomDatePicker(props) {
           prevNextButtons &&
           <IconButton
             disabled={minDate && dayjs(selectedDate).isSame(minDate, type)}
-            onClick={() => picker.substract(1)} size="large">
+            onClick={() => picker.subtract(1)} size="large">
             <ArrowBackIosOutlinedIcon fontSize="small" />
           </IconButton>
         }

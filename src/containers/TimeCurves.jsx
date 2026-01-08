@@ -125,6 +125,7 @@ function TimeCurves(props) {
                 minDate={minDate}
                 maxDate={maxDate}
                 selectedDate={currentDate}
+                type={period}
                 handleDateChange={setCurrentDate}
               />
               {chartType === 'LINE_CHART_TYPE' && (
@@ -133,6 +134,7 @@ function TimeCurves(props) {
                     prevNextButtons={false}
                     minDate={minDate}
                     maxDate={maxDate}
+                    type={period}
                     selectedDate={compareDate}
                     handleDateChange={setCompareDate}
                     shouldDisableDate={(date) => dayjs(date).isSame(currentDate, 'day')}

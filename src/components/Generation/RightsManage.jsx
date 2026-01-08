@@ -128,10 +128,10 @@ export default function RightsManage({
                         id: 'type-view-select',
                       }}
                     >
-                      <option id="month-option" value={'month'}>
+                      <option id="month-option" value={'MONTHLY'}>
                         {t('GENERATION_KWH_SELECT_MONTH')}
                       </option>
-                      <option id="year-option" value={'year'}>
+                      <option id="year-option" value={'YEARLY'}>
                         {t('GENERATION_KWH_SELECT_YEAR')}
                       </option>
                     </Select>

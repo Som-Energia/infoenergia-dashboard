@@ -47,8 +47,8 @@ describe('Generic Component Rights Manage', () => {
   const mockHandlePeriodChange = vi.fn()
   const mockPeriods = 'Taula_Peatges_20'
   const mockSelectedDate = new Date()
-  const mockViewTypeValueMonth = 'month'
-  const mockViewTypeValueYear = 'year'
+  const mockViewTypeValueMonth = 'MONTHLY'
+  const mockViewTypeValueYear = 'YEARLY'
   const mockTotal = 3000
 
   test('Should show the children component', async () => {
@@ -246,7 +246,7 @@ describe('Generic Component Rights Manage', () => {
     )
 
     const selectElement = getById(dom.container, 'type-view-select')
-    expect(selectElement).toHaveValue('month')
+    expect(selectElement).toHaveValue('MONTHLY')
     expect(selectElement).toHaveTextContent('GENERATION_KWH_SELECT_YEAR')
   })
 
@@ -288,7 +288,7 @@ describe('Generic Component Rights Manage', () => {
     )
 
     const selectElement = getById(dom.container, 'type-view-select')
-    expect(selectElement).toHaveValue('year')
+    expect(selectElement).toHaveValue('YEARLY')
     expect(selectElement).toHaveTextContent('GENERATION_KWH_SELECT_MONTH')
   })
 
@@ -331,7 +331,7 @@ describe('Generic Component Rights Manage', () => {
     )
 
     const selectElement = getById(dom.container, 'type-view-select')
-    const optionToSelect = 'month' // Change to the option you want to select
+    const optionToSelect = 'MONTHLY' // Change to the option you want to select
     await userEvent.selectOptions(selectElement, optionToSelect)
     expect(mockHandleViewTypeChange).toHaveBeenCalled()
   })
