@@ -11,28 +11,28 @@ const response = {
 
 export const getMockConsumption = async () => {
     return Promise.resolve({
-        data: JSON.parse(process.env.REACT_APP_GENERATION_ASSIGNMENTS_USE_TABLE),
+        data: JSON.parse(import.meta.env.VITE_APP_GENERATION_ASSIGNMENTS_USE_TABLE),
         ...response
     })
 }
 
 export const getMockKWhRecord = async () => {
     return Promise.resolve({
-        data: JSON.parse(process.env.REACT_APP_GENERATION_PRODUCTION_CHART),
+        data: JSON.parse(import.meta.env.VITE_APP_GENERATION_PRODUCTION_CHART),
         ...response
     })
 }
 
 export const getMockKWhRemaining = async () => {
     return Promise.resolve({
-        data: JSON.parse(process.env.REACT_APP_GENERATION_BAG_KWH),
+        data: JSON.parse(import.meta.env.VITE_APP_GENERATION_BAG_KWH),
         ...response
     })
 }
 
 export const getMockLastInvoiceDatePriorityContract = async () => {
     return Promise.resolve({
-        data: JSON.parse(process.env.REACT_APP_GENERATION_LAST_INVOICE_DATE),
+        data: JSON.parse(import.meta.env.VITE_APP_GENERATION_LAST_INVOICE_DATE),
         ...response
     })
 }

@@ -80,7 +80,7 @@ export const getSeasonalProfile = async (contract, token) => {
 }
 
 /* Choice development api or production api */
-const investmentsApi = investmentsFactApi.getApi(process.env.NODE_ENV)
+const investmentsApi = investmentsFactApi.getApi(import.meta.env.MODE)
 /* Use's table data */
 export const getConsumption = async (date, token, type) => investmentsApi.getConsumption(date, token, type)
 /* Production's chart data */
