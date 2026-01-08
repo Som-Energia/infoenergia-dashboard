@@ -1,5 +1,9 @@
 # Change Log
 
+## 2.0.1 2026-01-08
+
+- Hotfix date pickers lost type
+
 ## 2.0.0 2026-01-02
 
 - Change build engine from create-react-app to vite v7
