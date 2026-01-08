@@ -32,7 +32,7 @@ describe('Record section of GenerationkWh', () => {
   const mockHandleDateChange = vi.fn()
   const mockHandleViewTypeChange = vi.fn()
   const mockSelectedDate = new Date()
-  const MONTH = 'month'
+  const MONTH = 'MONTHLY'
 
   const getById = queryByAttribute.bind(null, 'id')
   test('Should show the loading component', async () => {
