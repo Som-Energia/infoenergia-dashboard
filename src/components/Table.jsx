@@ -14,7 +14,7 @@ const useStyles = makeStyles({
   },
 })
 
-export default function Talbe(props) {
+export default function CustomTable(props) {
   const classes = useStyles()
   const { columns, rows, id } = props
 

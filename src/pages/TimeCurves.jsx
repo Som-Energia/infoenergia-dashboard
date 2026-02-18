@@ -105,6 +105,7 @@ function TimeCurvesPage() {
               chartType={type}
               data={timeCurves}
               contract={contract}
+              lang={language}
             />
           ),
         },
@@ -116,6 +117,7 @@ function TimeCurvesPage() {
               chartType={type}
               data={timeCurves}
               contract={contract}
+              lang={language}
             />
           ),
         },
@@ -127,6 +129,7 @@ function TimeCurvesPage() {
               chartType={type}
               data={timeCurves}
               contract={contract}
+              lang={language}
             />
           ),
         },
@@ -138,6 +141,7 @@ function TimeCurvesPage() {
               chartType={type}
               data={timeCurves}
               contract={contract}
+              lang={language}
             />
           ),
         },
