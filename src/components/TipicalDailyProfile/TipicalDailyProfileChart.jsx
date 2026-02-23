@@ -11,7 +11,9 @@ import {
   Cell,
   Label,
 } from 'recharts'
-import { formatDecimal, formatNumber } from '../../services/utils'
+import { SummaryPeriodChart } from '@somenergia/somenergia-ui'
+
+import { colorPeriod, formatDecimal, formatNumber } from '../../services/utils'
 
 const zeroPad = (num, places) => String(num).padStart(places, '0')
 
@@ -27,19 +29,54 @@ const formatLabel = (value) => {
   return formatXAxis(value)
 }
 
-const colorPeriod = (hour, isWeekend) => {
-  if (isWeekend || (hour >= 0 && hour < 8)) return '#c4dd8c'
+const colorPeriods = (hour, isWeekend) => {
+  if (isWeekend || (hour >= 0 && hour < 8)) return 'low'
 
   return (hour >= 10 && hour < 14) || (hour >= 18 && hour < 22)
-    ? '#f2970f'
-    : '#96b633'
+    ? 'average'
+    : 'up'
 }
 
-const TipicalDailyProfileChart = ({ data }) => {
+function transformBardata(data) {
+  // build the periods array of dicts
+  let periods = []
+  data.forEach((item) => {
+    const colorItem = colorPeriods(item.hour, false)
+    item[colorItem] = item.kWh
+    console.log('colorItem', item)
+    periods.push(item)
+  })
+  // TODO: check where to define these colors
+  return {
+    fills: {
+      low: '#c4dd8c',
+      average: '#f2970f',
+      up: '#96b633',
+    },
+    keys: ['low', 'average', 'up'],
+    periods: periods,
+  }
+}
+
+const TipicalDailyProfileChart = ({ period, data = [], lang = 'es' }) => {
+  const bardata = transformBardata(data)
+
+  console.log('bardata', bardata)
   return (
     <div style={{ height: '300px' }}>
       <ResponsiveContainer>
-        <BarChart width={730} height={250} data={data}>
+          <SummaryPeriodChart
+            data={bardata}
+            period="DAILY"
+            Ylegend={'€/kWh'}
+            legend={true}
+            showTooltipKeys={false}
+            //referenceLineData={referenceLineData}
+            //tickCount={tickCountValue}
+            //maxYAxisValue={computeMaxYAxisValue(totalPrices, tickCountValue)}
+            //minYAxisValue={computeMinYAxisValue(totalPrices, tickCountValue)}
+          />
+        {/* <BarChart width={730} height={250} data={data}>
           <CartesianGrid stroke="#cccccc" vertical={false} />
           <XAxis
             dataKey="hour"
@@ -75,7 +112,7 @@ const TipicalDailyProfileChart = ({ data }) => {
           ) : (
             ''
           )}
-        </BarChart>
+        </BarChart> */}
       </ResponsiveContainer>
     </div>
   )
