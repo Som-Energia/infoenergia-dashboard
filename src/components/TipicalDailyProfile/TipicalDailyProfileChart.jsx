@@ -4,11 +4,11 @@ import { ResponsiveContainer } from 'recharts'
 import { SummaryPeriodChart } from '@somenergia/somenergia-ui'
 
 const colorPeriods = (hour, isWeekend) => {
-  if (isWeekend || (hour >= 0 && hour < 8)) return 'vall'
+  if (isWeekend || (hour >= 0 && hour < 8)) return 'VALLEY'
 
   return (hour >= 10 && hour < 14) || (hour >= 18 && hour < 22)
-    ? 'punta'
-    : 'pla'
+    ? 'PICK'
+    : 'FLAT'
 }
 
 function transformBardata(data) {
@@ -22,11 +22,11 @@ function transformBardata(data) {
   })
   return {
     fills: {
-      vall: '#c4dd8c',
-      punta: '#f2970f',
-      pla: '#96b633',
+      VALLEY: '#c4dd8c',
+      PICK: '#f2970f',
+      FLAT: '#96b633',
     },
-    keys: ['vall', 'punta', 'pla'],
+    keys: ['VALLEY', 'PICK', 'FLAT'],
     periods: periods,
   }
 }

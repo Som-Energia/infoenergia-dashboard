@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
 
 import dayjs from 'dayjs'
-import IconButton from '@mui/material/IconButton'
+import { IconButton } from '@mui/material'
 import ClearIcon from '@mui/icons-material/Clear'
 import TimeCurvesBarChart from '../components/TimeCurves/TimeCurvesBarChart'
 import TimeCurvesLineChart from '../components/TimeCurves/TimeCurvesLineChart'
