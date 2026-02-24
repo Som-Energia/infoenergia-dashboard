@@ -34,7 +34,6 @@ function transformBardata(data) {
 const TipicalDailyProfileChart = ({ data = [], lang = 'es' }) => {
   const bardata = transformBardata(data)
 
-  console.log('bardata', bardata)
   return (
     <div style={{ height: '300px' }}>
       <ResponsiveContainer>
