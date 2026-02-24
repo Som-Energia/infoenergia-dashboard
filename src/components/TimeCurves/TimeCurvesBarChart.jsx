@@ -1,79 +1,54 @@
-import React, { useMemo } from 'react'
+import { memo, useMemo } from 'react'
+import styled from 'styled-components'
+import { SummaryPeriodChart } from '@somenergia/somenergia-ui'
+import { groupDataByPeriod, getBaseKeys } from '../../services/utils'
+import { period2Color } from '../../services/utils'
 
-import {
-  Bar,
-  BarChart,
-  CartesianGrid,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-  Label,
-} from 'recharts'
+const ChartWrapper = styled.div`
+  height: 450px;
+  margin-top: 16px;
+`
+function transformBardata(data, tariffTimetableId) {
+  const base = getBaseKeys(tariffTimetableId)
+  const keys = Object.keys(base)
+  let periods = []
 
-import {
-  formatXAxis,
-  formatTooltip,
-  formatTooltipLabel,
-  groupDataByPeriod,
-  period2Color,
-  formatDecimal,
-} from '../../services/utils'
+  data.forEach((item) => {
+    keys.forEach((key) => {
+      item[key] = Math.round((item[key] + Number.EPSILON) * 1000) / 1000
+    })
+    periods.push(item)
+  })
 
-function TimeCurvesBarChart({ data, period, tariffTimetableId }) {
+  return {
+    fills: {
+      VALLEY: period2Color['VALLEY'],
+      PICK: period2Color['PICK'],
+      FLAT: period2Color['FLAT'],
+    },
+    keys: keys,
+    periods: periods,
+  }
+}
+
+function TimeCurvesBarChart({ period, data = [], compareData = [], lang = 'es', tariffTimetableId }) {
   const groupedData = useMemo(
     () => groupDataByPeriod(data, period, 'barChart', tariffTimetableId),
     [data, period]
   )
+  const bardata = transformBardata(groupedData, tariffTimetableId)
 
   return (
-    <div style={{ height: '450px' }}>
-      <ResponsiveContainer>
-        <BarChart width={730} height={250} data={groupedData}>
-          <CartesianGrid stroke="#616161" strokeWidth={0.5} vertical={false} />
-          <XAxis
-            dataKey="date"
-            tickFormatter={(tickItem) => formatXAxis(period, tickItem)}
-            tick={{ fontSize: '1rem', transform: 'translate(0, 8)' }}
-            padding={{ left: 24, right: 24 }}
-          />
-          <YAxis
-            type="number"
-            domain={[0, 'auto']}
-            axisLine={false}
-            tickCount={7}
-            width={75}
-            tickLine={false}
-            tickFormatter={(tickItem) => `${formatDecimal(tickItem)}`}
-            tick={{ fontSize: '1rem', transform: 'translate(0, 0)' }}
-          >
-            <Label
-              value="kWh"
-              angle={-90}
-              position="insideLeft"
-              fill="#969696"
-            />
-          </YAxis>
-
-          <Tooltip
-            formatter={(value) => formatTooltip(value, 'kWh', 3)}
-            labelFormatter={(value) => formatTooltipLabel(period, value)}
-            cursor={{ fill: '#f2f2f2bb' }}
-            contentStyle={{ fontWeight: 'bold' }}
-          />
-          {groupedData &&
-            Object.keys(period2Color).map((key) => (
-              <Bar
-                key={key}
-                stackId="current"
-                dataKey={key}
-                fill={period2Color[key]}
-              />
-            ))}
-        </BarChart>
-      </ResponsiveContainer>
-    </div>
+    <ChartWrapper>
+      <SummaryPeriodChart
+        data={bardata}
+        period={period}
+        compareData={compareData}
+        lang={lang}
+        showTooltipKeys={false}>
+      </SummaryPeriodChart>
+    </ChartWrapper>
   )
 }
 
-export default TimeCurvesBarChart
+export default memo(TimeCurvesBarChart)
