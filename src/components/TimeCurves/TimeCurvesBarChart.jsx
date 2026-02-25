@@ -12,20 +12,18 @@ function transformBardata(data, tariffTimetableId) {
   const base = getBaseKeys(tariffTimetableId)
   const keys = Object.keys(base)
   let periods = []
+  let fills = {}
 
   data.forEach((item) => {
     keys.forEach((key) => {
       item[key] = Math.round((item[key] + Number.EPSILON) * 1000) / 1000
+      fills[key] = period2Color[key]
     })
     periods.push(item)
   })
 
   return {
-    fills: {
-      VALLEY: period2Color['VALLEY'],
-      PICK: period2Color['PICK'],
-      FLAT: period2Color['FLAT'],
-    },
+    fills: fills,
     keys: keys,
     periods: periods,
   }

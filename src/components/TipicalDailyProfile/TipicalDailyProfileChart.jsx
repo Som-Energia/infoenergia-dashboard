@@ -2,6 +2,7 @@ import React from 'react'
 
 import { ResponsiveContainer } from 'recharts'
 import { SummaryPeriodChart } from '@somenergia/somenergia-ui'
+import { period2Color } from '../../services/utils'
 
 const colorPeriods = (hour, isWeekend) => {
   if (isWeekend || (hour >= 0 && hour < 8)) return 'VALLEY'
@@ -22,9 +23,9 @@ function transformBardata(data) {
   })
   return {
     fills: {
-      VALLEY: '#c4dd8c',
-      PICK: '#f2970f',
-      FLAT: '#96b633',
+      VALLEY: period2Color['VALLEY'],
+      PICK: period2Color['PICK'],
+      FLAT: period2Color['FLAT'],
     },
     keys: ['VALLEY', 'PICK', 'FLAT'],
     periods: periods,
