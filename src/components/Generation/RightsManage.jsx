@@ -6,6 +6,9 @@ import { getMonthCode } from '../../services/timecurves'
 import Loading from '../../components/Loading'
 import PeriodSelector from './PeriodSelector'
 import { useParams } from 'react-router-dom'
+import { ConsumptionDisplay } from '@somenergia/somenergia-ui'
+
+
 import dayjs from 'dayjs'
 import 'dayjs/locale/ca'
 import 'dayjs/locale/es'
@@ -23,7 +26,6 @@ export default function RightsManage({
 }) {
 
   const { t } = useTranslation()
-  const { MONTH } = useContext(GenerationUseContext)
 
   const { language } = useParams()
   const { i18n } = useTranslation()
@@ -63,32 +65,11 @@ export default function RightsManage({
                 gap: '10px',
               }}
             >
-              <Typography
-                variant="h4"
-                component="h1"
-                style={{ color: '#96B633' }}
-              >
-                <strong>{total}</strong> kWh
-              </Typography>
-              <Box
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'flex-end',
-                }}
-              >
-                <Typography style={{ fontWeight: 'bold' }}>
-                  {t('GENERATION_KWH_USE_TOTAL', {
-                    month:
-                      viewTypeValue === MONTH
-                        ? t(getMonthCode(dayjs(selectedDate).month() + 1))
-                        : t('YEARLY'),
-                  })}
-                </Typography>
-                <Typography style={{ color: '#96B633' }}>
-                  {dayjs(selectedDate).year()}
-                </Typography>
-              </Box>
+              <ConsumptionDisplay
+                period={viewTypeValue}
+                currentDate={selectedDate}
+                totalKwh={total}
+              />
             </Grid>
 
             <Grid
