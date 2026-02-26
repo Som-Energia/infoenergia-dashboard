@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Grid, FormControl, Select } from '@mui/material'
 import { useTranslation } from 'react-i18next'
-import Loading from '../../components/Loading'
+import { Loading } from '@somenergia/somenergia-ui'
 import PeriodSelector from './PeriodSelector'
 import { useParams } from 'react-router-dom'
 import { ConsumptionDisplay, SomDatePicker } from '@somenergia/somenergia-ui'

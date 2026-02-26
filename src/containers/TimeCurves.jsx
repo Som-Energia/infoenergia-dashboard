@@ -9,11 +9,10 @@ import TimeCurvesLineChart from '../components/TimeCurves/TimeCurvesLineChart'
 import LegendPeriod from '../components/TipicalDailyProfile/LegendPeriod'
 
 import TimeCurvesContext from '../contexts/TimeCurvesContext'
-import Loading from '../components/Loading'
 
 import { convertDataFromWattsToKwh } from '../services/utils'
 import CustomDatePicker from '../components/CustomDatePicker/CustomDatePicker'
-import { ConsumptionDisplay } from '@somenergia/somenergia-ui'
+import { ConsumptionDisplay, Loading } from '@somenergia/somenergia-ui'
 
 const filterDataWithPeriod = ({ refDate, period, data }) => {
   const filteredData = []

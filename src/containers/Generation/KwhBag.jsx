@@ -18,7 +18,7 @@ import {
 } from '../../services/utils'
 import GenerationUseContext from '../../contexts/GenerationUseContext'
 import { useTranslation } from 'react-i18next'
-import Loading from '../../components/Loading'
+import { Loading } from '@somenergia/somenergia-ui'
 import { getLastInvoiceDatePriorityContract } from '../../services/api'
 import PeriodSelector from '../../components/Generation/PeriodSelector'
 

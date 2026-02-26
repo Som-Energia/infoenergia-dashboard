@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react'
 import RightsManage from '../../components/Generation/RightsManage'
 import Grid from '@mui/material/Grid'
-import Loading from '../../components/Loading'
+import { Loading } from '@somenergia/somenergia-ui'
 import { generationKwhRecordData } from '../../services/utils'
 import CustomBarChart from '../../components/Generation/CustomBarChart'
 import { useTranslation } from 'react-i18next'
