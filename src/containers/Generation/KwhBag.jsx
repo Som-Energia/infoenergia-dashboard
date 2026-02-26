@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useMemo, useState } from 'react'
-import Grid from '@mui/material/Grid'
 import StackedBarChart from '../../components/Generation/StackedBarChart'
 import {
   TableContainer,
@@ -9,8 +8,9 @@ import {
   TableRow,
   TableCell,
   Typography,
+  Grid,
+  Paper
 } from '@mui/material'
-import Paper from '@mui/material/Paper'
 import makeStyles from '@mui/styles/makeStyles';
 import {
   groupYearlyDataAccumulation,
