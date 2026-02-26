@@ -1,13 +1,10 @@
-import React, { useContext, useEffect } from 'react'
-import { Box, Grid, Typography, FormControl, Select } from '@mui/material'
+import React, { useEffect } from 'react'
+import { Grid, FormControl, Select } from '@mui/material'
 import { useTranslation } from 'react-i18next'
-import GenerationUseContext from '../../contexts/GenerationUseContext'
-import { getMonthCode } from '../../services/timecurves'
 import Loading from '../../components/Loading'
 import PeriodSelector from './PeriodSelector'
 import { useParams } from 'react-router-dom'
-import { ConsumptionDisplay } from '@somenergia/somenergia-ui'
-
+import { ConsumptionDisplay, SomDatePicker } from '@somenergia/somenergia-ui'
 
 import dayjs from 'dayjs'
 import 'dayjs/locale/ca'
@@ -85,11 +82,16 @@ export default function RightsManage({
               spacing={1}
             >
               <Grid item xs={12} sm={3}>
-                <CustomDatePicker
-                  prevNextButtons={true}
-                  selectedDate={dayjs(selectedDate)}
-                  handleDateChange={handleDateChange}
-                  type={viewTypeValue}
+                <SomDatePicker
+                  period={viewTypeValue}
+                  currentTime={selectedDate}
+                  setCurrentTime={handleDateChange}
+                  sx={{
+                    borderColor: 'secondary.main',
+                    input: {
+                      textAlign: 'center',
+                    },
+                  }}
                 />
               </Grid>
               {handleViewTypeChange ? (
