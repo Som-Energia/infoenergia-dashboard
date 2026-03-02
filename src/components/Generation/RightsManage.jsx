@@ -86,10 +86,12 @@ export default function RightsManage({
                   period={viewTypeValue}
                   currentTime={selectedDate}
                   setCurrentTime={handleDateChange}
-                  sx={{
-                    borderColor: 'secondary.main',
-                    input: {
-                      textAlign: 'center',
+                  styles={{
+                    datePicker: {
+                      borderColor: 'secondary.main',
+                      input: {
+                        textAlign: 'center',
+                      }
                     },
                   }}
                 />

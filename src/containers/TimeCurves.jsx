@@ -11,8 +11,7 @@ import LegendPeriod from '../components/TipicalDailyProfile/LegendPeriod'
 import TimeCurvesContext from '../contexts/TimeCurvesContext'
 
 import { convertDataFromWattsToKwh } from '../services/utils'
-import CustomDatePicker from '../components/CustomDatePicker/CustomDatePicker'
-import { ConsumptionDisplay, Loading } from '@somenergia/somenergia-ui'
+import { ConsumptionDisplay, Loading, SomDatePicker } from '@somenergia/somenergia-ui'
 
 const filterDataWithPeriod = ({ refDate, period, data }) => {
   const filteredData = []
@@ -117,25 +116,26 @@ function TimeCurves(props) {
         <>
           <ControlsWrapper>
             <DateControlsWrapper>
-              <CustomDatePicker
+              <SomDatePicker
+                firstDate={minDate}
+                lastDate={maxDate}
+                currentTime={currentDate}
+                period={period}
+                setCurrentTime={setCurrentDate}
                 prevNextButtons={true}
-                minDate={minDate}
-                maxDate={maxDate}
-                selectedDate={currentDate}
-                type={period}
-                handleDateChange={setCurrentDate}
+                shouldDisableDate={(date) => dayjs(date).isSame(compareDate, 'day')}
               />
               {chartType === 'LINE_CHART_TYPE' && (
                 <>
-                  <CustomDatePicker
+                  <SomDatePicker
+                    firstDate={minDate}
+                    lastDate={maxDate}
+                    currentTime={compareDate}
+                    period={period}
+                    setCurrentTime={setCompareDate}
                     prevNextButtons={false}
-                    minDate={minDate}
-                    maxDate={maxDate}
-                    type={period}
-                    selectedDate={compareDate}
-                    handleDateChange={setCompareDate}
                     shouldDisableDate={(date) => dayjs(date).isSame(currentDate, 'day')}
-                  ></CustomDatePicker>
+                  />
                   {compareDate && (
                     <IconButton onClick={() => setCompareDate(null)} size="large">
                       <ClearIcon fontSize="small" />

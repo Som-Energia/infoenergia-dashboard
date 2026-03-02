@@ -1,7 +1,7 @@
 import React from 'react'
 import CustomTable from '../../components/Table'
 import RightsManage from '../../components/Generation/RightsManage'
-import Grid from '@mui/material/Grid'
+import {Grid} from '@mui/material'
 import { Loading } from '@somenergia/somenergia-ui'
 
 export default function Use({
