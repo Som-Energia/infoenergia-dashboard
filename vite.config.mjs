@@ -44,18 +44,14 @@ export default defineConfig(({ mode }) => {
       environment: 'jsdom',
       css: true,
       setupFiles: './src/tests/setupTests.js',
-
-      // Replace problematic import with alias
-      alias: {
-        '^@mui/material/useMediaQuery$': '@mui/material/node/useMediaQuery/index.js',
-      },
-
       // Vitest MUI's package pre-bundle avoid internal module resolution problems
       server: {
         deps: {
           inline: [
-            '@mui/material',
+            /@mui\/material/,
+            /@mui\/icons-material/,
             '@mui/x-date-pickers',
+            /@somenergia\/somenergia-ui/
           ],
         },
       },

@@ -9,7 +9,7 @@
     "@mui/material": "^6.5.0",
     "@mui/styles": "^6.5.0",
     "@mui/x-date-pickers": "^7.0.0",
-    "@somenergia/somenergia-ui": "^1.0.0-alpha.4",
+    "@somenergia/somenergia-ui": "1.0.0-alpha.13",
     "axios": "^1.13.2",
     "dayjs": "^1.11.0",
     "i18next": "^23.11.2",
