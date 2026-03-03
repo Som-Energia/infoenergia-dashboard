@@ -7,6 +7,7 @@ import userEvent from '@testing-library/user-event'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { vi } from 'vitest'
+import dayjs from 'dayjs'
 
 vi.mock('react-i18next', () => ({
   // this mock makes sure any components using the translate hook can use it without a warning being shown
@@ -25,8 +26,8 @@ vi.mock('react-i18next', () => ({
 }))
 
 function formatMMYYYY(date) {
-  const month = (date.getMonth() + 1).toString().padStart(2, '0') // Month is zero-based, so add 1
-  const year = date.getFullYear().toString()
+  const month = (date.month() + 1).toString().padStart(2, '0') // Month is zero-based, so add 1
+  const year = date.year().toString()
 
   return `${month}/${year}`
 }
@@ -46,7 +47,7 @@ describe('Generic Component Rights Manage', () => {
   const mockHandleViewTypeChange = vi.fn()
   const mockHandlePeriodChange = vi.fn()
   const mockPeriods = 'Taula_Peatges_20'
-  const mockSelectedDate = new Date()
+  const mockSelectedDate = dayjs()
   const mockViewTypeValueMonth = 'MONTHLY'
   const mockViewTypeValueYear = 'YEARLY'
   const mockTotal = 3000
@@ -203,8 +204,9 @@ describe('Generic Component Rights Manage', () => {
       </MemoryRouter>
     )
 
-    const stringData = mockSelectedDate.getFullYear().toString()
+    const stringData = mockSelectedDate.year().toString()
     const inputDate = getById(dom.container, 'year-picker')
+
     expect(inputDate.value).toBe(stringData)
   })
 

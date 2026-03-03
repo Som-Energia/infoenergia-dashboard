@@ -8,6 +8,8 @@ import { consumption } from './mockData/AssignmentsConsumption'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { vi } from 'vitest'
+import dayjs from 'dayjs'
+
 
 vi.mock('react-i18next', () => ({
   // this mock makes sure any components using the translate hook can use it without a warning being shown
@@ -35,7 +37,7 @@ describe('Generation use section', () => {
   const mockHandleDateChange = vi.fn()
   const mockHandleViewTypeChange = vi.fn()
   const mockAssignmentsTableFormat = consumption
-  const mockSelectedDate = new Date()
+  const mockSelectedDate = dayjs()
   const MONTH = 'MONTHLY'
   const YEAR = 'YEARLY'
 
