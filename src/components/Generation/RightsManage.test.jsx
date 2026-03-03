@@ -1,7 +1,8 @@
 import React from 'react'
 import RightsManage from './RightsManage'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
-import { render, queryByAttribute } from '@testing-library/react'
+import { render, queryByAttribute} from '@testing-library/react'
+
 import { GenerationUseContextProvider } from '../../contexts/GenerationUseContext'
 import userEvent from '@testing-library/user-event'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
@@ -24,14 +25,6 @@ vi.mock('react-i18next', () => ({
     init: () => {},
   },
 }))
-
-function formatMMYYYY(date) {
-  const month = (date.month() + 1).toString().padStart(2, '0') // Month is zero-based, so add 1
-  const year = date.year().toString()
-
-  return `${month}/${year}`
-}
-
 
 const routerFutureFlags = {
   v7_relativeSplatPath: true,
@@ -161,9 +154,9 @@ describe('Generic Component Rights Manage', () => {
       </MemoryRouter>
     )
 
-    const stringData = formatMMYYYY(mockSelectedDate)
-    const inputDate = getById(dom.container, 'month-picker')
-    expect(inputDate.value).toBe(stringData)
+    const selectedDate = "Choose date, selected date is " + dayjs(mockSelectedDate).format('ll')
+    const buttonDate = dom.getByRole('button',{name: selectedDate}).getAttribute('aria-label')
+    expect(buttonDate).toBeTruthy()
   })
 
   test('Should show the selected Date when type is YEAR', async () => {
@@ -204,10 +197,9 @@ describe('Generic Component Rights Manage', () => {
       </MemoryRouter>
     )
 
-    const stringData = mockSelectedDate.year().toString()
-    const inputDate = getById(dom.container, 'year-picker')
-
-    expect(inputDate.value).toBe(stringData)
+    const selectedDate = "Choose date, selected date is " + dayjs(mockSelectedDate).format('ll')
+    const buttonDate = dom.getByRole('button',{name: selectedDate}).getAttribute('aria-label')
+    expect(buttonDate).toBeTruthy()
   })
 
   test('Should be the value month in select element', async () => {
