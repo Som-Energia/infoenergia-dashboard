@@ -5,23 +5,24 @@ import react from '@vitejs/plugin-react';
 export default defineConfig(({ mode }) => {
 
   const ovOptions = mode === 'ov' ? {
-    entryFileNames: 'static/js/main.js',
+    entryFileNames: 'js/main.js',
     chunkFileNames: (fileInfo) => {
       if (fileInfo.name.includes('vendor')) {
-        return 'static/js/vendor.js';  // Explicitly name the entry JS file
+        return 'js/vendor.js';  // Explicitly name the entry JS file
       }
-      return 'static/js/[name]-[hash].js';
+      return 'js/[name]-[hash].js';
     },
     assetFileNames: (assetInfo) => {
       if (assetInfo.name.endsWith('.css')) {
-        return 'static/css/main.css'; // Explicitly name the CSS file
+        return 'css/main.css'; // Explicitly name the CSS file
       }
-      return 'static/css/[name]-[hash].[ext]';
+      return 'css/[name]-[hash].[ext]';
     }
   } : {}
 
 
   return {
+    base: 'static/infoenergia/',
     plugins: [react()],
     build: {
       outDir: 'build', // CRA's default build output
