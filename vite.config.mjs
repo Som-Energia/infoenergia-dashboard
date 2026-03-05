@@ -1,8 +1,10 @@
-import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import { defineConfig, loadEnv } from 'vite'
 
 
 export default defineConfig(({ mode }) => {
+
+   process.env = { ...process.env, ...loadEnv(mode, process.cwd(), 'BASE_URL') }
 
   const ovOptions = mode === 'ov' ? {
     entryFileNames: 'js/main.js',
@@ -22,7 +24,7 @@ export default defineConfig(({ mode }) => {
 
 
   return {
-    base: 'static/infoenergia/',
+    base: process.env.BASE_URL,
     plugins: [react()],
     build: {
       outDir: 'build', // CRA's default build output
