@@ -1,6 +1,6 @@
 # Change Log
 
-## unreleased
+## 2.1.0 2026-03-09
 
 - Using somenergia-ui components:
   - SomDatePicker instead of CustomDatePicker
