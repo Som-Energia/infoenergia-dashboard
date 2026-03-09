@@ -1,5 +1,13 @@
 # Change Log
 
+## unreleased
+
+- Using somenergia-ui components:
+  - SomDatePicker instead of CustomDatePicker
+  - SummaryPeriodChart
+  - ConsumptionDisplay
+  - Loading
+
 ## 2.0.1 2026-01-08
 
 - Hotfix date pickers lost type
