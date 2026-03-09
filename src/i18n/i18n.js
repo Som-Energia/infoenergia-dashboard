@@ -1,5 +1,6 @@
 import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
+import { registerSomEnergiaI18n } from '@somenergia/somenergia-ui'
 
 import LOCALE_CA from './locale-ca.json'
 import LOCALE_ES from './locale-es.json'
@@ -27,10 +28,11 @@ i18n
     resources,
     fallbackLng: 'es',
     lng: 'es',
-    keySeparator: false, // we do not use keys in form messages.welcome
     interpolation: {
       escapeValue: false // react already safes from xss
     }
   })
+
+registerSomEnergiaI18n(i18n)
 
 export default i18n

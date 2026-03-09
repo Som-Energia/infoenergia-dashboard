@@ -1,8 +1,8 @@
 import React from 'react'
-import Table from '../../components/Table'
+import CustomTable from '../../components/Table'
 import RightsManage from '../../components/Generation/RightsManage'
-import Grid from '@mui/material/Grid'
-import Loading from '../../components/Loading'
+import {Grid} from '@mui/material'
+import { Loading } from '@somenergia/somenergia-ui'
 
 export default function Use({
   handleViewTypeChange,
@@ -36,7 +36,7 @@ export default function Use({
           total={assignmentsTableFormat.total}
           isLoading={loading}
         >
-          <Table
+          <CustomTable
             columns={assignmentsTableFormat.columns}
             rows={assignmentsTableFormat?.rows}
             id={'table-body-assignment-consumption'}

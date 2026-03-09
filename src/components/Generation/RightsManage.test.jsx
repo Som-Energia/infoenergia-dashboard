@@ -1,12 +1,14 @@
 import React from 'react'
 import RightsManage from './RightsManage'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
-import { render, queryByAttribute } from '@testing-library/react'
+import { render, queryByAttribute} from '@testing-library/react'
+
 import { GenerationUseContextProvider } from '../../contexts/GenerationUseContext'
 import userEvent from '@testing-library/user-event'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { vi } from 'vitest'
+import dayjs from 'dayjs'
 
 vi.mock('react-i18next', () => ({
   // this mock makes sure any components using the translate hook can use it without a warning being shown
@@ -24,14 +26,6 @@ vi.mock('react-i18next', () => ({
   },
 }))
 
-function formatMMYYYY(date) {
-  const month = (date.getMonth() + 1).toString().padStart(2, '0') // Month is zero-based, so add 1
-  const year = date.getFullYear().toString()
-
-  return `${month}/${year}`
-}
-
-
 const routerFutureFlags = {
   v7_relativeSplatPath: true,
   v7_startTransition: true,
@@ -46,7 +40,7 @@ describe('Generic Component Rights Manage', () => {
   const mockHandleViewTypeChange = vi.fn()
   const mockHandlePeriodChange = vi.fn()
   const mockPeriods = 'Taula_Peatges_20'
-  const mockSelectedDate = new Date()
+  const mockSelectedDate = dayjs()
   const mockViewTypeValueMonth = 'MONTHLY'
   const mockViewTypeValueYear = 'YEARLY'
   const mockTotal = 3000
@@ -160,9 +154,9 @@ describe('Generic Component Rights Manage', () => {
       </MemoryRouter>
     )
 
-    const stringData = formatMMYYYY(mockSelectedDate)
-    const inputDate = getById(dom.container, 'month-picker')
-    expect(inputDate.value).toBe(stringData)
+    const selectedDate = "Choose date, selected date is " + dayjs(mockSelectedDate).format('ll')
+    const buttonDate = dom.getByRole('button',{name: selectedDate}).getAttribute('aria-label')
+    expect(buttonDate).toBeTruthy()
   })
 
   test('Should show the selected Date when type is YEAR', async () => {
@@ -203,9 +197,9 @@ describe('Generic Component Rights Manage', () => {
       </MemoryRouter>
     )
 
-    const stringData = mockSelectedDate.getFullYear().toString()
-    const inputDate = getById(dom.container, 'year-picker')
-    expect(inputDate.value).toBe(stringData)
+    const selectedDate = "Choose date, selected date is " + dayjs(mockSelectedDate).format('ll')
+    const buttonDate = dom.getByRole('button',{name: selectedDate}).getAttribute('aria-label')
+    expect(buttonDate).toBeTruthy()
   })
 
   test('Should be the value month in select element', async () => {

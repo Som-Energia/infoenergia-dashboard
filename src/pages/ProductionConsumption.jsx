@@ -1,10 +1,6 @@
 import React, { useEffect, useContext } from 'react'
-import Tabs from '@mui/material/Tabs'
-import Tab from '@mui/material/Tab'
 import makeStyles from '@mui/styles/makeStyles';
-import { Grid } from '@mui/material'
-import Typography from '@mui/material/Typography'
-import Box from '@mui/material/Box'
+import {Box, Typography, Grid, Tab, Tabs} from '@mui/material'
 import Use from '../containers/Generation/Use'
 import KwhBag from '../containers/Generation/KwhBag'
 import Record from '../containers/Generation/Record'

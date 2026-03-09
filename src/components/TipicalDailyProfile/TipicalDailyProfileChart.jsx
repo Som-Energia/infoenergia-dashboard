@@ -1,81 +1,51 @@
 import React from 'react'
 
-import {
-  BarChart,
-  ResponsiveContainer,
-  CartesianGrid,
-  XAxis,
-  YAxis,
-  Tooltip,
-  Bar,
-  Cell,
-  Label,
-} from 'recharts'
-import { formatDecimal, formatNumber } from '../../services/utils'
+import { ResponsiveContainer } from 'recharts'
+import { SummaryPeriodChart } from '@somenergia/somenergia-ui'
+import { period2Color } from '../../services/utils'
 
-const zeroPad = (num, places) => String(num).padStart(places, '0')
-
-const formatXAxis = (tickItem) => {
-  return zeroPad(tickItem, 2) + 'h'
-}
-
-const formatTooltip = (value, name) => {
-  return [name, formatDecimal(value, 1000)]
-}
-
-const formatLabel = (value) => {
-  return formatXAxis(value)
-}
-
-const colorPeriod = (hour, isWeekend) => {
-  if (isWeekend || (hour >= 0 && hour < 8)) return '#c4dd8c'
+const colorPeriods = (hour, isWeekend) => {
+  if (isWeekend || (hour >= 0 && hour < 8)) return 'VALLEY'
 
   return (hour >= 10 && hour < 14) || (hour >= 18 && hour < 22)
-    ? '#f2970f'
-    : '#96b633'
+    ? 'PICK'
+    : 'FLAT'
 }
 
-const TipicalDailyProfileChart = ({ data }) => {
+function transformBardata(data) {
+  let periods = []
+  data.forEach((item) => {
+    let newItem = {}
+    newItem['date'] = new Date().setHours(item.hour)
+    const colorItem = colorPeriods(item.hour, false)
+    newItem[colorItem] = Math.round((item.kWh + Number.EPSILON) * 1000) / 1000
+    periods.push(newItem)
+  })
+  return {
+    fills: {
+      VALLEY: period2Color['VALLEY'],
+      PICK: period2Color['PICK'],
+      FLAT: period2Color['FLAT'],
+    },
+    keys: ['VALLEY', 'PICK', 'FLAT'],
+    periods: periods,
+  }
+}
+
+const TipicalDailyProfileChart = ({ data = [], lang = 'es' }) => {
+  const bardata = transformBardata(data)
+
   return (
     <div style={{ height: '300px' }}>
       <ResponsiveContainer>
-        <BarChart width={730} height={250} data={data}>
-          <CartesianGrid stroke="#cccccc" vertical={false} />
-          <XAxis
-            dataKey="hour"
-            tickFormatter={formatXAxis}
-            tick={{ transform: 'translate(0, 8)' }}
+          <SummaryPeriodChart width={730} height={250}
+            data={bardata}
+            period="DAILY"
+            Ylegend={'kWh'}
+            legend={false}
+            lang={lang}
+            showTooltipKeys={false}
           />
-          <YAxis
-            axisLine={false}
-            tickCount={6}
-            tickLine={false}
-            tickFormatter={(tickItem) => `${formatNumber(tickItem)}`}
-            tick={{ transform: 'translate(-2, 0)' }}
-          >
-            <Label
-              value="kWh"
-              angle={-90}
-              position="insideLeft"
-              fill="#969696"
-            />
-          </YAxis>
-          <Tooltip
-            cursor={{ fill: '#f2f2f2' }}
-            formatter={formatTooltip}
-            labelFormatter={formatLabel}
-            separator=" "
-          />
-          {data !== undefined ? (
-            <Bar dataKey="kWh">
-              {data.map((entry, index) => (
-                <Cell key={index} fill={colorPeriod(entry?.hour)} />
-              ))}
-            </Bar>
-          ) : (
-            ''
-          )}
-        </BarChart>
       </ResponsiveContainer>
     </div>
   )

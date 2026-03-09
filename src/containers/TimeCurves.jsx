@@ -1,20 +1,17 @@
 import React, { useState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
-import { useTranslation } from 'react-i18next'
 
 import dayjs from 'dayjs'
-import IconButton from '@mui/material/IconButton'
+import { IconButton } from '@mui/material'
 import ClearIcon from '@mui/icons-material/Clear'
-import Counter from '../components/Counter'
 import TimeCurvesBarChart from '../components/TimeCurves/TimeCurvesBarChart'
 import TimeCurvesLineChart from '../components/TimeCurves/TimeCurvesLineChart'
 import LegendPeriod from '../components/TipicalDailyProfile/LegendPeriod'
 
 import TimeCurvesContext from '../contexts/TimeCurvesContext'
-import Loading from '../components/Loading'
 
-import { labelTotalPeriod, convertDataFromWattsToKwh } from '../services/utils'
-import CustomDatePicker from '../components/CustomDatePicker/CustomDatePicker'
+import { convertDataFromWattsToKwh } from '../services/utils'
+import { ConsumptionDisplay, Loading, SomDatePicker } from '@somenergia/somenergia-ui'
 
 const filterDataWithPeriod = ({ refDate, period, data }) => {
   const filteredData = []
@@ -51,8 +48,7 @@ const totalValueWithData = (data) => {
 }
 
 function TimeCurves(props) {
-  const { data, chartType, period, contract } = props
-  const { t } = useTranslation()
+  const { data, chartType, period, contract, lang } = props
 
   const { filteredTimeCurves, setFilteredTimeCurves } =
     useContext(TimeCurvesContext)
@@ -120,25 +116,26 @@ function TimeCurves(props) {
         <>
           <ControlsWrapper>
             <DateControlsWrapper>
-              <CustomDatePicker
+              <SomDatePicker
+                firstDate={minDate}
+                lastDate={maxDate}
+                currentTime={currentDate}
+                period={period}
+                setCurrentTime={setCurrentDate}
                 prevNextButtons={true}
-                minDate={minDate}
-                maxDate={maxDate}
-                selectedDate={currentDate}
-                type={period}
-                handleDateChange={setCurrentDate}
+                shouldDisableDate={(date) => dayjs(date).isSame(compareDate, 'day')}
               />
               {chartType === 'LINE_CHART_TYPE' && (
                 <>
-                  <CustomDatePicker
+                  <SomDatePicker
+                    firstDate={minDate}
+                    lastDate={maxDate}
+                    currentTime={compareDate}
+                    period={period}
+                    setCurrentTime={setCompareDate}
                     prevNextButtons={false}
-                    minDate={minDate}
-                    maxDate={maxDate}
-                    type={period}
-                    selectedDate={compareDate}
-                    handleDateChange={setCompareDate}
                     shouldDisableDate={(date) => dayjs(date).isSame(currentDate, 'day')}
-                  ></CustomDatePicker>
+                  />
                   {compareDate && (
                     <IconButton onClick={() => setCompareDate(null)} size="large">
                       <ClearIcon fontSize="small" />
@@ -148,19 +145,12 @@ function TimeCurves(props) {
               )}
             </DateControlsWrapper>
             <CounterWrapper>
-              <Counter
-                value={totalKwh}
-                title={t(labelTotalPeriod(period))}
-                date={dayjs(currentDate).format('DD/MM/YYYY')}
-              />
-              {chartType === 'LINE_CHART_TYPE' && compareDate && (
-                <Counter
-                  value={compareTotalKwh}
-                  title={t(labelTotalPeriod(period))}
-                  date={dayjs(compareDate).format('DD/MM/YYYY')}
-                  color="secondary"
-                />
-              )}
+              <ConsumptionDisplay
+                currentDate={currentDate}
+                period={period}
+                compareDate={chartType === 'LINE_CHART_TYPE' ? compareDate : null}
+                compareTotalKwh={chartType === 'LINE_CHART_TYPE' ? compareTotalKwh : null}
+                totalKwh={totalKwh} />
             </CounterWrapper>
           </ControlsWrapper>
           <ChartWrapper>
@@ -171,12 +161,14 @@ function TimeCurves(props) {
                 data={convertDataFromWattsToKwh(filteredTimeCurves)}
                 compareData={convertDataFromWattsToKwh(compareData)}
                 period={period}
+                lang={lang}
               />
             ) : (
               <TimeCurvesBarChart
                 data={convertDataFromWattsToKwh(filteredTimeCurves)}
                 compareData={convertDataFromWattsToKwh(compareData)}
                 period={period}
+                lang={lang}
                 tariffTimetableId={contract?.tariff_timetable_id}
               />
             )}

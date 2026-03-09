@@ -1,16 +1,11 @@
-import React, { useContext, useEffect } from 'react'
-import Typography from '@mui/material/Typography'
-import CustomDatePicker from '../CustomDatePicker/CustomDatePicker'
-import Box from '@mui/material/Box'
-import Grid from '@mui/material/Grid'
+import React, { useEffect } from 'react'
+import { Grid, FormControl, Select } from '@mui/material'
 import { useTranslation } from 'react-i18next'
-import FormControl from '@mui/material/FormControl'
-import Select from '@mui/material/Select'
-import GenerationUseContext from '../../contexts/GenerationUseContext'
-import { getMonthCode } from '../../services/timecurves'
-import Loading from '../../components/Loading'
+import { Loading } from '@somenergia/somenergia-ui'
 import PeriodSelector from './PeriodSelector'
 import { useParams } from 'react-router-dom'
+import { ConsumptionDisplay, SomDatePicker } from '@somenergia/somenergia-ui'
+
 import dayjs from 'dayjs'
 import 'dayjs/locale/ca'
 import 'dayjs/locale/es'
@@ -28,7 +23,6 @@ export default function RightsManage({
 }) {
 
   const { t } = useTranslation()
-  const { MONTH } = useContext(GenerationUseContext)
 
   const { language } = useParams()
   const { i18n } = useTranslation()
@@ -68,32 +62,11 @@ export default function RightsManage({
                 gap: '10px',
               }}
             >
-              <Typography
-                variant="h4"
-                component="h1"
-                style={{ color: '#96B633' }}
-              >
-                <strong>{total}</strong> kWh
-              </Typography>
-              <Box
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'flex-end',
-                }}
-              >
-                <Typography style={{ fontWeight: 'bold' }}>
-                  {t('GENERATION_KWH_USE_TOTAL', {
-                    month:
-                      viewTypeValue === MONTH
-                        ? t(getMonthCode(dayjs(selectedDate).month() + 1))
-                        : t('YEARLY'),
-                  })}
-                </Typography>
-                <Typography style={{ color: '#96B633' }}>
-                  {dayjs(selectedDate).year()}
-                </Typography>
-              </Box>
+              <ConsumptionDisplay
+                period={viewTypeValue}
+                currentDate={selectedDate}
+                totalKwh={total}
+              />
             </Grid>
 
             <Grid
@@ -109,11 +82,18 @@ export default function RightsManage({
               spacing={1}
             >
               <Grid item xs={12} sm={3}>
-                <CustomDatePicker
-                  prevNextButtons={true}
-                  selectedDate={dayjs(selectedDate)}
-                  handleDateChange={handleDateChange}
-                  type={viewTypeValue}
+                <SomDatePicker
+                  period={viewTypeValue}
+                  currentTime={selectedDate}
+                  setCurrentTime={handleDateChange}
+                  styles={{
+                    datePicker: {
+                      borderColor: 'secondary.main',
+                      input: {
+                        textAlign: 'center',
+                      }
+                    },
+                  }}
                 />
               </Grid>
               {handleViewTypeChange ? (

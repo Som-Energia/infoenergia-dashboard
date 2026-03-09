@@ -6,6 +6,8 @@ import mockCurves from './mockData/Remaining' // TODO: change this var with kwh 
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { vi } from 'vitest'
+import dayjs from 'dayjs'
+
 
 vi.mock('react-i18next', () => ({
   // this mock makes sure any components using the translate hook can use it without a warning being shown
@@ -31,7 +33,7 @@ const routerFutureFlags = {
 describe('Record section of GenerationkWh', () => {
   const mockHandleDateChange = vi.fn()
   const mockHandleViewTypeChange = vi.fn()
-  const mockSelectedDate = new Date()
+  const mockSelectedDate = dayjs()
   const MONTH = 'MONTHLY'
 
   const getById = queryByAttribute.bind(null, 'id')

@@ -1,12 +1,12 @@
 import React from 'react'
 import makeStyles from '@mui/styles/makeStyles';
-import Table from '@mui/material/Table'
-import TableBody from '@mui/material/TableBody'
-import TableCell from '@mui/material/TableCell'
-import TableContainer from '@mui/material/TableContainer'
-import TableHead from '@mui/material/TableHead'
-import TableRow from '@mui/material/TableRow'
-import Paper from '@mui/material/Paper'
+import { Table } from '@mui/material'
+import { TableBody } from '@mui/material'
+import { TableCell } from '@mui/material'
+import { TableContainer } from '@mui/material'
+import { TableHead } from '@mui/material'
+import { TableRow } from '@mui/material'
+import { Paper } from '@mui/material'
 
 const useStyles = makeStyles({
   table: {
@@ -14,7 +14,7 @@ const useStyles = makeStyles({
   },
 })
 
-export default function Talbe(props) {
+export default function CustomTable(props) {
   const classes = useStyles()
   const { columns, rows, id } = props
 
