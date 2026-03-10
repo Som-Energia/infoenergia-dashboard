@@ -1,27 +1,30 @@
-import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import { defineConfig, loadEnv } from 'vite'
 
 
 export default defineConfig(({ mode }) => {
 
+   process.env = { ...process.env, ...loadEnv(mode, process.cwd(), 'BASE_URL') }
+
   const ovOptions = mode === 'ov' ? {
-    entryFileNames: 'static/js/main.js',
+    entryFileNames: 'js/main.js',
     chunkFileNames: (fileInfo) => {
       if (fileInfo.name.includes('vendor')) {
-        return 'static/js/vendor.js';  // Explicitly name the entry JS file
+        return 'js/vendor.js';  // Explicitly name the entry JS file
       }
-      return 'static/js/[name]-[hash].js';
+      return 'js/[name]-[hash].js';
     },
     assetFileNames: (assetInfo) => {
       if (assetInfo.name.endsWith('.css')) {
-        return 'static/css/main.css'; // Explicitly name the CSS file
+        return 'css/main.css'; // Explicitly name the CSS file
       }
-      return 'static/css/[name]-[hash].[ext]';
+      return 'css/[name]-[hash].[ext]';
     }
   } : {}
 
 
   return {
+    base: process.env.BASE_URL,
     plugins: [react()],
     build: {
       outDir: 'build', // CRA's default build output
