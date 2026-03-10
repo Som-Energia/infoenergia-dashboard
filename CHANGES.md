@@ -1,5 +1,10 @@
 # Change Log
 
+## 3.0.0 2026-03-10
+
+- IMP: local deployment
+- REF: vite.config.mjs change build estructure
+
 ## 2.1.0 2026-03-09
 
 - Using somenergia-ui components:
