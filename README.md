@@ -5,9 +5,8 @@ InfoEnergia react dashboard for Som Energia Virtual Office.
 ## Development setup
 
 <!-- prettier-ignore -->
-- Copy .env.development.example as .env.development or generate it (see below)
-- Fill the contract list and the token
-- Trick: if you connect to the real OV infoenergia page as any user, and you inspect the code, the html contains both.
+
+- Create softlink a it-docs/conf/infoenergia-dashboard/.env.development (`ln -s ../it-docs/conf/infoenergia-dashboard/.env.development .env.development`)
 - Run `npm start` to launch the application. The landing page has an index to the target urls
 
 To run the tests
@@ -42,15 +41,42 @@ a restart is required since it is not monitored by autoreload.
 
 Use `generate_env.py --help` for more usage information.
 
-## Deploy into oficina virtual
+## Deployment
 
-This command will build and copy the files to oficinavirtual.
-In order to work both repositories (`infoenergia-dashboard` and `oficinavirtual`)
-should be cloned at the same directory level and with their default names.
-
-```bash
-npm run build:ov
+To deploy we have to use deploy.sh
 ```
+scripts/deploy.sh [env]
+```
+
+### Testing
+
+If you want to deploy to the OV:
+```
+scripts/deploy.sh ovtest [vassal number]
+```
+This command uses deploy-ovtest.conf. It is now defined with the test OV configuration.
+
+### Production
+
+If you want to deploy to the OV:
+```
+scripts/deploy.sh ovprod
+```
+This command uses deploy-ovprod.conf. It is now defined with the production OV configuration.
+
+### Local
+
+For the first time you should create the folder builds at the root of the projects.
+
+If you want to deploy local:
+```
+scripts/deploy-local.sh 
+```
+This command uses deploy-ovlocal.conf. It is now defined with the local OV configuration.
+
+Thing to keep in mind:
+- Follow the setup to create the necessary directories
+- This script must be run from its directory
 
 ## Component tree
 
