@@ -6,7 +6,7 @@ InfoEnergia react dashboard for Som Energia Virtual Office.
 
 <!-- prettier-ignore -->
 
-- Create softlink a it-docs/conf/infoenergia-dashboard/.env.development (`ln -s ../it-docs/conf/infoenergia-dashboard/.env.development .env.development`)
+- Create softlink a deployment-configurations/infoenergia-dashboard/.env.development (`ln -s ../deployment-configurations/infoenergia-dashboard/.env.development .env.development`)
 - Run `npm start` to launch the application. The landing page has an index to the target urls
 
 To run the tests
