@@ -2,6 +2,7 @@
   "name": "infoenergia",
   "version": "3.0.0",
   "private": false,
+  "type": "module",
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
@@ -42,6 +43,9 @@
     "eslint-plugin-promise": "^4.3.1",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.0.0",
+    "eslint-plugin-react-refresh": "^0.4.26",
+    "eslint-plugin-simple-import-sort": "^13.0.0",
+    "eslint-plugin-unused-imports": "^4.4.1",
     "globals": "^16.5.0",
     "jsdom": "^27.2.0",
     "mutationobserver-shim": "^0.3.7",
@@ -54,7 +58,12 @@
     "build": "export VITE_APP_VERSION=$(git rev-parse HEAD) && vite build",
     "test": "TZ=Europe/Madrid vitest",
     "test:coverage": "TZ=Europe/Madrid vitest run --coverage",
-    "build:ov": "npm run build  -- --mode=ov"
+    "build:ov": "npm run build  -- --mode=ov",
+    "lint": "eslint ./src",
+    "lint:fix": "eslint ./src --fix",
+    "lint:todos": "./scripts/todos.sh ./src",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "jest": {
     "moduleNameMapper": {
