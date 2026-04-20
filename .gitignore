@@ -37,3 +37,4 @@ public/infoenergia-config.js
 # others
 bun*
 package-lock.json
+.eslintcache
