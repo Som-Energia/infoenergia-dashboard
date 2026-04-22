@@ -544,13 +544,7 @@ export const getDataForTable = (assignmentsConsumption, data) => {
   dataT.dataKeys = maxLength < 6 ? dataKeys3 : dataKeys6
 
   function getRowKwh(kwhs) {
-    const rowKwh = kwhs
-      ? kwhs.reduce(
-          (accumulated, currentValue) => accumulated + currentValue,
-          0,
-        )
-      : 0
-    return rowKwh
+    return (kwhs || []).reduce((acc, current) => acc + current, 0)
   }
 
   function formattedRow(rowData) {
@@ -589,7 +583,8 @@ export const getDataForTable = (assignmentsConsumption, data) => {
   }
 
   dataT.rows = Object.keys(data).map((dataKey) => {
-    const { ...periods } = data[dataKey]
+    // Destructure to isolate period entries, discarding non-period fields
+    const { number: _number, address: _address, ...periods } = data[dataKey]
     const kwhs = Object.values(periods)
 
     const rowKwh = getRowKwh(kwhs)
