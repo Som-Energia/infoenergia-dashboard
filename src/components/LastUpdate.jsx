@@ -1,7 +1,8 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
+
 import dayjs from 'dayjs'
 import styled from 'styled-components'
-import { useTranslation } from 'react-i18next'
 
 const LastUpdateWrapper = styled.div`
   font-size: 1rem;

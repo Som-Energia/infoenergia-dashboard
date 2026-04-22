@@ -5,7 +5,6 @@ InfoEnergia react dashboard for Som Energia Virtual Office.
 ## Development setup
 
 <!-- prettier-ignore -->
-
 - Create softlink a deployment-configurations/infoenergia-dashboard/.env.development (`ln -s ../deployment-configurations/infoenergia-dashboard/.env.development .env.development`)
 - Run `npm start` to launch the application. The landing page has an index to the target urls
 
@@ -44,6 +43,7 @@ Use `generate_env.py --help` for more usage information.
 ## Deployment
 
 To deploy we have to use deploy.sh
+
 ```
 scripts/deploy.sh [env]
 ```
@@ -51,17 +51,21 @@ scripts/deploy.sh [env]
 ### Testing
 
 If you want to deploy to the OV:
+
 ```
 scripts/deploy.sh ovtest [vassal number]
 ```
+
 This command uses deploy-ovtest.conf. It is now defined with the test OV configuration.
 
 ### Production
 
 If you want to deploy to the OV:
+
 ```
 scripts/deploy.sh ovprod
 ```
+
 This command uses deploy-ovprod.conf. It is now defined with the production OV configuration.
 
 ### Local
@@ -69,12 +73,15 @@ This command uses deploy-ovprod.conf. It is now defined with the production OV c
 For the first time you should create the folder builds at the root of the projects.
 
 If you want to deploy local:
+
 ```
-scripts/deploy-local.sh 
+scripts/deploy-local.sh
 ```
+
 This command uses deploy-ovlocal.conf. It is now defined with the local OV configuration.
 
 Thing to keep in mind:
+
 - Follow the setup to create the necessary directories
 - This script must be run from its directory
 

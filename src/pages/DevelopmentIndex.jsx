@@ -9,8 +9,7 @@ export default function DevelopmentIndex() {
           value={lang}
           onChange={(ev) => {
             setLang(ev.target.value)
-          }}
-        >
+          }}>
           {['ca', 'es', 'eu', 'gl'].map((val) => {
             return (
               <option value={val} key={val}>
@@ -27,7 +26,9 @@ export default function DevelopmentIndex() {
             <a href={`/${lang}/infoenergy/energy-use`}>{"Ús de l'energia"}</a>
           </li>
           <li>
-            <a href={`/${lang}/investments/production-consumption`}>{"Generationkwh producció i consum"}</a>
+            <a href={`/${lang}/investments/production-consumption`}>
+              {'Generationkwh producció i consum'}
+            </a>
           </li>
         </ul>
       </section>

@@ -1,7 +1,9 @@
 import React from 'react'
 
-import { ResponsiveContainer } from 'recharts'
 import { SummaryPeriodChart } from '@somenergia/somenergia-ui'
+
+import { ResponsiveContainer } from 'recharts'
+
 import { period2Color } from '../../services/utils'
 
 const colorPeriods = (hour, isWeekend) => {
@@ -38,14 +40,16 @@ const TipicalDailyProfileChart = ({ data = [], lang = 'es' }) => {
   return (
     <div style={{ height: '300px' }}>
       <ResponsiveContainer>
-          <SummaryPeriodChart width={730} height={250}
-            data={bardata}
-            period="DAILY"
-            Ylegend={'kWh'}
-            legend={false}
-            lang={lang}
-            showTooltipKeys={false}
-          />
+        <SummaryPeriodChart
+          width={730}
+          height={250}
+          data={bardata}
+          period="DAILY"
+          Ylegend={'kWh'}
+          legend={false}
+          lang={lang}
+          showTooltipKeys={false}
+        />
       </ResponsiveContainer>
     </div>
   )

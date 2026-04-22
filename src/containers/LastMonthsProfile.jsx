@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react'
-import styled from 'styled-components'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Skeleton from '@mui/material/Skeleton'
 
-import Counter from '../components/Counter'
-import LastUpdate from '../components/LastUpdate'
-import CalendarMonth from '../components/LastMonthsProfile/CalendarMonth'
-import { Widget } from '../containers/TipicalDailyProfile/DistributionCharts'
+import styled from 'styled-components'
 
+import Counter from '../components/Counter'
+import CalendarMonth from '../components/LastMonthsProfile/CalendarMonth'
+import LastUpdate from '../components/LastUpdate'
+import { Widget } from '../containers/TipicalDailyProfile/DistributionCharts'
 import { getMonthsProfile } from '../services/api'
 
 const ChartWrapper = styled.div`

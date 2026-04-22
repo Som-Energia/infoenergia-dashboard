@@ -5,13 +5,13 @@ import {
   Bar,
   BarChart,
   CartesianGrid,
+  LabelList,
   ResponsiveContainer,
   XAxis,
   YAxis,
-  LabelList,
 } from 'recharts'
 
-import { formatNumber, formatEuros } from '../../services/utils'
+import { formatEuros, formatNumber } from '../../services/utils'
 
 const CustomLabel = (props) => {
   const { x, y, width, data, index } = props
@@ -24,8 +24,7 @@ const CustomLabel = (props) => {
         textAnchor="middle"
         fill="#96b633"
         fontWeight="700"
-        fontSize="1.5rem"
-      >
+        fontSize="1.5rem">
         {formatEuros(data?.price[index].euros)}
         <tspan className="unit"> €</tspan>
       </text>
@@ -36,8 +35,7 @@ const CustomLabel = (props) => {
         textAnchor="middle"
         fill="#666"
         fontWeight="700"
-        fontSize="1.5rem"
-      >
+        fontSize="1.5rem">
         {formatNumber(data?.valueKwh[index].kWh)}
         <tspan className="unit"> kWh</tspan>
       </text>
@@ -57,7 +55,7 @@ function SeasonalProfileBarChart({ data }) {
             axisLine={false}
             tick={() => ''}
             width={0}
-            domain={[(dataMin) => 0, (dataMax) => dataMax * 1.1 + 50]}
+            domain={[(_dataMin) => 0, (dataMax) => dataMax * 1.1 + 50]}
             tickCount={6}
           />
           <XAxis

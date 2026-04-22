@@ -1,25 +1,27 @@
-import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
+
 import { registerSomEnergiaI18n } from '@somenergia/somenergia-ui'
+
+import i18n from 'i18next'
 
 import LOCALE_CA from './locale-ca.json'
 import LOCALE_ES from './locale-es.json'
-import LOCALE_GL from './locale-gl.json'
 import LOCALE_EU from './locale-eu.json'
+import LOCALE_GL from './locale-gl.json'
 
 const resources = {
   ca: {
-    translation: LOCALE_CA
+    translation: LOCALE_CA,
   },
   es: {
-    translation: LOCALE_ES
+    translation: LOCALE_ES,
   },
   gl: {
-    translation: LOCALE_GL
+    translation: LOCALE_GL,
   },
   eu: {
-    translation: LOCALE_EU
-  }
+    translation: LOCALE_EU,
+  },
 }
 
 i18n
@@ -29,8 +31,8 @@ i18n
     fallbackLng: 'es',
     lng: 'es',
     interpolation: {
-      escapeValue: false // react already safes from xss
-    }
+      escapeValue: false, // react already safes from xss
+    },
   })
 
 registerSomEnergiaI18n(i18n)

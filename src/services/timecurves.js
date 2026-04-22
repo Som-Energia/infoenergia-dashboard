@@ -46,7 +46,8 @@ getMarketHolidays().then((holidays) => {
 export function getPeriod(datetime, tariffTimetableId = 'Taula_Peatges_20') {
   const periodTimes = periodes[tariffTimetableId].times
   datetime = dayjs(datetime)
-  const seasonPeriods = periodes[tariffTimetableId].seasons[datetime.month() + 1]
+  const seasonPeriods =
+    periodes[tariffTimetableId].seasons[datetime.month() + 1]
   const lesserPeriod = seasonPeriods[seasonPeriods.length - 1]
   // weekdays
   const day = datetime.isoWeekday()
@@ -108,7 +109,7 @@ export function getLegendFromTimeTable(zone) {
 
     if (groupingPeriodMonth[groupPeriods.join('-')]) {
       groupingPeriodMonth[groupPeriods.join('-')].months.push(
-        getMonthCode(season)
+        getMonthCode(season),
       )
       if (groupingPeriodMonth[groupPeriods.join('-')].months.length === 12) {
         groupingPeriodMonth[groupPeriods.join('-')].months = [getMonthCode(13)]
@@ -119,8 +120,8 @@ export function getLegendFromTimeTable(zone) {
           index === 0
             ? groupPeriods[2]
             : index % 2 === 0
-            ? groupPeriods[0]
-            : groupPeriods[1]
+              ? groupPeriods[0]
+              : groupPeriods[1]
         intervalPeriods.push({ ...interval, period: period })
         if (weekendAndHolidays.length !== intervals.length) {
           weekendAndHolidays.push({ ...interval, period: groupPeriods[2] })

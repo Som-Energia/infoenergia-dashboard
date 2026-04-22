@@ -1,17 +1,22 @@
-import React, { useState, useEffect, useContext } from 'react'
-import styled from 'styled-components'
+import React, { useContext, useEffect, useState } from 'react'
+
+import ClearIcon from '@mui/icons-material/Clear'
+import { IconButton } from '@mui/material'
+
+import {
+  ConsumptionDisplay,
+  Loading,
+  SomDatePicker,
+} from '@somenergia/somenergia-ui'
 
 import dayjs from 'dayjs'
-import { IconButton } from '@mui/material'
-import ClearIcon from '@mui/icons-material/Clear'
+import styled from 'styled-components'
+
 import TimeCurvesBarChart from '../components/TimeCurves/TimeCurvesBarChart'
 import TimeCurvesLineChart from '../components/TimeCurves/TimeCurvesLineChart'
 import LegendPeriod from '../components/TipicalDailyProfile/LegendPeriod'
-
 import TimeCurvesContext from '../contexts/TimeCurvesContext'
-
 import { convertDataFromWattsToKwh } from '../services/utils'
-import { ConsumptionDisplay, Loading, SomDatePicker } from '@somenergia/somenergia-ui'
 
 const filterDataWithPeriod = ({ refDate, period, data }) => {
   const filteredData = []
@@ -21,7 +26,7 @@ const filterDataWithPeriod = ({ refDate, period, data }) => {
         (item) =>
           dayjs(item?.date).isSame(refDate, 'day') ||
           (dayjs(item?.date).isSame(refDate.add(1, 'day'), 'day') &&
-            dayjs(item?.date).hour() === 0)
+            dayjs(item?.date).hour() === 0),
       )
     case 'WEEKLY':
       return data.filter((item) => dayjs(item?.date).isSame(refDate, 'week'))
@@ -82,11 +87,11 @@ function TimeCurves(props) {
     const filtered =
       data?.length > 0
         ? filterDataWithPeriod({
-          refDate: currentDate,
-          period,
-          data,
-          chartType,
-        })
+            refDate: currentDate,
+            period,
+            data,
+            chartType,
+          })
         : []
     setFilteredTimeCurves(filtered)
     const sumTotalKwh = (totalValueWithData(filtered) / 1000).toFixed(0)
@@ -123,7 +128,9 @@ function TimeCurves(props) {
                 period={period}
                 setCurrentTime={setCurrentDate}
                 prevNextButtons={true}
-                shouldDisableDate={(date) => dayjs(date).isSame(compareDate, 'day')}
+                shouldDisableDate={(date) =>
+                  dayjs(date).isSame(compareDate, 'day')
+                }
               />
               {chartType === 'LINE_CHART_TYPE' && (
                 <>
@@ -134,10 +141,14 @@ function TimeCurves(props) {
                     period={period}
                     setCurrentTime={setCompareDate}
                     prevNextButtons={false}
-                    shouldDisableDate={(date) => dayjs(date).isSame(currentDate, 'day')}
+                    shouldDisableDate={(date) =>
+                      dayjs(date).isSame(currentDate, 'day')
+                    }
                   />
                   {compareDate && (
-                    <IconButton onClick={() => setCompareDate(null)} size="large">
+                    <IconButton
+                      onClick={() => setCompareDate(null)}
+                      size="large">
                       <ClearIcon fontSize="small" />
                     </IconButton>
                   )}
@@ -148,9 +159,14 @@ function TimeCurves(props) {
               <ConsumptionDisplay
                 currentDate={currentDate}
                 period={period}
-                compareDate={chartType === 'LINE_CHART_TYPE' ? compareDate : null}
-                compareTotalKwh={chartType === 'LINE_CHART_TYPE' ? compareTotalKwh : null}
-                totalKwh={totalKwh} />
+                compareDate={
+                  chartType === 'LINE_CHART_TYPE' ? compareDate : null
+                }
+                compareTotalKwh={
+                  chartType === 'LINE_CHART_TYPE' ? compareTotalKwh : null
+                }
+                totalKwh={totalKwh}
+              />
             </CounterWrapper>
           </ControlsWrapper>
           <ChartWrapper>
@@ -173,11 +189,13 @@ function TimeCurves(props) {
               />
             )}
           </ChartWrapper>
-          {chartType === 'BAR_CHART_TYPE' && <LegendPeriod contract={contract} />}
+          {chartType === 'BAR_CHART_TYPE' && (
+            <LegendPeriod contract={contract} />
+          )}
         </>
       }
     </Widget>
-  );
+  )
 }
 
 export default React.memo(TimeCurves)

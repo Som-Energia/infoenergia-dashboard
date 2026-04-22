@@ -1,8 +1,11 @@
 import React from 'react'
-import CustomTable from '../../components/Table'
-import RightsManage from '../../components/Generation/RightsManage'
-import {Grid} from '@mui/material'
+
+import { Grid } from '@mui/material'
+
 import { Loading } from '@somenergia/somenergia-ui'
+
+import RightsManage from '../../components/Generation/RightsManage'
+import CustomTable from '../../components/Table'
 
 export default function Use({
   handleViewTypeChange,
@@ -12,8 +15,6 @@ export default function Use({
   assignmentsTableFormat,
   loading,
 }) {
-
-
   return (
     <>
       {loading ? (
@@ -23,8 +24,7 @@ export default function Use({
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-          }}
-        >
+          }}>
           <Loading />
         </Grid>
       ) : (
@@ -34,8 +34,7 @@ export default function Use({
           viewTypeValue={viewTypeValue}
           selectedDate={selectedDate}
           total={assignmentsTableFormat.total}
-          isLoading={loading}
-        >
+          isLoading={loading}>
           <CustomTable
             columns={assignmentsTableFormat.columns}
             rows={assignmentsTableFormat?.rows}

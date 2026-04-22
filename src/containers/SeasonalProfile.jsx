@@ -1,17 +1,16 @@
-import React, { useState, useEffect } from 'react'
-import styled from 'styled-components'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Skeleton from '@mui/material/Skeleton'
 
-import SeasonalProfileBarChart from '../components/SeasonalProfile/SeasonalProfileBarChart'
-import ClimaDependency from '../components/SeasonalProfile/ClimaDependency'
+import styled from 'styled-components'
+
 import LastUpdate from '../components/LastUpdate'
-
-import { ScrollWrapper, ScrollContainer } from '../components/Utils'
-import { Widget } from './TipicalDailyProfile/DistributionCharts'
-
+import ClimaDependency from '../components/SeasonalProfile/ClimaDependency'
+import SeasonalProfileBarChart from '../components/SeasonalProfile/SeasonalProfileBarChart'
+import { ScrollContainer, ScrollWrapper } from '../components/Utils'
 import { getSeasonalProfile } from '../services/api'
+import { Widget } from './TipicalDailyProfile/DistributionCharts'
 
 function SeasonalProfile(props) {
   const { contract, token } = props
@@ -74,13 +73,12 @@ function SeasonalProfile(props) {
                 </Title>
                 <ButtonsWrapper>
                   {Object.keys(
-                    data?.climaticDependence ? data?.climaticDependence : []
+                    data?.climaticDependence ? data?.climaticDependence : [],
                   ).map((season) => (
                     <Button
                       key={season}
                       className={seasonFilter === season ? 'active' : null}
-                      onClick={(event) => handleClick(event, season)}
-                    >
+                      onClick={(event) => handleClick(event, season)}>
                       {t(season.toUpperCase())}
                     </Button>
                   ))}

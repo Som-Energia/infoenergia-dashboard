@@ -1,2 +1,1 @@
-window.config = {
-}
+window.config = {}
