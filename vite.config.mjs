@@ -1,31 +1,31 @@
-import react from '@vitejs/plugin-react';
-import { defineConfig, loadEnv } from 'vite'
+import react from '@vitejs/plugin-react'
+// import eslint from 'vite-plugin-eslint2'
 
+import {
+  createAppConfig,
+  createManualChunks,
+} from '@somenergia/frontend-config/vite'
 
-export default defineConfig(({ mode }) => {
-
-   process.env = { ...process.env, ...loadEnv(mode, process.cwd(), 'BASE_URL') }
-
-  const ovOptions = mode === 'ov' ? {
-    entryFileNames: 'js/main.js',
-    chunkFileNames: (fileInfo) => {
-      if (fileInfo.name.includes('vendor')) {
-        return 'js/vendor.js';  // Explicitly name the entry JS file
-      }
-      return 'js/[name]-[hash].js';
-    },
-    assetFileNames: (assetInfo) => {
-      if (assetInfo.name.endsWith('.css')) {
-        return 'css/main.css'; // Explicitly name the CSS file
-      }
-      return 'css/[name]-[hash].[ext]';
-    }
-  } : {}
-
+export default createAppConfig((mode) => {
+  const ovOptions =
+    mode === 'ov'
+      ? {
+          entryFileNames: 'js/main.js',
+          chunkFileNames: (fileInfo) => {
+            return fileInfo.name.includes('vendor')
+              ? 'js/vendor.js' // Explicitly name the entry JS file
+              : 'js/[name]-[hash].js'
+          },
+          assetFileNames: (assetInfo) => {
+            return assetInfo.name.endsWith('.css')
+              ? 'css/main.css' // Explicitly name the CSS file
+              : 'css/[name]-[hash].[ext]'
+          },
+        }
+      : {}
 
   return {
-    base: process.env.BASE_URL,
-    plugins: [react()],
+    plugins: [react() /*eslint({ build: true, emitWarning: false })*/],
     build: {
       outDir: 'build', // CRA's default build output
       manifest: 'asset-manifest.json',
@@ -34,18 +34,38 @@ export default defineConfig(({ mode }) => {
       rollupOptions: {
         output: {
           ...ovOptions,
-        }
+          manualChunks: createManualChunks([
+            {
+              chunk: 'vendor-mui',
+              includes: ['@mui', '@emotion', 'styled-components'],
+            },
+            {
+              chunk: 'vendor-react',
+              includes: [
+                '/node_modules/react/',
+                '/node_modules/react-dom/',
+                '/node_modules/react-router',
+                '/node_modules/scheduler/',
+                '@remix-run',
+              ],
+            },
+            {
+              chunk: 'vendor-charts',
+              includes: [
+                '/recharts/',
+                '/d3-',
+                '/react-smooth/',
+                '/recharts-scale/',
+                '/decimal.js-light/',
+              ],
+            },
+            { chunk: 'vendor-i18n', includes: ['i18next', 'react-i18next'] },
+            { chunk: 'vendor-somenergia', includes: ['@somenergia'] },
+          ]),
+        },
       },
-      target: "es2020",
-    },
-    server: {
-      open: true,
-      port: 3000
     },
     test: {
-      globals: true,
-      environment: 'jsdom',
-      css: true,
       setupFiles: './src/tests/setupTests.js',
       // Vitest MUI's package pre-bundle avoid internal module resolution problems
       server: {
@@ -54,10 +74,11 @@ export default defineConfig(({ mode }) => {
             /@mui\/material/,
             /@mui\/icons-material/,
             '@mui/x-date-pickers',
-            /@somenergia\/somenergia-ui/
+            /@somenergia\/somenergia-ui/,
           ],
         },
       },
+      exclude: ['**/node_modules/**', '**/scripts/**', '**/coverage/**'],
     },
   }
-});
+})
