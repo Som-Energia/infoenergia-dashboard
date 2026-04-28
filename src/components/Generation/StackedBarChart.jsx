@@ -1,6 +1,8 @@
 import React from 'react'
-import { ResponsiveContainer } from 'recharts'
+
 import { SummaryPeriodChart } from '@somenergia/somenergia-ui'
+
+import { ResponsiveContainer } from 'recharts'
 
 function transformBardata(data) {
   let periods = data.periods
@@ -17,12 +19,12 @@ const StackedBarChart = ({ data }) => {
   return (
     <div>
       <ResponsiveContainer>
-        <SummaryPeriodChart margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+        <SummaryPeriodChart
+          margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
           data={bagdata}
-          period='DAILY'
+          period="DAILY"
           legend={true}
-          showTooltipKeys={true}>
-        </SummaryPeriodChart>
+          showTooltipKeys={true}></SummaryPeriodChart>
       </ResponsiveContainer>
     </div>
   )

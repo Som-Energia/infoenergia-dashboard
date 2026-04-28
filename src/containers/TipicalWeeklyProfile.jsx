@@ -1,17 +1,16 @@
-import React, { useState, useEffect } from 'react'
-import styled from 'styled-components'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Skeleton from '@mui/material/Skeleton'
 
-import TipicalWeeklyProfileChart from '../components/TipicalWeeklyProfile/TipicalWeeklyProfileChart'
+import styled from 'styled-components'
+
 import Counter from '../components/Counter'
 import LastUpdate from '../components/LastUpdate'
-
-import { ScrollWrapper, ScrollContainer } from '../components/Utils'
-import { Widget } from './TipicalDailyProfile/DistributionCharts'
-
+import TipicalWeeklyProfileChart from '../components/TipicalWeeklyProfile/TipicalWeeklyProfileChart'
+import { ScrollContainer, ScrollWrapper } from '../components/Utils'
 import { getWeeklyProfile } from '../services/api'
+import { Widget } from './TipicalDailyProfile/DistributionCharts'
 
 const TipicalWeeklyProfile = (props) => {
   const { contract, token } = props
@@ -70,8 +69,7 @@ const TipicalWeeklyProfile = (props) => {
               className="text"
               dangerouslySetInnerHTML={{
                 __html: t('AVG_USE_BETWEEN_WEEKDAY'),
-              }}
-            ></span>
+              }}></span>
           </DailyMediumWrapper>
           <WeekendMediumWrapper>
             <MediumValue>
@@ -81,8 +79,7 @@ const TipicalWeeklyProfile = (props) => {
               className="text"
               dangerouslySetInnerHTML={{
                 __html: t('AVG_USE_WEEKEND_DAY'),
-              }}
-            ></span>
+              }}></span>
           </WeekendMediumWrapper>
         </WeeklyMediumWrapper>
       </Widget>

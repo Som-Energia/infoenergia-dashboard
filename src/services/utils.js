@@ -1,8 +1,9 @@
 import dayjs from 'dayjs'
-import i18n from '../i18n/i18n'
-import { getPeriod } from './timecurves'
 import isoWeek from 'dayjs/plugin/isoWeek'
 import weekday from 'dayjs/plugin/weekday'
+
+import i18n from '../i18n/i18n'
+import { getPeriod } from './timecurves'
 
 export const capitalizeWord = (word) => {
   return word.charAt(0).toUpperCase() + word.slice(1)
@@ -121,7 +122,7 @@ export const groupWeeklyData = (data, tariffTimetableId) => {
       dayjs(firstDay)
         .add(day - 1, 'd')
         .valueOf(),
-      tariffTimetableId
+      tariffTimetableId,
     )
     weekly.push(result)
   }
@@ -146,7 +147,7 @@ export const groupMonthlyData = (data, tariffTimetableId) => {
       dayjs(firstDay)
         .add(day - 1, 'd')
         .valueOf(),
-      tariffTimetableId
+      tariffTimetableId,
     )
 
     month.push(result)
@@ -158,15 +159,15 @@ export const getBaseKeys = (tariffTimetableId, order = 0) => {
   if (tariffTimetableId === 'Taula_Peatges_20') {
     return order === 0
       ? {
-        VALLEY: 0,
-        PICK: 0,
-        FLAT: 0,
-      }
+          VALLEY: 0,
+          PICK: 0,
+          FLAT: 0,
+        }
       : {
-        PICK: 0,
-        FLAT: 0,
-        VALLEY: 0,
-      }
+          PICK: 0,
+          FLAT: 0,
+          VALLEY: 0,
+        }
   } else {
     return {
       P1: 0,
@@ -285,7 +286,7 @@ export const groupDataByPeriod = (
   data,
   period,
   type,
-  tariffTimetableId = 'Taula_Peatges_20'
+  tariffTimetableId = 'Taula_Peatges_20',
 ) => {
   switch (period) {
     case 'WEEKLY':
@@ -310,15 +311,15 @@ export const groupDataByPeriod = (
 export const mergeData = (arrData1 = [], arrData2 = []) => {
   return arrData1 > arrData2
     ? arrData1.map((item, index) => ({
-      date: item.date,
-      value: item.value,
-      compValue: arrData2[index]?.value,
-    }))
+        date: item.date,
+        value: item.value,
+        compValue: arrData2[index]?.value,
+      }))
     : arrData2.map((item, index) => ({
-      date: item.date,
-      value: arrData1[index]?.value,
-      compValue: item.value,
-    }))
+        date: item.date,
+        value: arrData1[index]?.value,
+        compValue: item.value,
+      }))
 }
 
 export const completeYearData = (origData) => {
@@ -334,19 +335,19 @@ export const completeYearData = (origData) => {
   const nextYear = new Date(
     new Date(currYearLast.getTime()).getFullYear() + 1,
     0,
-    1
+    1,
   )
   const lastYear = new Date(
     new Date(currYearFirst.getTime()).getFullYear() - 1,
     12,
-    0
+    0,
   )
 
   const diffDaysNext = Math.round(
-    Math.abs((lastDate.getTime() - nextYear.getTime()) / oneDay)
+    Math.abs((lastDate.getTime() - nextYear.getTime()) / oneDay),
   )
   const diffDaysLast = Math.round(
-    Math.abs((lastYear.getTime() - firstDate.getTime()) / oneDay)
+    Math.abs((lastYear.getTime() - firstDate.getTime()) / oneDay),
   )
 
   for (let i = diffDaysLast; i > 0; i--) {
@@ -517,10 +518,7 @@ export const formatOrdinals = (lang, number) => {
   }
 }
 
-export const getDataForTable = (
-  assignmentsConsumption,
-  data
-) => {
+export const getDataForTable = (assignmentsConsumption, data) => {
   const dataT = {}
 
   const dataKeys3 = ['P3', 'P2', 'P1']
@@ -546,16 +544,8 @@ export const getDataForTable = (
   dataT.dataKeys = maxLength < 6 ? dataKeys3 : dataKeys6
 
   function getRowKwh(kwhs) {
-
-    const rowKwh = kwhs
-      ? kwhs.reduce(
-        (accumulated, currentValue) => accumulated + currentValue,
-        0
-      )
-      : 0
-    return rowKwh
+    return (kwhs || []).reduce((acc, current) => acc + current, 0)
   }
-
 
   function formattedRow(rowData) {
     return {
@@ -583,7 +573,7 @@ export const getDataForTable = (
     if (a.priority === '-') {
       return 1
     }
-    if (b.priority === '-' || (a.priority < b.priority)) {
+    if (b.priority === '-' || a.priority < b.priority) {
       return -1
     }
     if (a.priority > b.priority) {
@@ -592,10 +582,9 @@ export const getDataForTable = (
     return 0
   }
 
-
   dataT.rows = Object.keys(data).map((dataKey) => {
-
-    const { number, address, ...periods } = data[dataKey]
+    // Destructure to isolate period entries, discarding non-period fields
+    const { number: _number, address: _address, ...periods } = data[dataKey]
     const kwhs = Object.values(periods)
 
     const rowKwh = getRowKwh(kwhs)
@@ -618,7 +607,7 @@ export const getDataForTable = (
     let priority = ''
     let contractNumber = ''
 
-    const assignment = assignmentsConsumption.find(obj => {
+    const assignment = assignmentsConsumption.find((obj) => {
       const contractNumber = obj.contract.split('-')[1]
       return parseInt(contractNumber) === parseInt(dataKey)
     })
@@ -626,14 +615,19 @@ export const getDataForTable = (
       contractNumber = assignment?.contract.split('-')[1]
       contractAddress = assignment?.contract_address
       priority = assignment.priority
-    }
-    else {
+    } else {
       contractAddress = data[dataKey].address
       contractNumber = dataKey
       priority = '-'
     }
 
-    return formattedRow({ contractAddress: contractAddress, contractNumber: contractNumber, priority: priority, kWhs: newData, totalKWh: rowKwh })
+    return formattedRow({
+      contractAddress: contractAddress,
+      contractNumber: contractNumber,
+      priority: priority,
+      kWhs: newData,
+      totalKWh: rowKwh,
+    })
   })
 
   dataT.rows = dataT.rows.sort(comparePriorities)
@@ -647,7 +641,7 @@ export function generationKwhRecordData(khwRecordData, periods, t) {
     khwRecordData,
     'YEARLY',
     'barChart',
-    periods
+    periods,
   )
 
   const keys = getBaseKeys(periods, 1)

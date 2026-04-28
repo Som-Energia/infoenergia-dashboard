@@ -1,5 +1,5 @@
 import react from '@vitejs/plugin-react'
-// import eslint from 'vite-plugin-eslint2'
+import eslint from 'vite-plugin-eslint2'
 
 import {
   createAppConfig,
@@ -25,7 +25,7 @@ export default createAppConfig((mode) => {
       : {}
 
   return {
-    plugins: [react() /*eslint({ build: true, emitWarning: false })*/],
+    plugins: [react(), eslint({ build: true, emitWarning: false })],
     build: {
       outDir: 'build', // CRA's default build output
       manifest: 'asset-manifest.json',

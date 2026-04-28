@@ -1,20 +1,20 @@
-import React, { useEffect, useContext } from 'react'
-import { useTranslation } from 'react-i18next'
-import { useParams } from 'react-router-dom'
-
-import dayjs from 'dayjs'
 import 'dayjs/locale/ca'
 import 'dayjs/locale/es'
 
-import TipicalDailyProfile from '../containers/TipicalDailyProfile.jsx'
-import TipicalWeeklyProfile from '../containers/TipicalWeeklyProfile'
-import LastMonthProfile from '../containers/LastMonthsProfile'
-import SeasonalProfile from '../containers/SeasonalProfile'
+import React, { useContext, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+
+import dayjs from 'dayjs'
+
+import Tabs from '../components/Tabs'
 import ContractSelectorWrapper, {
   ContractContext,
 } from '../containers/ContractSelectorWrapper'
-
-import Tabs from '../components/Tabs'
+import LastMonthProfile from '../containers/LastMonthsProfile'
+import SeasonalProfile from '../containers/SeasonalProfile'
+import TipicalDailyProfile from '../containers/TipicalDailyProfile.jsx'
+import TipicalWeeklyProfile from '../containers/TipicalWeeklyProfile'
 
 function EnergyUse(props) {
   const { token } = props

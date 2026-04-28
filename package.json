@@ -43,7 +43,7 @@
   },
   "scripts": {
     "start": "export VITE_APP_VERSION=$(git rev-parse HEAD) && vite",
-    "build": "export VITE_APP_VERSION=$(git rev-parse HEAD) && vite build",
+    "build": "export VITE_APP_VERSION=$(git rev-parse HEAD) && npm run lint:todos && vite build",
     "test": "TZ=Europe/Madrid vitest",
     "test:coverage": "TZ=Europe/Madrid vitest run --coverage",
     "build:ov": "npm run build  -- --mode=ov",

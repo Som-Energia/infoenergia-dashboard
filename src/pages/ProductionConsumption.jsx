@@ -1,17 +1,20 @@
-import React, { useEffect, useContext } from 'react'
-import makeStyles from '@mui/styles/makeStyles';
-import {Box, Typography, Grid, Tab, Tabs} from '@mui/material'
-import Use from '../containers/Generation/Use'
-import KwhBag from '../containers/Generation/KwhBag'
-import Record from '../containers/Generation/Record'
+import React, { useContext, useEffect } from 'react'
+import { CSVLink } from 'react-csv'
 import { useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { CsvformatData, kwhRecordToCsvformatData } from '../services/utils'
-import { CSVLink } from 'react-csv'
+
 import GetAppIcon from '@mui/icons-material/GetApp'
-import GenerationUseContext from '../contexts/GenerationUseContext'
-import ExtraControls from '../components/ExtraControls/ExtraControlsHeader'
+import { Box, Grid, Tab, Tabs, Typography } from '@mui/material'
+import makeStyles from '@mui/styles/makeStyles'
+
 import dayjs from 'dayjs'
+
+import ExtraControls from '../components/ExtraControls/ExtraControlsHeader'
+import KwhBag from '../containers/Generation/KwhBag'
+import Record from '../containers/Generation/Record'
+import Use from '../containers/Generation/Use'
+import GenerationUseContext from '../contexts/GenerationUseContext'
+import { CsvformatData, kwhRecordToCsvformatData } from '../services/utils'
 
 const useStyles = makeStyles((theme) => ({
   tab: {
@@ -21,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'space-between',
     padding: '20px',
-    minHeight: '95px' // prevents change height with/out DownloadButton
+    minHeight: '95px', // prevents change height with/out DownloadButton
   },
   root: {
     flexGrow: 1,
@@ -45,8 +48,7 @@ function TabPanel(props) {
       hidden={value !== index}
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
+      {...other}>
       {value === index && (
         <Box p={3}>
           <Typography component={'div'}>{children}</Typography>
@@ -64,8 +66,7 @@ const DownloadButton = ({ csvData, filename }) => {
       className="controlBtn"
       filename={filename}
       headers={headers}
-      data={data}
-    >
+      data={data}>
       <GetAppIcon fontSize="small" />
       &nbsp;{t('DOWNLOAD')}
     </CSVLink>
@@ -96,7 +97,7 @@ function ProductionConsumption(props) {
     loadingUse,
     loadingRecord,
     YEAR,
-    kWhRecord
+    kWhRecord,
   } = useContext(GenerationUseContext)
 
   useEffect(() => {
@@ -166,8 +167,7 @@ function ProductionConsumption(props) {
           textColor="primary"
           onChange={handleChange}
           aria-label="disabled tabs example"
-          indicatorColor="primary"
-        >
+          indicatorColor="primary">
           {sections.map((element, index) => (
             <Tab key={index} label={element} {...a11yProps} />
           ))}

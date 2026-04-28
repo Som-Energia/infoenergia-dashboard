@@ -1,13 +1,15 @@
 import React from 'react'
-import makeStyles from '@mui/styles/makeStyles';
+import { useTranslation } from 'react-i18next'
+
 import { Table } from '@mui/material'
 import { TableBody } from '@mui/material'
 import { TableCell } from '@mui/material'
 import { TableContainer } from '@mui/material'
 import { TableHead } from '@mui/material'
 import { TableRow } from '@mui/material'
+import makeStyles from '@mui/styles/makeStyles'
+
 import { period2Color } from '../../services/utils'
-import { useTranslation } from 'react-i18next'
 
 const useStyles = makeStyles({
   table: {
@@ -51,8 +53,7 @@ const TableItem = ({ data, isLast }) => {
                   className={classes.squareColor}
                   style={{
                     backgroundColor: period2Color[element.period],
-                  }}
-                ></span>
+                  }}></span>
                 <span>
                   <b>{t(element.period)}</b>
                 </span>

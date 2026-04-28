@@ -1,34 +1,32 @@
-import React, { useState, useEffect, useContext } from 'react'
-import styled from 'styled-components'
-
-import { useTranslation } from 'react-i18next'
-import { useParams } from 'react-router-dom'
-
-import dayjs from 'dayjs'
 import 'dayjs/locale/ca'
 import 'dayjs/locale/es'
 
-import TimelineOutlinedIcon from '@mui/icons-material/TimelineOutlined'
+import React, { useContext, useEffect, useState } from 'react'
+import { CSVLink } from 'react-csv'
+import { useParams } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+
 import BarChartOutlinedIcon from '@mui/icons-material/BarChartOutlined'
 import GetAppIcon from '@mui/icons-material/GetApp'
+import TimelineOutlinedIcon from '@mui/icons-material/TimelineOutlined'
+
+import dayjs from 'dayjs'
+import styled from 'styled-components'
 
 import Tabs from '../components/Tabs'
-import TimeCurves from '../containers/TimeCurves'
 import ContractSelectorWrapper, {
   ContractContext,
 } from '../containers/ContractSelectorWrapper'
+import TimeCurves from '../containers/TimeCurves'
 import TimeCurvesContext, {
   TimeCurvesContextProvider,
 } from '../contexts/TimeCurvesContext'
-
-import { CSVLink } from 'react-csv'
 import { CnmcformatData } from '../services/utils'
 
 const DownloadButton = (props) => {
   const { children } = props
   const { filteredTimeCurves } = useContext(TimeCurvesContext)
   const contract = useContext(ContractContext)
-
 
   const [headers, data] = CnmcformatData({
     data: filteredTimeCurves,
@@ -40,8 +38,7 @@ const DownloadButton = (props) => {
       className="controlBtn"
       filename={`infoenergia-${contract.name}.csv`}
       headers={headers}
-      data={data}
-    >
+      data={data}>
       {children}
     </CSVLink>
   )
@@ -56,16 +53,14 @@ const ExtraControls = (props) => {
         <li className={type === 'LINE_CHART_TYPE' ? 'active' : null}>
           <button
             className="controlBtn"
-            onClick={() => setType('LINE_CHART_TYPE')}
-          >
+            onClick={() => setType('LINE_CHART_TYPE')}>
             <TimelineOutlinedIcon fontSize="small" />
           </button>
         </li>
         <li className={type === 'BAR_CHART_TYPE' ? 'active' : null}>
           <button
             className="controlBtn"
-            onClick={() => setType('BAR_CHART_TYPE')}
-          >
+            onClick={() => setType('BAR_CHART_TYPE')}>
             <BarChartOutlinedIcon fontSize="small" />
           </button>
         </li>
@@ -87,7 +82,6 @@ function TimeCurvesPage() {
   const { timeCurves } = useContext(TimeCurvesContext)
   const contract = useContext(ContractContext)
   const [type, setType] = useState('LINE_CHART_TYPE')
-
 
   useEffect(() => {
     language && i18n.changeLanguage(language)

@@ -1,6 +1,7 @@
 import React from 'react'
-import styled from 'styled-components'
+
 import dayjs from 'dayjs'
+import styled from 'styled-components'
 
 import { formatkWhDecimal } from '../../services/utils'
 
@@ -104,7 +105,7 @@ const CalendarMonth = (props) => {
                 levels={levels}
               />
             )
-          })
+          }),
         )}
       </Calendar>
     </>
