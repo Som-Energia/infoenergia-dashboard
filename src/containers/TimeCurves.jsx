@@ -48,7 +48,6 @@ const totalValueWithData = (data) => {
 }
 
 function TimeCurves(props) {
-  console.log('props',props)
   const { data, chartType, period, contract, lang } = props
 
   const { filteredTimeCurves, setFilteredTimeCurves } =
