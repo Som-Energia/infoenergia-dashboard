@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+
 import styled from 'styled-components'
 
 const TabBarWrapper = styled.div`
@@ -85,8 +86,7 @@ export default function Tabs({ tabs = defaultTabs, extra, initialTab = 0 }) {
                 role="tab"
                 onClick={() => {
                   setActiveTab(index)
-                }}
-              >
+                }}>
                 {title}
               </button>
             </Tab>

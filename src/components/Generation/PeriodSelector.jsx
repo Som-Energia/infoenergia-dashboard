@@ -1,14 +1,12 @@
 import React, { useContext } from 'react'
-import {
-  FormControl,
-  Select,
-} from '@mui/material'
-import GenerationUseContext from '../../contexts/GenerationUseContext'
 import { useTranslation } from 'react-i18next'
 
+import { FormControl, Select } from '@mui/material'
+
+import GenerationUseContext from '../../contexts/GenerationUseContext'
 
 export default function KwhBag(props) {
-  const {handleChange, periods} = props
+  const { handleChange, periods } = props
   const { is3Period } = useContext(GenerationUseContext)
   const { t } = useTranslation()
 
@@ -21,8 +19,7 @@ export default function KwhBag(props) {
         inputProps={{
           name: 'viewType',
           id: 'period-select',
-        }}
-      >
+        }}>
         <option id="month-option" value={'Taula_Peatges_20'}>
           {t('GENERATION_SELECT_3_PERIODS')}
         </option>

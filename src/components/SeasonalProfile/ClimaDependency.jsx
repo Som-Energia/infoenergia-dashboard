@@ -1,6 +1,7 @@
 import React from 'react'
-import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
+
+import styled from 'styled-components'
 
 const levels = ['null', 'low', 'moderate', 'high']
 
@@ -16,8 +17,7 @@ const ClimaDependency = ({ data }) => {
           {levels.map((level) => (
             <DependecyLevel
               key={level}
-              className={level === data ? 'active' : null}
-            >
+              className={level === data ? 'active' : null}>
               <div className="edge" />
               <Level>{t(level.toUpperCase())}</Level>
               <div className="edge" />

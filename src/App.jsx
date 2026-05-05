@@ -1,22 +1,24 @@
+import './App.css'
+
 import React, { lazy, Suspense } from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
-import DevelopmentIndex from './pages/DevelopmentIndex'
+
 import CssBaseline from '@mui/material/CssBaseline'
-import { GenerationUseContextProvider } from './contexts/GenerationUseContext'
-import { LocalizationProvider as DatePickerLocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import {
   createTheme,
-  ThemeProvider,
   StyledEngineProvider,
+  ThemeProvider,
 } from '@mui/material/styles'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import { LocalizationProvider as DatePickerLocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 
+import { GenerationUseContextProvider } from './contexts/GenerationUseContext'
 import i18n from './i18n/i18n'
-import './App.css'
+import DevelopmentIndex from './pages/DevelopmentIndex'
 
 function App(props) {
   const generationAssignments = document.getElementById(
-    'generation-assignments-data'
+    'generation-assignments-data',
   )
   const assignmentsConsumption = generationAssignments
     ? JSON.parse(generationAssignments.textContent)
@@ -33,13 +35,12 @@ function App(props) {
   }
 
   const loadGenerationKwh = () => {
-    const ProductionConsumption = lazy(() =>
-      import('./pages/ProductionConsumption')
+    const ProductionConsumption = lazy(
+      () => import('./pages/ProductionConsumption'),
     )
     return (
       <GenerationUseContextProvider
-        generationAssignments={assignmentsConsumption}
-      >
+        generationAssignments={assignmentsConsumption}>
         <ProductionConsumption {...props} />
       </GenerationUseContextProvider>
     )
@@ -52,15 +53,13 @@ function App(props) {
           <CssBaseline />
           <DatePickerLocalizationProvider
             dateAdapter={AdapterDayjs}
-            adapterLocale={i18n}
-          >
+            adapterLocale={i18n}>
             <Suspense fallback={<></>}>
               <Router
                 future={{
                   v7_relativeSplatPath: true,
                   v7_startTransition: true,
-                }}
-              >
+                }}>
                 <Routes>
                   <Route exact path="/" element={<DevelopmentIndex />}></Route>
                   <Route
@@ -119,8 +118,8 @@ const theme = createTheme({
           borderColor: '#6d8f22',
           border: '1px solid',
           backgroundColor: '#6d8f22',
-        }
-      }
-    }
-  }
+        },
+      },
+    },
+  },
 })

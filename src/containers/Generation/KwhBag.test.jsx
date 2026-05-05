@@ -1,11 +1,14 @@
 import React from 'react'
-import KwhBag from './KwhBag'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
-import { render, queryByAttribute } from '@testing-library/react'
-import { GenerationUseContextProvider } from '../../contexts/GenerationUseContext'
+
+import { createTheme, ThemeProvider } from '@mui/material/styles'
+
+import { queryByAttribute, render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { vi } from 'vitest'
-import { createTheme, ThemeProvider } from '@mui/material/styles'
+
+import { GenerationUseContextProvider } from '../../contexts/GenerationUseContext'
+import KwhBag from './KwhBag'
 
 vi.mock('react-i18next', () => ({
   // this mock makes sure any components using the translate hook can use it without a warning being shown
@@ -64,8 +67,7 @@ describe('Generation use section', () => {
     const dom = render(
       <MemoryRouter
         initialEntries={[`/${lang}/investments/production-consumption`]}
-        future={routerFutureFlags}
-      >
+        future={routerFutureFlags}>
         <Routes>
           <Route
             exact
@@ -73,16 +75,14 @@ describe('Generation use section', () => {
             element={
               <GenerationUseContextProvider
                 initViewTypeValue={0}
-                isTestMode={true}
-              >
+                isTestMode={true}>
                 <ThemeProvider theme={theme}>
                   <KwhBag lastInvoiceDatePriorityContract={new Date()} />
                 </ThemeProvider>
               </GenerationUseContextProvider>
-            }
-          ></Route>
+            }></Route>
         </Routes>
-      </MemoryRouter>
+      </MemoryRouter>,
     )
 
     const selectElement = getById(dom.container, 'period-select')

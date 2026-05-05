@@ -1,19 +1,21 @@
-import React, { useState, useEffect, createContext } from 'react'
-import { useTranslation } from 'react-i18next'
-import { useParams } from 'react-router-dom'
-import infoenergyBox from '../images/infoenergy_box.svg'
-
-import dayjs from 'dayjs'
 import 'dayjs/locale/ca'
 import 'dayjs/locale/es'
 
+import React, { createContext, useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+
+import dayjs from 'dayjs'
+
+import infoenergyBox from '../images/infoenergy_box.svg'
+
 const empoweringToken = document.getElementById('root').dataset.token
 const contractList = JSON.parse(
-  document.getElementById('contracts-data').textContent
+  document.getElementById('contracts-data').textContent,
 )
 const contracts = Object.assign(
   {},
-  ...contractList.map((item) => ({ [item.name]: item }))
+  ...contractList.map((item) => ({ [item.name]: item })),
 )
 const contractNames = contractList.map((contract) => contract.name)
 
@@ -48,8 +50,7 @@ function ContractSelectorWrapper({ title, children }) {
                     name="contract"
                     id="contract-selector"
                     value={currentContract}
-                    onChange={(ev) => setCurrentContract(ev.target.value)}
-                  >
+                    onChange={(ev) => setCurrentContract(ev.target.value)}>
                     {contractNames.map((key) => {
                       return (
                         <option value={key} key={key}>

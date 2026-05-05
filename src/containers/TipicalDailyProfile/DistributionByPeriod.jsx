@@ -1,20 +1,18 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Skeleton from '@mui/material/Skeleton'
 
-import DistributionPieChart from '../../components/TipicalDailyProfile/DistributionPieChart'
 import DistributionLegend from '../../components/TipicalDailyProfile/DistributionLegend'
-
+import DistributionPieChart from '../../components/TipicalDailyProfile/DistributionPieChart'
 import { getDistributionByPeriod } from '../../services/api'
-
 import {
+  ChartWrapper,
   Container,
+  LegendWrapper,
+  NoDataMessage,
   Title,
   Wrapper,
-  ChartWrapper,
-  NoDataMessage,
-  LegendWrapper,
 } from './DistributionCharts'
 
 const COLORS = {

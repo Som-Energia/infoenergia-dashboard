@@ -1,19 +1,16 @@
-import { createContext, useState, useEffect } from 'react'
-import { getConsumption, getkWhRemaining, getkWhRecord } from '../services/api'
-import {
-  formatOrdinals, getDataForTable
-} from '../services/utils'
-import { useTranslation } from 'react-i18next'
-import { useParams } from 'react-router-dom'
-import dayjs from 'dayjs'
 import 'dayjs/locale/ca'
 import 'dayjs/locale/es'
 import 'dayjs/locale/eu'
 import 'dayjs/locale/gl'
 
+import { createContext, useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
+import dayjs from 'dayjs'
 
-
+import { getConsumption, getkWhRecord, getkWhRemaining } from '../services/api'
+import { formatOrdinals, getDataForTable } from '../services/utils'
 
 const initValues = {
   selectedDate: null,
@@ -44,8 +41,6 @@ export const GenerationUseContextProvider = (props) => {
     isloadingRecord = false,
   } = props
 
-
-
   const [selectedDate, setSelectedDate] = useState(initSelectedDate)
   const [is3Period, setIs3Period] = useState(false)
   const [viewTypeValue, setViewTypeValue] = useState(initViewTypeValue)
@@ -54,7 +49,7 @@ export const GenerationUseContextProvider = (props) => {
   const [loadingRecord, setLoadingRecord] = useState(isloadingRecord)
 
   const [assignmentsTableFormat, setAssignmentsTableFormat] = useState(
-    initAssignmentsTableFormat
+    initAssignmentsTableFormat,
   )
   const [kWhRemaining, setkWhRemaining] = useState(initKWhRemaining)
   const [kWhRecord, setkWhRecord] = useState(initKWhRecord)
@@ -80,13 +75,13 @@ export const GenerationUseContextProvider = (props) => {
     t('GENERATION_KWH_USE_TABLE_TOTAL'),
   ]
 
-
-
-
   const Is3Period = () => {
     let result = true
     generationAssignments.forEach((element) => {
-      result = result && (element.contract_tariff.includes('2.0') || element.contract_tariff === "")
+      result =
+        result &&
+        (element.contract_tariff.includes('2.0') ||
+          element.contract_tariff === '')
     })
     setIs3Period(result)
   }
@@ -97,28 +92,30 @@ export const GenerationUseContextProvider = (props) => {
       : formatOrdinals(language, priorityNumber + 1)
   }
 
-
   const getUseData = async () => {
     try {
       setLoadingUse(true)
       const consumption = await getConsumption(
         selectedDate,
         token,
-        viewTypeValue
+        viewTypeValue,
       )
 
       const assignmentsTableFormat = getDataForTable(
         generationAssignments,
-        consumption.data
+        consumption.data,
       )
 
-      const assignmentsTableFormatTmp = JSON.parse(JSON.stringify(assignmentsTableFormat.data))
+      const assignmentsTableFormatTmp = JSON.parse(
+        JSON.stringify(assignmentsTableFormat.data),
+      )
       const maxLength = assignmentsTableFormatTmp?.dataKeys?.length
-      assignmentsTableFormat.data.columns = maxLength === 3
-        ? threePeriodsColumns
-        : sixPeriodsColumns
+      assignmentsTableFormat.data.columns =
+        maxLength === 3 ? threePeriodsColumns : sixPeriodsColumns
 
-      assignmentsTableFormatTmp.rows.forEach(row => { row.priority = row.priority !== '-' ? getPriority(row.priority) : '-' })
+      assignmentsTableFormatTmp.rows.forEach((row) => {
+        row.priority = row.priority !== '-' ? getPriority(row.priority) : '-'
+      })
 
       assignmentsTableFormat.data.rows = assignmentsTableFormatTmp.rows
 
@@ -158,14 +155,13 @@ export const GenerationUseContextProvider = (props) => {
     language && i18n.changeLanguage(language)
   }, [language, i18n])
 
-
   useEffect(
     function () {
       if (!isTestMode) {
         getRecordData()
       }
     },
-    [selectedDate]
+    [selectedDate],
   )
 
   useEffect(function () {
@@ -180,7 +176,7 @@ export const GenerationUseContextProvider = (props) => {
         getUseData()
       }
     },
-    [viewTypeValue, generationAssignments, selectedDate]
+    [viewTypeValue, generationAssignments, selectedDate],
   )
 
   useEffect(
@@ -189,7 +185,7 @@ export const GenerationUseContextProvider = (props) => {
         Is3Period()
       }
     },
-    [generationAssignments]
+    [generationAssignments],
   )
 
   return (
@@ -207,9 +203,8 @@ export const GenerationUseContextProvider = (props) => {
         loadingRecord,
         is3Period,
         MONTH,
-        YEAR
-      }}
-    >
+        YEAR,
+      }}>
       {props.children}
     </GenerationUseContext.Provider>
   )

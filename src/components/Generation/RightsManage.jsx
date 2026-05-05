@@ -1,14 +1,18 @@
+import 'dayjs/locale/ca'
+import 'dayjs/locale/es'
+
 import React, { useEffect } from 'react'
-import { Grid, FormControl, Select } from '@mui/material'
-import { useTranslation } from 'react-i18next'
-import { Loading } from '@somenergia/somenergia-ui'
-import PeriodSelector from './PeriodSelector'
 import { useParams } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+
+import { FormControl, Grid, Select } from '@mui/material'
+
+import { Loading } from '@somenergia/somenergia-ui'
 import { ConsumptionDisplay, SomDatePicker } from '@somenergia/somenergia-ui'
 
 import dayjs from 'dayjs'
-import 'dayjs/locale/ca'
-import 'dayjs/locale/es'
+
+import PeriodSelector from './PeriodSelector'
 
 export default function RightsManage({
   children,
@@ -21,7 +25,6 @@ export default function RightsManage({
   viewTypeValue,
   total,
 }) {
-
   const { t } = useTranslation()
 
   const { language } = useParams()
@@ -29,7 +32,6 @@ export default function RightsManage({
   useEffect(() => {
     language && i18n.changeLanguage(language)
     language ? dayjs.locale(language) : dayjs.locale('es')
-
   }, [language, i18n])
 
   return (
@@ -41,16 +43,18 @@ export default function RightsManage({
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-          }}
-        >
+          }}>
           <Loading />
         </Grid>
       ) : (
         <>
           <Grid
             container
-            style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem' }}
-          >
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              marginBottom: '1rem',
+            }}>
             <Grid
               item
               xs={12}
@@ -60,8 +64,7 @@ export default function RightsManage({
                 alignItems: 'center',
                 justifyContent: 'flex-end',
                 gap: '10px',
-              }}
-            >
+              }}>
               <ConsumptionDisplay
                 period={viewTypeValue}
                 currentDate={selectedDate}
@@ -79,8 +82,7 @@ export default function RightsManage({
                 justifyContent: 'space-between',
                 gap: '20px',
               }}
-              spacing={1}
-            >
+              spacing={1}>
               <Grid item xs={12} sm={3}>
                 <SomDatePicker
                   period={viewTypeValue}
@@ -91,14 +93,14 @@ export default function RightsManage({
                       borderColor: 'secondary.main',
                       input: {
                         textAlign: 'center',
-                      }
+                      },
                     },
                   }}
                 />
               </Grid>
               {handleViewTypeChange ? (
                 <Grid item xs={12} sm={3}>
-                  <FormControl fullWidth variant='standard'>
+                  <FormControl fullWidth variant="standard">
                     <Select
                       native
                       value={viewTypeValue}
@@ -106,8 +108,7 @@ export default function RightsManage({
                       inputProps={{
                         name: 'viewType',
                         id: 'type-view-select',
-                      }}
-                    >
+                      }}>
                       <option id="month-option" value={'MONTHLY'}>
                         {t('GENERATION_KWH_SELECT_MONTH')}
                       </option>

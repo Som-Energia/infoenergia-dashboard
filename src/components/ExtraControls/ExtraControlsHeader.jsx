@@ -1,13 +1,12 @@
 import React from 'react'
+
 import styled from 'styled-components'
 
 const ExtraControls = ({ children }) => {
-
   return (
     <ExtraButtonsWrapper>
       <ul>
-
-        {React.Children.map(children, child => (
+        {React.Children.map(children, (child) => (
           <li>{child}</li>
         ))}
       </ul>

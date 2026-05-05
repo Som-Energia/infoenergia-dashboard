@@ -1,5 +1,6 @@
 import React from 'react'
-import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts'
+
+import { Cell, Pie, PieChart, ResponsiveContainer } from 'recharts'
 
 function DistributionPieChart({ data, colors }) {
   const values = []
@@ -18,8 +19,7 @@ function DistributionPieChart({ data, colors }) {
             innerRadius={50}
             outerRadius={80}
             paddingAngle={0}
-            dataKey="value"
-          >
+            dataKey="value">
             {values.map((entry, index) => (
               <Cell key={index} fill={colors[entry?.name]} />
             ))}

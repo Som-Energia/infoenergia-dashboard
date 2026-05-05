@@ -1,4 +1,5 @@
 import axios from 'axios'
+
 import investmentsFactApi from './investmentsFactApi'
 
 const HEMAN_API_URL = document.getElementById('root')
@@ -82,10 +83,14 @@ export const getSeasonalProfile = async (contract, token) => {
 /* Choice development api or production api */
 const investmentsApi = investmentsFactApi.getApi(import.meta.env.MODE)
 /* Use's table data */
-export const getConsumption = async (date, token, type) => investmentsApi.getConsumption(date, token, type)
+export const getConsumption = async (date, token, type) =>
+  investmentsApi.getConsumption(date, token, type)
 /* Production's chart data */
-export const getkWhRecord = async (date, token) => investmentsApi.getkWhRecord(date, token)
+export const getkWhRecord = async (date, token) =>
+  investmentsApi.getkWhRecord(date, token)
 /* Bag's chart data */
-export const getkWhRemaining = async (token) => investmentsApi.getkWhRemaining(token)
+export const getkWhRemaining = async (token) =>
+  investmentsApi.getkWhRemaining(token)
 /* Bag's chart last date */
-export const getLastInvoiceDatePriorityContract = async (token) => investmentsApi.getLastInvoiceDatePriorityContract(token)
+export const getLastInvoiceDatePriorityContract = async (token) =>
+  investmentsApi.getLastInvoiceDatePriorityContract(token)
