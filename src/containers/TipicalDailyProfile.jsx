@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next'
 import Grid from '@mui/material/Grid'
 import Skeleton from '@mui/material/Skeleton'
 import Typography from '@mui/material/Typography'
-import makeStyles from '@mui/styles/makeStyles';
 
 import TipicalDailyProfileChart from '../components/TipicalDailyProfile/TipicalDailyProfileChart'
 import Counter from '../components/Counter'
@@ -21,21 +20,16 @@ import { getDailyProfile } from '../services/api'
 
 import ErrorOutlineIcon from '@mui/icons-material/Error'
 
-
-const useStyles = makeStyles((theme) => ({
-    message: {
-        marginTop: theme.spacing(4),
-        fontSize: '1rem',
-        textAlign: 'center',
-        color: theme?.typography?.color,
-      },
-  }))
-
+const sxStyles = {
+  marginTop: '4rem',
+  fontSize: '1rem',
+  textAlign: 'center',
+  color: 'primary',
+}
 
 function TipicalDailyProfile(props) {
   const { contract, token, tariff } = props
   const { t } = useTranslation()
-  const classes = useStyles()
 
   const [data, setData] = useState({})
   const [isLoading, setIsLoading] = useState(true)
@@ -55,56 +49,56 @@ function TipicalDailyProfile(props) {
   return (
     <>
       <Widget>
-      {tariff !== '2.0TD' ? (
-        <Typography className={classes.message}>
-          {t('ONLY_FOR_20TD')}
-        </Typography>
-      ) : (
-        <>
-        <Grid item xs={12}>
-          <CounterWrapper>
-            <Counter
-              title={t('DAILY_AVERAGE')}
-              value={data?.dailyAvg?.value || '-'}
-              date={t('LAST_12_MONTHS')}
-            />
-          </CounterWrapper>
-        </Grid>
-        <Grid item xs={12}>
-          {isLoading ? (
-            <Skeleton height={300} />
-          ) : data?.dailyTypicalProfile ? (
-            <ScrollContainer>
-              <ScrollWrapper>
-                <TipicalDailyProfileChart data={data?.dailyTypicalProfile} />
-              </ScrollWrapper>
-            </ScrollContainer>
-          ) : data?.errors ? (
-            // <NoDataMessage>{t(data.errors)}</NoDataMessage>
-            (<NoDataMessage>{t('NO_DATA')}</NoDataMessage>)
-          ) : (
-            <NoDataMessage>{t('NO_DATA')}</NoDataMessage>
-          )}
-        </Grid>
+        {tariff !== '2.0TD' ? (
+          <Typography sx={sxStyles}>{t('ONLY_FOR_20TD')}</Typography>
+        ) : (
+          <>
+            <Grid item xs={12}>
+              <CounterWrapper>
+                <Counter
+                  title={t('DAILY_AVERAGE')}
+                  value={data?.dailyAvg?.value || '-'}
+                  date={t('LAST_12_MONTHS')}
+                />
+              </CounterWrapper>
+            </Grid>
+            <Grid item xs={12}>
+              {isLoading ? (
+                <Skeleton height={300} />
+              ) : data?.dailyTypicalProfile ? (
+                <ScrollContainer>
+                  <ScrollWrapper>
+                    <TipicalDailyProfileChart
+                      data={data?.dailyTypicalProfile}
+                    />
+                  </ScrollWrapper>
+                </ScrollContainer>
+              ) : data?.errors ? (
+                // <NoDataMessage>{t(data.errors)}</NoDataMessage>
+                <NoDataMessage>{t('NO_DATA')}</NoDataMessage>
+              ) : (
+                <NoDataMessage>{t('NO_DATA')}</NoDataMessage>
+              )}
+            </Grid>
 
-        <Separator />
+            <Separator />
 
-        <Grid container>
-          <Grid item xs={12}>
-            <Message>
-              <div className="iconWrapper">
-                <ErrorOutlineIcon fontSize="large" />
-              </div>
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: t('CONSUME_ADVICE'),
-                }}
-              ></div>
-            </Message>
-          </Grid>
-        </Grid>
-        </>
-      )}
+            <Grid container>
+              <Grid item xs={12}>
+                <Message>
+                  <div className="iconWrapper">
+                    <ErrorOutlineIcon fontSize="large" />
+                  </div>
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: t('CONSUME_ADVICE'),
+                    }}
+                  ></div>
+                </Message>
+              </Grid>
+            </Grid>
+          </>
+        )}
       </Widget>
       <Separator />
       <WidgetGrid>
@@ -112,20 +106,18 @@ function TipicalDailyProfile(props) {
           <DistributionByUserType {...props} />
         </Widget>
         <Widget>
-        {tariff !== '2.0TD' ? (
-          <Typography className={classes.message}>
-            {t('ONLY_FOR_20TD')}
-          </Typography>
-        ) : (
-        <>
-          <DistributionByPeriod {...props} />
-        </>
-      )}
+          {tariff !== '2.0TD' ? (
+            <Typography sx={sxStyles}>{t('ONLY_FOR_20TD')}</Typography>
+          ) : (
+            <>
+              <DistributionByPeriod {...props} />
+            </>
+          )}
         </Widget>
       </WidgetGrid>
       <LastUpdate date={data?.updated} />
     </>
-  );
+  )
 }
 
 export default TipicalDailyProfile
