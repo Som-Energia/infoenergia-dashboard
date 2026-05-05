@@ -48,6 +48,7 @@ const totalValueWithData = (data) => {
 }
 
 function TimeCurves(props) {
+  console.log('props',props)
   const { data, chartType, period, contract, lang } = props
 
   const { filteredTimeCurves, setFilteredTimeCurves } =
@@ -162,6 +163,7 @@ function TimeCurves(props) {
                 compareData={convertDataFromWattsToKwh(compareData)}
                 period={period}
                 lang={lang}
+                displaced={true}
               />
             ) : (
               <TimeCurvesBarChart
@@ -170,6 +172,7 @@ function TimeCurves(props) {
                 period={period}
                 lang={lang}
                 tariffTimetableId={contract?.tariff_timetable_id}
+                displaced={true}
               />
             )}
           </ChartWrapper>

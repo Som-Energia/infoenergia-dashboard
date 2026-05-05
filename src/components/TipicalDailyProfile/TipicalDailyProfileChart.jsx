@@ -45,6 +45,8 @@ const TipicalDailyProfileChart = ({ data = [], lang = 'es' }) => {
             legend={false}
             lang={lang}
             showTooltipKeys={false}
+            displaced={true}
+            scale={'auto'}
           />
       </ResponsiveContainer>
     </div>
