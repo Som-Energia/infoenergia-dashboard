@@ -42,6 +42,25 @@ export default defineConfig(({ mode }) => {
       open: true,
       port: 3000
     },
+    resolve: {
+      dedupe: [
+        "react",
+        "react-dom",
+        "@mui/material",
+        "@mui/x-date-pickers",
+        "@mui/system",
+        "@mui/base",
+        "styled-components",
+        "dayjs",
+      ],
+    },
+    optimizeDeps: {
+      include: [
+        "@mui/material",
+        "@mui/x-date-pickers",
+        "@somenergia/somenergia-ui",
+      ],
+    },
     test: {
       globals: true,
       environment: 'jsdom',

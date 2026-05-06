@@ -1,5 +1,10 @@
 # Change Log
 
+## unreleased
+
+- FIX: use displace and scale parameters
+- FIX: add vite configuration to aviod conflicts when usign somenergia-ui locally
+
 ## 3.0.0 2026-03-10
 
 - IMP: local deployment
