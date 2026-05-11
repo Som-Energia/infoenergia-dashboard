@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
-import styled from 'styled-components'
+import React, { useState } from "react"
+
+import styled from "styled-components"
 
 const TabBarWrapper = styled.div`
   display: flex;
@@ -64,9 +65,9 @@ const TabContentWrapper = styled.div`
 
 const defaultTabs = [
   [
-    { title: 'Tab 1', content: <div>Tab 1 content</div> },
-    { title: 'Tab 2', content: <div>Tab 2 content</div> },
-    { title: 'Tab 3', content: <div>Tab 3 content</div> },
+    { title: "Tab 1", content: <div>Tab 1 content</div> },
+    { title: "Tab 2", content: <div>Tab 2 content</div> },
+    { title: "Tab 3", content: <div>Tab 3 content</div> },
   ],
 ]
 
@@ -79,14 +80,13 @@ export default function Tabs({ tabs = defaultTabs, extra, initialTab = 0 }) {
       <TabBarWrapper>
         <TabList role="tablist">
           {tabs.map(({ title }, index) => (
-            <Tab key={index} className={activeTab === index ? 'active' : null}>
+            <Tab key={index} className={activeTab === index ? "active" : null}>
               <button
                 href="#"
                 role="tab"
                 onClick={() => {
                   setActiveTab(index)
-                }}
-              >
+                }}>
                 {title}
               </button>
             </Tab>

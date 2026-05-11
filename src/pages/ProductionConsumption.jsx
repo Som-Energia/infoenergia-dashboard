@@ -1,23 +1,26 @@
-import React, { useEffect, useContext } from 'react'
-import { Box, Typography, Grid, Tab, Tabs } from '@mui/material'
-import Use from '../containers/Generation/Use'
-import KwhBag from '../containers/Generation/KwhBag'
-import Record from '../containers/Generation/Record'
-import { useParams } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
-import { CsvformatData, kwhRecordToCsvformatData } from '../services/utils'
-import { CSVLink } from 'react-csv'
-import GetAppIcon from '@mui/icons-material/GetApp'
-import GenerationUseContext from '../contexts/GenerationUseContext'
-import ExtraControls from '../components/ExtraControls/ExtraControlsHeader'
-import dayjs from 'dayjs'
+import React, { useContext, useEffect } from "react"
+import { CSVLink } from "react-csv"
+import { useParams } from "react-router-dom"
+import { useTranslation } from "react-i18next"
+
+import GetAppIcon from "@mui/icons-material/GetApp"
+import { Box, Grid, Tab, Tabs, Typography } from "@mui/material"
+
+import dayjs from "dayjs"
+
+import ExtraControls from "../components/ExtraControls/ExtraControlsHeader"
+import KwhBag from "../containers/Generation/KwhBag"
+import Record from "../containers/Generation/Record"
+import Use from "../containers/Generation/Use"
+import GenerationUseContext from "../contexts/GenerationUseContext"
+import { CsvformatData, kwhRecordToCsvformatData } from "../services/utils"
 
 const sxStyles = {
   divRoot: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    padding: '20px',
-    minHeight: '95px', // prevents change height with/out DownloadButton
+    display: "flex",
+    justifyContent: "space-between",
+    padding: "20px",
+    minHeight: "95px", // prevents change height with/out DownloadButton
   },
 }
 
@@ -30,11 +33,10 @@ function TabPanel(props) {
       hidden={value !== index}
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
+      {...other}>
       {value === index && (
         <Box p={3}>
-          <Typography component={'div'}>{children}</Typography>
+          <Typography component={"div"}>{children}</Typography>
         </Box>
       )}
     </div>
@@ -49,10 +51,9 @@ const DownloadButton = ({ csvData, filename }) => {
       className="controlBtn"
       filename={filename}
       headers={headers}
-      data={data}
-    >
+      data={data}>
       <GetAppIcon fontSize="small" />
-      &nbsp;{t('DOWNLOAD')}
+      &nbsp;{t("DOWNLOAD")}
     </CSVLink>
   )
 }
@@ -60,7 +61,7 @@ const DownloadButton = ({ csvData, filename }) => {
 function a11yProps(index) {
   return {
     id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
   }
 }
 
@@ -68,9 +69,9 @@ function ProductionConsumption(props) {
   const { language } = useParams()
   const { i18n, t } = useTranslation()
   const sections = [
-    t('GENERATION_KWH_USE_SECTION_TITLE'),
-    t('GENERATION_KWH_BAG_SECTION_TITLE'),
-    t('GENERATION_KWH_RECORD_SECTION_TITLE'),
+    t("GENERATION_KWH_USE_SECTION_TITLE"),
+    t("GENERATION_KWH_BAG_SECTION_TITLE"),
+    t("GENERATION_KWH_RECORD_SECTION_TITLE"),
   ]
   const {
     setSelectedDate,
@@ -150,8 +151,7 @@ function ProductionConsumption(props) {
           textColor="primary"
           onChange={handleChange}
           aria-label="disabled tabs example"
-          indicatorColor="primary"
-        >
+          indicatorColor="primary">
           {sections.map((element, index) => (
             <Tab key={index} label={element} {...a11yProps} />
           ))}
@@ -160,7 +160,7 @@ function ProductionConsumption(props) {
           <ExtraControls>
             <DownloadButton
               csvData={CsvformatData(assignmentsTableFormat)}
-              filename={'generationkwh-use.csv'}
+              filename={"generationkwh-use.csv"}
             />
           </ExtraControls>
         ) : null}
@@ -168,7 +168,7 @@ function ProductionConsumption(props) {
           <ExtraControls>
             <DownloadButton
               csvData={kwhRecordToCsvformatData(kWhRecord, t)}
-              filename={'generationkwh-prod.csv'}
+              filename={"generationkwh-prod.csv"}
             />
           </ExtraControls>
         ) : null}

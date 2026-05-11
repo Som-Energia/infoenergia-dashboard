@@ -1,15 +1,17 @@
-import React from 'react'
-import Record from './Record'
-import { MemoryRouter, Route, Routes } from 'react-router-dom'
-import { render, queryByAttribute } from '@testing-library/react'
-import mockCurves from './mockData/Remaining' // TODO: change this var with kwh record
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import { vi } from 'vitest'
-import dayjs from 'dayjs'
+import React from "react"
+import { MemoryRouter, Route, Routes } from "react-router-dom"
 
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs"
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider"
 
-vi.mock('react-i18next', () => ({
+import { queryByAttribute, render } from "@testing-library/react"
+import dayjs from "dayjs"
+import { vi } from "vitest"
+
+import mockCurves from "./mockData/Remaining" // TODO: change this var with kwh record
+import Record from "./Record"
+
+vi.mock("react-i18next", () => ({
   // this mock makes sure any components using the translate hook can use it without a warning being shown
   useTranslation: () => {
     return {
@@ -20,7 +22,7 @@ vi.mock('react-i18next', () => ({
     }
   },
   initReactI18next: {
-    type: '3rdParty',
+    type: "3rdParty",
     init: () => {},
   },
 }))
@@ -30,20 +32,19 @@ const routerFutureFlags = {
   v7_startTransition: true,
 }
 
-describe('Record section of GenerationkWh', () => {
+describe("Record section of GenerationkWh", () => {
   const mockHandleDateChange = vi.fn()
   const mockHandleViewTypeChange = vi.fn()
   const mockSelectedDate = dayjs()
-  const MONTH = 'MONTHLY'
+  const MONTH = "MONTHLY"
 
-  const getById = queryByAttribute.bind(null, 'id')
-  test('Should show the loading component', async () => {
-    const lang = 'ca'
+  const getById = queryByAttribute.bind(null, "id")
+  test("Should show the loading component", async () => {
+    const lang = "ca"
     const dom = render(
       <MemoryRouter
         initialEntries={[`/${lang}/investments/production-consumption`]}
-        future={routerFutureFlags}
-      >
+        future={routerFutureFlags}>
         <Routes>
           <Route
             exact
@@ -59,22 +60,20 @@ describe('Record section of GenerationkWh', () => {
                   kWhRecord={mockCurves}
                 />
               </LocalizationProvider>
-            }
-          ></Route>
+            }></Route>
         </Routes>
-      </MemoryRouter>
+      </MemoryRouter>,
     )
-    const loadingComponent = getById(dom.container, 'record-loading-component')
+    const loadingComponent = getById(dom.container, "record-loading-component")
     expect(loadingComponent).toBeInTheDocument()
   })
 
-  test('Should show the chart component', async () => {
-    const lang = 'ca'
+  test("Should show the chart component", async () => {
+    const lang = "ca"
     const dom = render(
       <MemoryRouter
         initialEntries={[`/${lang}/investments/production-consumption`]}
-        future={routerFutureFlags}
-      >
+        future={routerFutureFlags}>
         <Routes>
           <Route
             exact
@@ -90,14 +89,13 @@ describe('Record section of GenerationkWh', () => {
                   kWhRecord={mockCurves}
                 />
               </LocalizationProvider>
-            }
-          ></Route>
+            }></Route>
         </Routes>
-      </MemoryRouter>
+      </MemoryRouter>,
     )
-    const loadingComponent = getById(dom.container, 'record-loading-component')
+    const loadingComponent = getById(dom.container, "record-loading-component")
     expect(loadingComponent).toBeNull()
-    const chartComponent = getById(dom.container, 'record-chart-component')
+    const chartComponent = getById(dom.container, "record-chart-component")
     expect(chartComponent).toBeInTheDocument()
   })
 })

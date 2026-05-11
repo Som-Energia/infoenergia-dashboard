@@ -1,14 +1,18 @@
-import React, { useEffect } from 'react'
-import { Grid, FormControl, Select } from '@mui/material'
-import { useTranslation } from 'react-i18next'
-import { Loading } from '@somenergia/somenergia-ui'
-import PeriodSelector from './PeriodSelector'
-import { useParams } from 'react-router-dom'
-import { ConsumptionDisplay, SomDatePicker } from '@somenergia/somenergia-ui'
+import "dayjs/locale/ca"
+import "dayjs/locale/es"
 
-import dayjs from 'dayjs'
-import 'dayjs/locale/ca'
-import 'dayjs/locale/es'
+import React, { useEffect } from "react"
+import { useParams } from "react-router-dom"
+import { useTranslation } from "react-i18next"
+
+import { FormControl, Grid, Select } from "@mui/material"
+
+import { Loading } from "@somenergia/somenergia-ui"
+import { ConsumptionDisplay, SomDatePicker } from "@somenergia/somenergia-ui"
+
+import dayjs from "dayjs"
+
+import PeriodSelector from "./PeriodSelector"
 
 export default function RightsManage({
   children,
@@ -21,15 +25,13 @@ export default function RightsManage({
   viewTypeValue,
   total,
 }) {
-
   const { t } = useTranslation()
 
   const { language } = useParams()
   const { i18n } = useTranslation()
   useEffect(() => {
     language && i18n.changeLanguage(language)
-    language ? dayjs.locale(language) : dayjs.locale('es')
-
+    language ? dayjs.locale(language) : dayjs.locale("es")
   }, [language, i18n])
 
   return (
@@ -38,30 +40,31 @@ export default function RightsManage({
         <Grid
           id="loading-comp-id"
           style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}>
           <Loading />
         </Grid>
       ) : (
         <>
           <Grid
             container
-            style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem' }}
-          >
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              marginBottom: "1rem",
+            }}>
             <Grid
               item
               xs={12}
               style={{
-                display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'flex-end',
-                gap: '10px',
-              }}
-            >
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "flex-end",
+                gap: "10px",
+              }}>
               <ConsumptionDisplay
                 period={viewTypeValue}
                 currentDate={selectedDate}
@@ -74,13 +77,12 @@ export default function RightsManage({
               item
               xs={12}
               style={{
-                alignItems: 'center',
-                display: 'flex',
-                justifyContent: 'space-between',
-                gap: '20px',
+                alignItems: "center",
+                display: "flex",
+                justifyContent: "space-between",
+                gap: "20px",
               }}
-              spacing={1}
-            >
+              spacing={1}>
               <Grid item xs={12} sm={3}>
                 <SomDatePicker
                   period={viewTypeValue}
@@ -88,31 +90,30 @@ export default function RightsManage({
                   setCurrentTime={handleDateChange}
                   styles={{
                     datePicker: {
-                      borderColor: 'secondary.main',
+                      borderColor: "secondary.main",
                       input: {
-                        textAlign: 'center',
-                      }
+                        textAlign: "center",
+                      },
                     },
                   }}
                 />
               </Grid>
               {handleViewTypeChange ? (
                 <Grid item xs={12} sm={3}>
-                  <FormControl fullWidth variant='standard'>
+                  <FormControl fullWidth variant="standard">
                     <Select
                       native
                       value={viewTypeValue}
                       onChange={handleViewTypeChange}
                       inputProps={{
-                        name: 'viewType',
-                        id: 'type-view-select',
-                      }}
-                    >
-                      <option id="month-option" value={'MONTHLY'}>
-                        {t('GENERATION_KWH_SELECT_MONTH')}
+                        name: "viewType",
+                        id: "type-view-select",
+                      }}>
+                      <option id="month-option" value={"MONTHLY"}>
+                        {t("GENERATION_KWH_SELECT_MONTH")}
                       </option>
-                      <option id="year-option" value={'YEARLY'}>
-                        {t('GENERATION_KWH_SELECT_YEAR')}
+                      <option id="year-option" value={"YEARLY"}>
+                        {t("GENERATION_KWH_SELECT_YEAR")}
                       </option>
                     </Select>
                   </FormControl>

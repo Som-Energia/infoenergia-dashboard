@@ -1,10 +1,12 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App'
-import './index.css'
-import * as serviceWorker from './serviceWorker'
+import "./index.css"
 
-const root = document.getElementById('root')
+import React from "react"
+import ReactDOM from "react-dom/client"
+
+import App from "./App"
+import * as serviceWorker from "./serviceWorker"
+
+const root = document.getElementById("root")
 const props = {}
 
 if (root) {
@@ -15,10 +17,10 @@ if (root) {
 
   console.log(`infoenergia version: ${import.meta.env.VITE_APP_VERSION}`)
 
-  ReactDOM.createRoot(document.getElementById('root')).render(
+  ReactDOM.createRoot(document.getElementById("root")).render(
     <React.StrictMode>
       <App {...props} />
-    </React.StrictMode>
+    </React.StrictMode>,
   )
 }
 

@@ -14,6 +14,6 @@ const buildData = (fromDate, toDate, baseValue = 5) => {
   return result
 }
 
-const data = buildData('2020-01-01', '2020-01-26', 5)
+const data = buildData("2020-01-01", "2020-01-26", 5)
 
 export default data
