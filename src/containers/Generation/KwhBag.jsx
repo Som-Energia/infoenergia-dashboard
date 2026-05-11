@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useMemo, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import React, { useContext, useEffect, useMemo, useState } from "react"
+import { useTranslation } from "react-i18next"
 
 import {
   Grid,
@@ -11,20 +11,18 @@ import {
   TableHead,
   TableRow,
   Typography,
-  Grid,
-  Paper,
-} from '@mui/material'
+} from "@mui/material"
 
-import { Loading } from '@somenergia/somenergia-ui'
+import { Loading } from "@somenergia/somenergia-ui"
 
-import PeriodSelector from '../../components/Generation/PeriodSelector'
-import StackedBarChart from '../../components/Generation/StackedBarChart'
-import GenerationUseContext from '../../contexts/GenerationUseContext'
-import { getLastInvoiceDatePriorityContract } from '../../services/api'
+import PeriodSelector from "../../components/Generation/PeriodSelector"
+import StackedBarChart from "../../components/Generation/StackedBarChart"
+import GenerationUseContext from "../../contexts/GenerationUseContext"
+import { getLastInvoiceDatePriorityContract } from "../../services/api"
 import {
   groupYearlyDataAccumulation,
   period2ColorKwhBag,
-} from '../../services/utils'
+} from "../../services/utils"
 
 function createData(periodes, kwh) {
   return { periodes, kwh }
@@ -33,7 +31,7 @@ function createData(periodes, kwh) {
 export default function KwhBag(props) {
   const { token, lastInvoiceDatePriorityContract } = props
   const { kWhRemaining, loadingRemain } = useContext(GenerationUseContext)
-  const [periods, setPeriods] = useState('Taula_Peatges_20')
+  const [periods, setPeriods] = useState("Taula_Peatges_20")
   const [date, setDate] = useState(lastInvoiceDatePriorityContract)
   const { t } = useTranslation()
 
@@ -48,7 +46,7 @@ export default function KwhBag(props) {
     const groupDataKeys = Object.keys(groupData)
     const is3Period = groupDataKeys.length === 3
     groupDataKeys.forEach((element) => {
-      const suffix = is3Period ? '_P' : ''
+      const suffix = is3Period ? "_P" : ""
       data.periods[t(element + suffix)] = groupData[element]
       data.fills[t(element + suffix)] = period2ColorKwhBag[element]
     })
@@ -83,12 +81,12 @@ export default function KwhBag(props) {
     <>
       <Grid
         style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          marginBottom: '20px',
+          display: "flex",
+          justifyContent: "space-between",
+          marginBottom: "20px",
         }}>
         <Grid item container xs={12} sm={6}>
-          <h3>{t('GENERATION_KWH_BAG_TITLE')}</h3>
+          <h3>{t("GENERATION_KWH_BAG_TITLE")}</h3>
         </Grid>
         <Grid
           item
@@ -96,23 +94,23 @@ export default function KwhBag(props) {
           xs={12}
           sm={2}
           style={{
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'flex-end',
-            gap: '10px',
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "flex-end",
+            gap: "10px",
           }}>
           <PeriodSelector handleChange={handleChange} periods={periods} />
         </Grid>
       </Grid>
       <Grid
         container
-        style={{ display: 'flex', justifyContent: 'center', gap: '15px' }}>
+        style={{ display: "flex", justifyContent: "center", gap: "15px" }}>
         {loadingRemain ? (
           <Grid
             style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
             }}>
             <Loading />
           </Grid>
@@ -127,9 +125,9 @@ export default function KwhBag(props) {
                   <TableHead>
                     <TableRow>
                       <TableCell>
-                        {t('GENERATION_KWH_BAG_TABLE_PERIOD')}
+                        {t("GENERATION_KWH_BAG_TABLE_PERIOD")}
                       </TableCell>
-                      <TableCell>{t('GENERATION_KWH_BAG_TABLE_KWH')}</TableCell>
+                      <TableCell>{t("GENERATION_KWH_BAG_TABLE_KWH")}</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -152,8 +150,8 @@ export default function KwhBag(props) {
         <Typography
           id="date-info"
           dangerouslySetInnerHTML={{
-            __html: t('GENERATION_KWH_BAG_DESCRIPTION', {
-              date: new Date(date).toLocaleDateString('es-ES'),
+            __html: t("GENERATION_KWH_BAG_DESCRIPTION", {
+              date: new Date(date).toLocaleDateString("es-ES"),
             }),
           }}
         />

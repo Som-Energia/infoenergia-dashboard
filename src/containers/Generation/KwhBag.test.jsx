@@ -1,16 +1,16 @@
-import React from 'react'
-import { MemoryRouter, Route, Routes } from 'react-router-dom'
+import React from "react"
+import { MemoryRouter, Route, Routes } from "react-router-dom"
 
-import { createTheme, ThemeProvider } from '@mui/material/styles'
+import { createTheme, ThemeProvider } from "@mui/material/styles"
 
-import { queryByAttribute, render } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
-import { vi } from 'vitest'
+import { queryByAttribute, render } from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
+import { vi } from "vitest"
 
-import { GenerationUseContextProvider } from '../../contexts/GenerationUseContext'
-import KwhBag from './KwhBag'
+import { GenerationUseContextProvider } from "../../contexts/GenerationUseContext"
+import KwhBag from "./KwhBag"
 
-vi.mock('react-i18next', () => ({
+vi.mock("react-i18next", () => ({
   // this mock makes sure any components using the translate hook can use it without a warning being shown
   useTranslation: () => {
     return {
@@ -21,7 +21,7 @@ vi.mock('react-i18next', () => ({
     }
   },
   initReactI18next: {
-    type: '3rdParty',
+    type: "3rdParty",
     init: () => {},
   },
 }))
@@ -31,7 +31,7 @@ const routerFutureFlags = {
   v7_startTransition: true,
 }
 
-describe('Generation use section', () => {
+describe("Generation use section", () => {
   const theme = createTheme({
     components: {
       MuiUseMediaQuery: {
@@ -42,14 +42,14 @@ describe('Generation use section', () => {
     },
     palette: {
       primary: {
-        main: '#6d8f22',
+        main: "#6d8f22",
       },
       secondary: {
-        main: '#767676',
+        main: "#767676",
       },
       background: {
-        default: '#f0f2f2',
-        paper: '#ffffff',
+        default: "#f0f2f2",
+        paper: "#ffffff",
       },
       contrastThreshold: 1,
       tonalOffset: 0.2,
@@ -61,9 +61,9 @@ describe('Generation use section', () => {
       borderRadius: 4,
     },
   })
-  const getById = queryByAttribute.bind(null, 'id')
-  test('Should change the periods 3 to 6', async () => {
-    const lang = 'ca'
+  const getById = queryByAttribute.bind(null, "id")
+  test("Should change the periods 3 to 6", async () => {
+    const lang = "ca"
     const dom = render(
       <MemoryRouter
         initialEntries={[`/${lang}/investments/production-consumption`]}
@@ -85,11 +85,11 @@ describe('Generation use section', () => {
       </MemoryRouter>,
     )
 
-    const selectElement = getById(dom.container, 'period-select')
-    expect(selectElement).toHaveValue('Taula_Peatges_20')
-    expect(selectElement).toHaveTextContent('GENERATION_SELECT_3_PERIODS')
+    const selectElement = getById(dom.container, "period-select")
+    expect(selectElement).toHaveValue("Taula_Peatges_20")
+    expect(selectElement).toHaveTextContent("GENERATION_SELECT_3_PERIODS")
 
-    const optionToSelect = 'Taula_Peatges_30_60_Peninsular' // Change to the option you want to select
+    const optionToSelect = "Taula_Peatges_30_60_Peninsular" // Change to the option you want to select
     await userEvent.selectOptions(selectElement, optionToSelect)
     expect(selectElement).toHaveValue(optionToSelect)
   })
