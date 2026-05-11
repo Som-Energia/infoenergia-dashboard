@@ -38,17 +38,19 @@ const TipicalDailyProfileChart = ({ data = [], lang = 'es' }) => {
   const bardata = transformBardata(data)
 
   return (
-    <div style={{ height: '300px' }}>
+    <div style={{ height: '480px' }}>
       <ResponsiveContainer>
         <SummaryPeriodChart
           width={730}
-          height={250}
+          height={550}
           data={bardata}
           period="DAILY"
           Ylegend={'kWh'}
           legend={false}
           lang={lang}
           showTooltipKeys={false}
+          displaced={true}
+          scale={'auto'}
         />
       </ResponsiveContainer>
     </div>

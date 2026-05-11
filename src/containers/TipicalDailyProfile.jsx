@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react'
+import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
 
 import ErrorOutlineIcon from '@mui/icons-material/Error'
 import Grid from '@mui/material/Grid'
 import Skeleton from '@mui/material/Skeleton'
 import Typography from '@mui/material/Typography'
-import makeStyles from '@mui/styles/makeStyles'
-
-import styled from 'styled-components'
 
 import Counter from '../components/Counter'
 import LastUpdate from '../components/LastUpdate'
@@ -18,19 +16,20 @@ import DistributionByPeriod from './TipicalDailyProfile/DistributionByPeriod'
 import DistributionByUserType from './TipicalDailyProfile/DistributionByUserType'
 import { Widget } from './TipicalDailyProfile/DistributionCharts'
 
-const useStyles = makeStyles((theme) => ({
-  message: {
-    marginTop: theme.spacing(4),
-    fontSize: '1rem',
-    textAlign: 'center',
-    color: theme?.typography?.color,
-  },
-}))
+import { getDailyProfile } from '../services/api'
+
+import ErrorOutlineIcon from '@mui/icons-material/Error'
+
+const sxStyles = {
+  marginTop: '4rem',
+  fontSize: '1rem',
+  textAlign: 'center',
+  color: 'primary',
+}
 
 function TipicalDailyProfile(props) {
   const { contract, token, tariff } = props
   const { t } = useTranslation()
-  const classes = useStyles()
 
   const [data, setData] = useState({})
   const [isLoading, setIsLoading] = useState(true)
@@ -51,9 +50,7 @@ function TipicalDailyProfile(props) {
     <>
       <Widget>
         {tariff !== '2.0TD' ? (
-          <Typography className={classes.message}>
-            {t('ONLY_FOR_20TD')}
-          </Typography>
+          <Typography sx={sxStyles}>{t('ONLY_FOR_20TD')}</Typography>
         ) : (
           <>
             <Grid item xs={12}>
@@ -95,7 +92,8 @@ function TipicalDailyProfile(props) {
                   <div
                     dangerouslySetInnerHTML={{
                       __html: t('CONSUME_ADVICE'),
-                    }}></div>
+                    }}
+                  ></div>
                 </Message>
               </Grid>
             </Grid>
@@ -109,9 +107,7 @@ function TipicalDailyProfile(props) {
         </Widget>
         <Widget>
           {tariff !== '2.0TD' ? (
-            <Typography className={classes.message}>
-              {t('ONLY_FOR_20TD')}
-            </Typography>
+            <Typography sx={sxStyles}>{t('ONLY_FOR_20TD')}</Typography>
           ) : (
             <>
               <DistributionByPeriod {...props} />

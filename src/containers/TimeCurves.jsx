@@ -178,6 +178,7 @@ function TimeCurves(props) {
                 compareData={convertDataFromWattsToKwh(compareData)}
                 period={period}
                 lang={lang}
+                displaced={true}
               />
             ) : (
               <TimeCurvesBarChart
@@ -186,6 +187,7 @@ function TimeCurves(props) {
                 period={period}
                 lang={lang}
                 tariffTimetableId={contract?.tariff_timetable_id}
+                displaced={true}
               />
             )}
           </ChartWrapper>

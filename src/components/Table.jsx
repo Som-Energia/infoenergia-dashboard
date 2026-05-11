@@ -7,21 +7,13 @@ import { TableContainer } from '@mui/material'
 import { TableHead } from '@mui/material'
 import { TableRow } from '@mui/material'
 import { Paper } from '@mui/material'
-import makeStyles from '@mui/styles/makeStyles'
-
-const useStyles = makeStyles({
-  table: {
-    minWidth: 650,
-  },
-})
 
 export default function CustomTable(props) {
-  const classes = useStyles()
   const { columns, rows, id } = props
 
   return (
     <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="simple table">
+      <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
             {columns.map((element) => (

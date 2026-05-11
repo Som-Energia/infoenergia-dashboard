@@ -52,7 +52,10 @@ function TimeCurvesBarChart({
         period={period}
         compareData={compareData}
         lang={lang}
-        showTooltipKeys={false}></SummaryPeriodChart>
+        showTooltipKeys={false}
+        displaced={true}
+        scale={'auto'}>
+      </SummaryPeriodChart>
     </ChartWrapper>
   )
 }

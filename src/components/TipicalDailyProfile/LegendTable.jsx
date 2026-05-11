@@ -7,14 +7,10 @@ import { TableCell } from '@mui/material'
 import { TableContainer } from '@mui/material'
 import { TableHead } from '@mui/material'
 import { TableRow } from '@mui/material'
-import makeStyles from '@mui/styles/makeStyles'
 
 import { period2Color } from '../../services/utils'
 
-const useStyles = makeStyles({
-  table: {
-    minWidth: 650,
-  },
+const sxStyles = {
   tableCell: {
     border: 0,
   },
@@ -24,10 +20,9 @@ const useStyles = makeStyles({
     display: 'inline-block',
     margin: '0 8px',
   },
-})
+}
 
 const TableItem = ({ data, isLast }) => {
-  const classes = useStyles()
   const { t } = useTranslation()
   const monthsData = data.months.map((element) => t(element))
 
@@ -35,25 +30,28 @@ const TableItem = ({ data, isLast }) => {
     <>
       {isLast ? (
         <TableRow>
-          <TableCell className={classes.tableCell}>
+          <TableCell sx={sxStyles.tableCell}>
             <b>{t('WEEKEND_HOLIDAYS')}</b>
           </TableCell>
         </TableRow>
       ) : null}
 
       <TableRow>
-        <TableCell className={classes.tableCell}>
+        <TableCell sx={sxStyles.tableCell}>
           <span>{monthsData.join(', ')}</span>
         </TableCell>
         {data.intervalPeriods.map((element, index) => {
           return (
-            <TableCell className={classes.tableCell} key={element + index}>
+            <TableCell sx={sxStyles.tableCell} key={element + index}>
               <span>
                 <span
-                  className={classes.squareColor}
                   style={{
-                    backgroundColor: period2Color[element.period],
-                  }}></span>
+                    ...sxStyles.squareColor,
+                    ...{
+                      backgroundColor: period2Color[element.period],
+                    },
+                  }}
+                ></span>
                 <span>
                   <b>{t(element.period)}</b>
                 </span>
@@ -67,18 +65,17 @@ const TableItem = ({ data, isLast }) => {
 }
 
 export default function DenseTable({ header, data }) {
-  const classes = useStyles()
   const { t } = useTranslation()
 
   return (
     <TableContainer>
-      <Table className={classes.table} size="small" aria-label="a dense table">
+      <Table sx={{ minWidth: '100px' }} size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
-            <TableCell className={classes.tableCell}></TableCell>
+            <TableCell sx={sxStyles.tableCell}></TableCell>
             {header.map((element, index) => {
               return (
-                <TableCell className={classes.tableCell} key={element + index}>
+                <TableCell sx={sxStyles.tableCell} key={element + index}>
                   <b>{element.start + 'h - ' + element.end + 'h'}</b>
                 </TableCell>
               )
@@ -87,7 +84,7 @@ export default function DenseTable({ header, data }) {
         </TableHead>
         <TableBody>
           <TableRow>
-            <TableCell className={classes.tableCell}>
+            <TableCell sx={sxStyles.tableCell}>
               <b>{t('WORKING_DAYS')}</b>
             </TableCell>
           </TableRow>

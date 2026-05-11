@@ -1,14 +1,9 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useEffect, useContext } from 'react'
+import { Box, Typography, Grid, Tab, Tabs } from '@mui/material'
 import { CSVLink } from 'react-csv'
-import { useParams } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
-
-import GetAppIcon from '@mui/icons-material/GetApp'
-import { Box, Grid, Tab, Tabs, Typography } from '@mui/material'
-import makeStyles from '@mui/styles/makeStyles'
-
-import dayjs from 'dayjs'
-
+import Use from '../containers/Generation/Use'
+import KwhBag from '../containers/Generation/KwhBag'
+import Record from '../containers/Generation/Record'
 import ExtraControls from '../components/ExtraControls/ExtraControlsHeader'
 import KwhBag from '../containers/Generation/KwhBag'
 import Record from '../containers/Generation/Record'
@@ -16,28 +11,14 @@ import Use from '../containers/Generation/Use'
 import GenerationUseContext from '../contexts/GenerationUseContext'
 import { CsvformatData, kwhRecordToCsvformatData } from '../services/utils'
 
-const useStyles = makeStyles((theme) => ({
-  tab: {
-    color: 'primary',
-  },
+const sxStyles = {
   divRoot: {
     display: 'flex',
     justifyContent: 'space-between',
     padding: '20px',
     minHeight: '95px', // prevents change height with/out DownloadButton
   },
-  root: {
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.paper,
-  },
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120,
-  },
-  selectEmpty: {
-    marginTop: theme.spacing(2),
-  },
-}))
+}
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props
@@ -105,7 +86,6 @@ function ProductionConsumption(props) {
   }, [language, i18n])
 
   const [value, setValue] = React.useState(0)
-  const classes = useStyles()
   const handleChange = (_event, newValue) => {
     setValue(newValue)
   }
@@ -161,7 +141,7 @@ function ProductionConsumption(props) {
 
   return (
     <Grid>
-      <Grid container className={classes.divRoot}>
+      <Grid container sx={sxStyles.divRoot}>
         <Tabs
           value={value}
           textColor="primary"

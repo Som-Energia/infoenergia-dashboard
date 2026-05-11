@@ -11,8 +11,9 @@ import {
   TableHead,
   TableRow,
   Typography,
+  Grid,
+  Paper,
 } from '@mui/material'
-import makeStyles from '@mui/styles/makeStyles'
 
 import { Loading } from '@somenergia/somenergia-ui'
 
@@ -29,28 +30,6 @@ function createData(periodes, kwh) {
   return { periodes, kwh }
 }
 
-const useStyles = makeStyles((theme) => ({
-  tab: {
-    color: 'primary',
-  },
-  divRoot: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    padding: '20px',
-  },
-  root: {
-    flexGrow: 1,
-    backgroundColor: theme.palette?.background?.paper,
-  },
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120,
-  },
-  selectEmpty: {
-    marginTop: theme.spacing(2),
-  },
-}))
-
 export default function KwhBag(props) {
   const { token, lastInvoiceDatePriorityContract } = props
   const { kWhRemaining, loadingRemain } = useContext(GenerationUseContext)
@@ -61,7 +40,6 @@ export default function KwhBag(props) {
   const handleChange = (event) => {
     setPeriods(event.target.value)
   }
-  const classes = useStyles()
 
   const groupedData = useMemo(() => {
     const groupData = groupYearlyDataAccumulation(kWhRemaining, periods)
@@ -145,7 +123,7 @@ export default function KwhBag(props) {
             </Grid>
             <Grid item xs={12} sm={5}>
               <TableContainer component={Paper}>
-                <Table className={classes.table} aria-label="simple table">
+                <Table aria-label="simple table">
                   <TableHead>
                     <TableRow>
                       <TableCell>
