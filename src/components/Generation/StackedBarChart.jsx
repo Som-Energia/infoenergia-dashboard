@@ -1,12 +1,12 @@
-import React from 'react'
+import React from "react"
 
-import { SummaryPeriodChart } from '@somenergia/somenergia-ui'
+import { SummaryPeriodChart } from "@somenergia/somenergia-ui"
 
-import { ResponsiveContainer } from 'recharts'
+import { ResponsiveContainer } from "recharts"
 
 function transformBardata(data) {
   let periods = data.periods
-  periods['date'] = new Date().setHours(0)
+  periods["date"] = new Date().setHours(0)
   return {
     fills: data.fills,
     keys: Object.keys(data.fills),

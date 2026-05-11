@@ -1,17 +1,17 @@
-import 'dayjs/locale/ca'
-import 'dayjs/locale/es'
+import "dayjs/locale/ca"
+import "dayjs/locale/es"
 
-import React, { createContext, useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
+import React, { createContext, useEffect, useState } from "react"
+import { useParams } from "react-router-dom"
+import { useTranslation } from "react-i18next"
 
-import dayjs from 'dayjs'
+import dayjs from "dayjs"
 
-import infoenergyBox from '../images/infoenergy_box.svg'
+import infoenergyBox from "../images/infoenergy_box.svg"
 
-const empoweringToken = document.getElementById('root').dataset.token
+const empoweringToken = document.getElementById("root").dataset.token
 const contractList = JSON.parse(
-  document.getElementById('contracts-data').textContent,
+  document.getElementById("contracts-data").textContent,
 )
 const contracts = Object.assign(
   {},
@@ -28,7 +28,7 @@ function ContractSelectorWrapper({ title, children }) {
 
   useEffect(() => {
     language && i18n.changeLanguage(language)
-    language ? dayjs.locale(language) : dayjs.locale('es')
+    language ? dayjs.locale(language) : dayjs.locale("es")
   }, [language, i18n])
 
   return (
@@ -44,7 +44,7 @@ function ContractSelectorWrapper({ title, children }) {
               <div className="container-contract-selector">
                 <form action="" id="contract-selector-form">
                   <label htmlFor="contract-selector">
-                    {t('CURRENT_CONTRACT')}
+                    {t("CURRENT_CONTRACT")}
                   </label>
                   <select
                     name="contract"
@@ -67,18 +67,18 @@ function ContractSelectorWrapper({ title, children }) {
         <section className="section infoenergy-container container">
           {contractNames.length === 0 ? (
             <p className="warning" id="no-data">
-              {t('ERROR_NO_ACTIVE_CONTRACTS')}
+              {t("ERROR_NO_ACTIVE_CONTRACTS")}
             </p>
           ) : !empoweringToken ? (
             <p className="warning" id="no-allow">
-              {t('ERROR_NO_INFOENERGIA_TOKEN')}
+              {t("ERROR_NO_INFOENERGIA_TOKEN")}
             </p>
           ) : (
             <div>{children}</div>
           )}
-          <p style={{ display: 'none' }} id="tarifa-30">
+          <p style={{ display: "none" }} id="tarifa-30">
             {
-              'trans Este contrato tiene una tarifa 3.0 con menos de 50 kW de potencia contratada. Las empresas de distribución no comparten los datos horarios de uso de energía de estos contratos, porque la normativa no les obliga a hacerlo. Por este motivo no disponemos de esta información y no podemos ofrecértela en este espacio.'
+              "trans Este contrato tiene una tarifa 3.0 con menos de 50 kW de potencia contratada. Las empresas de distribución no comparten los datos horarios de uso de energía de estos contratos, porque la normativa no les obliga a hacerlo. Por este motivo no disponemos de esta información y no podemos ofrecértela en este espacio."
             }
           </p>
         </section>

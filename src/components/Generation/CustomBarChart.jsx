@@ -1,12 +1,12 @@
-import React from 'react'
+import React from "react"
 
-import { SummaryPeriodChart } from '@somenergia/somenergia-ui'
+import { SummaryPeriodChart } from "@somenergia/somenergia-ui"
 
-import { ResponsiveContainer } from 'recharts'
+import { ResponsiveContainer } from "recharts"
 
 function CustomBarChart({ data, period, legend = false }) {
   return (
-    <div style={{ height: '450px' }}>
+    <div style={{ height: "450px" }}>
       <ResponsiveContainer>
         <SummaryPeriodChart
           width={730}
@@ -16,8 +16,7 @@ function CustomBarChart({ data, period, legend = false }) {
           legend={legend}
           showTooltipKeys={true}
           displaced={true}
-          scale={'auto'}>
-        </SummaryPeriodChart>
+          scale={"auto"}></SummaryPeriodChart>
       </ResponsiveContainer>
     </div>
   )

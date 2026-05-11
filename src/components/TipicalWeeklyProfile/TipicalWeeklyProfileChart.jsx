@@ -1,5 +1,5 @@
-import React from 'react'
-import { useTranslation } from 'react-i18next'
+import React from "react"
+import { useTranslation } from "react-i18next"
 
 import {
   CartesianGrid,
@@ -9,14 +9,14 @@ import {
   Tooltip,
   XAxis,
   YAxis,
-} from 'recharts'
+} from "recharts"
 
 import {
   formatDay,
   formatDayHour,
   formatDecimal,
   formatPerc,
-} from '../../services/utils'
+} from "../../services/utils"
 
 const CustomizedDaysValuesTick = (props) => {
   const { x, y, data } = props
@@ -31,7 +31,7 @@ const CustomizedDaysValuesTick = (props) => {
     }
   }
 
-  const [currentDay] = props.payload.value.split('-')
+  const [currentDay] = props.payload.value.split("-")
   const avgDay = avgDataDay(currentDay)
 
   return (
@@ -47,7 +47,7 @@ const CustomizedDaysValuesTick = (props) => {
         {formatDay(parseInt(avgDay?.weekDay) + 1)}
       </text>
       <text x={0} y={20} dy={16} textAnchor="middle" fill="#666">
-        {t('AVG_USE')}
+        {t("AVG_USE")}
       </text>
       <text
         x={0}
@@ -79,16 +79,16 @@ const formatTooltip = (value, name) => {
 }
 
 const formatLabel = (value) => {
-  const [day, hour] = value.split('-')
+  const [day, hour] = value.split("-")
   return `${formatDayHour(parseInt(day) + 1, hour)}h`
 }
 
 const TipicalWeeklyProfileChart = ({ data }) => {
   const { avgWeekCCH, formatAvgWeekCCH } = data
-  const tickPoints = [...Array(7).keys()].map((index) => index + '-12')
+  const tickPoints = [...Array(7).keys()].map((index) => index + "-12")
 
   return (
-    <div style={{ height: '300px' }}>
+    <div style={{ height: "300px" }}>
       <ResponsiveContainer width="100%" height={300}>
         {formatAvgWeekCCH ? (
           <LineChart data={formatAvgWeekCCH} margin={{ top: 10, bottom: 10 }}>
@@ -99,9 +99,9 @@ const TipicalWeeklyProfileChart = ({ data }) => {
               dataKey="dayHour"
               tick={<CustomizedDaysValuesTick data={avgWeekCCH} />}
             />
-            <YAxis axisLine={false} tickCount={5} tick={() => ''} width={0} />
+            <YAxis axisLine={false} tickCount={5} tick={() => ""} width={0} />
             <Tooltip
-              cursor={{ fill: '#f2f2f2' }}
+              cursor={{ fill: "#f2f2f2" }}
               formatter={formatTooltip}
               labelFormatter={formatLabel}
               separator=" "

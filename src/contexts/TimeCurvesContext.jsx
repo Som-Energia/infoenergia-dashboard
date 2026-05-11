@@ -1,7 +1,7 @@
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useState } from "react"
 
-import { ContractContext } from '../containers/ContractSelectorWrapper'
-import { getTimeCurves } from '../services/timecurves'
+import { ContractContext } from "../containers/ContractSelectorWrapper"
+import { getTimeCurves } from "../services/timecurves"
 
 const TimeCurvesContext = createContext({
   timeCurves: [],
@@ -25,7 +25,7 @@ export const TimeCurvesContextProvider = (props) => {
             return getTimeCurves({
               token,
               cups: contract.cups,
-              currentMonth: now.subtract(yearsago, 'year').format('YYYYMM'),
+              currentMonth: now.subtract(yearsago, "year").format("YYYYMM"),
             })
           }),
         )

@@ -1,24 +1,24 @@
-import React from 'react'
-import { useTranslation } from 'react-i18next'
+import React from "react"
+import { useTranslation } from "react-i18next"
 
-import { Table } from '@mui/material'
-import { TableBody } from '@mui/material'
-import { TableCell } from '@mui/material'
-import { TableContainer } from '@mui/material'
-import { TableHead } from '@mui/material'
-import { TableRow } from '@mui/material'
+import { Table } from "@mui/material"
+import { TableBody } from "@mui/material"
+import { TableCell } from "@mui/material"
+import { TableContainer } from "@mui/material"
+import { TableHead } from "@mui/material"
+import { TableRow } from "@mui/material"
 
-import { period2Color } from '../../services/utils'
+import { period2Color } from "../../services/utils"
 
 const sxStyles = {
   tableCell: {
     border: 0,
   },
   squareColor: {
-    width: '16px',
-    height: '16px',
-    display: 'inline-block',
-    margin: '0 8px',
+    width: "16px",
+    height: "16px",
+    display: "inline-block",
+    margin: "0 8px",
   },
 }
 
@@ -31,14 +31,14 @@ const TableItem = ({ data, isLast }) => {
       {isLast ? (
         <TableRow>
           <TableCell sx={sxStyles.tableCell}>
-            <b>{t('WEEKEND_HOLIDAYS')}</b>
+            <b>{t("WEEKEND_HOLIDAYS")}</b>
           </TableCell>
         </TableRow>
       ) : null}
 
       <TableRow>
         <TableCell sx={sxStyles.tableCell}>
-          <span>{monthsData.join(', ')}</span>
+          <span>{monthsData.join(", ")}</span>
         </TableCell>
         {data.intervalPeriods.map((element, index) => {
           return (
@@ -50,8 +50,7 @@ const TableItem = ({ data, isLast }) => {
                     ...{
                       backgroundColor: period2Color[element.period],
                     },
-                  }}
-                ></span>
+                  }}></span>
                 <span>
                   <b>{t(element.period)}</b>
                 </span>
@@ -69,14 +68,14 @@ export default function DenseTable({ header, data }) {
 
   return (
     <TableContainer>
-      <Table sx={{ minWidth: '100px' }} size="small" aria-label="a dense table">
+      <Table sx={{ minWidth: "100px" }} size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
             <TableCell sx={sxStyles.tableCell}></TableCell>
             {header.map((element, index) => {
               return (
                 <TableCell sx={sxStyles.tableCell} key={element + index}>
-                  <b>{element.start + 'h - ' + element.end + 'h'}</b>
+                  <b>{element.start + "h - " + element.end + "h"}</b>
                 </TableCell>
               )
             })}
@@ -85,7 +84,7 @@ export default function DenseTable({ header, data }) {
         <TableBody>
           <TableRow>
             <TableCell sx={sxStyles.tableCell}>
-              <b>{t('WORKING_DAYS')}</b>
+              <b>{t("WORKING_DAYS")}</b>
             </TableCell>
           </TableRow>
           {data

@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from "react"
 
-import styled from 'styled-components'
+import styled from "styled-components"
 
-import { getLegendFromTimeTable } from '../../services/timecurves'
-import LegendTable from './LegendTable'
+import { getLegendFromTimeTable } from "../../services/timecurves"
+import LegendTable from "./LegendTable"
 
 const LegendPeriod = ({ contract }) => {
   const [legend, setLegend] = useState(null)

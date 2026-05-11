@@ -1,14 +1,14 @@
-import React, { useMemo, useState } from 'react'
-import { useParams } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
+import React, { useMemo, useState } from "react"
+import { useParams } from "react-router-dom"
+import { useTranslation } from "react-i18next"
 
-import { Grid } from '@mui/material'
+import { Grid } from "@mui/material"
 
-import { Loading } from '@somenergia/somenergia-ui'
+import { Loading } from "@somenergia/somenergia-ui"
 
-import CustomBarChart from '../../components/Generation/CustomBarChart'
-import RightsManage from '../../components/Generation/RightsManage'
-import { generationKwhRecordData } from '../../services/utils'
+import CustomBarChart from "../../components/Generation/CustomBarChart"
+import RightsManage from "../../components/Generation/RightsManage"
+import { generationKwhRecordData } from "../../services/utils"
 
 export default function Record({
   handleDateChange,
@@ -17,7 +17,7 @@ export default function Record({
   loading,
   kWhRecord,
 }) {
-  const [periods, setPeriods] = useState('Taula_Peatges_20')
+  const [periods, setPeriods] = useState("Taula_Peatges_20")
   const { t } = useTranslation()
   const { language } = useParams()
   const handleChange = (event) => {
@@ -34,9 +34,9 @@ export default function Record({
       {loading ? (
         <Grid
           style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
           }}
           id="record-loading-component">
           <Loading />
@@ -53,12 +53,12 @@ export default function Record({
           <Grid
             id="record-chart-component"
             item
-            style={{ padding: '30px 0 0 0' }}>
+            style={{ padding: "30px 0 0 0" }}>
             <CustomBarChart
               data={groupedData}
-              period={'YEARLY'}
+              period={"YEARLY"}
               legend={true}
-              type={'BAR'}
+              type={"BAR"}
               lang={language}
             />
           </Grid>

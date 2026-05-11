@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import React, { useEffect, useState } from "react"
+import { useTranslation } from "react-i18next"
 
-import Skeleton from '@mui/material/Skeleton'
+import Skeleton from "@mui/material/Skeleton"
 
-import styled from 'styled-components'
+import styled from "styled-components"
 
-import Counter from '../components/Counter'
-import CalendarMonth from '../components/LastMonthsProfile/CalendarMonth'
-import LastUpdate from '../components/LastUpdate'
-import { Widget } from '../containers/TipicalDailyProfile/DistributionCharts'
-import { getMonthsProfile } from '../services/api'
+import Counter from "../components/Counter"
+import CalendarMonth from "../components/LastMonthsProfile/CalendarMonth"
+import LastUpdate from "../components/LastUpdate"
+import { Widget } from "../containers/TipicalDailyProfile/DistributionCharts"
+import { getMonthsProfile } from "../services/api"
 
 const ChartWrapper = styled.div`
   width: 100%;
@@ -75,9 +75,9 @@ function LastMonthProfile(props) {
   const [isLoading, setIsLoading] = useState(true)
 
   const legendData = [
-    { color: '#96b633', label: t('USE_REGULAR') },
-    { color: '#f2970f', label: t('USE_EXCEPTIONAL') },
-    { color: '#616161', label: t('USE_LOW') },
+    { color: "#96b633", label: t("USE_REGULAR") },
+    { color: "#f2970f", label: t("USE_EXCEPTIONAL") },
+    { color: "#616161", label: t("USE_LOW") },
   ]
 
   useEffect(() => {
@@ -94,14 +94,14 @@ function LastMonthProfile(props) {
 
   return (
     <>
-      {' '}
+      {" "}
       <Widget>
         <TopWrapper>
           <CounterWrapper>
             <Counter
-              title={t('STAND_DAILY_USE')}
-              value={data?.levels ? data?.levels[1]?.kWh : '-'}
-              date={t('LAST_3_MONTHS')}
+              title={t("STAND_DAILY_USE")}
+              value={data?.levels ? data?.levels[1]?.kWh : "-"}
+              date={t("LAST_3_MONTHS")}
             />
           </CounterWrapper>
         </TopWrapper>
@@ -127,12 +127,12 @@ function LastMonthProfile(props) {
           ) : data?.errors ? (
             <NoDataMessage>{t(data.errors)}</NoDataMessage>
           ) : (
-            <NoDataMessage>{t('NO_DATA')}</NoDataMessage>
+            <NoDataMessage>{t("NO_DATA")}</NoDataMessage>
           )}
         </ChartWrapper>
         <LegendWrapper>
           <LegendLabel>
-            {t('ENERGY_USE')}
+            {t("ENERGY_USE")}
             <LegendItem>
               {legendData.map((item) => (
                 <LegendColor key={item.label} color={item.color}>

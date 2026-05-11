@@ -1,11 +1,11 @@
-import React from 'react'
+import React from "react"
 
-import { Grid } from '@mui/material'
+import { Grid } from "@mui/material"
 
-import { Loading } from '@somenergia/somenergia-ui'
+import { Loading } from "@somenergia/somenergia-ui"
 
-import RightsManage from '../../components/Generation/RightsManage'
-import CustomTable from '../../components/Table'
+import RightsManage from "../../components/Generation/RightsManage"
+import CustomTable from "../../components/Table"
 
 export default function Use({
   handleViewTypeChange,
@@ -21,9 +21,9 @@ export default function Use({
         <Grid
           id="loading-use-id"
           style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
           }}>
           <Loading />
         </Grid>
@@ -38,7 +38,7 @@ export default function Use({
           <CustomTable
             columns={assignmentsTableFormat.columns}
             rows={assignmentsTableFormat?.rows}
-            id={'table-body-assignment-consumption'}
+            id={"table-body-assignment-consumption"}
           />
         </RightsManage>
       )}

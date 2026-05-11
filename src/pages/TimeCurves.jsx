@@ -1,27 +1,27 @@
-import 'dayjs/locale/ca'
-import 'dayjs/locale/es'
+import "dayjs/locale/ca"
+import "dayjs/locale/es"
 
-import React, { useContext, useEffect, useState } from 'react'
-import { CSVLink } from 'react-csv'
-import { useParams } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
+import React, { useContext, useEffect, useState } from "react"
+import { CSVLink } from "react-csv"
+import { useParams } from "react-router-dom"
+import { useTranslation } from "react-i18next"
 
-import BarChartOutlinedIcon from '@mui/icons-material/BarChartOutlined'
-import GetAppIcon from '@mui/icons-material/GetApp'
-import TimelineOutlinedIcon from '@mui/icons-material/TimelineOutlined'
+import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined"
+import GetAppIcon from "@mui/icons-material/GetApp"
+import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined"
 
-import dayjs from 'dayjs'
-import styled from 'styled-components'
+import dayjs from "dayjs"
+import styled from "styled-components"
 
-import Tabs from '../components/Tabs'
+import Tabs from "../components/Tabs"
 import ContractSelectorWrapper, {
   ContractContext,
-} from '../containers/ContractSelectorWrapper'
-import TimeCurves from '../containers/TimeCurves'
+} from "../containers/ContractSelectorWrapper"
+import TimeCurves from "../containers/TimeCurves"
 import TimeCurvesContext, {
   TimeCurvesContextProvider,
-} from '../contexts/TimeCurvesContext'
-import { CnmcformatData } from '../services/utils'
+} from "../contexts/TimeCurvesContext"
+import { CnmcformatData } from "../services/utils"
 
 const DownloadButton = (props) => {
   const { children } = props
@@ -50,24 +50,24 @@ const ExtraControls = (props) => {
   return (
     <ExtraButtonsWrapper>
       <ul>
-        <li className={type === 'LINE_CHART_TYPE' ? 'active' : null}>
+        <li className={type === "LINE_CHART_TYPE" ? "active" : null}>
           <button
             className="controlBtn"
-            onClick={() => setType('LINE_CHART_TYPE')}>
+            onClick={() => setType("LINE_CHART_TYPE")}>
             <TimelineOutlinedIcon fontSize="small" />
           </button>
         </li>
-        <li className={type === 'BAR_CHART_TYPE' ? 'active' : null}>
+        <li className={type === "BAR_CHART_TYPE" ? "active" : null}>
           <button
             className="controlBtn"
-            onClick={() => setType('BAR_CHART_TYPE')}>
+            onClick={() => setType("BAR_CHART_TYPE")}>
             <BarChartOutlinedIcon fontSize="small" />
           </button>
         </li>
         <li>
           <DownloadButton>
             <GetAppIcon fontSize="small" />
-            &nbsp;{t('DOWNLOAD')}
+            &nbsp;{t("DOWNLOAD")}
           </DownloadButton>
         </li>
       </ul>
@@ -81,18 +81,18 @@ function TimeCurvesPage() {
 
   const { timeCurves } = useContext(TimeCurvesContext)
   const contract = useContext(ContractContext)
-  const [type, setType] = useState('LINE_CHART_TYPE')
+  const [type, setType] = useState("LINE_CHART_TYPE")
 
   useEffect(() => {
     language && i18n.changeLanguage(language)
-    language ? dayjs.locale(language) : dayjs.locale('es')
+    language ? dayjs.locale(language) : dayjs.locale("es")
   }, [language, i18n])
 
   return (
     <Tabs
       tabs={[
         {
-          title: t('DAILY'),
+          title: t("DAILY"),
           content: (
             <TimeCurves
               period="DAILY"
@@ -104,7 +104,7 @@ function TimeCurvesPage() {
           ),
         },
         {
-          title: t('WEEKLY'),
+          title: t("WEEKLY"),
           content: (
             <TimeCurves
               period="WEEKLY"
@@ -116,7 +116,7 @@ function TimeCurvesPage() {
           ),
         },
         {
-          title: t('MONTHLY'),
+          title: t("MONTHLY"),
           content: (
             <TimeCurves
               period="MONTHLY"
@@ -128,7 +128,7 @@ function TimeCurvesPage() {
           ),
         },
         {
-          title: t('YEARLY'),
+          title: t("YEARLY"),
           content: (
             <TimeCurves
               period="YEARLY"
@@ -151,11 +151,11 @@ function TimeCurvePageWrapper(props) {
   const { token, now = dayjs() } = props
   useEffect(() => {
     language && i18n.changeLanguage(language)
-    language ? dayjs.locale(language) : dayjs.locale('es')
+    language ? dayjs.locale(language) : dayjs.locale("es")
   }, [language, i18n])
 
   return (
-    <ContractSelectorWrapper title={t('SECTION_TITLE_HOURLY_CURVES')}>
+    <ContractSelectorWrapper title={t("SECTION_TITLE_HOURLY_CURVES")}>
       <TimeCurvesContextProvider token={token} now={now}>
         <TimeCurvesPage {...props}></TimeCurvesPage>
       </TimeCurvesContextProvider>

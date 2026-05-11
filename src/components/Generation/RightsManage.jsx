@@ -1,18 +1,18 @@
-import 'dayjs/locale/ca'
-import 'dayjs/locale/es'
+import "dayjs/locale/ca"
+import "dayjs/locale/es"
 
-import React, { useEffect } from 'react'
-import { useParams } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
+import React, { useEffect } from "react"
+import { useParams } from "react-router-dom"
+import { useTranslation } from "react-i18next"
 
-import { FormControl, Grid, Select } from '@mui/material'
+import { FormControl, Grid, Select } from "@mui/material"
 
-import { Loading } from '@somenergia/somenergia-ui'
-import { ConsumptionDisplay, SomDatePicker } from '@somenergia/somenergia-ui'
+import { Loading } from "@somenergia/somenergia-ui"
+import { ConsumptionDisplay, SomDatePicker } from "@somenergia/somenergia-ui"
 
-import dayjs from 'dayjs'
+import dayjs from "dayjs"
 
-import PeriodSelector from './PeriodSelector'
+import PeriodSelector from "./PeriodSelector"
 
 export default function RightsManage({
   children,
@@ -31,7 +31,7 @@ export default function RightsManage({
   const { i18n } = useTranslation()
   useEffect(() => {
     language && i18n.changeLanguage(language)
-    language ? dayjs.locale(language) : dayjs.locale('es')
+    language ? dayjs.locale(language) : dayjs.locale("es")
   }, [language, i18n])
 
   return (
@@ -40,9 +40,9 @@ export default function RightsManage({
         <Grid
           id="loading-comp-id"
           style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
           }}>
           <Loading />
         </Grid>
@@ -51,19 +51,19 @@ export default function RightsManage({
           <Grid
             container
             style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              marginBottom: '1rem',
+              display: "flex",
+              justifyContent: "space-between",
+              marginBottom: "1rem",
             }}>
             <Grid
               item
               xs={12}
               style={{
-                display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'flex-end',
-                gap: '10px',
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "flex-end",
+                gap: "10px",
               }}>
               <ConsumptionDisplay
                 period={viewTypeValue}
@@ -77,10 +77,10 @@ export default function RightsManage({
               item
               xs={12}
               style={{
-                alignItems: 'center',
-                display: 'flex',
-                justifyContent: 'space-between',
-                gap: '20px',
+                alignItems: "center",
+                display: "flex",
+                justifyContent: "space-between",
+                gap: "20px",
               }}
               spacing={1}>
               <Grid item xs={12} sm={3}>
@@ -90,9 +90,9 @@ export default function RightsManage({
                   setCurrentTime={handleDateChange}
                   styles={{
                     datePicker: {
-                      borderColor: 'secondary.main',
+                      borderColor: "secondary.main",
                       input: {
-                        textAlign: 'center',
+                        textAlign: "center",
                       },
                     },
                   }}
@@ -106,14 +106,14 @@ export default function RightsManage({
                       value={viewTypeValue}
                       onChange={handleViewTypeChange}
                       inputProps={{
-                        name: 'viewType',
-                        id: 'type-view-select',
+                        name: "viewType",
+                        id: "type-view-select",
                       }}>
-                      <option id="month-option" value={'MONTHLY'}>
-                        {t('GENERATION_KWH_SELECT_MONTH')}
+                      <option id="month-option" value={"MONTHLY"}>
+                        {t("GENERATION_KWH_SELECT_MONTH")}
                       </option>
-                      <option id="year-option" value={'YEARLY'}>
-                        {t('GENERATION_KWH_SELECT_YEAR')}
+                      <option id="year-option" value={"YEARLY"}>
+                        {t("GENERATION_KWH_SELECT_YEAR")}
                       </option>
                     </Select>
                   </FormControl>

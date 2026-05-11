@@ -1,6 +1,6 @@
-import React from 'react'
+import React from "react"
 
-import { Cell, Pie, PieChart, ResponsiveContainer } from 'recharts'
+import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts"
 
 function DistributionPieChart({ data, colors }) {
   const values = []

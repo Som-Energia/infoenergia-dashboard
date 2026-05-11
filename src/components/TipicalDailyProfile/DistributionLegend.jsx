@@ -1,23 +1,23 @@
-import React from 'react'
+import React from "react"
 
 const classes = {
   list: {
-    paddingTop: '16px',
-    paddingLeft: '0',
+    paddingTop: "16px",
+    paddingLeft: "0",
   },
   listItem: {
-    marginBottom: '10px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    marginBottom: "10px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
   name: {
-    fontSize: '18px',
-    marginRight: '24px',
-    textTransform: 'uppercase',
+    fontSize: "18px",
+    marginRight: "24px",
+    textTransform: "uppercase",
   },
   value: {
-    fontSize: '28px',
+    fontSize: "28px",
     fontWeight: 700,
   },
 }
@@ -31,17 +31,17 @@ const DistributionLegend = ({ values, colors, data }) => {
             return data[value] !== undefined ? (
               <li key={values[value]} style={classes.listItem}>
                 <span style={classes.name}>
-                  {values[value] !== undefined ? values[value] : '-'}{' '}
+                  {values[value] !== undefined ? values[value] : "-"}{" "}
                 </span>
                 <span style={{ ...classes.value, color: colors[value] }}>
-                  <b>{data[value] !== undefined ? data[value] : '-'}%</b>
+                  <b>{data[value] !== undefined ? data[value] : "-"}%</b>
                 </span>
               </li>
             ) : null
           })}
         </ul>
       ) : (
-        ''
+        ""
       )}
     </>
   )

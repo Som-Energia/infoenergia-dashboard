@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from "axios"
 
 const investmenAxios = axios.create({})
 
@@ -44,14 +44,14 @@ const devInvestmentApi = {
 }
 
 const getConsumption = async (date, token, type) => {
-  const urlY = '/api/investments/assignments-consumption-yearly/'
-  const urlM = '/api/investments/assignments-consumption-monthly/'
+  const urlY = "/api/investments/assignments-consumption-yearly/"
+  const urlM = "/api/investments/assignments-consumption-monthly/"
 
   return investmenAxios({
-    method: 'GET',
+    method: "GET",
     url:
-      type === 'MONTHLY' ? urlM + date.format('YYYY-MM') : urlY + date.year(),
-    headers: { Authorization: token, Identifier: 'ass_consumption' },
+      type === "MONTHLY" ? urlM + date.format("YYYY-MM") : urlY + date.year(),
+    headers: { Authorization: token, Identifier: "ass_consumption" },
   }).then((response) => {
     return response?.data
   })
@@ -59,9 +59,9 @@ const getConsumption = async (date, token, type) => {
 
 const getkWhRecord = async (date, token) => {
   return investmenAxios({
-    method: 'GET',
-    url: '/api/investments/assignments-kwh-rights/' + date.year(),
-    headers: { Authorization: token, Identifier: 'kwh_rights' },
+    method: "GET",
+    url: "/api/investments/assignments-kwh-rights/" + date.year(),
+    headers: { Authorization: token, Identifier: "kwh_rights" },
   }).then((response) => {
     return response?.data
   })
@@ -69,9 +69,9 @@ const getkWhRecord = async (date, token) => {
 
 const getkWhRemaining = async (token) => {
   return investmenAxios({
-    method: 'GET',
-    url: '/api/investments/assignments-remaining-kwh-production',
-    headers: { Authorization: token, Identifier: 'kwh_production' },
+    method: "GET",
+    url: "/api/investments/assignments-remaining-kwh-production",
+    headers: { Authorization: token, Identifier: "kwh_production" },
   })
     .then((response) => {
       return response?.data
@@ -84,9 +84,9 @@ const getkWhRemaining = async (token) => {
 
 const getLastInvoiceDatePriorityContract = async (token) => {
   return investmenAxios({
-    method: 'GET',
-    url: '/api/investments/last-invoice-date-from-priority-contract',
-    headers: { Authorization: token, Identifier: 'last_invoice_date' },
+    method: "GET",
+    url: "/api/investments/last-invoice-date-from-priority-contract",
+    headers: { Authorization: token, Identifier: "last_invoice_date" },
   }).then((response) => {
     return response?.data
   })
@@ -100,7 +100,7 @@ const prodInvestmentApi = {
 }
 
 const getApi = (mode) => {
-  if (mode === 'development') {
+  if (mode === "development") {
     return devInvestmentApi
   } else {
     return prodInvestmentApi

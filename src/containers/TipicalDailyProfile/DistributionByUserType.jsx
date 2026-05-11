@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import React, { useEffect, useState } from "react"
+import { useTranslation } from "react-i18next"
 
-import Skeleton from '@mui/material/Skeleton'
+import Skeleton from "@mui/material/Skeleton"
 
-import DistributionLegend from '../../components/TipicalDailyProfile/DistributionLegend'
-import DistributionPieChart from '../../components/TipicalDailyProfile/DistributionPieChart'
-import { getDistributionByTypeOfUse } from '../../services/api'
+import DistributionLegend from "../../components/TipicalDailyProfile/DistributionLegend"
+import DistributionPieChart from "../../components/TipicalDailyProfile/DistributionPieChart"
+import { getDistributionByTypeOfUse } from "../../services/api"
 import {
   ChartWrapper,
   Container,
@@ -13,7 +13,7 @@ import {
   NoDataMessage,
   Title,
   Wrapper,
-} from './DistributionCharts'
+} from "./DistributionCharts"
 
 export default function DistributionByUserType(props) {
   const { contract, token } = props
@@ -22,15 +22,15 @@ export default function DistributionByUserType(props) {
   const [isLoading, setIsLoading] = useState(true)
 
   const COLORS = {
-    permanent: '#f2970f',
-    peak: '#616161',
-    regular: '#96b633',
+    permanent: "#f2970f",
+    peak: "#616161",
+    regular: "#96b633",
   }
 
   const VALUES = {
-    permanent: t('PERMANENT'),
-    peak: t('PIC'),
-    regular: t('REGULAR'),
+    permanent: t("PERMANENT"),
+    peak: t("PIC"),
+    regular: t("REGULAR"),
   }
 
   useEffect(() => {
@@ -50,10 +50,10 @@ export default function DistributionByUserType(props) {
       {isLoading ? (
         <Skeleton height={210} width="100%" />
       ) : !data || data?.error ? (
-        <NoDataMessage>{t('NO_DATA')}</NoDataMessage>
+        <NoDataMessage>{t("NO_DATA")}</NoDataMessage>
       ) : (
         <>
-          <Title>{t('DISTRIB_BY_USE_TYPE')}</Title>
+          <Title>{t("DISTRIB_BY_USE_TYPE")}</Title>
           <Container>
             <ChartWrapper>
               <DistributionPieChart colors={COLORS} data={data} />

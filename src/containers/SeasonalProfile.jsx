@@ -1,23 +1,23 @@
-import React, { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import React, { useEffect, useState } from "react"
+import { useTranslation } from "react-i18next"
 
-import Skeleton from '@mui/material/Skeleton'
+import Skeleton from "@mui/material/Skeleton"
 
-import styled from 'styled-components'
+import styled from "styled-components"
 
-import LastUpdate from '../components/LastUpdate'
-import ClimaDependency from '../components/SeasonalProfile/ClimaDependency'
-import SeasonalProfileBarChart from '../components/SeasonalProfile/SeasonalProfileBarChart'
-import { ScrollContainer, ScrollWrapper } from '../components/Utils'
-import { getSeasonalProfile } from '../services/api'
-import { Widget } from './TipicalDailyProfile/DistributionCharts'
+import LastUpdate from "../components/LastUpdate"
+import ClimaDependency from "../components/SeasonalProfile/ClimaDependency"
+import SeasonalProfileBarChart from "../components/SeasonalProfile/SeasonalProfileBarChart"
+import { ScrollContainer, ScrollWrapper } from "../components/Utils"
+import { getSeasonalProfile } from "../services/api"
+import { Widget } from "./TipicalDailyProfile/DistributionCharts"
 
 function SeasonalProfile(props) {
   const { contract, token } = props
   const { t } = useTranslation()
   const [data, setData] = useState({})
   const [isLoading, setIsLoading] = useState(true)
-  const [seasonFilter, setSeasonFilter] = useState('summer')
+  const [seasonFilter, setSeasonFilter] = useState("summer")
 
   const handleClick = (event, season) => {
     event.preventDefault()
@@ -41,7 +41,7 @@ function SeasonalProfile(props) {
       <Widget>
         <SelectorWrapper>
           <SelectorBox>
-            <SelectorValue>{t('LAST_12_MONTHS')}</SelectorValue>
+            <SelectorValue>{t("LAST_12_MONTHS")}</SelectorValue>
           </SelectorBox>
         </SelectorWrapper>
         <ChartWrapper>
@@ -56,7 +56,7 @@ function SeasonalProfile(props) {
           ) : data?.errors ? (
             <NoDataMessage>{t(data.errors)}</NoDataMessage>
           ) : (
-            <NoDataMessage>{t('NO_DATA')}</NoDataMessage>
+            <NoDataMessage>{t("NO_DATA")}</NoDataMessage>
           )}
         </ChartWrapper>
       </Widget>
@@ -68,8 +68,8 @@ function SeasonalProfile(props) {
             <>
               <TabWrapper>
                 <Title>
-                  {t('CLIMATE_DEPENDENCY')}
-                  <span> {t('LAST_36_NONTH_BASE')}</span>
+                  {t("CLIMATE_DEPENDENCY")}
+                  <span> {t("LAST_36_NONTH_BASE")}</span>
                 </Title>
                 <ButtonsWrapper>
                   {Object.keys(
@@ -77,7 +77,7 @@ function SeasonalProfile(props) {
                   ).map((season) => (
                     <Button
                       key={season}
-                      className={seasonFilter === season ? 'active' : null}
+                      className={seasonFilter === season ? "active" : null}
                       onClick={(event) => handleClick(event, season)}>
                       {t(season.toUpperCase())}
                     </Button>

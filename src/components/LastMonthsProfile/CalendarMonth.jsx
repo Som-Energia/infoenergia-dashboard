@@ -1,9 +1,9 @@
-import React from 'react'
+import React from "react"
 
-import dayjs from 'dayjs'
-import styled from 'styled-components'
+import dayjs from "dayjs"
+import styled from "styled-components"
 
-import { formatkWhDecimal } from '../../services/utils'
+import { formatkWhDecimal } from "../../services/utils"
 
 const MonthName = styled.div`
   display: flex;
@@ -57,15 +57,15 @@ const ConsumDay = (props) => {
   const [low, high] = levels
   const consumDay = consum?.[0]?.kWh || 0
 
-  let className = ''
+  let className = ""
   if (consumDay < low?.kWh) {
-    className = 'low'
+    className = "low"
   } else if (consumDay < high?.kWh) {
-    className = 'normal'
+    className = "normal"
   } else if (consumDay > high?.kWh) {
-    className = 'high'
+    className = "high"
   } else {
-    className = ''
+    className = ""
   }
 
   return (
@@ -80,8 +80,8 @@ const CalendarMonth = (props) => {
   const currentMonth = `${month?.fullMonth}`.slice(-2)
   const currentYear = `${month?.fullMonth}`.slice(0, 4)
   const fullMonth = month?.fullMonth
-    ? dayjs(`${currentMonth} ${currentYear}`, 'MM YYYY', true).format('MMMM')
-    : ''
+    ? dayjs(`${currentMonth} ${currentYear}`, "MM YYYY", true).format("MMMM")
+    : ""
 
   return (
     <>
@@ -89,17 +89,17 @@ const CalendarMonth = (props) => {
       <Calendar>
         {month?.arrayDays.map((week, weekIdx) =>
           week.map((day, dayIdx) => {
-            const formatedDay = ('0' + day).slice(-2)
+            const formatedDay = ("0" + day).slice(-2)
             const fullMonth = month?.fullMonth
             const dayMonth = fullMonth + formatedDay
             const consumDay = findConsumDay(consum, dayMonth)
             if (day === 0) {
-              return <EmptyDay key={weekIdx + '-' + dayIdx} />
+              return <EmptyDay key={weekIdx + "-" + dayIdx} />
             }
 
             return (
               <ConsumDay
-                key={weekIdx + '-' + dayIdx}
+                key={weekIdx + "-" + dayIdx}
                 day={day}
                 consum={consumDay}
                 levels={levels}

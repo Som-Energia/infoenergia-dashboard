@@ -1,23 +1,23 @@
-import React from 'react'
-import { useTranslation } from 'react-i18next'
+import React from "react"
+import { useTranslation } from "react-i18next"
 
-import styled from 'styled-components'
+import styled from "styled-components"
 
-const levels = ['null', 'low', 'moderate', 'high']
+const levels = ["null", "low", "moderate", "high"]
 
 const ClimaDependency = ({ data }) => {
   const { t } = useTranslation()
 
   return (
     <div>
-      {data === 'nothing' || data === 'nodata' ? (
-        <NoDataMessage>{t('NO_DATA')}</NoDataMessage>
+      {data === "nothing" || data === "nodata" ? (
+        <NoDataMessage>{t("NO_DATA")}</NoDataMessage>
       ) : (
         <DependecyLevels>
           {levels.map((level) => (
             <DependecyLevel
               key={level}
-              className={level === data ? 'active' : null}>
+              className={level === data ? "active" : null}>
               <div className="edge" />
               <Level>{t(level.toUpperCase())}</Level>
               <div className="edge" />

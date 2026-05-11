@@ -1,40 +1,40 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from "react"
 
-import ClearIcon from '@mui/icons-material/Clear'
-import { IconButton } from '@mui/material'
+import ClearIcon from "@mui/icons-material/Clear"
+import { IconButton } from "@mui/material"
 
 import {
   ConsumptionDisplay,
   Loading,
   SomDatePicker,
-} from '@somenergia/somenergia-ui'
+} from "@somenergia/somenergia-ui"
 
-import dayjs from 'dayjs'
-import styled from 'styled-components'
+import dayjs from "dayjs"
+import styled from "styled-components"
 
-import TimeCurvesBarChart from '../components/TimeCurves/TimeCurvesBarChart'
-import TimeCurvesLineChart from '../components/TimeCurves/TimeCurvesLineChart'
-import LegendPeriod from '../components/TipicalDailyProfile/LegendPeriod'
-import TimeCurvesContext from '../contexts/TimeCurvesContext'
-import { convertDataFromWattsToKwh } from '../services/utils'
+import TimeCurvesBarChart from "../components/TimeCurves/TimeCurvesBarChart"
+import TimeCurvesLineChart from "../components/TimeCurves/TimeCurvesLineChart"
+import LegendPeriod from "../components/TipicalDailyProfile/LegendPeriod"
+import TimeCurvesContext from "../contexts/TimeCurvesContext"
+import { convertDataFromWattsToKwh } from "../services/utils"
 
 const filterDataWithPeriod = ({ refDate, period, data }) => {
   const filteredData = []
   switch (period) {
-    case 'DAILY':
+    case "DAILY":
       return data.filter(
         (item) =>
-          dayjs(item?.date).isSame(refDate, 'day') ||
-          (dayjs(item?.date).isSame(refDate.add(1, 'day'), 'day') &&
+          dayjs(item?.date).isSame(refDate, "day") ||
+          (dayjs(item?.date).isSame(refDate.add(1, "day"), "day") &&
             dayjs(item?.date).hour() === 0),
       )
-    case 'WEEKLY':
-      return data.filter((item) => dayjs(item?.date).isSame(refDate, 'week'))
-    case 'MONTHLY':
-      return data.filter((item) => dayjs(item?.date).isSame(refDate, 'month'))
-    case 'YEARLY':
+    case "WEEKLY":
+      return data.filter((item) => dayjs(item?.date).isSame(refDate, "week"))
+    case "MONTHLY":
+      return data.filter((item) => dayjs(item?.date).isSame(refDate, "month"))
+    case "YEARLY":
       for (let i = 0; i < data.length; i++) {
-        if (dayjs(data[i]?.date).isSame(refDate, 'year')) {
+        if (dayjs(data[i]?.date).isSame(refDate, "year")) {
           filteredData.push(data[i])
         }
       }
@@ -63,20 +63,20 @@ function TimeCurves(props) {
   const [currentDate, setCurrentDate] = useState(dayjs())
   const [compareDate, setCompareDate] = useState(null)
   const [compareData, setCompareData] = useState([])
-  const [totalKwh, setTotalKwh] = useState('-')
+  const [totalKwh, setTotalKwh] = useState("-")
   const [compareTotalKwh, setCompareTotalKwh] = useState()
 
   useEffect(() => {
     const firstItem = data?.[0]
     const firstDate = dayjs(firstItem?.date)
-    firstDate.startOf('day')
+    firstDate.startOf("day")
 
     const lastItem = data?.[data.length - 1]
     let lastDate = dayjs(lastItem?.date)
     if (lastDate.hour() === 0) {
-      lastDate = lastDate.subtract(1, 'hour')
+      lastDate = lastDate.subtract(1, "hour")
     }
-    lastDate.startOf('day')
+    lastDate.startOf("day")
 
     setMinDate(firstDate)
     setMaxDate(lastDate)
@@ -129,10 +129,10 @@ function TimeCurves(props) {
                 setCurrentTime={setCurrentDate}
                 prevNextButtons={true}
                 shouldDisableDate={(date) =>
-                  dayjs(date).isSame(compareDate, 'day')
+                  dayjs(date).isSame(compareDate, "day")
                 }
               />
-              {chartType === 'LINE_CHART_TYPE' && (
+              {chartType === "LINE_CHART_TYPE" && (
                 <>
                   <SomDatePicker
                     firstDate={minDate}
@@ -142,7 +142,7 @@ function TimeCurves(props) {
                     setCurrentTime={setCompareDate}
                     prevNextButtons={false}
                     shouldDisableDate={(date) =>
-                      dayjs(date).isSame(currentDate, 'day')
+                      dayjs(date).isSame(currentDate, "day")
                     }
                   />
                   {compareDate && (
@@ -160,10 +160,10 @@ function TimeCurves(props) {
                 currentDate={currentDate}
                 period={period}
                 compareDate={
-                  chartType === 'LINE_CHART_TYPE' ? compareDate : null
+                  chartType === "LINE_CHART_TYPE" ? compareDate : null
                 }
                 compareTotalKwh={
-                  chartType === 'LINE_CHART_TYPE' ? compareTotalKwh : null
+                  chartType === "LINE_CHART_TYPE" ? compareTotalKwh : null
                 }
                 totalKwh={totalKwh}
               />
@@ -172,7 +172,7 @@ function TimeCurves(props) {
           <ChartWrapper>
             {!data.length ? (
               <Loading />
-            ) : chartType === 'LINE_CHART_TYPE' ? (
+            ) : chartType === "LINE_CHART_TYPE" ? (
               <TimeCurvesLineChart
                 data={convertDataFromWattsToKwh(filteredTimeCurves)}
                 compareData={convertDataFromWattsToKwh(compareData)}
@@ -191,7 +191,7 @@ function TimeCurves(props) {
               />
             )}
           </ChartWrapper>
-          {chartType === 'BAR_CHART_TYPE' && (
+          {chartType === "BAR_CHART_TYPE" && (
             <LegendPeriod contract={contract} />
           )}
         </>

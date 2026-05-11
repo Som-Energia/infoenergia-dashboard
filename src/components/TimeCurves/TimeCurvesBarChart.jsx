@@ -1,11 +1,11 @@
-import { memo, useMemo } from 'react'
+import { memo, useMemo } from "react"
 
-import { SummaryPeriodChart } from '@somenergia/somenergia-ui'
+import { SummaryPeriodChart } from "@somenergia/somenergia-ui"
 
-import styled from 'styled-components'
+import styled from "styled-components"
 
-import { getBaseKeys, groupDataByPeriod } from '../../services/utils'
-import { period2Color } from '../../services/utils'
+import { getBaseKeys, groupDataByPeriod } from "../../services/utils"
+import { period2Color } from "../../services/utils"
 
 const ChartWrapper = styled.div`
   height: 450px;
@@ -36,11 +36,11 @@ function TimeCurvesBarChart({
   period,
   data = [],
   compareData = [],
-  lang = 'es',
+  lang = "es",
   tariffTimetableId,
 }) {
   const groupedData = useMemo(
-    () => groupDataByPeriod(data, period, 'barChart', tariffTimetableId),
+    () => groupDataByPeriod(data, period, "barChart", tariffTimetableId),
     [data, period],
   )
   const bardata = transformBardata(groupedData, tariffTimetableId)
@@ -54,8 +54,7 @@ function TimeCurvesBarChart({
         lang={lang}
         showTooltipKeys={false}
         displaced={true}
-        scale={'auto'}>
-      </SummaryPeriodChart>
+        scale={"auto"}></SummaryPeriodChart>
     </ChartWrapper>
   )
 }

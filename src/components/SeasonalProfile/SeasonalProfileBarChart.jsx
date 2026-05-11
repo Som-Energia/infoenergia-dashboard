@@ -1,5 +1,5 @@
-import React from 'react'
-import { useTranslation } from 'react-i18next'
+import React from "react"
+import { useTranslation } from "react-i18next"
 
 import {
   Bar,
@@ -9,9 +9,9 @@ import {
   ResponsiveContainer,
   XAxis,
   YAxis,
-} from 'recharts'
+} from "recharts"
 
-import { formatEuros, formatNumber } from '../../services/utils'
+import { formatEuros, formatNumber } from "../../services/utils"
 
 const CustomLabel = (props) => {
   const { x, y, width, data, index } = props
@@ -46,21 +46,21 @@ const CustomLabel = (props) => {
 function SeasonalProfileBarChart({ data }) {
   const { t } = useTranslation()
   return (
-    <div style={{ height: '300px' }}>
+    <div style={{ height: "300px" }}>
       <ResponsiveContainer>
         <BarChart width={730} height={250} data={data?.price}>
           <CartesianGrid stroke="#cccccc" strokeWidth={0.5} vertical={false} />
           <YAxis
             dataKey="euros"
             axisLine={false}
-            tick={() => ''}
+            tick={() => ""}
             width={0}
             domain={[(_dataMin) => 0, (dataMax) => dataMax * 1.1 + 50]}
             tickCount={6}
           />
           <XAxis
             dataKey="season"
-            tick={{ transform: 'translate(0, 8)' }}
+            tick={{ transform: "translate(0, 8)" }}
             tickFormatter={(tickItem) => t(tickItem.toUpperCase())}
             tickLine={false}
             fontWeight={500}
