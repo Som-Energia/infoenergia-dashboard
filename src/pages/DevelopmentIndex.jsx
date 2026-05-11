@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { useState } from "react"
 export default function DevelopmentIndex() {
-  const [lang, setLang] = useState('ca')
+  const [lang, setLang] = useState("ca")
   return (
     <>
       <h1>Infoenergia Pages</h1>
@@ -9,9 +9,8 @@ export default function DevelopmentIndex() {
           value={lang}
           onChange={(ev) => {
             setLang(ev.target.value)
-          }}
-        >
-          {['ca', 'es', 'eu', 'gl'].map((val) => {
+          }}>
+          {["ca", "es", "eu", "gl"].map((val) => {
             return (
               <option value={val} key={val}>
                 {val}
@@ -21,13 +20,15 @@ export default function DevelopmentIndex() {
         </select>
         <ul>
           <li>
-            <a href={`/${lang}/infoenergy`}>{'Corbes horàries'}</a>
+            <a href={`/${lang}/infoenergy`}>{"Corbes horàries"}</a>
           </li>
           <li>
             <a href={`/${lang}/infoenergy/energy-use`}>{"Ús de l'energia"}</a>
           </li>
           <li>
-            <a href={`/${lang}/investments/production-consumption`}>{"Generationkwh producció i consum"}</a>
+            <a href={`/${lang}/investments/production-consumption`}>
+              {"Generationkwh producció i consum"}
+            </a>
           </li>
         </ul>
       </section>

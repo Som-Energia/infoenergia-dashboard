@@ -1,13 +1,21 @@
-import { memo } from 'react'
-import styled from 'styled-components'
-import { CurveChart } from '@somenergia/somenergia-ui'
+import { memo } from "react"
+
+import { CurveChart } from "@somenergia/somenergia-ui"
+
+import styled from "styled-components"
 
 const ChartWrapper = styled.div`
   height: 450px;
   margin-top: 16px;
 `
 
-function TimeCurvesLineChart({ period, data = [], compareData = [], lang = 'es', displaced }) {
+function TimeCurvesLineChart({
+  period,
+  data = [],
+  compareData = [],
+  lang = "es",
+  displaced,
+}) {
   return (
     <ChartWrapper>
       <CurveChart
@@ -15,8 +23,7 @@ function TimeCurvesLineChart({ period, data = [], compareData = [], lang = 'es',
         period={period}
         compareData={compareData}
         lang={lang}
-        displaced={displaced}
-      ></CurveChart>
+        displaced={displaced}></CurveChart>
     </ChartWrapper>
   )
 }

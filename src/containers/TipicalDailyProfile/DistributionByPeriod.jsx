@@ -1,26 +1,24 @@
-import React, { useState, useEffect } from 'react'
-import { useTranslation } from 'react-i18next'
+import React, { useEffect, useState } from "react"
+import { useTranslation } from "react-i18next"
 
-import Skeleton from '@mui/material/Skeleton'
+import Skeleton from "@mui/material/Skeleton"
 
-import DistributionPieChart from '../../components/TipicalDailyProfile/DistributionPieChart'
-import DistributionLegend from '../../components/TipicalDailyProfile/DistributionLegend'
-
-import { getDistributionByPeriod } from '../../services/api'
-
+import DistributionLegend from "../../components/TipicalDailyProfile/DistributionLegend"
+import DistributionPieChart from "../../components/TipicalDailyProfile/DistributionPieChart"
+import { getDistributionByPeriod } from "../../services/api"
 import {
+  ChartWrapper,
   Container,
+  LegendWrapper,
+  NoDataMessage,
   Title,
   Wrapper,
-  ChartWrapper,
-  NoDataMessage,
-  LegendWrapper,
-} from './DistributionCharts'
+} from "./DistributionCharts"
 
 const COLORS = {
-  peakPercentage: '#f2970f',
-  valleyPercentage: '#96b633',
-  superValleyPercentage: '#c4dd8c',
+  peakPercentage: "#f2970f",
+  valleyPercentage: "#96b633",
+  superValleyPercentage: "#c4dd8c",
 }
 
 const DistributionByPeriod = (props) => {
@@ -30,9 +28,9 @@ const DistributionByPeriod = (props) => {
   const [isLoading, setIsLoading] = useState(true)
 
   const VALUES = {
-    peakPercentage: t('PICK'),
-    valleyPercentage: t('FLAT'),
-    superValleyPercentage: t('VALLEY'),
+    peakPercentage: t("PICK"),
+    valleyPercentage: t("FLAT"),
+    superValleyPercentage: t("VALLEY"),
   }
 
   useEffect(() => {
@@ -52,10 +50,10 @@ const DistributionByPeriod = (props) => {
       {isLoading ? (
         <Skeleton height={210} width="100%" />
       ) : !data || data?.error ? (
-        <NoDataMessage>{t('NO_DATA')}</NoDataMessage>
+        <NoDataMessage>{t("NO_DATA")}</NoDataMessage>
       ) : (
         <>
-          <Title>{t('DISTRIB_BY_PERIOD')}</Title>
+          <Title>{t("DISTRIB_BY_PERIOD")}</Title>
           <Container>
             <ChartWrapper>
               <DistributionPieChart colors={COLORS} data={data} />

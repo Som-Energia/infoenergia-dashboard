@@ -1,80 +1,81 @@
-import dayjs from 'dayjs'
-import i18n from '../i18n/i18n'
-import { getPeriod } from './timecurves'
-import isoWeek from 'dayjs/plugin/isoWeek'
-import weekday from 'dayjs/plugin/weekday'
+import dayjs from "dayjs"
+import isoWeek from "dayjs/plugin/isoWeek"
+import weekday from "dayjs/plugin/weekday"
+
+import i18n from "../i18n/i18n"
+import { getPeriod } from "./timecurves"
 
 export const capitalizeWord = (word) => {
   return word.charAt(0).toUpperCase() + word.slice(1)
 }
 
 export const formatNumber = (num) => {
-  return num.toLocaleString('es-ES')
+  return num.toLocaleString("es-ES")
 }
 
 export const formatDay = (weekDay) => {
   dayjs.extend(isoWeek)
-  return dayjs().isoWeekday(weekDay).format('dddd')
+  return dayjs().isoWeekday(weekDay).format("dddd")
 }
 
 export const formatDayHour = (day, hour) => {
   dayjs.extend(isoWeek)
-  return dayjs().hour(hour).isoWeekday(day).format('dddd HH')
+  return dayjs().hour(hour).isoWeekday(day).format("dddd HH")
 }
 
 export const formatkWh = (item) => {
-  return formatNumber(Math.round(item)) + ' kWh'
+  return formatNumber(Math.round(item)) + " kWh"
 }
 
 export const formatDecimal = (item, base = 100) =>
   formatNumber(Math.round((item + Number.EPSILON) * base) / base)
 
 export const formatkWhDecimal = (item, base = undefined) => {
-  return formatDecimal(item, base) + ' kWh'
+  return formatDecimal(item, base) + " kWh"
 }
 
 export const formatPerc = (item) => {
-  return Math.round(item) + '%'
+  return Math.round(item) + "%"
 }
 
 export const formatEuros = (item) => {
-  const value = item || '-'
-  return `${value}`.replace('.', ',')
+  const value = item || "-"
+  return `${value}`.replace(".", ",")
 }
 
 export const formatXAxis = (period, item) => {
   switch (period) {
-    case 'DAILY':
-      return dayjs(item).format('HH') + 'h'
-    case 'WEEKLY':
-      return dayjs(item).format('dddd')
-    case 'MONTHLY':
-      return dayjs(item).format('D')
+    case "DAILY":
+      return dayjs(item).format("HH") + "h"
+    case "WEEKLY":
+      return dayjs(item).format("dddd")
+    case "MONTHLY":
+      return dayjs(item).format("D")
     default:
-      return dayjs(item).format('MMMM')
+      return dayjs(item).format("MMMM")
   }
 }
 
-export const formatTooltipLabel = (period, value, type = 'barChart') => {
-  const formatWithHour = (value) => dayjs(value).format('DD/MM/YYYY HH') + 'h'
+export const formatTooltipLabel = (period, value, type = "barChart") => {
+  const formatWithHour = (value) => dayjs(value).format("DD/MM/YYYY HH") + "h"
 
   switch (period) {
-    case 'DAILY':
+    case "DAILY":
       return formatWithHour(value)
-    case 'WEEKLY':
-      return type === 'barChart'
-        ? dayjs(value).format('DD/MM/YYYY')
+    case "WEEKLY":
+      return type === "barChart"
+        ? dayjs(value).format("DD/MM/YYYY")
         : formatWithHour(value)
-    case 'MONTHLY':
-      return type === 'barChart'
-        ? dayjs(value).format('DD/MM/YYYY')
+    case "MONTHLY":
+      return type === "barChart"
+        ? dayjs(value).format("DD/MM/YYYY")
         : formatWithHour(value)
-    case 'YEARLY':
-      return type === 'barChart'
-        ? dayjs(value).format('MM/YYYY')
+    case "YEARLY":
+      return type === "barChart"
+        ? dayjs(value).format("MM/YYYY")
         : formatWithHour(value)
     default:
-      return dayjs(value).format('DD/MM/YYYY')
+      return dayjs(value).format("DD/MM/YYYY")
   }
 }
 
@@ -119,9 +120,9 @@ export const groupWeeklyData = (data, tariffTimetableId) => {
     const result = agregateDates(
       days,
       dayjs(firstDay)
-        .add(day - 1, 'd')
+        .add(day - 1, "d")
         .valueOf(),
-      tariffTimetableId
+      tariffTimetableId,
     )
     weekly.push(result)
   }
@@ -144,9 +145,9 @@ export const groupMonthlyData = (data, tariffTimetableId) => {
     const result = agregateDates(
       days,
       dayjs(firstDay)
-        .add(day - 1, 'd')
+        .add(day - 1, "d")
         .valueOf(),
-      tariffTimetableId
+      tariffTimetableId,
     )
 
     month.push(result)
@@ -155,18 +156,18 @@ export const groupMonthlyData = (data, tariffTimetableId) => {
 }
 
 export const getBaseKeys = (tariffTimetableId, order = 0) => {
-  if (tariffTimetableId === 'Taula_Peatges_20') {
+  if (tariffTimetableId === "Taula_Peatges_20") {
     return order === 0
       ? {
-        VALLEY: 0,
-        PICK: 0,
-        FLAT: 0,
-      }
+          VALLEY: 0,
+          PICK: 0,
+          FLAT: 0,
+        }
       : {
-        PICK: 0,
-        FLAT: 0,
-        VALLEY: 0,
-      }
+          PICK: 0,
+          FLAT: 0,
+          VALLEY: 0,
+        }
   } else {
     return {
       P1: 0,
@@ -204,7 +205,7 @@ export const groupYearlyData = (data, tariffTimetableId) => {
   const result = {}
 
   for (let i = 0; i < data.length; i++) {
-    const current = dayjs(data[i].date).startOf('month').valueOf()
+    const current = dayjs(data[i].date).startOf("month").valueOf()
     if (!result[current]?.value) {
       result[current] = {
         date: current,
@@ -223,7 +224,7 @@ export const groupYearlyData = (data, tariffTimetableId) => {
 export const groupYearlyDataByDay = (data) => {
   const result = {}
   for (let i = 0; i < data.length; i++) {
-    const current = dayjs(data[i].date).startOf('day').valueOf()
+    const current = dayjs(data[i].date).startOf("day").valueOf()
     if (!result[current]?.value) {
       result[current] = { date: current, value: 0 }
     }
@@ -236,44 +237,44 @@ dayjs.extend(weekday)
 
 export const domainFromData = (data, period) => {
   const firstDate = dayjs(data?.[0]?.date)
-  if (period === 'WEEKLY') {
+  if (period === "WEEKLY") {
     return [firstDate.weekday(0).valueOf(), firstDate.weekday(7).valueOf()]
   }
 
-  if (period === 'MONTHLY') {
+  if (period === "MONTHLY") {
     return [
       firstDate.date(1).valueOf(),
-      firstDate.date(1).add(1, 'month').valueOf(),
+      firstDate.date(1).add(1, "month").valueOf(),
     ]
   }
 
-  if (period === 'YEARLY') {
+  if (period === "YEARLY") {
     return [
       firstDate.month(0).date(1).valueOf(),
-      firstDate.month(0).date(1).add(1, 'year').valueOf(),
+      firstDate.month(0).date(1).add(1, "year").valueOf(),
     ]
   }
 
-  return ['auto', 'auto']
+  return ["auto", "auto"]
 }
 
 export const ticksFromData = (data, period) => {
   const firstDate = dayjs(data?.[0]?.date)
-  if (period === 'WEEKLY') {
+  if (period === "WEEKLY") {
     return [...Array(7).keys()].map((item) => {
       const day = firstDate.weekday(item).valueOf()
       return day
     })
   }
 
-  if (period === 'MONTHLY') {
+  if (period === "MONTHLY") {
     return [...Array(firstDate.daysInMonth()).keys()].map((item) => {
       const day = firstDate.date(item + 1)
       return day.valueOf()
     })
   }
 
-  if (period === 'YEARLY') {
+  if (period === "YEARLY") {
     return [...Array(12).keys()].map((item) => {
       const day = firstDate.month(item)
       return day.valueOf()
@@ -285,23 +286,23 @@ export const groupDataByPeriod = (
   data,
   period,
   type,
-  tariffTimetableId = 'Taula_Peatges_20'
+  tariffTimetableId = "Taula_Peatges_20",
 ) => {
   switch (period) {
-    case 'WEEKLY':
-      return type === 'barChart'
+    case "WEEKLY":
+      return type === "barChart"
         ? groupWeeklyData(data, tariffTimetableId)
         : data
-    case 'MONTHLY':
-      return type === 'barChart'
+    case "MONTHLY":
+      return type === "barChart"
         ? groupMonthlyData(data, tariffTimetableId)
         : data
-    case 'YEARLY':
-      return type === 'barChart'
+    case "YEARLY":
+      return type === "barChart"
         ? groupYearlyData(data, tariffTimetableId)
         : groupYearlyDataByDay(data)
     default:
-      return type === 'barChart'
+      return type === "barChart"
         ? groupDailyData(data, tariffTimetableId)
         : data
   }
@@ -310,15 +311,15 @@ export const groupDataByPeriod = (
 export const mergeData = (arrData1 = [], arrData2 = []) => {
   return arrData1 > arrData2
     ? arrData1.map((item, index) => ({
-      date: item.date,
-      value: item.value,
-      compValue: arrData2[index]?.value,
-    }))
+        date: item.date,
+        value: item.value,
+        compValue: arrData2[index]?.value,
+      }))
     : arrData2.map((item, index) => ({
-      date: item.date,
-      value: arrData1[index]?.value,
-      compValue: item.value,
-    }))
+        date: item.date,
+        value: arrData1[index]?.value,
+        compValue: item.value,
+      }))
 }
 
 export const completeYearData = (origData) => {
@@ -334,33 +335,33 @@ export const completeYearData = (origData) => {
   const nextYear = new Date(
     new Date(currYearLast.getTime()).getFullYear() + 1,
     0,
-    1
+    1,
   )
   const lastYear = new Date(
     new Date(currYearFirst.getTime()).getFullYear() - 1,
     12,
-    0
+    0,
   )
 
   const diffDaysNext = Math.round(
-    Math.abs((lastDate.getTime() - nextYear.getTime()) / oneDay)
+    Math.abs((lastDate.getTime() - nextYear.getTime()) / oneDay),
   )
   const diffDaysLast = Math.round(
-    Math.abs((lastYear.getTime() - firstDate.getTime()) / oneDay)
+    Math.abs((lastYear.getTime() - firstDate.getTime()) / oneDay),
   )
 
   for (let i = diffDaysLast; i > 0; i--) {
-    const date = dayjs(lastYear).add(i, 'd')
+    const date = dayjs(lastYear).add(i, "d")
     for (let j = 0; j < 24; j++) {
-      const dateWithHour = dayjs(date).add(j, 'h')
+      const dateWithHour = dayjs(date).add(j, "h")
       data.unshift({ date: dateWithHour.valueOf(), value: null })
     }
   }
 
   for (let i = 1; i < diffDaysNext; i++) {
-    const date = dayjs(lastDate).add(i, 'd')
+    const date = dayjs(lastDate).add(i, "d")
     for (let j = 0; j < 24; j++) {
-      const dateWithHour = dayjs(date).add(j, 'h')
+      const dateWithHour = dayjs(date).add(j, "h")
       data[data.length] = { date: dateWithHour.valueOf(), value: null }
     }
   }
@@ -369,27 +370,27 @@ export const completeYearData = (origData) => {
 }
 
 export const period2ColorKwhBag = {
-  VALLEY: '#76562D',
-  FLAT: '#F1A10C',
-  PICK: '#E45356',
-  P1: '#E45356',
-  P2: '#F1A10C',
-  P3: '#76562D',
-  P4: '#58B9C0',
-  P5: '#ED95A1',
-  P6: '#706E6F',
+  VALLEY: "#76562D",
+  FLAT: "#F1A10C",
+  PICK: "#E45356",
+  P1: "#E45356",
+  P2: "#F1A10C",
+  P3: "#76562D",
+  P4: "#58B9C0",
+  P5: "#ED95A1",
+  P6: "#706E6F",
 }
 
 export const period2Color = {
-  VALLEY: '#c4dd8c',
-  FLAT: '#96b633',
-  PICK: '#f2970f',
-  P1: '#E45356',
-  P2: '#F1A10C',
-  P3: '#76562D',
-  P4: '#58B9C0',
-  P5: '#ED95A1',
-  P6: '#706E6F',
+  VALLEY: "#c4dd8c",
+  FLAT: "#96b633",
+  PICK: "#f2970f",
+  P1: "#E45356",
+  P2: "#F1A10C",
+  P3: "#76562D",
+  P4: "#58B9C0",
+  P5: "#ED95A1",
+  P6: "#706E6F",
 }
 
 export const colorPeriod = (date) => {
@@ -399,19 +400,19 @@ export const colorPeriod = (date) => {
 
 export const CnmcformatData = ({ data, cups }) => {
   const formatedHeaders = [
-    { label: 'CUPS', key: 'cups' },
-    { label: 'Fecha', key: 'date' },
-    { label: 'Hora', key: 'time' },
-    { label: 'Consumo_kWh', key: 'value' },
-    { label: 'Metodo_obtencion', key: 'state' },
+    { label: "CUPS", key: "cups" },
+    { label: "Fecha", key: "date" },
+    { label: "Hora", key: "time" },
+    { label: "Consumo_kWh", key: "value" },
+    { label: "Metodo_obtencion", key: "state" },
   ]
 
   const formatedData = data.map(({ date, value }) => ({
     cups,
-    date: dayjs(date).format('DD/MM/YYYY'),
-    time: dayjs(date).format('H'),
-    value: (parseFloat(value) / 1000).toString().replace('.', ','),
-    state: 'R',
+    date: dayjs(date).format("DD/MM/YYYY"),
+    time: dayjs(date).format("H"),
+    value: (parseFloat(value) / 1000).toString().replace(".", ","),
+    state: "R",
   }))
 
   return [formatedHeaders, formatedData]
@@ -447,7 +448,7 @@ export const CsvformatData = (data) => {
 }
 
 export const kwhRecordToCsvformatData = (data, t) => {
-  const columns = [t('DATE'), t('HOUR'), t('PRODUCTION_KWH')]
+  const columns = [t("DATE"), t("HOUR"), t("PRODUCTION_KWH")]
 
   const formatedHeaders = columns.map((element) => ({
     label: element,
@@ -455,7 +456,7 @@ export const kwhRecordToCsvformatData = (data, t) => {
   }))
 
   const formatedData = data.map((element) => {
-    const dataFormated = dayjs(element.date).format('MM/YYYY')
+    const dataFormated = dayjs(element.date).format("MM/YYYY")
     const hour = dayjs(element.date).hour()
 
     const row = {}
@@ -471,60 +472,57 @@ export const kwhRecordToCsvformatData = (data, t) => {
 
 export const periodUnit = (period) => {
   switch (period) {
-    case 'DAILY':
-      return 'd'
-    case 'WEEKLY':
-      return 'w'
-    case 'MONTHLY':
-      return 'M'
-    case 'YEARLY':
-      return 'y'
+    case "DAILY":
+      return "d"
+    case "WEEKLY":
+      return "w"
+    case "MONTHLY":
+      return "M"
+    case "YEARLY":
+      return "y"
     default:
-      return ''
+      return ""
   }
 }
 
 export const labelTotalPeriod = (period) => {
   switch (period) {
-    case 'DAILY':
-      return 'TOTAL_DAILY'
-    case 'WEEKLY':
-      return 'TOTAL_WEEKLY'
-    case 'MONTHLY':
-      return 'TOTAL_MONTHLY'
-    case 'YEARLY':
-      return 'TOTAL_YEARLY'
+    case "DAILY":
+      return "TOTAL_DAILY"
+    case "WEEKLY":
+      return "TOTAL_WEEKLY"
+    case "MONTHLY":
+      return "TOTAL_MONTHLY"
+    case "YEARLY":
+      return "TOTAL_YEARLY"
     default:
-      return ''
+      return ""
   }
 }
 
 export const formatOrdinals = (lang, number) => {
   const catSuffix = {
-    1: 'r',
-    2: 'n',
-    3: 'r',
-    4: 't',
-    other: 'è',
+    1: "r",
+    2: "n",
+    3: "r",
+    4: "t",
+    other: "è",
   }
 
-  if (lang === 'ca') {
-    const key = number >= 5 ? 'other' : number
+  if (lang === "ca") {
+    const key = number >= 5 ? "other" : number
     const suffix = catSuffix[key]
     return `${number}${suffix}`
   } else {
-    return `${number}${'º'}`
+    return `${number}${"º"}`
   }
 }
 
-export const getDataForTable = (
-  assignmentsConsumption,
-  data
-) => {
+export const getDataForTable = (assignmentsConsumption, data) => {
   const dataT = {}
 
-  const dataKeys3 = ['P3', 'P2', 'P1']
-  const dataKeys6 = ['P6', 'P5', 'P4', 'P3', 'P2', 'P1']
+  const dataKeys3 = ["P3", "P2", "P1"]
+  const dataKeys6 = ["P6", "P5", "P4", "P3", "P2", "P1"]
 
   /*
     data object contains an array of:
@@ -546,23 +544,15 @@ export const getDataForTable = (
   dataT.dataKeys = maxLength < 6 ? dataKeys3 : dataKeys6
 
   function getRowKwh(kwhs) {
-
-    const rowKwh = kwhs
-      ? kwhs.reduce(
-        (accumulated, currentValue) => accumulated + currentValue,
-        0
-      )
-      : 0
-    return rowKwh
+    return (kwhs || []).reduce((acc, current) => acc + current, 0)
   }
-
 
   function formattedRow(rowData) {
     return {
-      id: rowData.contractNumber + ' - ' + rowData.contractAddress,
+      id: rowData.contractNumber + " - " + rowData.contractAddress,
       priority: rowData.priority,
       ...rowData.kWhs,
-      total: rowData.totalKWh + ' kWh',
+      total: rowData.totalKWh + " kWh",
     }
   }
 
@@ -573,17 +563,17 @@ export const getDataForTable = (
         if (!emptyData[id]) {
           emptyData[id] = {}
         }
-        emptyData[id]['P' + (i + 1)] = '-'
+        emptyData[id]["P" + (i + 1)] = "-"
       }
     }
     return emptyData
   }
 
   function comparePriorities(a, b) {
-    if (a.priority === '-') {
+    if (a.priority === "-") {
       return 1
     }
-    if (b.priority === '-' || (a.priority < b.priority)) {
+    if (b.priority === "-" || a.priority < b.priority) {
       return -1
     }
     if (a.priority > b.priority) {
@@ -592,10 +582,9 @@ export const getDataForTable = (
     return 0
   }
 
-
   dataT.rows = Object.keys(data).map((dataKey) => {
-
-    const { number, address, ...periods } = data[dataKey]
+    // Destructure to isolate period entries, discarding non-period fields
+    const { number: _number, address: _address, ...periods } = data[dataKey]
     const kwhs = Object.values(periods)
 
     const rowKwh = getRowKwh(kwhs)
@@ -605,35 +594,40 @@ export const getDataForTable = (
 
     const dataTmpCopy = JSON.parse(JSON.stringify(data[dataKey]))
     Object.keys(dataTmpCopy).forEach((id) => {
-      dataTmpCopy[id] = dataTmpCopy[id] + ' kWh'
+      dataTmpCopy[id] = dataTmpCopy[id] + " kWh"
     })
 
     const tmpData = { ...dataTmpCopy, ...emptyData[dataKey] }
     const newData = {}
     dataT.dataKeys.forEach((element) => {
-      newData[element] = tmpData[element] || '-'
+      newData[element] = tmpData[element] || "-"
     })
 
-    let contractAddress = ''
-    let priority = ''
-    let contractNumber = ''
+    let contractAddress = ""
+    let priority = ""
+    let contractNumber = ""
 
-    const assignment = assignmentsConsumption.find(obj => {
-      const contractNumber = obj.contract.split('-')[1]
+    const assignment = assignmentsConsumption.find((obj) => {
+      const contractNumber = obj.contract.split("-")[1]
       return parseInt(contractNumber) === parseInt(dataKey)
     })
     if (assignment) {
-      contractNumber = assignment?.contract.split('-')[1]
+      contractNumber = assignment?.contract.split("-")[1]
       contractAddress = assignment?.contract_address
       priority = assignment.priority
-    }
-    else {
+    } else {
       contractAddress = data[dataKey].address
       contractNumber = dataKey
-      priority = '-'
+      priority = "-"
     }
 
-    return formattedRow({ contractAddress: contractAddress, contractNumber: contractNumber, priority: priority, kWhs: newData, totalKWh: rowKwh })
+    return formattedRow({
+      contractAddress: contractAddress,
+      contractNumber: contractNumber,
+      priority: priority,
+      kWhs: newData,
+      totalKWh: rowKwh,
+    })
   })
 
   dataT.rows = dataT.rows.sort(comparePriorities)
@@ -645,9 +639,9 @@ export const getDataForTable = (
 export function generationKwhRecordData(khwRecordData, periods, t) {
   const groupData = groupDataByPeriod(
     khwRecordData,
-    'YEARLY',
-    'barChart',
-    periods
+    "YEARLY",
+    "barChart",
+    periods,
   )
 
   const keys = getBaseKeys(periods, 1)
@@ -671,8 +665,8 @@ export function generationKwhRecordData(khwRecordData, periods, t) {
 }
 
 export function getCodeToText(code) {
-  if (code === 'VALLEY' || code === 'PICK' || code === 'FLAT') {
-    code = code + '_P'
+  if (code === "VALLEY" || code === "PICK" || code === "FLAT") {
+    code = code + "_P"
   }
   return code
 }

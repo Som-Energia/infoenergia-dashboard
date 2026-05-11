@@ -1,17 +1,16 @@
-import React, { useState, useEffect } from 'react'
-import styled from 'styled-components'
-import { useTranslation } from 'react-i18next'
+import React, { useEffect, useState } from "react"
+import { useTranslation } from "react-i18next"
 
-import Skeleton from '@mui/material/Skeleton'
+import Skeleton from "@mui/material/Skeleton"
 
-import TipicalWeeklyProfileChart from '../components/TipicalWeeklyProfile/TipicalWeeklyProfileChart'
-import Counter from '../components/Counter'
-import LastUpdate from '../components/LastUpdate'
+import styled from "styled-components"
 
-import { ScrollWrapper, ScrollContainer } from '../components/Utils'
-import { Widget } from './TipicalDailyProfile/DistributionCharts'
-
-import { getWeeklyProfile } from '../services/api'
+import Counter from "../components/Counter"
+import LastUpdate from "../components/LastUpdate"
+import TipicalWeeklyProfileChart from "../components/TipicalWeeklyProfile/TipicalWeeklyProfileChart"
+import { ScrollContainer, ScrollWrapper } from "../components/Utils"
+import { getWeeklyProfile } from "../services/api"
+import { Widget } from "./TipicalDailyProfile/DistributionCharts"
 
 const TipicalWeeklyProfile = (props) => {
   const { contract, token } = props
@@ -36,9 +35,9 @@ const TipicalWeeklyProfile = (props) => {
       <Widget>
         <CounterWrapper>
           <Counter
-            title={t('WEEKLY_AVERAGE')}
-            value={data?.value || '-'}
-            date={t('LAST_12_MONTHS')}
+            title={t("WEEKLY_AVERAGE")}
+            value={data?.value || "-"}
+            date={t("LAST_12_MONTHS")}
           />
         </CounterWrapper>
         <ScrollContainer>
@@ -56,7 +55,7 @@ const TipicalWeeklyProfile = (props) => {
               ) : data?.errors ? (
                 <NoDataMessage>{t(data.errors)}</NoDataMessage>
               ) : (
-                <NoDataMessage>{t('NO_DATA')}</NoDataMessage>
+                <NoDataMessage>{t("NO_DATA")}</NoDataMessage>
               )}
             </ChartWrapper>
           </ScrollWrapper>
@@ -64,25 +63,23 @@ const TipicalWeeklyProfile = (props) => {
         <WeeklyMediumWrapper>
           <DailyMediumWrapper>
             <MediumValue>
-              {data?.weekValue || '-'} <span>kWh</span>
+              {data?.weekValue || "-"} <span>kWh</span>
             </MediumValue>
             <span
               className="text"
               dangerouslySetInnerHTML={{
-                __html: t('AVG_USE_BETWEEN_WEEKDAY'),
-              }}
-            ></span>
+                __html: t("AVG_USE_BETWEEN_WEEKDAY"),
+              }}></span>
           </DailyMediumWrapper>
           <WeekendMediumWrapper>
             <MediumValue>
-              {data?.weekendValue || '-'} <span>kWh</span>
+              {data?.weekendValue || "-"} <span>kWh</span>
             </MediumValue>
             <span
               className="text"
               dangerouslySetInnerHTML={{
-                __html: t('AVG_USE_WEEKEND_DAY'),
-              }}
-            ></span>
+                __html: t("AVG_USE_WEEKEND_DAY"),
+              }}></span>
           </WeekendMediumWrapper>
         </WeeklyMediumWrapper>
       </Widget>

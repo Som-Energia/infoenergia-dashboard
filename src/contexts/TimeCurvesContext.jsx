@@ -1,6 +1,7 @@
-import { createContext, useState, useContext, useEffect } from 'react'
-import {ContractContext} from  '../containers/ContractSelectorWrapper'
-import { getTimeCurves } from '../services/timecurves'
+import { createContext, useContext, useEffect, useState } from "react"
+
+import { ContractContext } from "../containers/ContractSelectorWrapper"
+import { getTimeCurves } from "../services/timecurves"
 
 const TimeCurvesContext = createContext({
   timeCurves: [],
@@ -13,7 +14,7 @@ export const TimeCurvesContextProvider = (props) => {
   const [timeCurves, setTimeCurves] = useState([])
   const [filteredTimeCurves, setFilteredTimeCurves] = useState([])
   const contract = useContext(ContractContext)
-  const {token, now} = props
+  const { token, now } = props
 
   useEffect(
     function () {
@@ -24,17 +25,16 @@ export const TimeCurvesContextProvider = (props) => {
             return getTimeCurves({
               token,
               cups: contract.cups,
-              currentMonth: now.subtract(yearsago, 'year').format('YYYYMM'),
+              currentMonth: now.subtract(yearsago, "year").format("YYYYMM"),
             })
-          })
+          }),
         )
         setTimeCurves(responses.flat())
       }
       requestData()
     },
-    [token, contract.cups]
+    [token, contract.cups],
   )
-
 
   return (
     <TimeCurvesContext.Provider
@@ -43,8 +43,7 @@ export const TimeCurvesContextProvider = (props) => {
         setTimeCurves,
         filteredTimeCurves,
         setFilteredTimeCurves,
-      }}
-    >
+      }}>
       {props.children}
     </TimeCurvesContext.Provider>
   )

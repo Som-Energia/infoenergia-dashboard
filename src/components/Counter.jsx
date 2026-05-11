@@ -1,5 +1,6 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from "react"
+
+import styled from "styled-components"
 
 const CounterWrapper = styled.div`
   display: flex;
@@ -8,12 +9,12 @@ const CounterWrapper = styled.div`
 
 const CounterBox = styled.div`
   border-color: ${(props) =>
-    props.color === 'primary' ? '#96b633' : '#f2970f'};
+    props.color === "primary" ? "#96b633" : "#f2970f"};
   border-width: 0px;
   border-radius: 8px;
   border-style: solid;
   padding: 4px 8px;
-  color: ${(props) => (props.color === 'primary' ? '#96b633' : '#f2970f')};
+  color: ${(props) => (props.color === "primary" ? "#96b633" : "#f2970f")};
   display: flex;
   align-items: center;
 `
@@ -43,13 +44,13 @@ const CounterDetail = styled.div`
 `
 
 function Counter(props) {
-  const { value, title, date = '', color = 'primary' } = props
-  const dateLabel = date === '' ? '' : date
+  const { value, title, date = "", color = "primary" } = props
+  const dateLabel = date === "" ? "" : date
   return (
     <CounterWrapper>
       <CounterBox color={color}>
         <CounterValue>
-          <span>{value !== '-' ? value : '-'}</span>
+          <span>{value !== "-" ? value : "-"}</span>
           <span> kWh</span>
         </CounterValue>
         <CounterDetail>

@@ -1,30 +1,27 @@
-import React, { useState, useEffect } from 'react'
-import styled from 'styled-components'
-import { useTranslation } from 'react-i18next'
+import React, { useEffect, useState } from "react"
+import { useTranslation } from "react-i18next"
 
-import Grid from '@mui/material/Grid'
-import Skeleton from '@mui/material/Skeleton'
-import Typography from '@mui/material/Typography'
+import ErrorOutlineIcon from "@mui/icons-material/Error"
+import Grid from "@mui/material/Grid"
+import Skeleton from "@mui/material/Skeleton"
+import Typography from "@mui/material/Typography"
 
-import TipicalDailyProfileChart from '../components/TipicalDailyProfile/TipicalDailyProfileChart'
-import Counter from '../components/Counter'
-import LastUpdate from '../components/LastUpdate'
+import styled from "styled-components"
 
-import DistributionByPeriod from './TipicalDailyProfile/DistributionByPeriod'
-import DistributionByUserType from './TipicalDailyProfile/DistributionByUserType'
-
-import { ScrollWrapper, ScrollContainer } from '../components/Utils'
-import { Widget } from './TipicalDailyProfile/DistributionCharts'
-
-import { getDailyProfile } from '../services/api'
-
-import ErrorOutlineIcon from '@mui/icons-material/Error'
+import Counter from "../components/Counter"
+import LastUpdate from "../components/LastUpdate"
+import TipicalDailyProfileChart from "../components/TipicalDailyProfile/TipicalDailyProfileChart"
+import { ScrollContainer, ScrollWrapper } from "../components/Utils"
+import { getDailyProfile } from "../services/api"
+import DistributionByPeriod from "./TipicalDailyProfile/DistributionByPeriod"
+import DistributionByUserType from "./TipicalDailyProfile/DistributionByUserType"
+import { Widget } from "./TipicalDailyProfile/DistributionCharts"
 
 const sxStyles = {
-  marginTop: '4rem',
-  fontSize: '1rem',
-  textAlign: 'center',
-  color: 'primary',
+  marginTop: "4rem",
+  fontSize: "1rem",
+  textAlign: "center",
+  color: "primary",
 }
 
 function TipicalDailyProfile(props) {
@@ -49,16 +46,16 @@ function TipicalDailyProfile(props) {
   return (
     <>
       <Widget>
-        {tariff !== '2.0TD' ? (
-          <Typography sx={sxStyles}>{t('ONLY_FOR_20TD')}</Typography>
+        {tariff !== "2.0TD" ? (
+          <Typography sx={sxStyles}>{t("ONLY_FOR_20TD")}</Typography>
         ) : (
           <>
             <Grid item xs={12}>
               <CounterWrapper>
                 <Counter
-                  title={t('DAILY_AVERAGE')}
-                  value={data?.dailyAvg?.value || '-'}
-                  date={t('LAST_12_MONTHS')}
+                  title={t("DAILY_AVERAGE")}
+                  value={data?.dailyAvg?.value || "-"}
+                  date={t("LAST_12_MONTHS")}
                 />
               </CounterWrapper>
             </Grid>
@@ -75,9 +72,9 @@ function TipicalDailyProfile(props) {
                 </ScrollContainer>
               ) : data?.errors ? (
                 // <NoDataMessage>{t(data.errors)}</NoDataMessage>
-                <NoDataMessage>{t('NO_DATA')}</NoDataMessage>
+                <NoDataMessage>{t("NO_DATA")}</NoDataMessage>
               ) : (
-                <NoDataMessage>{t('NO_DATA')}</NoDataMessage>
+                <NoDataMessage>{t("NO_DATA")}</NoDataMessage>
               )}
             </Grid>
 
@@ -91,9 +88,8 @@ function TipicalDailyProfile(props) {
                   </div>
                   <div
                     dangerouslySetInnerHTML={{
-                      __html: t('CONSUME_ADVICE'),
-                    }}
-                  ></div>
+                      __html: t("CONSUME_ADVICE"),
+                    }}></div>
                 </Message>
               </Grid>
             </Grid>
@@ -106,8 +102,8 @@ function TipicalDailyProfile(props) {
           <DistributionByUserType {...props} />
         </Widget>
         <Widget>
-          {tariff !== '2.0TD' ? (
-            <Typography sx={sxStyles}>{t('ONLY_FOR_20TD')}</Typography>
+          {tariff !== "2.0TD" ? (
+            <Typography sx={sxStyles}>{t("ONLY_FOR_20TD")}</Typography>
           ) : (
             <>
               <DistributionByPeriod {...props} />
