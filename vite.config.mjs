@@ -65,6 +65,25 @@ export default createAppConfig((mode) => {
         },
       },
     },
+    resolve: {
+      dedupe: [
+        "react",
+        "react-dom",
+        "@mui/material",
+        "@mui/x-date-pickers",
+        "@mui/system",
+        "@mui/base",
+        "styled-components",
+        "dayjs",
+      ],
+    },
+    optimizeDeps: {
+      include: [
+        "@mui/material",
+        "@mui/x-date-pickers",
+        "@somenergia/somenergia-ui",
+      ],
+    },
     test: {
       setupFiles: './src/tests/setupTests.js',
       // Vitest MUI's package pre-bundle avoid internal module resolution problems

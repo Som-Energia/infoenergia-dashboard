@@ -1,6 +1,5 @@
 import React, { useEffect, useContext } from 'react'
-import makeStyles from '@mui/styles/makeStyles';
-import {Box, Typography, Grid, Tab, Tabs} from '@mui/material'
+import { Box, Typography, Grid, Tab, Tabs } from '@mui/material'
 import Use from '../containers/Generation/Use'
 import KwhBag from '../containers/Generation/KwhBag'
 import Record from '../containers/Generation/Record'
@@ -13,28 +12,14 @@ import GenerationUseContext from '../contexts/GenerationUseContext'
 import ExtraControls from '../components/ExtraControls/ExtraControlsHeader'
 import dayjs from 'dayjs'
 
-const useStyles = makeStyles((theme) => ({
-  tab: {
-    color: 'primary',
-  },
+const sxStyles = {
   divRoot: {
     display: 'flex',
     justifyContent: 'space-between',
     padding: '20px',
-    minHeight: '95px' // prevents change height with/out DownloadButton
+    minHeight: '95px', // prevents change height with/out DownloadButton
   },
-  root: {
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.paper,
-  },
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120,
-  },
-  selectEmpty: {
-    marginTop: theme.spacing(2),
-  },
-}))
+}
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props
@@ -96,7 +81,7 @@ function ProductionConsumption(props) {
     loadingUse,
     loadingRecord,
     YEAR,
-    kWhRecord
+    kWhRecord,
   } = useContext(GenerationUseContext)
 
   useEffect(() => {
@@ -104,7 +89,6 @@ function ProductionConsumption(props) {
   }, [language, i18n])
 
   const [value, setValue] = React.useState(0)
-  const classes = useStyles()
   const handleChange = (_event, newValue) => {
     setValue(newValue)
   }
@@ -160,7 +144,7 @@ function ProductionConsumption(props) {
 
   return (
     <Grid>
-      <Grid container className={classes.divRoot}>
+      <Grid container sx={sxStyles.divRoot}>
         <Tabs
           value={value}
           textColor="primary"

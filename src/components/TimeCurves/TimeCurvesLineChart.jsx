@@ -7,14 +7,16 @@ const ChartWrapper = styled.div`
   margin-top: 16px;
 `
 
-function TimeCurvesLineChart({ period, data = [], compareData = [], lang = 'es' }) {
+function TimeCurvesLineChart({ period, data = [], compareData = [], lang = 'es', displaced }) {
   return (
     <ChartWrapper>
       <CurveChart
         data={data}
         period={period}
         compareData={compareData}
-        lang={lang}></CurveChart>
+        lang={lang}
+        displaced={displaced}
+      ></CurveChart>
     </ChartWrapper>
   )
 }

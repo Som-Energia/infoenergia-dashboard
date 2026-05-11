@@ -10,7 +10,9 @@ function CustomBarChart({ data, period, legend = false }) {
           data={data}
           period={period}
           legend={legend}
-          showTooltipKeys={true}>
+          showTooltipKeys={true}
+          displaced={true}
+          scale={'auto'}>
         </SummaryPeriodChart>
       </ResponsiveContainer>
     </div>

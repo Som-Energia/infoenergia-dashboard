@@ -9,12 +9,11 @@ import {
   TableCell,
   Typography,
   Grid,
-  Paper
+  Paper,
 } from '@mui/material'
-import makeStyles from '@mui/styles/makeStyles';
 import {
   groupYearlyDataAccumulation,
-  period2ColorKwhBag
+  period2ColorKwhBag,
 } from '../../services/utils'
 import GenerationUseContext from '../../contexts/GenerationUseContext'
 import { useTranslation } from 'react-i18next'
@@ -26,33 +25,9 @@ function createData(periodes, kwh) {
   return { periodes, kwh }
 }
 
-const useStyles = makeStyles((theme) => ({
-  tab: {
-    color: 'primary',
-  },
-  divRoot: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    padding: '20px',
-  },
-  root: {
-    flexGrow: 1,
-    backgroundColor: theme.palette?.background?.paper,
-  },
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120,
-  },
-  selectEmpty: {
-    marginTop: theme.spacing(2),
-  }
-}
-))
-
 export default function KwhBag(props) {
   const { token, lastInvoiceDatePriorityContract } = props
-  const { kWhRemaining, loadingRemain } =
-    useContext(GenerationUseContext)
+  const { kWhRemaining, loadingRemain } = useContext(GenerationUseContext)
   const [periods, setPeriods] = useState('Taula_Peatges_20')
   const [date, setDate] = useState(lastInvoiceDatePriorityContract)
   const { t } = useTranslation()
@@ -60,16 +35,15 @@ export default function KwhBag(props) {
   const handleChange = (event) => {
     setPeriods(event.target.value)
   }
-  const classes = useStyles()
 
   const groupedData = useMemo(() => {
     const groupData = groupYearlyDataAccumulation(kWhRemaining, periods)
     delete groupData.value
     const data = { periods: {}, fills: {} }
     const groupDataKeys = Object.keys(groupData)
-    const is3Period = groupDataKeys.length === 3;
+    const is3Period = groupDataKeys.length === 3
     groupDataKeys.forEach((element) => {
-      const suffix = is3Period ? '_P' : '';
+      const suffix = is3Period ? '_P' : ''
       data.periods[t(element + suffix)] = groupData[element]
       data.fills[t(element + suffix)] = period2ColorKwhBag[element]
     })
@@ -82,7 +56,7 @@ export default function KwhBag(props) {
       Object.keys(groupedData.periods).map((element) => {
         return createData(t(element), groupedData.periods[element])
       }),
-    [groupedData]
+    [groupedData],
   )
 
   const getDate = async () => {
@@ -148,7 +122,7 @@ export default function KwhBag(props) {
             </Grid>
             <Grid item xs={12} sm={5}>
               <TableContainer component={Paper}>
-                <Table className={classes.table} aria-label="simple table">
+                <Table aria-label="simple table">
                   <TableHead>
                     <TableRow>
                       <TableCell>
