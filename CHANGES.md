@@ -1,5 +1,10 @@
 # Change Log
 
+## 3.0.2 2026-05-12
+
+- Use unified eslint and prettier configurations
+- Add npm scripts to lint, format and show todos
+
 ## 3.0.1 2026-05-06
 
 - FIX: use displace and scale parameters
