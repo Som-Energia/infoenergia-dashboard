@@ -1,5 +1,10 @@
 # Change Log
 
+## 3.0.3 2026-05-19
+
+- Update somenergia-ui version
+- Update frontend-config version
+
 ## 3.0.2 2026-05-12
 
 - Use unified eslint and prettier configurations
