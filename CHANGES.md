@@ -1,5 +1,10 @@
 # Change Log
 
+## 3.0.4 2026-05-19
+
+- Fix build error with mode "ov"
+- Fix fonttype removing Roboto reference from App.css
+
 ## 3.0.3 2026-05-19
 
 - Update somenergia-ui version
