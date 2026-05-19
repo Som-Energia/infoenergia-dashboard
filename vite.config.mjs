@@ -6,9 +6,9 @@ import {
   createManualChunks,
 } from "@somenergia/frontend-config/vite"
 
-export default createAppConfig((mode) => {
+export default createAppConfig((configEnv) => {
   const ovOptions =
-    mode === "ov"
+    configEnv.mode === "ov"
       ? {
           entryFileNames: "js/main.js",
           chunkFileNames: (fileInfo) => {
