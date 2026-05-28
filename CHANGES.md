@@ -1,6 +1,6 @@
 # Change Log
 
-## 3.0.5 2026-05-22
+## unreleased
 
 - REF: improve deploy.sh installing a fresh dependencies
 - Update frontend-config version
