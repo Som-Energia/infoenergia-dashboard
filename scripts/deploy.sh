@@ -77,6 +77,8 @@ if [ "$1" == "ovtest" ]; then
 fi
 
 function build() {
+  log_message "INFO" "Clean install dependencies $build"
+  npm ci
   log_message "INFO" "Building project $build"
   npm run $build
 
