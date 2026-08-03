@@ -103,7 +103,10 @@ export const agregateDates = (dates, agregatedDate, tariffTimetableId) => {
   }
 
   dates.forEach((item) => {
-    const period = getPeriod(item?.date, tariffTimetableId)
+    const period = getPeriod(
+      dayjs(item?.date).subtract(1, "hour"),
+      tariffTimetableId,
+    )
     result[period] += item?.value
     result.value += item?.value
   })
@@ -214,7 +217,10 @@ export const groupYearlyData = (data, tariffTimetableId) => {
       }
     }
 
-    const period = getPeriod(data[i].date, tariffTimetableId)
+    const period = getPeriod(
+      dayjs(data[i].date).subtract(1, "hour"),
+      tariffTimetableId,
+    )
     result[current][period] += data[i].value
     result[current].value += data[i].value
   }
