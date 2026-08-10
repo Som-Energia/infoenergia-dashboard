@@ -1,9 +1,10 @@
 # Change Log
 
-## unreleased
+## 3.0.5 2026-08-10
 
 - REF: improve deploy.sh installing a fresh dependencies
 - Update frontend-config version
+- Fix color bar to match hoover description.
 
 ## 3.0.4 2026-05-19
 
