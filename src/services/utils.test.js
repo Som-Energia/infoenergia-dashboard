@@ -2,7 +2,41 @@ import {
   convertDataFromWattsToKwh,
   formatTooltip,
   getDataForTable,
+  kwhRecordToCsvformatData,
 } from "./utils"
+
+describe("kwhRecordToCsvformatData", () => {
+  const translations = {
+    DATE: "Data",
+    HOUR: "Hora",
+    PRODUCTION_KWH: "Producció",
+  }
+  const t = (key) => translations[key]
+  const headers = [
+    { label: "Data", key: "Data" },
+    { label: "Hora", key: "Hora" },
+    { label: "Producció", key: "Producció" },
+  ]
+
+  it("should include the day and preserve hours, production and translated headers", () => {
+    const data = [
+      { date: "2026-11-05T09:00:00", value: 1.25 },
+      { date: "2026-11-06T14:00:00", value: 2.5 },
+    ]
+
+    expect(kwhRecordToCsvformatData(data, t)).toEqual([
+      headers,
+      [
+        { Data: "05/11/2026", Hora: 9, Producció: 1.25 },
+        { Data: "06/11/2026", Hora: 14, Producció: 2.5 },
+      ],
+    ])
+  })
+
+  it("should preserve headers with no rows for empty input", () => {
+    expect(kwhRecordToCsvformatData([], t)).toEqual([headers, []])
+  })
+})
 
 describe("convertDataFromWattsToKwh", () => {
   it("should convert data from watts to kWh", () => {
