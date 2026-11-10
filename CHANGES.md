@@ -1,5 +1,9 @@
 # Change Log
 
+## 3.0.6 2026-11-10
+
+- FIX: Added day in csv download in generation
+
 ## 3.0.5 2026-08-10
 
 - REF: improve deploy.sh installing a fresh dependencies
