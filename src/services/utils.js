@@ -462,7 +462,7 @@ export const kwhRecordToCsvformatData = (data, t) => {
   }))
 
   const formatedData = data.map((element) => {
-    const dataFormated = dayjs(element.date).format("MM/YYYY")
+    const dataFormated = dayjs(element.date).format("DD/MM/YYYY")
     const hour = dayjs(element.date).hour()
 
     const row = {}
